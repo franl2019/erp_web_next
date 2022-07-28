@@ -8,7 +8,7 @@
 import {useRouter} from "vue-router";
 import {useRouterPage} from "@/utils";
 
-// const {ipcRenderer} = require("electron");
+
 
 const props = withDefaults(defineProps<{
   routerName?: string

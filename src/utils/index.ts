@@ -1,4 +1,3 @@
-
 import moment from "moment";
 import {Router} from "vue-router";
 import {DirectiveBinding} from "@vue/runtime-core";
@@ -6,7 +5,7 @@ import ErpDialog from "@/components/dialog/dialog";
 import {CodeType} from "@/types/CodeType";
 import {tabMenu} from "@/components/tab/useRouterTab";
 import router from "@/router";
-
+import {config} from "@/config";
 
 export function useLocalStorageSave(key: string, value: string): void {
     window.localStorage.setItem(key, value)
@@ -57,20 +56,17 @@ export function getEndDate(): string {
 }
 
 export function useRouterPage(fullPath: string,title:string) {
-    router.push(fullPath).then(
-        ()=>{
-            tabMenu.addTab(fullPath, {
-                activation: false, showCloseButton: true, title
-            })
-        }
-    )
-    // if (IS_DEV) {
-    //     // const url = useGetUrl(href);
-    //     // ipcRenderer.send('router', {url})
-    // } else {
-    //     // const url = useGetUrl(href);
-    //     // ipcRenderer.send('router', {url})
-    // }
+    if(config.mode === "WEB"){
+        router.push(fullPath).then(
+            ()=>{
+                tabMenu.addTab(fullPath, {
+                    activation: false, showCloseButton: true, title
+                })
+            }
+        )
+    }else if(config.mode === "ELECTRON"){
+        // const {ipcRenderer} = require("electron");
+    }
 }
 
 export function useRouterReportToSheet(router: Router, option: { correlationId: number; correlationType: CodeType; correlationCode: string }) {
