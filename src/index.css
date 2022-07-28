@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    div {
+        border-style: none;
+    }
+}
+
+#app {
+    @apply h-screen w-screen
+}
+
+
+/* 滚动条 */
+::-webkit-scrollbar {
+    @apply w-2 h-2
+}
+
+::-webkit-scrollbar-thumb {
+    @apply rounded bg-gray-300
+}
+
+/*element ui style*/
+:root{
+    --el-input-border-color:#6366F1;
+    --el-color-primary:#6366F1;
+    --el-component-size:38px;
+    --el-input-inner-height:40px;
+
+    --el-border-color:#D1D5DB;
+    --el-border-width:50px;
+    --el-date-editor-width:100;
+
+
+}
+
+.el-tree-node__content {
+    @apply h-10
+}
+
+.el-select {
+    @apply w-full h-10 border border-solid border-gray-300 rounded;
+}
+
+.el-select .select-trigger{
+    @apply h-full
+}
+
+.el-select .select-trigger .el-input{
+    @apply h-full
+}
+.el-select .select-trigger .el-input.is-focus{
+    box-shadow: 0 0 0 0 var(--el-select-input-focus-border-color) inset!important;
+    border-radius: var(--el-input-border-radius,var(--el-border-radius-base));
+}
+
+.el-select .select-trigger .el-input .el-input__wrapper{
+    box-shadow: 0 0 0 0 var(--el-select-input-focus-border-color) inset!important;
+}
+
+.el-select .select-trigger .el-input .el-input__wrapper.is-focus {
+    box-shadow: 0 0 0 0 var(--el-select-input-focus-border-color) inset!important;
+}
+
+.el-select .select-trigger .el-input .el-input__wrapper .el-input__inner{
+    @apply h-full p-0
+}
+
+.el-select .select-trigger .el-input .el-input__wrapper .el-input__inner {
+    @apply rounded-md w-full text-sm text-gray-500 focus:ring-0
+}
+
+.el-input .el-input__wrapper .el-input__inner:disabled {
+    background-color: #F5F7FA;
+    /*color: #A8ABB2 !important;*/
+}
+
+/*.el-select .select-trigger .el-input .el-input__inner:focus {*/
+/*    @apply border-indigo-500;*/
+/*}*/
+
+.el-date-editor.el-date-editor--daterange.el-input__inner.el-range-editor.el-tooltip__trigger.el-tooltip__trigger{
+    @apply flex-auto w-full md:flex-none md:w-64 !important
+}
+
+.el-date-editor.is-active{
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset !important;
+}
+
+/*
+* 日期组件
+*/
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger .el-input__wrapper{
+    padding: 2px 11px;
+}
+
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger .el-input__wrapper.is-focus{
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset;
+    padding: 2px 11px;
+}
+
+.el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger .el-input__wrapper.is-focus .el-input__inner{
+    box-shadow: none;
+}
+
+.el-input{
+    width: 100% !important;
+}
+
+/*.el-date-editor .el-input__inner:focus {*/
+/*    @apply border-indigo-500;*/
+/*}*/
+
+/*.el-date-editor {*/
+/*    --el-date-editor-width: 100%*/
+/*}*/
+
+/*.el-date-editor {*/
+/*    @apply w-full md:w-auto !important;*/
+/*}*/
+
+/*
+* popover
+*/
+
+.el-popover{
+    --el-popover-padding:0;
+}
+
+/*
+ * AG Grid
+*/
+
+.groupTitleClass .ag-header-group-cell-label{
+    justify-content: center;
+}

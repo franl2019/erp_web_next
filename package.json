@@ -1,0 +1,43 @@
+{
+  "name": "erp_tailwindcss_vue_elementui",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "electron/electron.js",
+  "scripts": {
+    "web:dev": "vite",
+    "web:build": "vite build",
+    "web:serve": "vite preview"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.3.4",
+    "@types/uuid": "^8.3.3",
+    "ag-grid-community": "^26.1.0",
+    "ag-grid-vue3": "^26.1.2",
+    "axios": "^0.24.0",
+    "class-validator": "^0.13.1",
+    "concurrently": "^7.2.0",
+    "cross-env": "^7.0.3",
+    "element-plus": "^2.2.0",
+    "mathjs": "^10.0.0",
+    "moment": "^2.29.1",
+    "sass": "^1.43.3",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4",
+    "uuid": "^8.3.2",
+    "vue": "^3.2.16",
+    "vue-class-component": "^8.0.0-rc.1",
+    "vue-router": "4",
+    "vuedraggable": "^4.1.0",
+    "wait-on": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^16.11.6",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.11",
+    "vue-tsc": "^0.28.9"
+  }
+}
