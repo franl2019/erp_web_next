@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
         component: Login
     },
     {
-        name:"login",
+        name: "login",
         path: "/login",
         meta: {
             title: "登录页"
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
         component: Login
     },
     {
-        name:'test',
+        name: 'test',
         path: "/test", meta: {
             title: "测试页"
         }, component: () => import(/* webpackChunkName: "test" */ '@/view/test/test.vue')
@@ -42,45 +42,45 @@ const routes: Array<RouteRecordRaw> = [
         },
         children: [
             {
-                name:'controlHome',
+                name: 'controlHome',
                 path: "/controlHome", meta: {
-                    title:"首页"
+                    title: "首页"
                 }, component: () => import(/* webpackChunkName: "controlHome" */ '@/view/home/controlHome.vue')
             },
             {
-                name:'saleHome',
+                name: 'saleHome',
                 path: "/saleHome", meta: {
-                    title:"销售管理"
+                    title: "销售管理"
                 }, component: () => import(/* webpackChunkName: "saleHome" */ '@/view/home/saleHome.vue')
             },
             {
-                name:'buyHome',
+                name: 'buyHome',
                 path: "/buyHome", meta: {
-                    title:"采购管理"
+                    title: "采购管理"
                 }, component: () => import(/* webpackChunkName: "buyHome" */ '@/view/home/buyHome.vue')
             },
             {
-                name:'moneyHome',
+                name: 'moneyHome',
                 path: "/moneyHome", meta: {
-                    title:"资金管理"
+                    title: "资金管理"
                 }, component: () => import(/* webpackChunkName: "moneyHome" */ '@/view/home/moneyHome.vue')
             },
             {
-                name:'baseInfoHome',
+                name: 'baseInfoHome',
                 path: "/baseInfoHome", meta: {
-                    title:"基础资料管理"
+                    title: "基础资料管理"
                 }, component: () => import(/* webpackChunkName: "baseInfoHome" */ '@/view/home/baseInfoHome.vue')
             },
             {
-                name:'warehouseHome',
+                name: 'warehouseHome',
                 path: "/warehouseHome", meta: {
-                    title:"仓库管理"
+                    title: "仓库管理"
                 }, component: () => import(/* webpackChunkName: "warehouseHome" */ '@/view/home/warehouseHome.vue')
             },
             {
-                name:'systemHome',
+                name: 'systemHome',
                 path: "/systemHome", meta: {
-                    title:"系统设置"
+                    title: "系统设置"
                 }, component: () => import(/* webpackChunkName: "systemHome" */ '@/view/home/systemHome.vue')
             },
             ...clientAreaRouter,
@@ -149,9 +149,12 @@ const router = createRouter({
 
 router.afterEach(to => {
     const title = String(to.meta.title) || ""
-    if(to.fullPath!=="/"){
-        tabMenu.addTab(to.fullPath, {
-            activation: false, showCloseButton: true, title
+    if (to.fullPath !== "/") {
+        tabMenu.addTab({
+            key: to.fullPath,
+            activation: false,
+            showCloseButton: true,
+            title
         })
     }
 })

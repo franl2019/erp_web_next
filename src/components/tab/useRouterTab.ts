@@ -1,37 +1,45 @@
 import {ref, Ref} from "vue";
 
-interface Tab {
+export interface Tab {
+    key: string;
     title: string;
     activation: boolean;
     showCloseButton: boolean;
 }
 
-type TabMap = Map<string, Tab>
+export class TabMenu {
 
-class TabMenu {
+    private readonly tabList: Ref<Tab[]>
 
-    private readonly tabMap: Ref<TabMap>
-
-    constructor() {
-        this.tabMap = ref(new Map());
-        this.addTab('/controlHome', {
-            activation: true, showCloseButton: false, title: "首页"
+    constructor(tab: Ref<Tab[]>) {
+        this.tabList = tab;
+        this.addTab({
+            key:'/controlHome', activation: true, showCloseButton: false, title: "首页"
         })
     }
 
-    public getTabMap() {
-        return this.tabMap;
+    private static deactivate(tab: Tab) {
+        tab.activation = false
     }
 
-    public activationTab(tabKey: string) {
-        const tab = this.getTabMenu(tabKey);
-        if (tab) {
-            tab.activation = true;
-            this.tabMap.value.set(tabKey, tab)
+    private static activation(tab: Tab) {
+        tab.activation = true;
+    }
 
-            this.tabMap.value.forEach((tab: Tab, key: string) => {
-                if (key !== tabKey) {
-                    this.deactivate(key)
+    public getTabMap() {
+        return this.tabList;
+    }
+
+    //激活tab
+    public activationTab(tabKey: string): boolean {
+        const tab = this.findOne(tabKey);
+        if (tab) {
+            TabMenu.activation(tab)
+
+            //停用其他tab
+            this.tabList.value.forEach((tab: Tab) => {
+                if (tab.key !== tabKey) {
+                    TabMenu.deactivate(tab)
                 }
             })
 
@@ -41,50 +49,40 @@ class TabMenu {
         }
     }
 
-    public addTab(tabKey: string, tab?: Tab) {
-        if (!this.activationTab(tabKey)) {
-            if (tab) {
-                this.setTabMenu(tabKey, tab)
-                this.activationTab(tabKey)
-            }
-        }
-    }
-
-    public deleteTab(tabKey: string) {
-        if (this.deleteTabMenu(tabKey)) {
-            const lastTabKey = this.getTabLastOne()
-            if (lastTabKey) {
-                this.activationTab(lastTabKey)
-                return lastTabKey
-            }
-        }
-    }
-
-    private getTabLastOne() {
-        let lastOneTabKey
-        this.tabMap.value.forEach((tab: Tab, key: string) => {
-            lastOneTabKey = key
-        });
-        return lastOneTabKey
-    }
-
-    private getTabMenu(tabKey: string): Tab | undefined {
-        return this.tabMap.value.get(tabKey)
-    }
-
-    private setTabMenu(tabKey: string, tab: Tab) {
-        this.tabMap.value.set(tabKey, tab);
-    }
-
-    private deleteTabMenu(tabKey: string) {
-        return this.tabMap.value.delete(tabKey)
-    }
-
-    private deactivate(tabKey: string) {
-        const tab = this.getTabMenu(tabKey);
+    public closeTab(tabKey: string) {
+        const tab = this.findOne(tabKey);
         if (tab) {
-            tab.activation = false;
-            this.tabMap.value.set(tabKey, tab)
+            this.delete(tabKey);
+            return this.findLastOne()
+        }
+    }
+
+    public addTab(tab: Tab) {
+        const findTab = this.findOne(tab.key)
+        if (findTab == undefined) this.tabList.value.push(tab)
+
+        //添加后激活
+        this.activationTab(tab.key);
+    }
+
+    private findLastOne() {
+        return this.tabList.value[this.tabList.value.length]
+    }
+
+    private findOne(tabKey: string): Tab | undefined {
+        for (let i = 0; i < this.tabList.value.length; i++) {
+            if (tabKey === this.tabList.value[i].key) return this.tabList.value[i]
+        }
+    }
+
+    private delete(tabKey: string): boolean {
+        let deleteIndex: number | undefined
+        for (let i = 0; i < this.tabList.value.length; i++) {
+            if (tabKey === this.tabList.value[i].key) deleteIndex = i
+        }
+
+        if (deleteIndex !== undefined) {
+            this.tabList.value.splice(deleteIndex, 1);
             return true
         } else {
             return false
@@ -92,6 +90,4 @@ class TabMenu {
     }
 }
 
-const tabMenu = new TabMenu()
-
-export {tabMenu}
+export const tabMenu = new TabMenu(ref([]));

@@ -9,20 +9,25 @@
       </erp_button_svg>
     </div>
 
-    <div class="flex flex-col w-full h-full overflow-x-auto">
-      <div class="flex w-full h-full px-1">
-        <erp_menu_tab_item
-            v-for="(value,key) in tabMenu.getTabMap().value"
-            :title="value[1].title"
-            :activation="value[1].activation"
-            :show-close-button="value[1].showCloseButton"
-            :tab-key="value[0]"
-            :key="key"
-            @clickedTabButton="onClickedTabButton"
-            @clickedCloseButton="onClickedCloseButton"
-        >
-        </erp_menu_tab_item>
-      </div>
+    <div class="flex flex-col w-full h-full">
+      <!--拖动tab-->
+      <draggable
+          :list="props.modelValue"
+          class="flex w-full h-full px-1 overflow-x-auto"
+          handle=".handle"
+          item-key="key"
+          @end="onDragEndTab"
+      >
+        <template #item="{ element }">
+          <div class="handle">
+            <erp_menu_tab_item
+                :tab="element"
+                v-bind="$attrs"
+            ></erp_menu_tab_item>
+          </div>
+        </template>
+      </draggable>
+
     </div>
 
   </div>
@@ -32,23 +37,23 @@
 <script lang="ts" setup>
 import Erp_menu_tab_item from "@/components/tab/erp_tab_item.vue";
 import Erp_button_svg from "@/components/button/ErpSvgButton.vue";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {defineProps} from "vue";
+import {Tab} from "@/components/tab/useRouterTab";
+import Draggable from "vuedraggable";
+
+const props = withDefaults(
+    defineProps<{
+      modelValue: Tab[]
+    }>(),
+    {
+      modelValue: () => []
+    })
 
 const emits = defineEmits([
   'clickedMenuButton',
-  'clickedTabButton',
-  'clickedCloseButton'
 ])
 
+function onDragEndTab(){
 
-function onClickedCloseButton(tabKey: string) {
-  const nestKey = tabMenu.deleteTab(tabKey)
-  emits("clickedCloseButton", tabKey, nestKey)
-
-}
-
-function onClickedTabButton(tabKey: string) {
-  tabMenu.activationTab(tabKey)
-  emits('clickedTabButton', tabKey)
 }
 </script>

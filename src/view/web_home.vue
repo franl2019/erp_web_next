@@ -8,6 +8,7 @@
 
         <!--router tab-->
         <erp-router-tab
+            v-model="tabMenu.getTabMap().value"
             @clickedMenuButton="showMenu"
             @clickedTabButton="onClickedTabButton"
             @clickedCloseButton="onClickedCloseButton"
@@ -43,6 +44,7 @@ import {ErpKeepAlive} from "@/components/ErpKeepAlive/ErpKeepAlive";
 import ErpRouterTab from "@/components/tab/erp_tab.vue";
 import {useRouter} from "vue-router";
 import {useRouterPage} from "@/utils";
+import {tabMenu} from "@/components/tab/useRouterTab";
 
 const isCollapse = ref(true)
 

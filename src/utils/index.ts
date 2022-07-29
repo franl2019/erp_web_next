@@ -3,9 +3,9 @@ import {Router} from "vue-router";
 import {DirectiveBinding} from "@vue/runtime-core";
 import ErpDialog from "@/components/dialog/dialog";
 import {CodeType} from "@/types/CodeType";
-import {tabMenu} from "@/components/tab/useRouterTab";
 import router from "@/router";
 import {config} from "@/config";
+import {tabMenu} from "@/components/tab/useRouterTab";
 
 export function useLocalStorageSave(key: string, value: string): void {
     window.localStorage.setItem(key, value)
@@ -55,16 +55,19 @@ export function getEndDate(): string {
     return moment().endOf("month").format('YYYY-MM-DD HH:mm:ss');
 }
 
-export function useRouterPage(fullPath: string,title:string) {
-    if(config.mode === "WEB"){
+export function useRouterPage(fullPath: string, title: string) {
+    if (config.mode === "WEB") {
         router.push(fullPath).then(
-            ()=>{
-                tabMenu.addTab(fullPath, {
-                    activation: false, showCloseButton: true, title
+            () => {
+                tabMenu.addTab({
+                    key: fullPath,
+                    activation: false,
+                    showCloseButton: true,
+                    title
                 })
             }
         )
-    }else if(config.mode === "ELECTRON"){
+    } else if (config.mode === "ELECTRON") {
         // const {ipcRenderer} = require("electron");
     }
 }
@@ -80,7 +83,7 @@ export function useRouterReportToSheet(router: Router, option: { correlationId: 
                         accountInComeId: String(option.correlationId)
                     }
                 })
-                useRouterPage(route.fullPath,route.meta.title as string)
+                useRouterPage(route.fullPath, route.meta.title as string)
             }
                 break
 
@@ -91,7 +94,7 @@ export function useRouterReportToSheet(router: Router, option: { correlationId: 
                         accountExpenditureId: String(option.correlationId)
                     }
                 })
-                useRouterPage(route.fullPath,route.meta.title as string)
+                useRouterPage(route.fullPath, route.meta.title as string)
             }
                 break
 
@@ -102,7 +105,7 @@ export function useRouterReportToSheet(router: Router, option: { correlationId: 
                         accountsVerifySheetId: String(option.correlationId)
                     }
                 })
-                useRouterPage(route.fullPath,route.meta.title as string)
+                useRouterPage(route.fullPath, route.meta.title as string)
             }
                 break
 
@@ -112,7 +115,7 @@ export function useRouterReportToSheet(router: Router, option: { correlationId: 
                         outboundid: String(option.correlationId)
                     }
                 });
-                useRouterPage(route.fullPath,route.meta.title as string)
+                useRouterPage(route.fullPath, route.meta.title as string)
             }
                 break
 
@@ -123,7 +126,7 @@ export function useRouterReportToSheet(router: Router, option: { correlationId: 
                         inboundcode: option.correlationCode
                     }
                 });
-                useRouterPage(route.fullPath,route.meta.title as string)
+                useRouterPage(route.fullPath, route.meta.title as string)
             }
                 break
 
