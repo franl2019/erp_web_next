@@ -59,13 +59,13 @@ const emits = defineEmits([
 
 function clickedTabButton() {
   tabMenu.activationTab(props.tab.key);
-  emits('clickedTabButton', props.tab.key)
+  emits('clickedTabButton', props.tab.key);
 }
 
 function clickedCloseButton() {
-  tabMenu.closeTab(props.tab.key);
   if (props.tab.showCloseButton) {
-    emits('clickedCloseButton', props.tab.key)
+    const nextTab = tabMenu.closeTab(props.tab.key);
+    emits('clickedCloseButton', props.tab.key , nextTab?.key);
   }
 }
 </script>

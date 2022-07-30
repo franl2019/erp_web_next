@@ -70,9 +70,7 @@ async function onClickedCloseButton(tabKey: string, nextKey: string) {
     await useRouterPage(nextKey,"")
   }
 
-
   if (keepAliveTestApi) {
-    console.log('deleteCache')
     keepAliveTestApi.deleteCache(tabKey);
   }
 }

@@ -14,6 +14,8 @@
       <draggable
           :list="props.modelValue"
           class="flex w-full h-full px-1 overflow-x-auto"
+          ghost-class="ghost"
+          drag-class="drag"
           handle=".handle"
           item-key="key"
           @end="onDragEndTab"
@@ -37,7 +39,6 @@
 <script lang="ts" setup>
 import Erp_menu_tab_item from "@/components/tab/erp_tab_item.vue";
 import Erp_button_svg from "@/components/button/ErpSvgButton.vue";
-import {defineProps} from "vue";
 import {Tab} from "@/components/tab/useRouterTab";
 import Draggable from "vuedraggable";
 
@@ -57,3 +58,13 @@ function onDragEndTab(){
 
 }
 </script>
+
+<style lang="scss" scoped>
+.ghost{
+  @apply border-2 border-solid border-indigo-400 rounded
+}
+
+.drag{
+  @apply opacity-0
+}
+</style>

@@ -53,7 +53,8 @@ export class TabMenu {
         const tab = this.findOne(tabKey);
         if (tab) {
             this.delete(tabKey);
-            return this.findLastOne()
+            //关闭激活状态的tab才返回
+            if(tab.activation) return this.findLastOne()
         }
     }
 
@@ -66,7 +67,12 @@ export class TabMenu {
     }
 
     private findLastOne() {
-        return this.tabList.value[this.tabList.value.length]
+        const lastIndex = this.tabList.value.length
+        if(lastIndex > 0){
+            return this.tabList.value[lastIndex-1]
+        }else{
+            return null
+        }
     }
 
     private findOne(tabKey: string): Tab | undefined {

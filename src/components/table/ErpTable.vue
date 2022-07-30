@@ -1,5 +1,5 @@
 <template>
-  <div class="h-96 md:h-full flex-none md:flex-auto flex overflow-auto">
+  <div class="h-1/3 md:flex-grow md:flex-auto flex">
     <AgGridVue
         :animateRows="true"
         :columnDefs="tableConfig.columnDefaults"
@@ -20,31 +20,30 @@
     >
     </AgGridVue>
     <div v-show="tableOptionBarVisible"
-         class="w-72 bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none flex flex-col overflow-hidden z-10"
+         class="w-72 h-full bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none flex flex-col"
     >
-      <div class="font-bold flex flex-wrap items-center bg-gray-100 py-1 px-2">
-        <!--          <img alt="drag" class="w-4 h-4 mr-1" src="@/assets/mouse_black_18dp.svg">-->
-        <!--          <span class="text-red-500 flex-none">拖动</span>-->
-        <!--          <img alt="drag" class="w-5 h-5" src="@/assets/apps_black_18dp.svg">-->
-        <span class="flex-none">调整"列"顺序</span>
+      <div class="flex flex-none font-bold items-center bg-gray-100 py-1 px-2">
+        <span class="flex-none">调整列顺序:</span>
       </div>
-      <draggable
-          :list="tableSidebarColumnStateList"
-          class="overflow-y-auto flex-grow flex flex-col px-2 py-1"
-          ghost-class="ghost"
-          handle=".handle"
-          item-key="name"
-          @end="onTableOptionEndDrag"
-      >
-        <template #item="{ element }">
-          <div class="flex items-center text-base">
-            <img alt="drag" class="handle w-5 h-5 cursor-move" src="@/assets/apps_black_18dp.svg">
-            <erp_input_re-checkbox v-model="element.hide" @change="clickedOptionItem"></erp_input_re-checkbox>
-            <span class=""> {{ element.name }}</span>
-          </div>
-        </template>
-      </draggable>
-      <div class="flex w-full items-center justify-center p-2 bg-gray-100">
+      <div class="flex flex-col px-2 py-1 overflow-x-auto">
+        <draggable
+            :list="tableSidebarColumnStateList"
+            ghost-class="ghost"
+            drag-class="drag-class"
+            handle=".handle"
+            item-key="name"
+            @end="onTableOptionEndDrag"
+        >
+          <template #item="{ element }">
+            <div class="flex items-center text-base">
+              <img alt="drag" class="handle w-5 h-5 cursor-move" src="@/assets/apps_black_18dp.svg">
+              <erp_input_re-checkbox v-model="element.hide" @change="clickedOptionItem"></erp_input_re-checkbox>
+              <div>{{ element.name }}</div>
+            </div>
+          </template>
+        </draggable>
+      </div>
+      <div class="flex flex-none w-full items-center justify-center p-2 bg-gray-100">
         <erp_button class="w-1/2 mr-2" size="small" type="danger" @click="onRemoveColumnState">重置</erp_button>
         <erp_button class="w-1/2" size="small" type="success" @click="onSaveColumnState">保存配置</erp_button>
       </div>
@@ -316,6 +315,10 @@ defineExpose({initTableData, initTableDataList, getGridApi});
 <style lang="scss" src="./ag-theme-erp.scss"></style>
 <style lang="scss" scoped>
 .ghost {
-  @apply mx-1 border-b-2 border-blue-400
+  @apply border-2 border-solid border-indigo-400 rounded
+}
+
+.drag-class{
+  @apply opacity-0
 }
 </style>
