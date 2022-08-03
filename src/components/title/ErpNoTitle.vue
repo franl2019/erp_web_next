@@ -1,7 +1,6 @@
 <template>
   <div
-      class="flex flex-none flex-col my-2 items-start w-full bg-white md:flex-row md:items-center md:space-y-0"
-  >
+      class="flex flex-none flex-col my-1 items-start w-full bg-white md:flex-row md:items-center md:space-y-0">
     <div class="flex flex-wrap w-full justify-center md:justify-end md:flex-nowrap">
       <div class="flex flex-col md:justify-between w-full md:flex-row md:items-center md:flex-wrap">
         <div class="flex flex-wrap flex-none space-x-1.5 mb-1 md:items-center">

@@ -58,7 +58,7 @@
 </template>
 
 <script lang='ts' setup>
-import {onBeforeMount, onMounted, Ref, ref, UnwrapRef, watch} from "vue";
+import {onBeforeMount, Ref, ref, UnwrapRef, watch} from "vue";
 import {LOCALE_CN} from '@/components/table/local/zh_cn';
 import Draggable from "vuedraggable";
 import Erp_button from "@/components/button/ErpButton.vue";
@@ -123,13 +123,13 @@ onBeforeMount(async () => {
   await initTableColumnState();
 })
 
-onMounted(()=>{
-  if (props.tableEdit) {
-    startEditTable()
-  } else {
-    endEditTable()
-  }
-})
+// onMounted(() => {
+//   if (props.tableEdit) {
+//     startEditTable()
+//   } else {
+//     endEditTable()
+//   }
+// })
 
 //初始化表格数据
 async function initTableData() {
@@ -245,10 +245,9 @@ function formatOptionColumnState(columnState: ColumnState[]) {
       if (tableConfig.columnDefaults[j].field === OptionColumnState[i].colId) {
         OptionColumnState[i].name = tableConfig.columnDefaults[j].headerName;
         break;
-      }
-      else if(tableConfig.columnDefaults[j].children&&tableConfig.columnDefaults[j].children!.length>0){
+      } else if (tableConfig.columnDefaults[j].children && tableConfig.columnDefaults[j].children!.length > 0) {
         for (let k = 0; k < tableConfig.columnDefaults[j].children!.length; k++) {
-          if(tableConfig.columnDefaults[j].children![k].field === OptionColumnState[i].colId){
+          if (tableConfig.columnDefaults[j].children![k].field === OptionColumnState[i].colId) {
             OptionColumnState[i].name = tableConfig.columnDefaults[j].headerName + '-' + tableConfig.columnDefaults[j].children![k].headerName;
             break;
           }
@@ -279,25 +278,30 @@ const canEditCol: string[] = [];
 
 function getCanEditColList() {
   for (let i = 0; i < tableConfig.columnDefaults.length; i++) {
-    const columnDefault = tableConfig.columnDefaults[i];
-    if (columnDefault.field && columnDefault.editable) {
-      canEditCol.push(columnDefault.field);
+    const col = tableConfig.columnDefaults[i];
+    if (col.field && col.editable) {
+      canEditCol.push(col.field);
     }
   }
 }
 
 function startEditTable() {
+  //拖动显示
+  gridApi.setSuppressRowDrag(false);
+  //可以编辑
   for (let j = 0; j < canEditCol.length; j++) {
-    const columnDef = gridApi.getColumnDef(canEditCol[j])
-    if (columnDef) columnDef.editable = true;
+    const col = gridApi.getColumnDef(canEditCol[j])
+    if (col) col.editable = true;
   }
-
 }
 
 function endEditTable() {
+  //拖动隐藏
+  gridApi.setSuppressRowDrag(true);
+  //禁止编辑
   for (let j = 0; j < canEditCol.length; j++) {
-    const columnDef = gridApi.getColumnDef(canEditCol[j])
-    if (columnDef) columnDef.editable = false;
+    const col = gridApi.getColumnDef(canEditCol[j])
+    if (col) col.editable = false;
   }
 }
 
@@ -318,7 +322,7 @@ defineExpose({initTableData, initTableDataList, getGridApi});
   @apply border-2 border-solid border-indigo-400 rounded
 }
 
-.drag-class{
+.drag-class {
   @apply opacity-0
 }
 </style>

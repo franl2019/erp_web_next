@@ -69,6 +69,16 @@ export function useRouterPage(fullPath: string, title: string) {
         )
     } else if (config.mode === "ELECTRON") {
         // const {ipcRenderer} = require("electron");
+        router.push(fullPath).then(
+            () => {
+                tabMenu.addTab({
+                    key: fullPath,
+                    activation: false,
+                    showCloseButton: true,
+                    title
+                })
+            }
+        )
     }
 }
 

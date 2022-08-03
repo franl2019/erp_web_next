@@ -1,6 +1,6 @@
 <template>
   <label :for="inputUuid"
-         class="flex items-center w-full border border-solid border-gray-300 rounded p-2.5 select-none">
+         class="flex items-center w-full rounded select-none" :class="borderClass">
     <input :id="inputUuid" :checked="props.modelValue" @change="$emit('update:modelValue',newValue)" type="checkbox"
            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
     <span class="ml-2 block text-sm text-gray-900"><slot></slot></span>
@@ -14,9 +14,14 @@ import {computed} from "vue";
 const inputUuid = uuidv4();
 const props = withDefaults(defineProps<{
   modelValue?: number
+  border?:boolean
 }>(),{
-  modelValue:0
+  modelValue:0,
+  border:false
 })
+
+const borderClass = props.border ? 'border border-solid border-gray-300 p-2.5' : '';
+
 const newValue = computed(() => {
   return props.modelValue ? 0 : 1
 })

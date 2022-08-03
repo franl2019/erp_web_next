@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex items-center justify-between">
-          <erp-checkbox class="flex-none">记住密码</erp-checkbox>
+          <erp-checkbox v-model="rememberAccount" class="w-auto">记住账户</erp-checkbox>
           <div class="text-sm flex-none">
             <a class="font-medium text-indigo-600 hover:text-indigo-500" href="#">
               忘记密码？
@@ -30,7 +30,7 @@
       </form>
 
 
-<!--      <erp-router-button router-name="test">测试</erp-router-button>-->
+      <!--      <erp-router-button router-name="test">测试</erp-router-button>-->
     </div>
   </div>
 
@@ -39,12 +39,17 @@
 
 <script lang='ts' setup>
 import ErpButton from "../components/button/ErpButton.vue";
-import ErpCheckbox from "../components/button/ErpCheckbox.vue";
+import ErpCheckbox from "@/components/input/ErpCheckbox.vue";
 import ErpInput from "../components/input/ErpInput.vue";
 import {useRouter} from "vue-router";
-import {Auth, IAuth} from "@/module/auth/login";
-import {reactive} from "vue";
+import {Auth, IAuth} from "@/module/auth/auth";
+import {onMounted, reactive, Ref, ref} from "vue";
 import ErpLoading from "@/components/loading/ErpLoading.vue";
+
+onMounted(()=>{
+  getAccountToLocalStorage();
+})
+
 const router = useRouter();
 
 const user: IAuth = reactive({
@@ -52,9 +57,24 @@ const user: IAuth = reactive({
   password: ""
 })
 
+const rememberAccount: Ref<0 | 1> = ref(0);
+
 async function onLoginSubmit() {
   const auth = new Auth(user)
   await auth.login();
+  await rememberAccountToLocalStorage(user.usercode);
   await router.push({name: "controlHome"})
+}
+
+function rememberAccountToLocalStorage(usercode:string){
+  window.localStorage.setItem('usercode',usercode)
+}
+
+function getAccountToLocalStorage(){
+  const usercode = window.localStorage.getItem('usercode') || ""
+  if (usercode){
+    user.usercode = usercode;
+    rememberAccount.value = 1;
+  }
 }
 </script>

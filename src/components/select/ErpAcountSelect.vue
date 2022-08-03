@@ -53,7 +53,6 @@ async function getAccountList() {
     updatedAt: null,
     updater: "",
     useFlag: 0
-
   })
 }
 </script>
