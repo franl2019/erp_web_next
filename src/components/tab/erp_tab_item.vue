@@ -65,7 +65,7 @@ function clickedTabButton() {
 function clickedCloseButton() {
   if (props.tab.showCloseButton) {
     const nextTab = tabMenu.closeTab(props.tab.key);
-    emits('clickedCloseButton', props.tab.key , nextTab?.key);
+    emits('clickedCloseButton', props.tab.key, nextTab?.key);
   }
 }
 </script>

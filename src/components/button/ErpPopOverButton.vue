@@ -1,5 +1,5 @@
 <template>
-  <el-popover placement="bottom-end" :width="300" transition="" v-model:visible="visible" trigger="click">
+  <el-popover placement="bottom-end" :width="300" transition="" :visible="visible" trigger="click">
     <template #reference>
       <erp-button id="filterButton" @click="clickedBtn">
         <div class="w-5 h-5 relative mt-0.5">

@@ -105,8 +105,6 @@
                :table-state="defaultOutboundMxTable"
     ></erp-table>
   </erp-page-box>
-
-
 </template>
 
 <script lang='ts' setup>
@@ -193,13 +191,10 @@ const {
   clickedFilterCloseBtn
 } = useSaleOutboundFindViewEvent(option)
 
-// const { ipcRenderer } = require('electron')
-//
-// ipcRenderer.on('renderer-focus',debounce(
-//     async ()=>{
-//       await initPage()
-//     }
-// ))
+async function activated(){
+  await initPage()
+}
+defineExpose([activated])
 
 onMounted(async () => {
 

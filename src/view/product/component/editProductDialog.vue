@@ -15,7 +15,7 @@
        <erp_select_productarea v-model="updateProductDto.productareaid"></erp_select_productarea>
       </erp_form_item>
       <erp_form_item label-for-name="仓库" type="danger" md-col="4" lg-col="2">
-        <erp_select_warehouse v-model="updateProductDto.warehouseid"></erp_select_warehouse>
+        <erp-warehouse-auth-select v-model="updateProductDto.warehouseid"></erp-warehouse-auth-select>
       </erp_form_item>
       <erp_form_item label-for-name="单位" type="danger" md-col="4" lg-col="2">
         <erp_input_rounded v-model="updateProductDto.unit"></erp_input_rounded>
@@ -86,7 +86,7 @@ import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
 import {onMounted, ref} from "vue";
 import {IProduct} from "@/module/product/product";
 import Erp_select_productarea from "@/components/select/ErpProductareaSelect.vue";
-import Erp_select_warehouse from "@/components/select/ErpWarehouseSelect.vue";
+import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.vue";
 import Erp_checkbox_border from "@/components/input/ErpCheckbox.vue";
 import {valueName} from "@/config/valueName";
 

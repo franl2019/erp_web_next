@@ -115,17 +115,16 @@ import {useButtonState} from "@/composables/useButtonState";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useDateSelect} from "@/composables/useDateSelect";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
-import {debounce, useRouterPage} from "@/utils";
+import {useRouterPage} from "@/utils";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpPopOverButton from "@/components/button/ErpPopOverButton.vue";
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpFormItem from "@/components/form/ErpFormItem.vue";
 
-// const {ipcRenderer} = require('electron')
-//
-// ipcRenderer.on('renderer-focus', debounce(async () => {
-//   await initPage()
-// }))
+async function activated(){
+  await initPage()
+}
+defineExpose([activated])
 
 const inboundHeadFindDto = ref<IBuyInboundFindDto>(new BuyInboundFindDto());
 const inboundMxFindDto = ref<IBuyInboundMxFindDto>(new BuyInboundMxFindDto());

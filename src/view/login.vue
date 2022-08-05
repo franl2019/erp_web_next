@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex items-center justify-between">
-          <erp-checkbox v-model="rememberAccount" class="w-auto">记住账户</erp-checkbox>
+          <erp-checkbox v-model="rememberAccount" class="w-auto" :border="false">记住账户</erp-checkbox>
           <div class="text-sm flex-none">
             <a class="font-medium text-indigo-600 hover:text-indigo-500" href="#">
               忘记密码？

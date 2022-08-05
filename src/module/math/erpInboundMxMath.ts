@@ -1,5 +1,5 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
-import {chain, bignumber, round} from 'mathjs';
+import {bignumber, chain, round} from 'mathjs';
 import {IProductionInboundMxTableData} from "@/module/productionInbound/types/IProductionInboundMxTableData";
 
 export class ErpInboundMxMath {
@@ -10,6 +10,37 @@ export class ErpInboundMxMath {
     constructor(params: ValueSetterParams) {
         this.inboundMx = params.data
         this.colField = params.column.getColId();
+    }
+
+    public calculate() {
+        switch (this.colField) {
+            case "inqty":
+                this.setterInqty();
+                break
+            case "bzqty":
+                this.setterBzqty();
+                break
+            case "price":
+                this.setterPrice();
+                break
+            case "agio":
+                this.setterAgio();
+                break
+            case "agio1":
+                this.setterAgio1();
+                break
+            case "agio2":
+                this.setterAgio2();
+                break
+            case "netprice":
+                this.setterNetprice();
+                break
+            case "amt":
+                this.setterAmt();
+                break;
+            default:
+                break
+        }
     }
 
     protected countInqty() {
@@ -29,39 +60,47 @@ export class ErpInboundMxMath {
     }
 
     protected countPrice() {
-        this.inboundMx.price = Number(
-            round(chain(bignumber(this.inboundMx.netprice))
-                .divide(bignumber(this.inboundMx.agio2))
-                .divide(bignumber(this.inboundMx.agio1))
-                .divide(bignumber(this.inboundMx.agio))
-                .done(), 4)
-        );
+        this.inboundMx.price =
+            round(Number(
+                chain(bignumber(this.inboundMx.netprice))
+                    .divide(bignumber(this.inboundMx.agio2))
+                    .divide(bignumber(this.inboundMx.agio1))
+                    .divide(bignumber(this.inboundMx.agio))
+                    .done()
+            ), 4)
+
     }
 
     protected countNetprice() {
-        this.inboundMx.netprice = Number(
-            round(chain(bignumber(this.inboundMx.price))
-                .multiply(bignumber(this.inboundMx.agio))
-                .multiply(bignumber(this.inboundMx.agio1))
-                .multiply(bignumber(this.inboundMx.agio2))
-                .done(), 4)
-        )
+        this.inboundMx.netprice =
+            round(
+                Number(
+                    chain(bignumber(this.inboundMx.price))
+                        .multiply(bignumber(this.inboundMx.agio))
+                        .multiply(bignumber(this.inboundMx.agio1))
+                        .multiply(bignumber(this.inboundMx.agio2))
+                        .done()
+                ), 4)
     }
 
     protected unCountNetprice() {
-        this.inboundMx.netprice = Number(
-            round(chain(bignumber(this.inboundMx.amt))
-                .divide(bignumber(this.inboundMx.priceqty))
-                .done(), 4)
-        )
+        this.inboundMx.netprice =
+            round(
+                Number(
+                    chain(bignumber(this.inboundMx.amt))
+                        .divide(bignumber(this.inboundMx.priceqty))
+                        .done()
+                ), 4);
     }
 
     protected countAmt() {
-        this.inboundMx.amt = Number(
-            round(chain(bignumber(this.inboundMx.netprice))
-                .multiply(bignumber(this.inboundMx.priceqty))
-                .done(), 2)
-        )
+        this.inboundMx.amt =
+            round(
+                Number(
+                    chain(bignumber(this.inboundMx.netprice))
+                        .multiply(bignumber(this.inboundMx.priceqty))
+                        .done()
+                ), 2);
     }
 
     private setterInqty() {
@@ -106,36 +145,5 @@ export class ErpInboundMxMath {
     private setterAmt() {
         this.unCountNetprice();
         this.countPrice();
-    }
-
-    public calculate() {
-        switch (this.colField) {
-            case "inqty":
-                this.setterInqty();
-                break
-            case "bzqty":
-                this.setterBzqty();
-                break
-            case "price":
-                this.setterPrice();
-                break
-            case "agio":
-                this.setterAgio();
-                break
-            case "agio1":
-                this.setterAgio1();
-                break
-            case "agio2":
-                this.setterAgio2();
-                break
-            case "netprice":
-                this.setterNetprice();
-                break
-            case "amt":
-                this.setterAmt();
-                break;
-            default:
-                break
-        }
     }
 }

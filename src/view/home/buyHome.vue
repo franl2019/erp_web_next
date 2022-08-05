@@ -83,12 +83,11 @@ const router = useRouter();
 const buyInboundService = new BuyInboundService();
 const accountExpenditureService = new AccountExpenditureService();
 
-// const {ipcRenderer} = require('electron')
-//
-// ipcRenderer.on('renderer-focus', debounce(async () => {
-//   await findBuyInboundSheetState();
-//   await findAccountExpenditureState();
-// }))
+async function activated(){
+  await findBuyInboundSheetState();
+  await findAccountExpenditureState();
+}
+defineExpose([activated])
 
 onMounted(async ()=>{
   await findBuyInboundSheetState();

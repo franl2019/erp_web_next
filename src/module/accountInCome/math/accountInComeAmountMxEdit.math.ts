@@ -39,34 +39,38 @@ export class AccountInComeAmountMxEditMath {
 
     //金额计算
     private amount_calculate() {
-        this.accountInComeAmountMx.accountsReceivable = Number(
+        this.accountInComeAmountMx.accountsReceivable =
             round(
-                chain(bignumber(this.accountInComeAmountMx.amount))
-                    .multiply(bignumber(this.accountInComeAmountMx.exchangeRate))
-                    .done()
+                Number(
+                    chain(bignumber(this.accountInComeAmountMx.amount))
+                        .multiply(bignumber(this.accountInComeAmountMx.exchangeRate))
+                        .done()
+                )
                 , 4)
-        )
     }
 
     //汇率计算
     private exchangeRate_calculate() {
-        this.accountInComeAmountMx.accountsReceivable = Number(
+        this.accountInComeAmountMx.accountsReceivable =
             round(
-                chain(bignumber(this.accountInComeAmountMx.amount))
-                    .multiply(bignumber(this.accountInComeAmountMx.exchangeRate))
-                    .done()
-                , 4)
-        )
+                Number(
+                    chain(bignumber(this.accountInComeAmountMx.amount))
+                        .multiply(bignumber(this.accountInComeAmountMx.exchangeRate))
+                        .done()
+                )
+                , 4);
     }
 
     //应收账款金额计算
     private accountsReceivable_calculate() {
-        this.accountInComeAmountMx.amount = Number(
+        this.accountInComeAmountMx.amount =
             round(
-                chain(bignumber(this.accountInComeAmountMx.accountsReceivable))
-                    .divide(bignumber(this.accountInComeAmountMx.exchangeRate))
-                    .done()
-                , 4)
-        )
+                Number(
+                    chain(bignumber(this.accountInComeAmountMx.accountsReceivable))
+                        .divide(bignumber(this.accountInComeAmountMx.exchangeRate))
+                        .done()
+                )
+                , 4);
+
     }
 }

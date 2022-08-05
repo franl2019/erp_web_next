@@ -83,11 +83,10 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useRouterPage} from "@/utils";
 import {VerifyParamError} from "@/error/verifyParamError";
 
-// const { ipcRenderer } = require('electron')
-//
-// ipcRenderer.on('renderer-focus',debounce(async ()=>{
-//   await initPage()
-// }))
+async function activated(){
+  await initPage()
+}
+defineExpose([activated])
 
 const router = useRouter();
 const accountInComeFindDto = ref(new AccountInComeFindDto());

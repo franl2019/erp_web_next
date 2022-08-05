@@ -88,13 +88,10 @@ const buttonShowState = ref<IButtonState>({
 const {findDate} = useDateSelect(findDto);
 const accountsVerifySheetService = new AccountsVerifySheetService();
 
-// const {ipcRenderer} = require('electron')
-//
-// ipcRenderer.on('renderer-focus', debounce(async () => {
-//   initButtonState()
-//   await initSheetMxTableData();
-//   await initPage()
-// }))
+async function activated(){
+  await initPage()
+}
+defineExpose([activated])
 
 onMounted(async () => {
   await initPage();

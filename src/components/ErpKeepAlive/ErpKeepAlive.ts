@@ -1,5 +1,5 @@
 import type {ComponentOptions, ConcreteComponent, SetupContext, VNode} from 'vue'
-import {getCurrentInstance, onBeforeUnmount, onMounted, onUpdated} from 'vue'
+import {getCurrentInstance, onUpdated} from 'vue'
 
 type CacheKey = string | number | symbol | ConcreteComponent
 export type Cache = Map<CacheKey, VNode>
@@ -37,7 +37,7 @@ export const ErpKeepAlive: ComponentOptions = {
     setup(props, {slots, emit}: SetupContext) {
 
 
-        onUpdated(()=>{
+        onUpdated(() => {
 
         })
 
@@ -59,7 +59,7 @@ export const ErpKeepAlive: ComponentOptions = {
 
         const {
             renderer: {
-                p: patch, m: move, um: _unmount, o: {createElement}
+                m: move, um: _unmount, o: {createElement}
             }
         } = sharedContext
 
@@ -85,7 +85,19 @@ export const ErpKeepAlive: ComponentOptions = {
 
         // KeepAlive 组件的实例上会被添加两个内部函数，分别是 deActivate 和 activate
         // 这两个函数会在渲染器中被调用
-        sharedContext.activate = (vnode: any, container: any, anchor: any) => {
+        sharedContext.activate = async (vnode: any, container: any, anchor: any) => {
+
+            //找到不生命周期藏哪了,凑合用于代替 keepALive 的 activated 生命周期
+            const exposedList: Function[] = vnode.component.exposed
+            if (exposedList.length > 0) {
+                for (let i = 0; i < exposedList.length; i++) {
+                    const exposed = exposedList[i]
+                    if (exposed.name === 'activated') {
+                        await exposed();
+                    }
+                }
+            }
+
             move(vnode, container, anchor)
         }
 
@@ -94,9 +106,9 @@ export const ErpKeepAlive: ComponentOptions = {
         }
 
         function unmount(vnode: VNode) {
-            if(current.key === vnode.key){
+            if (current.key === vnode.key) {
                 resetShapeFlag(vnode)
-            }else{
+            } else {
                 // reset the shapeFlag so it can be properly unmounted
                 resetShapeFlag(vnode)
                 _unmount(vnode, instance, parentSuspense, true)
@@ -143,5 +155,6 @@ export const ErpKeepAlive: ComponentOptions = {
             return vnode
         }
     }
+
 }
 

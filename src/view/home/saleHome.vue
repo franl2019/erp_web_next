@@ -4,12 +4,12 @@
       <div class="font-bold text-xl">销售管理流程图</div>
 
       <div class="flex h-4/6 w-full items-center justify-center">
-<!--        <module-card title="销售订单">-->
-<!--          <module-card-item content="进行中" :count="16"></module-card-item>-->
-<!--          <module-card-item content="未审核" :count="7"></module-card-item>-->
-<!--          <module-card-item content="已审核" :count="10"></module-card-item>-->
-<!--        </module-card>-->
-<!--        <erp_button_big></erp_button_big>-->
+        <!--        <module-card title="销售订单">-->
+        <!--          <module-card-item content="进行中" :count="16"></module-card-item>-->
+        <!--          <module-card-item content="未审核" :count="7"></module-card-item>-->
+        <!--          <module-card-item content="已审核" :count="10"></module-card-item>-->
+        <!--        </module-card>-->
+        <!--        <erp_button_big></erp_button_big>-->
         <module-card title="销售单" @click="openSaleOutboundView">
           <module-card-item content="进行中" :count="saleOutboundSheetState.completeL1Review"></module-card-item>
           <module-card-item content="未审核" :count="saleOutboundSheetState.undoneL1Review"></module-card-item>
@@ -34,15 +34,15 @@
     </div>
     <div class="w-64 flex-none border-l border-solid pl-2">
       <erp_title title="账簿报表"></erp_title>
-<!--      <div class="mb-5">-->
-<!--        <div class="font-bold">销售订单报表</div>-->
-<!--        <erp-router-button>-->
-<!--          销售订单明细表-->
-<!--        </erp-router-button>-->
-<!--        <erp-router-button>-->
-<!--          销售订单汇总表-->
-<!--        </erp-router-button>-->
-<!--      </div>-->
+      <!--      <div class="mb-5">-->
+      <!--        <div class="font-bold">销售订单报表</div>-->
+      <!--        <erp-router-button>-->
+      <!--          销售订单明细表-->
+      <!--        </erp-router-button>-->
+      <!--        <erp-router-button>-->
+      <!--          销售订单汇总表-->
+      <!--        </erp-router-button>-->
+      <!--      </div>-->
       <div class="mb-5">
         <div class="font-bold">销售单报表</div>
         <erp-router-button router-name="saleOutboundMxReport">
@@ -106,12 +106,12 @@ export interface IAccountInComeSheetState {
   undoneL2Review: number;
 }
 
-// const {ipcRenderer} = require('electron')
-//
-// ipcRenderer.on('renderer-focus', debounce(async () => {
-//   await findSaleOutboundSheetState();
-//   await findAccountInComeSheetState();
-// }))
+async function activated() {
+  await findSaleOutboundSheetState();
+  await findAccountInComeSheetState();
+}
+
+defineExpose([activated])
 
 onMounted(() => {
   findSaleOutboundSheetState();
@@ -130,14 +130,14 @@ function openSaleOutboundView() {
   const route = router.resolve({
     name: 'saleOutbound'
   })
-  useRouterPage(route.fullPath,route.meta.title as string);
+  useRouterPage(route.fullPath, route.meta.title as string);
 }
 
 function openAccountInComeView() {
   const route = router.resolve({
     name: 'accountInComeFind'
   })
-  useRouterPage(route.fullPath,route.meta.title as string);
+  useRouterPage(route.fullPath, route.meta.title as string);
 }
 
 async function findSaleOutboundSheetState() {

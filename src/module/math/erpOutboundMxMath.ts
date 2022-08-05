@@ -29,45 +29,55 @@ export class ErpOutboundMxMath {
     }
 
     protected countPrice() {
-        this.outboundMx.price = Number(
-            round(chain(bignumber(this.outboundMx.netprice))
-                .subtract(bignumber(this.outboundMx.floatprice3))
-                .subtract(bignumber(this.outboundMx.floatprice2))
-                .subtract(bignumber(this.outboundMx.floatprice1))
-                .divide(bignumber(this.outboundMx.agio2))
-                .divide(bignumber(this.outboundMx.agio1))
-                .divide(bignumber(this.outboundMx.agio))
-                .done(), 4)
-        );
+        this.outboundMx.price =
+            round(
+                Number(
+                chain(bignumber(this.outboundMx.netprice))
+                    .subtract(bignumber(this.outboundMx.floatprice3))
+                    .subtract(bignumber(this.outboundMx.floatprice2))
+                    .subtract(bignumber(this.outboundMx.floatprice1))
+                    .divide(bignumber(this.outboundMx.agio2))
+                    .divide(bignumber(this.outboundMx.agio1))
+                    .divide(bignumber(this.outboundMx.agio))
+                    .done()
+            ), 4)
+
     }
 
     protected countNetprice() {
-        this.outboundMx.netprice = Number(
-            round(chain(bignumber(this.outboundMx.price))
-                .multiply(bignumber(this.outboundMx.agio))
-                .multiply(bignumber(this.outboundMx.agio1))
-                .multiply(bignumber(this.outboundMx.agio2))
-                .add(bignumber(this.outboundMx.floatprice1))
-                .add(bignumber(this.outboundMx.floatprice2))
-                .add(bignumber(this.outboundMx.floatprice3))
-                .done(), 4)
-        )
+        this.outboundMx.netprice =
+            round(
+                Number(
+                chain(bignumber(this.outboundMx.price))
+                    .multiply(bignumber(this.outboundMx.agio))
+                    .multiply(bignumber(this.outboundMx.agio1))
+                    .multiply(bignumber(this.outboundMx.agio2))
+                    .add(bignumber(this.outboundMx.floatprice1))
+                    .add(bignumber(this.outboundMx.floatprice2))
+                    .add(bignumber(this.outboundMx.floatprice3))
+                    .done()
+            ), 4)
+
     }
 
     protected unCountNetprice() {
-        this.outboundMx.netprice = Number(
-            round(chain(bignumber(this.outboundMx.amt))
-                .divide(bignumber(this.outboundMx.priceqty))
-                .done(), 4)
-        )
+        this.outboundMx.netprice =
+            round(
+                Number(
+                chain(bignumber(this.outboundMx.amt))
+                    .divide(bignumber(this.outboundMx.priceqty))
+                    .done()
+            ), 4)
     }
 
     protected countAmt() {
-        this.outboundMx.amt = Number(
-            round(chain(bignumber(this.outboundMx.netprice))
-                .multiply(bignumber(this.outboundMx.priceqty))
-                .done(), 2)
-        )
+        this.outboundMx.amt =
+            round(
+                Number(
+                chain(bignumber(this.outboundMx.netprice))
+                    .multiply(bignumber(this.outboundMx.priceqty))
+                    .done()
+            ), 2)
     }
 
     private setterOutqty() {

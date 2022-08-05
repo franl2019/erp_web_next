@@ -1,6 +1,5 @@
 <template>
   <div
-      :class="'my-'+props.height"
       class="flex flex-none flex-col items-start w-full z-10 bg-white md:flex-row md:items-center md:space-y-0"
   >
     <div v-if="title" class="flex-none text-lg font-bold sm:mr-4 text-center sm:text-left w-full sm:w-auto">
@@ -13,7 +12,7 @@
         >
           <slot name="input"></slot>
         </div>
-        <div class="flex flex-none space-x-1 mb-1 sm:mb-0 md:items-center">
+        <div class="flex flex-none space-x-1 sm:mb-0 md:items-center">
           <slot>
           </slot>
         </div>

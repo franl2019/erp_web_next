@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-full px-2 pb-2">
+  <div class="flex w-full h-full px-2 py-2 space-y-1">
     <div v-if="isVisibleLeft" class="w-64">
       <slot name="left"></slot>
     </div>

@@ -23,7 +23,7 @@
       <menu2 v-show="isCollapse"></menu2>
 
 
-      <div class="flex-grow h-full overflow-auto pb-3">
+      <div class="flex-grow h-full overflow-auto">
         <router-view v-slot="{ Component }">
           <erp-keep-alive @getKeepAliveTest="getKeepAliveTestCache">
             <component :is="Component"
@@ -37,7 +37,7 @@
 
 <script setup lang='ts'>
 import ErpLoading from "@/components/loading/ErpLoading.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import Menu2 from "@/components/menu2/menu2.vue";
 import {KeepAliveTestApi} from "@/components/ErpKeepAlive/ErpKeepAlive";
 import {ErpKeepAlive} from "@/components/ErpKeepAlive/ErpKeepAlive";
@@ -69,9 +69,9 @@ async function onClickedCloseButton(tabKey: string, nextKey: string) {
   if (nextKey) {
     await useRouterPage(nextKey,"")
   }
-
-  if (keepAliveTestApi) {
-    keepAliveTestApi.deleteCache(tabKey);
-  }
 }
+
+onMounted(()=>{
+  tabMenu.setKeepAliveTestApi(keepAliveTestApi);
+})
 </script>
