@@ -1,12 +1,13 @@
 import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
-import Table_Date from "@/components/table/components/renderer/table_date.vue";
-import Table_CodeType from "@/components/table/components/renderer/table_CodeType.vue";
-import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
 import {AccountPayableMxReportService} from "@/module/report/accountPayableMxReport/accountPayableMxReport.service";
 import {IAccountPayableMxReport} from "@/module/report/accountPayableMxReport/accountPayableMxReport";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
+import Table_Date from "@/components/table/components/renderer/table_date.vue";
+import Table_CodeType from "@/components/table/components/renderer/table_CodeType.vue";
+import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
+import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
 
 export const defaultAccountPayableMxReportTableConfig = ref<ITableState<IAccountPayableMxReport>>({
     tableName: "defaultAccountPayableMxReportTableConfig",
@@ -22,8 +23,8 @@ export const defaultAccountPayableMxReportTableConfig = ref<ITableState<IAccount
     },
     columnDefaults: [
 
-        {headerName: '供应商名称', field: 'buyname'},
-        {headerName: '供应商编号', field: 'buycode'},
+        {headerName: '供应商名称', field: 'buyname',cellRendererFramework:Table_BuyInfo},
+        {headerName: '供应商编号', field: 'buycode',cellRendererFramework:Table_BuyInfo},
         {headerName: '业务员', field: 'ymrep'},
 
         {headerName: '日期', field: 'inDate', cellRendererFramework: Table_Date},

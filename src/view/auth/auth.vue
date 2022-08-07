@@ -3,7 +3,7 @@
     <div class="flex-none">
       <erp_title title="权限管理">
         <template v-slot:input>
-          <el-select class="md:w-36" v-model="userid" @change="userChange" placeholder="请选择用户">
+          <el-select class="md:w-36" v-model="userid" placeholder="请选择用户">
             <el-option
                 v-for="item in userSelectList"
                 :key="item.userid"
@@ -15,7 +15,7 @@
         </template>
       </erp_title>
     </div>
-    <div v-show="userid&&userid!==0" class="flex flex-grow flex-col md:flex-row">
+    <div class="flex flex-grow flex-col md:flex-row">
       <div class="flex-none md:w-64 overflow-y-auto md:mr-2 border-solid border border-gray-400">
         <el-tree
             ref="AuthTreeRef"
@@ -28,12 +28,19 @@
         />
       </div>
       <div class="flex-grow h-96 md:h-full">
-        <router-view v-slot="{ Component }">
-          <keep-alive>
-            <component :is="Component"
-                       ></component>
-          </keep-alive>
-        </router-view>
+        <template v-if="propsUserid">
+          <Component v-if="showComponent==='user_client_operatearea_mx'"
+                     :is="user_client_operatearea_mx"
+                     :userid="propsUserid"></Component>
+          <Component v-else-if="showComponent==='user_buy_operatearea_mx'"
+                     :is="user_buy_operatearea_mx"
+                     :userid="propsUserid"></Component>
+          <Component v-else-if="showComponent==='user_warehouse_mx'"
+                     :is="user_warehouse_mx"
+                     :userid="propsUserid"></Component>
+          <Component v-else-if="showComponent==='user_account_mx'"
+                     :is="user_account_mx" :userid="propsUserid"></Component>
+        </template>
       </div>
     </div>
   </erp-page-box>
@@ -41,11 +48,20 @@
 
 <script setup lang='ts'>
 import Erp_title from "@/components/title/ErpTitle.vue";
+import type {Component} from "vue";
 import {onMounted, ref} from "vue";
+
 import {UserService} from "@/module/user/user.service";
 import {IUser} from "@/module/user/user";
 import {useRouter} from "vue-router";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
+
+import user_client_operatearea_mx from "@/view/auth/user_operatearea_mx/client/user_client_operatearea_mx.vue";
+import user_buy_operatearea_mx from "@/view/auth/user_operatearea_mx/buy/user_buy_operatearea_mx.vue";
+
+import user_warehouse_mx from "@/view/auth/user_warehouse_mx/user_warehouse_mx.vue";
+import user_account_mx from "@/view/auth/user_account_mx/user_account_mx.vue";
+
 
 const router = useRouter();
 const AuthTreeRef = ref();
@@ -64,6 +80,7 @@ interface IAuthMenu {
   authMenuId: number;
   authMenuName: string;
   router: string;
+  component?: Component
 }
 
 interface IAuthMenuTree extends IAuthMenu {
@@ -79,12 +96,14 @@ const authMenuTreeData = ref<IAuthMenuTree[]>([
       {
         authMenuId: 11,
         authMenuName: "客户操作区域",
-        router: "user_client_operatearea_mx"
+        router: "user_client_operatearea_mx",
+        component: user_client_operatearea_mx
       },
       {
         authMenuId: 12,
         authMenuName: "供应商操作区域",
-        router: "user_buy_operatearea_mx"
+        router: "user_buy_operatearea_mx",
+        component: user_buy_operatearea_mx
       }
     ]
   },
@@ -96,7 +115,8 @@ const authMenuTreeData = ref<IAuthMenuTree[]>([
       {
         authMenuId: 21,
         authMenuName: "仓库权限",
-        router: "user_warehouse_mx"
+        router: "user_warehouse_mx",
+        component: user_warehouse_mx
       }
     ]
   },
@@ -108,7 +128,8 @@ const authMenuTreeData = ref<IAuthMenuTree[]>([
       {
         authMenuId: 31,
         authMenuName: "出纳账户权限",
-        router: "user_account_mx"
+        router: "user_account_mx",
+        component: user_account_mx
       }
     ]
   },
@@ -118,23 +139,13 @@ onMounted(async () => {
   userSelectList.value = await userService.find();
 })
 
-const selectAuthRouterName = ref<string>("");
+let showComponent = ref()
+let propsUserid = ref()
 
 function onClickTreeNode(authMenu: IAuthMenuTree) {
-
-    selectAuthRouterName.value = authMenu.router;
-    router.push({
-      name: authMenu.router,
-      query: {
-        userid: userid.value
-      }
-    });
-
-}
-
-function userChange() {
-  router.push({
-    name: "auth",
-  });
+  if (authMenu.component && userid.value) {
+    propsUserid.value = userid.value
+    showComponent.value = authMenu.router
+  }
 }
 </script>

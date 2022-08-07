@@ -110,7 +110,7 @@
 <script lang='ts' setup>
 import {defaultOutboundMxTable} from "@/view/saleOutbound/tableConfig/defaultOutboundMxTable";
 import {defaultOutboundHeadTable} from "@/view/saleOutbound/tableConfig/defaultOutboundHeadTable";
-import {onMounted, ref} from "vue";
+import {onActivated, onMounted, ref} from "vue";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {
   useSaleOutboundFindViewHock
@@ -197,7 +197,8 @@ async function activated(){
 defineExpose([activated])
 
 onMounted(async () => {
-
+  console.log('activated')
   await initPage()
 })
+
 </script>

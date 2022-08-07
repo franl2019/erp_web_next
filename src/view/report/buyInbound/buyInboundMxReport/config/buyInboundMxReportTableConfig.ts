@@ -7,6 +7,7 @@ import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import {valueName} from "@/config/valueName";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
+import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
 export const buyInboundMxReportTableConfig = ref<ITableState<IBuyInboundMxReport>>({
     tableName: "buyInboundMxReportTableConfig",
@@ -60,7 +61,7 @@ export const buyInboundMxReportTableConfig = ref<ITableState<IBuyInboundMxReport
         {headerName: '打印次数', field: 'printcount'},
 
         {headerName: '客户', field: 'clientname'},
-        {headerName: '供应商', field: 'buyname'},
+        {headerName: '供应商', field: 'buyname',cellRendererFramework:Table_BuyInfo},
         {headerName: '审核', field: 'level1review', cellRendererFramework: Table_flag},
         {headerName: '审核人', field: 'level1name'},
         {headerName: '审核日期', field: 'level1date', cellRendererFramework: Table_Date},

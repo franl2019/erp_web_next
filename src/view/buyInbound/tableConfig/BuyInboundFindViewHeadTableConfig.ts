@@ -6,6 +6,7 @@ import {IInbound} from "@/types/inbound/IInbound";
 import {BuyInboundService} from "@/module/buyInbound/service/BuyInbound.service";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
+import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
 export const BuyInboundFindViewHeadTableConfig = ref<ITableState<IInbound>>({
     tableName: "buyInboundFindViewHeadTableConfig",
@@ -27,7 +28,7 @@ export const BuyInboundFindViewHeadTableConfig = ref<ITableState<IInbound>>({
         {headerName: '打印次数', field: 'printcount'},
         {headerName: '仓库名称', field: 'warehousename'},
         {headerName: '客户名称', field: 'clientname'},
-        {headerName: '供应商名称', field: 'buyname'},
+        {headerName: '供应商名称', field: 'buyname',cellRendererFramework:Table_BuyInfo},
         {headerName: '审核', field: 'level1review', cellRendererFramework: Table_flag},
         {headerName: '审核人', field: 'level1name'},
         {headerName: '审核日期', field: 'level1date', cellRendererFramework: Table_Date},

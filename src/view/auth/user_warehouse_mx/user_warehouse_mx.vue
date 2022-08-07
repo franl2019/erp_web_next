@@ -64,6 +64,10 @@ import {
 import ErpDialog from "@/components/dialog/dialog";
 import {useRoute} from "vue-router";
 
+const props = defineProps<{
+  userid:number
+}>()
+
 onMounted(async ()=>{
   await userWarehousePermissionTableRef.value?.initTableData();
 })
@@ -88,20 +92,20 @@ function onSelectRow(event: SelectionChangedEvent) {
 }
 
 async function onClickedCreateDialogOk() {
-  createDto.value.userid = Number(route.query.userid);
+  createDto.value.userid = Number(props.userid);
   await userWarehouseMxService.create(createDto.value);
   await userWarehousePermissionTableRef.value?.initTableData();
 }
 
 function onClickedDeleteBtn() {
-  if (Number(route.query.userid) !== 0) {
+  if (Number(props.userid) !== 0) {
     ErpDialog({
       title: "是否删除",
       message: `${rowClickedValue.value?.warehousename},仓库权限？`,
       ok: async () => {
         if (rowClickedValue.value) {
           const deleteDto = new DeleteUserWarehousePermissionsDto();
-          deleteDto.userid = Number(route.query.userid);
+          deleteDto.userid = Number(props.userid);
           deleteDto.warehouseid = rowClickedValue.value.warehouseid;
           await userWarehouseMxService.delete_data(deleteDto);
           await userWarehousePermissionTableRef.value?.initTableData();

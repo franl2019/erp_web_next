@@ -9,17 +9,18 @@ import {onMounted} from "vue";
 import {config} from "@/config";
 
 onMounted(()=>{
-  if(!config.isDev){
-    window.onbeforeunload = function(e) {
 
-      e = e || window.event;
-      const dialogText:string = '是否退出ERP?';
-      if(e){
-        e.returnValue = dialogText;
-      }
-      return dialogText;
+  //关闭二次确定
+  if(!config.isDev){
+    window.onbeforeunload = function() {
+      return true;
     };
   }
+
+  // contextmenu 禁用右键菜单
+  document.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+  })
 })
 </script>
 

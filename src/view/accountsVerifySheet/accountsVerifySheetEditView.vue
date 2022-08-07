@@ -97,11 +97,12 @@ import {ITableRef} from "@/components/table/type";
 import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 import {AccountsVerifySheetMxService} from "@/module/accountsVerifySheet/accountsVerifySheetMx.service";
 import {AccountsVerifySheetUpdateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetUpdate.dto";
-import {getToday} from "@/utils";
+import {getToday, useRouterPage} from "@/utils";
 import {VerifyParamError} from "@/error/verifyParamError";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpDialog from "@/components/dialog/dialog";
+import {tabMenu} from "@/components/tab/useRouterTab";
 
 onMounted(() => {
   initPage();
@@ -170,11 +171,14 @@ async function clickedSaveButton() {
     const createResult = await accountsVerifySheetService.create(editDto.value);
     if (createResult && createResult.id) {
       state.value.accountsVerifySheetId = createResult.id;
-      await router.push({name: 'accountsVerifySheetEdit'})
 
-      await initSheetMxTableData()
-      await initPage();
-      buttonShowState.value = getButtonState(editDto.value.level1Review, editDto.value.level2Review);
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "accountsVerifySheetEdit", query: {
+          accountsVerifySheetId: editDto.value.accountsVerifySheetId
+        }
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
   } else {
     editDto.value.accountsVerifySheetMx = getTableSheetMx();
@@ -189,7 +193,13 @@ async function clickedDeleteButton() {
     message: `是否删除 ${accountsVerifySheetCode} 核销单`,
     ok: async () => {
       await accountsVerifySheetService.delete_data({accountsVerifySheetId});
-      window.close();
+
+      //跳转
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "accountsVerifySheetFind"
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
   })
 }
@@ -216,8 +226,18 @@ async function clickedL1ReviewButton() {
         editDto.value.accountsVerifySheetMx = getTableSheetMx();
         const createResult = await accountsVerifySheetService.create_l1Review(editDto.value);
         state.value.accountsVerifySheetId = createResult.id
-        await initSheetMxTableData();
-        await initPage();
+
+        if (createResult && createResult.id) {
+          state.value.accountsVerifySheetId = createResult.id;
+
+          tabMenu.closeTab(route.fullPath)
+          const newRoute = router.resolve({
+            name: "accountsVerifySheetEdit", query: {
+              accountsVerifySheetId: editDto.value.accountsVerifySheetId
+            }
+          });
+          useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+        }
       }
     })
   }

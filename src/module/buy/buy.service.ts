@@ -6,6 +6,15 @@ import {ICreateBuyDto} from "@/module/buy/dto/createBuy.dto";
 import {IUpdateBuyDto} from "@/module/buy/dto/updateBuy.dto";
 import {VerifyParamError} from "@/error/verifyParamError";
 export class BuyService {
+    public async findOne(buyid:number): Promise<IBuy> {
+        const result = await http_post<IApiResult<IBuy>>(API_URL.BUY_FIND_ONE, {buyid});
+        if (result.code === 200 && result.data && result.data.length>0) {
+            return result.data[0];
+        } else {
+            return Promise.reject(new VerifyParamError("查询单个供应商资料失败"));
+        }
+    }
+
     public async find(findDto: IFindBuyDto): Promise<IBuy[]> {
         const result = await http_post<IApiResult<IBuy>>(API_URL.BUY_SELECT, findDto);
         if (result.code === 200 && result.data) {

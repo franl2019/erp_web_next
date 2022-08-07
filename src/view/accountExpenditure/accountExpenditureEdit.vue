@@ -99,6 +99,8 @@ import {AccountCategoryType} from "@/types/AccountCategoryType";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import {VerifyParamError} from "@/error/verifyParamError";
+import {tabMenu} from "@/components/tab/useRouterTab";
+import {useRouterPage} from "@/utils";
 
 
 onMounted(async () => {
@@ -223,7 +225,7 @@ async function initHeadData(accountExpenditureId: number) {
   });
 
   if (accountExpenditureList.length !== 1) {
-    return Promise.reject(new VerifyParamError('单据打开失败'));
+    return Promise.reject(new VerifyParamError('查无此单'));
   }
 
   return accountExpenditureList[0];
@@ -414,14 +416,23 @@ async function clickedSaveButton() {
   if (state.value.accountExpenditureId === 0) {
     const createResult = await accountExpenditureService.create(editDto.value);
     state.value.accountExpenditureId = createResult.id;
-    await router.push({name: 'accountExpenditureEdit'})
+
+    tabMenu.closeTab(route.fullPath)
+    const newRoute = router.resolve({
+      name: "accountExpenditureEdit", query: {
+        accountExpenditureId: state.value.accountExpenditureId
+      }
+    });
+    useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+
   } else {
     await accountExpenditureService.update(editDto.value);
+    await initAmountMxTableData()
+    await initSheetMxTableData()
+    await initPage();
   }
 
-  await initAmountMxTableData()
-  await initSheetMxTableData()
-  await initPage();
+
 }
 
 //单击删除按钮
@@ -434,7 +445,12 @@ async function clickedDeleteButton() {
       //删除支出单
       await accountExpenditureService.delete_data({accountExpenditureId});
       //关闭
-      window.close();
+      //跳转
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "accountExpenditureFind"
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
   })
 }
@@ -465,10 +481,18 @@ async function clickedL1ReviewButton() {
       message: `是否保存审核单据,金额:${amount}`,
       ok: async () => {
         const createResult = await accountExpenditureService.create_l1Review(editDto.value);
-        state.value.accountExpenditureId = createResult.id;
-        await initAmountMxTableData();
-        await initSheetMxTableData();
-        await initPage();
+
+        if(createResult&&createResult.id){
+          state.value.accountExpenditureId = createResult.id;
+
+          tabMenu.closeTab(route.fullPath)
+          const newRoute = router.resolve({
+            name: "accountExpenditureEdit", query: {
+              accountExpenditureId: state.value.accountExpenditureId
+            }
+          });
+          useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+        }
       }
     })
   }

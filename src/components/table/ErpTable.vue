@@ -17,6 +17,8 @@
         @grid-ready="initTableApi"
         @drag-stopped="onDragStopped"
         @displayed-columns-changed="onDragStopped"
+        @cellContextMenu="onCellContextMenu"
+        @click.right="onCellContextMenu"
     >
     </AgGridVue>
     <div v-show="tableOptionBarVisible"
@@ -64,6 +66,7 @@ import Draggable from "vuedraggable";
 import Erp_button from "@/components/button/ErpButton.vue";
 import {AgGridVue} from "ag-grid-vue3";
 import {
+  CellContextMenuEvent,
   ColumnApi,
   ColumnState,
   GridApi,
@@ -75,6 +78,7 @@ import Erp_input_reCheckbox from "@/components/input/erp_input_reCheckbox.vue";
 import {ITableState} from "@/components/table/type";
 import {TableColumnStateService} from "@/module/tableColumnState";
 import {defaultConfig} from "@/components/table/default/defaultConfig";
+import ErpDialog from "@/components/dialog/dialog";
 
 const props = withDefaults(defineProps<{
   tableState?: UnwrapRef<Ref<UnwrapRef<ITableState<any>>>>,
@@ -123,20 +127,11 @@ onBeforeMount(async () => {
   await initTableColumnState();
 })
 
-// onMounted(() => {
-//   if (props.tableEdit) {
-//     startEditTable()
-//   } else {
-//     endEditTable()
-//   }
-// })
-
 //初始化表格数据
 async function initTableData() {
   const data = await tableConfig.tableService.find(tableConfig.findDto);
   if (gridApi) {
     await gridApi.setRowData([])
-
   }
   await gridApi.applyTransaction({add: data})
 }
@@ -144,6 +139,23 @@ async function initTableData() {
 async function initTableDataList() {
   if (gridApi) {
     gridApi.setRowData([])
+  }
+}
+
+//表格右键
+function onCellContextMenu(event: CellContextMenuEvent) {
+  if(event.colDef){
+    const headerName = event.colDef.headerName || '';
+    const field = event.colDef.field || ''
+    if(field){
+      ErpDialog({
+        title:headerName,
+        message:field
+      })
+    }
+  }else{
+    console.log('是其他')
+    console.log(event)
   }
 }
 

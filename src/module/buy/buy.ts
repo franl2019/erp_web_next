@@ -14,10 +14,10 @@ export interface IBuy {
     accountspayabletype: number;
     level1review: number;
     level1name: string;
-    level1date: Date;
+    level1date: Date | null;
     level2review: number;
     level2name: string;
-    level2date: Date;
+    level2date: Date | null;
     remark1: string;
     remark2: string;
     remark3: string;
@@ -29,13 +29,13 @@ export interface IBuy {
     remark9: string;
     remark10: string;
     creater: string;
-    createdAt: Date;
+    createdAt: Date | null;
     updater: string;
-    updatedAt: Date;
+    updatedAt: Date | null;
     buyareaid: number;
     operateareaid: number;
     del_uuid: number;
-    deleteAt: Date;
+    deleteAt: Date | null;
     deleter: string;
 }
 

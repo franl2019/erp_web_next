@@ -32,6 +32,7 @@ const API_URL = {
     CLIENT_UN_LEVEL2REVIEW: BASE_PATH + '/erp/client/unLevel2Review',
 
     //buy
+    BUY_FIND_ONE: BASE_PATH + '/erp/buy/findOne',
     BUY_SELECT: BASE_PATH + '/erp/buy/find',
     BUY_ADD: BASE_PATH + '/erp/buy/create',
     BUY_UPDATE: BASE_PATH + '/erp/buy/update',

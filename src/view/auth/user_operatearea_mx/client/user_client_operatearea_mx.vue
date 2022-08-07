@@ -29,7 +29,7 @@ import Erp_table from "@/components/table/ErpTable.vue";
 import {
   FindUserClientOperateAreaDto
 } from "@/module/user_operatearea_mx/dto/findUserClientOperateArea.dto";
-import {onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted, ref} from "vue";
 import {SelectionChangedEvent} from "ag-grid-community";
 import {IUser_operatearea_mx, User_operatearea_mx} from "@/module/user_operatearea_mx/user_operatearea_mx";
 import {
@@ -52,12 +52,14 @@ onMounted(async () => {
 })
 
 const route = useRoute();
+const props = defineProps(['userid'])
+console.log(getCurrentInstance())
 
 //table
 const tableRef = ref<ITableRef>();
 
 const findUserClientOperateareaDto = ref(new FindUserClientOperateAreaDto());
-findUserClientOperateareaDto.value.userid = Number(route.query.userid);
+findUserClientOperateareaDto.value.userid = Number(props.userid);
 
 const rowClickedValue = ref<IUser_operatearea_mx>(new User_operatearea_mx());
 
@@ -78,7 +80,7 @@ const createClientOperateareaDto = ref<ICreateUserOperateAreaDto>(new CreateUser
 
 //create dialog confirm event
 async function onCreateDialogConfirm() {
-  createClientOperateareaDto.value.userid = Number(route.query.userid);
+  createClientOperateareaDto.value.userid = Number(props.userid);
   await userOperateareaMxService.create(createClientOperateareaDto.value);
   await tableRef.value?.initTableData();
   createClientOperateareaDto.value = new CreateUserOperateAreaDto();
@@ -92,7 +94,7 @@ async function onClickedDeleteBtn() {
     ok: async () => {
       if (rowClickedValue.value) {
         const deleteDto = new DeleteUserOperateAreaDto();
-        deleteDto.userid = Number(route.query.userid);
+        deleteDto.userid = Number(props.userid);
         deleteDto.operateareaid = rowClickedValue.value.operateareaid;
         await userOperateareaMxService.delete_data(deleteDto);
         await tableRef.value?.initTableData();

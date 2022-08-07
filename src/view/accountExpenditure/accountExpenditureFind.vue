@@ -117,6 +117,14 @@ onMounted(async () => {
   await initPage();
 })
 
+async function activated() {
+  await initPage();
+}
+
+defineExpose([activated])
+
+
+
 //hock ------------------------------------------
 
 async function initPage() {
@@ -191,7 +199,7 @@ function clickedCreateButton() {
   const route = router.resolve({
     name: "accountExpenditureCreate",
     query: {
-      id: new Date().toString()
+      id: 0
     }
   });
   useRouterPage(route.fullPath,route.meta.title as string);

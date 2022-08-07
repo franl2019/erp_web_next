@@ -112,6 +112,8 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import * as mathjs from "mathjs";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {VerifyParamError} from "@/error/verifyParamError";
+import {tabMenu} from "@/components/tab/useRouterTab";
+import {useRouterPage} from "@/utils";
 
 const {chain, round, bignumber} = mathjs;
 
@@ -247,11 +249,14 @@ async function initPage(): Promise<void> {
 }
 
 async function routerEditBuyInbound(inboundcode: string) {
-  await router.push({
-    name: "editBuyInbound"
-  })
   state.value.inboundcode = inboundcode;
-  await initPage()
+  tabMenu.closeTab(route.fullPath)
+  const newRoute = router.resolve({
+    name: "editBuyInbound", query: {
+      inboundcode: state.value.inboundcode
+    }
+  });
+  useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
 }
 
 //验证dto
@@ -276,12 +281,6 @@ async function getBuyInboundCreateDto() {
   //验证
   await verifyCreateDto(inbound);
   return inbound;
-}
-
-function unSave() {
-  router.push({
-    name: 'buyInbound'
-  })
 }
 
 //保存按钮
@@ -488,7 +487,12 @@ function clickedDeleteData() {
         title: "提示",
         message: `删除成功`,
         ok: async () => {
-          window.close()
+          //跳转
+          tabMenu.closeTab(route.fullPath)
+          const newRoute = router.resolve({
+            name: "buyInbound"
+          });
+          useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
         },
         closeBtnVisible: false
       })

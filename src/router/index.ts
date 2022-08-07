@@ -149,7 +149,12 @@ const router = createRouter({
 
 router.afterEach(to => {
     const title = String(to.meta.title) || ""
-    if (to.fullPath !== "/") {
+    if (to.fullPath !== "/"
+        && to.fullPath !== "/user_warehouse_mx"
+        && to.fullPath !== "/user_client_operatearea_mx"
+        && to.fullPath !== "/user_buy_operatearea_mx"
+        && to.fullPath !== "/user_account_mx"
+    ) {
         tabMenu.addTab({
             key: to.fullPath,
             activation: false,

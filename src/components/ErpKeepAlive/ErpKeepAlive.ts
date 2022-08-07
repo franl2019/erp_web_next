@@ -85,20 +85,31 @@ export const ErpKeepAlive: ComponentOptions = {
 
         // KeepAlive 组件的实例上会被添加两个内部函数，分别是 deActivate 和 activate
         // 这两个函数会在渲染器中被调用
-        sharedContext.activate = async (vnode: any, container: any, anchor: any) => {
+        sharedContext.activate = (vnode: any, container: any, anchor: any) => {
 
-            //找到不生命周期藏哪了,凑合用于代替 keepALive 的 activated 生命周期
+            move(vnode, container, anchor)
+
+
+
+            //keepAlive activateHook
+            const activateHook: Function[] = vnode.component.a
+            if (activateHook && activateHook.length > 0) {
+                for (let i = 0; i < activateHook.length; i++) {
+                    activateHook[i]()
+                }
+            }
+
+            //keepAlive 缓存组件重新激活的生命周期
             const exposedList: Function[] = vnode.component.exposed
             if (exposedList.length > 0) {
                 for (let i = 0; i < exposedList.length; i++) {
                     const exposed = exposedList[i]
                     if (exposed.name === 'activated') {
-                        await exposed();
+                        exposed();
                     }
                 }
             }
 
-            move(vnode, container, anchor)
         }
 
         sharedContext.deactivate = (vnode: any) => {

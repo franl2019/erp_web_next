@@ -4,6 +4,7 @@ import {useFormatInboundMxNumber} from "@/utils/tableUtils";
 import {IInboundMx} from "@/types/inboundMx/IInboundMx";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
 import {valueName} from "@/config/valueName";
+import TableEditorProductCode from "@/components/table/components/editor/TableEditorProductCode.vue";
 
 export const BuyInboundCreateViewMxTableConfig = ref<ITableState<IInboundMx>>({
     tableName: "buyInboundCreateViewMxTableConfig",
@@ -32,7 +33,7 @@ export const BuyInboundCreateViewMxTableConfig = ref<ITableState<IInboundMx>>({
             valueGetter: "node.rowIndex + 1",
             editable: false
         },
-        {headerName: `${valueName.product}编号`, field: 'productcode'},
+        {headerName: `${valueName.product}编号`, field: 'productcode',cellEditorFramework:TableEditorProductCode,editable:true},
         {headerName: `${valueName.product}名称`, field: 'productname'},
         {headerName: '规格', field: 'spec'},
         {headerName: '用料', field: 'materials'},

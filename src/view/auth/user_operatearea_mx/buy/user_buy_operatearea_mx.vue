@@ -47,6 +47,10 @@ onMounted(async ()=>{
   await tableRef.value?.initTableData();
 })
 
+const props = defineProps<{
+  userid:number
+}>()
+
 const route = useRoute();
 
 //table
@@ -55,7 +59,7 @@ const tableRef = ref<ITableRef>();
 const findUserBuyOperateareaDto = ref(new FindUserBuyOperateAreaDto());
 
 
-findUserBuyOperateareaDto.value.userid = Number(route.query.userid);
+findUserBuyOperateareaDto.value.userid = Number(props.userid);
 
 const rowClickedValue = ref<IUser_operatearea_mx>(new User_operatearea_mx());
 
@@ -75,7 +79,7 @@ const createBuyOperateareaDto = ref<ICreateUserOperateAreaDto>(new CreateUserOpe
 
 //create dialog confirm event
 async function onCreateDialogConfirm() {
-  createBuyOperateareaDto.value.userid = Number(route.query.userid);
+  createBuyOperateareaDto.value.userid = Number(props.userid);
   await userOperateareaMxService.create(createBuyOperateareaDto.value);
   await tableRef.value?.initTableData();
   createBuyOperateareaDto.value = new CreateUserOperateAreaDto();
@@ -89,7 +93,7 @@ async function onClickedDeleteBtn() {
     ok:async () => {
       if (rowClickedValue.value) {
         const deleteDto = new DeleteUserOperateAreaDto();
-        deleteDto.userid = Number(route.query.userid);
+        deleteDto.userid = Number(props.userid);
         deleteDto.operateareaid = rowClickedValue.value.operateareaid;
         await userOperateareaMxService.delete_data(deleteDto);
         await tableRef.value?.initTableData();

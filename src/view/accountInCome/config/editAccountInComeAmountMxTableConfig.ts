@@ -4,8 +4,8 @@ import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmount
 import {AccountInComeAmountMxService} from "@/module/accountInCome/accountInComeAmountMx.service";
 import Table_renderer_account from "@/components/table/components/renderer/table_renderer_account.vue";
 import Table_renderer_currency from "@/components/table/components/renderer/table_renderer_currency.vue";
-import Table_select_account from "@/components/table/components/select/table_select_account_auth.vue";
-import Table_select_currency from "@/components/table/components/select/table_select_currency.vue";
+import Table_select_account from "@/components/table/components/editor/table_select_account_auth.vue";
+import Table_select_currency from "@/components/table/components/editor/table_select_currency.vue";
 import {onlyNumberValueSetter} from "@/components/table/valueSetter/onlyNumberValueSetter";
 import {AccountInComeAmountMxEditMath} from "@/module/accountInCome/math/accountInComeAmountMxEdit.math";
 

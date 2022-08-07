@@ -3,7 +3,7 @@ import {ITableState} from "@/components/table/type";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {AccountExpenditureAmountMxService} from "@/module/accountExpenditure/accountExpenditureAmountMx.service";
 import Table_Account from '@/components/table/components/renderer/table_renderer_account.vue'
-import Table_select_account from '@/components/table/components/select/table_select_account_auth.vue'
+import Table_select_account from '@/components/table/components/editor/table_select_account_auth.vue'
 import {onlyNumberValueSetter} from "@/components/table/valueSetter/onlyNumberValueSetter";
 
 export const editAccountExpenditureAmountMxTableConfig = ref<ITableState<IAccountExpenditureAmountMx>>({

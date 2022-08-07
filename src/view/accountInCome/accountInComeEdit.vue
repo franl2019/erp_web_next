@@ -104,12 +104,13 @@ import {AccountInComeUpdateDto} from "@/module/accountInCome/dto/accountInComeUp
 import {AccountInComeAmountMxService} from "@/module/accountInCome/accountInComeAmountMx.service";
 import {AccountInComeSheetMxService} from "@/module/accountInCome/accountInComeSheetMx.service";
 import {AccountCategoryType} from "@/types/AccountCategoryType";
-import {getToday} from "@/utils";
+import {getToday, useRouterPage} from "@/utils";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useButtonState} from "@/composables/useButtonState";
 import {VerifyParamError} from "@/error/verifyParamError";
+import {tabMenu} from "@/components/tab/useRouterTab";
 
 const {bignumber, chain, round} = mathjs;
 const router = useRouter();
@@ -248,14 +249,19 @@ async function clickedSaveBtn() {
 
   if (editDto.value.accountInComeId === 0) {
     const createResult = await accountInComeService.create(editDto.value);
-    editDto.value.accountInComeId = createResult.id;
-    await router.push({
-      name: 'accountInComeEdit'
-    })
 
-    await initAmountMx();
-    await initSheetMx()
-    await initPage();
+    if(createResult&&createResult.id){
+      editDto.value.accountInComeId = createResult.id;
+
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "accountInComeEdit", query: {
+          accountInComeId: editDto.value.accountInComeId
+        }
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+    }
+
   } else {
     await accountInComeService.update(editDto.value);
     await initAmountMx();
@@ -280,7 +286,13 @@ async function clickedDeleteBtn() {
       await accountInComeService.delete_data({
         accountInComeId
       })
-      window.close();
+
+      //跳转
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "accountInComeFind"
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
   })
 }
@@ -313,14 +325,18 @@ async function clickedLevel1ReviewBtn() {
       message: `是否保存并审核`,
       ok: async () => {
         const createResult = await accountInComeService.create_l1Review(editDto.value);
-        editDto.value.accountInComeId = createResult.id;
 
-        await initAmountMx();
-        await initSheetMx()
+        if(createResult&&createResult.id){
+          editDto.value.accountInComeId = createResult.id;
+          tabMenu.closeTab(route.fullPath)
+          const newRoute = router.resolve({
+            name: "accountInComeEdit", query: {
+              accountInComeId: editDto.value.accountInComeId
+            }
+          });
+          useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+        }
 
-        await initPage();
-
-        updateButtonState(editDto.value.level1Review, editDto.value.level2Review);
       }
     })
   }

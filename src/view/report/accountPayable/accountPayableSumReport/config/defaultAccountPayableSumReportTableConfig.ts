@@ -4,6 +4,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {AccountPayableSumReportService} from "@/module/report/accountPayableSumReport/accountPayableSumReport.service";
 import {IAccountPayableSumReport} from "@/module/report/accountPayableSumReport/accountPayableSumReport";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
+import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
 export const defaultAccountPayableSumReportTableConfig = ref<ITableState<IAccountPayableSumReport>>({
     tableName: "defaultAccountPayableSumReportTableConfig",
@@ -20,8 +21,8 @@ export const defaultAccountPayableSumReportTableConfig = ref<ITableState<IAccoun
     columnDefaults: [
 
 
-        {headerName: '供应商名称', field: 'buyname'},
-        {headerName: '供应商编号', field: 'buycode'},
+        {headerName: '供应商名称', field: 'buyname',cellRendererFramework:Table_BuyInfo},
+        {headerName: '供应商编号', field: 'buycode',cellRendererFramework:Table_BuyInfo},
 
 
         {

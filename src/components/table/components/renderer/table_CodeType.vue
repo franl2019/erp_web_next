@@ -6,7 +6,9 @@ import {ref} from "vue";
 import {CodeType} from "@/types/CodeType";
 
 const props = defineProps<{
-  params: any
+  params: {
+    value:any
+  }
 }>();
 
 const value = ref<string>("");

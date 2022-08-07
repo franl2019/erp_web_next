@@ -41,6 +41,10 @@ import {useRoute} from "vue-router";
 
 const userAccountAuthTableRef = ref<ITableRef>();
 
+const props = defineProps<{
+  userid:number
+}>()
+
 onMounted(async () => {
   await initTableData();
 })
@@ -56,17 +60,17 @@ const accountCreateDialogVisual = ref<boolean>(false);
 
 //查询
 const userAccountAuthFindDto = ref(new UserAccountAuthFindDto());
-userAccountAuthFindDto.value.userid = Number(route.query.userid);
+userAccountAuthFindDto.value.userid = Number(props.userid);
 //创建
 const userAccountAuthCreateDto = ref(new UserAccountAuthCreateDto());
 //删除
 const userAccountAuthDeleteDto = ref(new UserAccountAuthDeleteDto());
-userAccountAuthDeleteDto.value.userid = Number(route.query.userid);
+userAccountAuthDeleteDto.value.userid = Number(props.userid);
 
 //创建出纳账号权限按钮
 function clickedCreateBtn() {
   userAccountAuthCreateDto.value = new UserAccountAuthCreateDto();
-  userAccountAuthCreateDto.value.userid = Number(route.query.userid);
+  userAccountAuthCreateDto.value.userid = Number(props.userid);
   accountCreateDialogVisual.value = true;
 }
 
