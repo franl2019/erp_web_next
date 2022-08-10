@@ -124,7 +124,7 @@ import ErpFormItem from "@/components/form/ErpFormItem.vue";
 async function activated(){
   await initPage()
 }
-defineExpose([activated])
+defineExpose({activated})
 
 const inboundHeadFindDto = ref<IBuyInboundFindDto>(new BuyInboundFindDto());
 const inboundMxFindDto = ref<IBuyInboundMxFindDto>(new BuyInboundMxFindDto());

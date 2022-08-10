@@ -86,7 +86,7 @@ import {VerifyParamError} from "@/error/verifyParamError";
 async function activated(){
   await initPage()
 }
-defineExpose([activated])
+defineExpose({activated})
 
 const router = useRouter();
 const accountInComeFindDto = ref(new AccountInComeFindDto());

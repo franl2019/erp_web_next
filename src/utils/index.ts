@@ -6,6 +6,7 @@ import {CodeType} from "@/types/CodeType";
 import router from "@/router";
 import {config} from "@/config";
 import {tabMenu} from "@/components/tab/useRouterTab";
+import mitt from 'mitt';
 
 export function useLocalStorageSave(key: string, value: string): void {
     window.localStorage.setItem(key, value)
@@ -241,3 +242,5 @@ export const v_reqClick = {
     unmounted() {
     }
 }
+
+export const emitter = mitt()

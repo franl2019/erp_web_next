@@ -121,7 +121,7 @@ async function activated() {
   await initPage();
 }
 
-defineExpose([activated])
+defineExpose({activated})
 
 
 

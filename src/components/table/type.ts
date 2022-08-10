@@ -1,10 +1,11 @@
-import {GridApi, GridOptions, ColDef} from "ag-grid-community";
+import {GridApi, GridOptions, ColDef, ColumnApi} from "ag-grid-community";
 
 export interface ITableRef {
     initTableData: (callback?:Function) => Promise<void>;
     initTableDataList: () => Promise<void>;
     //获取表格Api
     getGridApi: () => GridApi;
+    getColumnApi: ()=> ColumnApi;
 }
 
 export interface ITableService<T> {

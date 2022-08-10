@@ -87,7 +87,7 @@ async function activated(){
   await findBuyInboundSheetState();
   await findAccountExpenditureState();
 }
-defineExpose([activated])
+defineExpose({activated})
 
 onMounted(async ()=>{
   await findBuyInboundSheetState();

@@ -113,7 +113,7 @@ import * as mathjs from "mathjs";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {VerifyParamError} from "@/error/verifyParamError";
 import {tabMenu} from "@/components/tab/useRouterTab";
-import {useRouterPage} from "@/utils";
+import {emitter, useRouterPage} from "@/utils";
 
 const {chain, round, bignumber} = mathjs;
 
@@ -309,6 +309,11 @@ async function save_l1review(): Promise<void> {
     await inboundService.update_l1Review(inbound);
   }
 }
+
+// emitter.on('tableSelectProduct',(event)=>{
+//   const product = event as IProduct
+//   addInboundMx(formatProductListToInboundMx([product]))
+// })
 
 //增加明细按钮
 function clickedAddInboundMx() {

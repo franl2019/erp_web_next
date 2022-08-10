@@ -91,7 +91,7 @@ const accountsVerifySheetService = new AccountsVerifySheetService();
 async function activated(){
   await initPage()
 }
-defineExpose([activated])
+defineExpose({activated})
 
 onMounted(async () => {
   await initPage();

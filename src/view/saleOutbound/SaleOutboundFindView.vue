@@ -194,7 +194,7 @@ const {
 async function activated(){
   await initPage()
 }
-defineExpose([activated])
+defineExpose({activated})
 
 onMounted(async () => {
   console.log('activated')

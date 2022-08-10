@@ -111,7 +111,7 @@ async function activated() {
   await findAccountInComeSheetState();
 }
 
-defineExpose([activated])
+defineExpose({activated})
 
 onMounted(() => {
   findSaleOutboundSheetState();

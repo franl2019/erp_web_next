@@ -52,8 +52,14 @@
     </div>
     <div v-show="configButtonVisible" class="w-6 flex-none border-solid border-t border-r border-b border-gray-300 ">
       <div
-          class="my-0 mx-auto h-12 text-sm font-semibold leading-4 flex items-center text-center bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
-          @click="showOption">设置
+          class="flex flex-col h-12 items-center justify-center space-y-1.5 text-sm font-semibold bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
+          @click="showOption">
+        <div class="leading-3">
+          设
+        </div>
+        <div class="leading-3">
+          置
+        </div>
       </div>
     </div>
   </div>
@@ -324,7 +330,11 @@ function getGridApi() {
   return gridApi;
 }
 
-defineExpose({initTableData, initTableDataList, getGridApi});
+function getColumnApi() {
+  return columnApi;
+}
+
+defineExpose({initTableData, initTableDataList, getGridApi,getColumnApi});
 
 
 </script>
