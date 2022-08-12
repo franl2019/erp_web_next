@@ -1,64 +1,78 @@
 <template>
-  <div class="h-1/3 md:flex-grow md:flex-auto flex">
-    <AgGridVue
-        :animateRows="true"
-        :columnDefs="tableConfig.columnDefaults"
-        :getRowStyle="setPinnedBottomRowStyle"
-        :gridOptions="tableConfig.gridOptions"
-        :localeText="LOCALE_CN"
-        :pinnedBottomRowData="tablePinnedBottomRowData"
-        :rowData="tableData"
-        :rowDragManaged="true"
-        :suppressMoveWhenRowDragging="true"
-        :navigateToNextCell="navigateToNextCell"
-        class="ag-theme-erp w-full"
-        v-bind="$attrs"
-        @rowDragEnd="onRowDragEnd"
-        @grid-ready="initTableApi"
-        @drag-stopped="onDragStopped"
-        @displayed-columns-changed="onDragStopped"
-        @cellContextMenu="onCellContextMenu"
-        @click.right="onCellContextMenu"
-    >
-    </AgGridVue>
-    <div v-show="tableOptionBarVisible"
-         class="w-72 h-full bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none flex flex-col"
-    >
-      <div class="flex flex-none font-bold items-center bg-gray-100 py-1 px-2">
-        <span class="flex-none">调整列顺序:</span>
-      </div>
-      <div class="flex flex-col px-2 py-1 overflow-x-auto">
+
+  <div class="flex flex-col flex-grow w-full">
+    <div v-if="props.showTopBox" class="flex flex-row flex-none h-8 border border-solid border-black"></div>
+    <div class="flex flex-row flex-grow h-0">
+      <AgGridVue
+          :animateRows="true"
+          :columnDefs="tableConfig.columnDefaults"
+
+          :getRowStyle="setPinnedBottomRowStyle"
+
+          :gridOptions="tableConfig.gridOptions"
+          :localeText="LOCALE_CN"
+          :navigateToNextCell="navigateToNextCell"
+          :pinnedBottomRowData="tablePinnedBottomRowData"
+          :rowData="tableData"
+          :rowDragManaged="true"
+          :suppressMoveWhenRowDragging="true"
+
+          class="ag-theme-erp flex-grow"
+          v-bind="$attrs"
+
+          @cellContextMenu="onCellContextMenu"
+          @rowDragEnd="onRowDragEnd"
+          @grid-ready="onGridReady"
+          @drag-stopped="onDragStopped"
+          @displayed-columns-changed="onDragStopped"
+          @click.right="onCellContextMenu"
+      >
+      </AgGridVue>
+      <!--列顺序调节-->
+
+
+      <div
+          v-show="tableOptionBarVisible"
+          class="w-64 flex flex-col flex-none bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none">
+        <div class="flex flex-none font-bold items-center bg-gray-100 py-1 px-2">
+          <span class="">调整列顺序:</span>
+        </div>
+
         <draggable
             :list="tableSidebarColumnStateList"
-            ghost-class="ghost"
+            v-if="tableOptionBarVisible"
+            class="w-64 px-1 py-1 overflow-y-scroll flex flex-col flex-grow h-0"
             drag-class="drag-class"
+            ghost-class="ghost"
             handle=".handle"
             item-key="name"
             @end="onTableOptionEndDrag"
         >
           <template #item="{ element }">
-            <div class="flex items-center text-base">
+            <div class="flex items-center">
               <img alt="drag" class="handle w-5 h-5 cursor-move" src="@/assets/apps_black_18dp.svg">
               <erp_input_re-checkbox v-model="element.hide" @change="clickedOptionItem"></erp_input_re-checkbox>
               <div>{{ element.name }}</div>
             </div>
           </template>
         </draggable>
-      </div>
-      <div class="flex flex-none w-full items-center justify-center p-2 bg-gray-100">
-        <erp_button class="w-1/2 mr-2" size="small" type="danger" @click="onRemoveColumnState">重置</erp_button>
-        <erp_button class="w-1/2" size="small" type="success" @click="onSaveColumnState">保存配置</erp_button>
-      </div>
-    </div>
-    <div v-show="configButtonVisible" class="w-6 flex-none border-solid border-t border-r border-b border-gray-300 ">
-      <div
-          class="flex flex-col h-12 items-center justify-center space-y-1.5 text-sm font-semibold bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
-          @click="showOption">
-        <div class="leading-3">
-          设
+
+        <div class="flex flex-none w-full items-center justify-center p-2 bg-gray-100">
+          <erp_button class="w-1/2 mr-2" size="small" type="danger" @click="onRemoveColumnState">重置</erp_button>
+          <erp_button class="w-1/2" size="small" type="success" @click="onSaveColumnState">保存配置</erp_button>
         </div>
-        <div class="leading-3">
-          置
+      </div>
+      <!--配置栏按钮-->
+      <div v-show="configButtonVisible" class="w-6 border-solid border-t border-r border-b border-gray-300 ">
+        <div
+            class="flex flex-col h-12 items-center justify-center space-y-1.5 text-sm font-semibold bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
+            @click="showOption">
+          <div class="leading-3">
+            设
+          </div>
+          <div class="leading-3">
+            置
+          </div>
         </div>
       </div>
     </div>
@@ -66,11 +80,7 @@
 </template>
 
 <script lang='ts' setup>
-import {onBeforeMount, Ref, ref, UnwrapRef, watch} from "vue";
-import {LOCALE_CN} from '@/components/table/local/zh_cn';
-import Draggable from "vuedraggable";
-import Erp_button from "@/components/button/ErpButton.vue";
-import {AgGridVue} from "ag-grid-vue3";
+import {Ref, ref, UnwrapRef, watch} from "vue";
 import {
   CellContextMenuEvent,
   ColumnApi,
@@ -80,21 +90,31 @@ import {
   NavigateToNextCellParams,
   RowClassParams
 } from "ag-grid-community";
-import Erp_input_reCheckbox from "@/components/input/erp_input_reCheckbox.vue";
+import ErpDialog from "@/components/dialog/dialog";
+import {AgGridVue} from "ag-grid-vue3";
 import {ITableState} from "@/components/table/type";
 import {TableColumnStateService} from "@/module/tableColumnState";
+import {LOCALE_CN} from '@/components/table/local/zh_cn';
 import {defaultConfig} from "@/components/table/default/defaultConfig";
-import ErpDialog from "@/components/dialog/dialog";
+import Draggable from "vuedraggable";
+import Erp_button from "@/components/button/ErpButton.vue";
+import Erp_input_reCheckbox from "@/components/input/erp_input_reCheckbox.vue";
 
 const props = withDefaults(defineProps<{
   tableState?: UnwrapRef<Ref<UnwrapRef<ITableState<any>>>>,
   findDto?: {},
   configButtonVisible?: boolean
+  rightClickFilter?: boolean
   tableEdit?: boolean
+  showTopBox?:boolean
 }>(), {
   configButtonVisible: true,
-  tableEdit: true
+  tableEdit: true,
+  rightClickFilter: false,
+  showTopBox:false
 })
+
+const emits = defineEmits(['ready'])
 
 const tableConfig = {
   tableName: props.tableState?.tableName || "",
@@ -115,7 +135,7 @@ function setPinnedBottomRowStyle(params: RowClassParams) {
 }
 
 //表格Data
-let tableData = ref([]);
+const tableData = ref([]);
 //表格列状态服务
 const tableColumnStateService = new TableColumnStateService(tableConfig.tableName);
 //初始化表格API
@@ -123,60 +143,16 @@ let gridApi: GridApi;
 //列API
 let columnApi: ColumnApi;
 
-async function initTableApi(event: GridReadyEvent) {
-  gridApi = event.api;
-  columnApi = event.columnApi;
-
-}
-
-onBeforeMount(async () => {
-  await initTableColumnState();
-})
 
 //初始化表格数据
 async function initTableData() {
   const data = await tableConfig.tableService.find(tableConfig.findDto);
-  if (gridApi) {
-    await gridApi.setRowData([])
-  }
-  await gridApi.applyTransaction({add: data})
+  if (gridApi) await gridApi.setRowData([]);
+  await gridApi.applyTransaction({add: data});
 }
 
 async function initTableDataList() {
-  if (gridApi) {
-    gridApi.setRowData([])
-  }
-}
-
-//表格右键
-function onCellContextMenu(event: CellContextMenuEvent) {
-  if(event.colDef){
-    const headerName = event.colDef.headerName || '';
-    const field = event.colDef.field || ''
-    if(field){
-      ErpDialog({
-        title:headerName,
-        message:field
-      })
-    }
-  }else{
-    console.log('是其他')
-    console.log(event)
-  }
-}
-
-//在表格拖动结束后
-function onDragStopped() {
-  //不能删
-  if (columnApi) {
-    const columnState = columnApi.getColumnState();
-    tableSidebarColumnStateList.value = formatOptionColumnState(columnState);
-  }
-}
-
-//行拖动结束,重新计算行的序号
-function onRowDragEnd() {
-  gridApi.refreshCells();
+  if (gridApi) gridApi.setRowData([])
 }
 
 //键盘控制上下行选择
@@ -193,7 +169,10 @@ function navigateToNextCell(params: NavigateToNextCellParams) {
   }
 
   params.api.forEachNode((node: any) => {
-    if (suggestedNextCell && node.rowIndex === suggestedNextCell.rowIndex) {
+    if (
+        suggestedNextCell
+        && node.rowIndex === suggestedNextCell.rowIndex
+    ) {
       node.setSelected(true);
     }
   });
@@ -334,12 +313,55 @@ function getColumnApi() {
   return columnApi;
 }
 
-defineExpose({initTableData, initTableDataList, getGridApi,getColumnApi});
+defineExpose({initTableData, initTableDataList, getGridApi, getColumnApi});
 
+
+//事件 Event
+
+//当表格单元格右键
+function onCellContextMenu(event: CellContextMenuEvent) {
+  if (props.rightClickFilter
+      && event.colDef
+  ) {
+    const headerName = event.colDef.headerName || '';
+    const field = event.colDef.field || ''
+    if (field) {
+      ErpDialog({
+        title: headerName,
+        message: field
+      })
+    }
+  } else {
+  }
+}
+
+//行拖动结束,重新计算行的序号
+function onRowDragEnd() {
+  gridApi.refreshCells();
+}
+
+//在表格准备好后
+function onGridReady(event: GridReadyEvent) {
+  gridApi = event.api;
+  columnApi = event.columnApi;
+  initTableColumnState();
+  emits('ready', event);
+}
+
+//在表格拖动结束后
+function onDragStopped() {
+  //不能删
+  if (columnApi) {
+    const columnState = columnApi.getColumnState();
+    tableSidebarColumnStateList.value = formatOptionColumnState(columnState);
+  }
+}
 
 </script>
+
 <style lang="scss" src="./ag-theme-erp.scss"></style>
 <style lang="scss" scoped>
+
 .ghost {
   @apply border-2 border-solid border-indigo-400 rounded
 }
@@ -347,4 +369,5 @@ defineExpose({initTableData, initTableDataList, getGridApi,getColumnApi});
 .drag-class {
   @apply opacity-0
 }
+
 </style>

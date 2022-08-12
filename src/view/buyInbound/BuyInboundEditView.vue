@@ -2,7 +2,7 @@
   <erp-page-box>
 
     <erp-no-title>
-      <erp-button :disabled="!state.edit" type="info" v-reqClick="save">保存</erp-button>
+      <erp-button v-reqClick="save" :disabled="!state.edit" type="info">保存</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedLevel1review">审核</erp-button>
@@ -57,11 +57,12 @@
 
     <erp-table ref="inboundMxTableRef"
                :find-dto="{}"
-               :table-edit="state.edit"
                :getRowNodeId="getInboundMxTableRowNodeId"
+               :table-edit="state.edit"
                :table-state="BuyInboundCreateViewMxTableConfig"
                @cellEditingStarted="bottomRowStopEditing"
                @cellValueChanged="onCellValueChanged"
+               @ready="onTableReady"
     ></erp-table>
 
     <erp-form>
@@ -78,6 +79,7 @@
         <erp-input-round v-model="inboundHead.level2name" disabled></erp-input-round>
       </erp-form-item>
     </erp-form>
+
   </erp-page-box>
 </template>
 
@@ -92,7 +94,7 @@ import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.v
 import ErpSelectProductDialog from "@/components/dialog/selectInfo/selectProduct/SelectProductDialog";
 import ErpDialog from "@/components/dialog/dialog";
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {IProduct} from "@/module/product/product";
 import {CellEditingStartedEvent} from "ag-grid-community";
@@ -113,7 +115,8 @@ import * as mathjs from "mathjs";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {VerifyParamError} from "@/error/verifyParamError";
 import {tabMenu} from "@/components/tab/useRouterTab";
-import {emitter, useRouterPage} from "@/utils";
+import {useRouterPage} from "@/utils";
+import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";
 
 const {chain, round, bignumber} = mathjs;
 
@@ -122,10 +125,9 @@ function getInboundMxTableRowNodeId(params: IBuyInboundMxTableData) {
   return params.rowId;
 }
 
-onMounted(async () => {
-  //初始化页面
+async function onTableReady() {
   await initPage();
-})
+}
 
 //路由api
 const router = useRouter();
@@ -186,6 +188,39 @@ function getInboundMxSumAmt(): number {
   return sumAmt;
 }
 
+function addNullLine() {
+  // const initInboundMx: IBuyInboundMxTableData = {
+  //   agio: 0,
+  //   agio1: 0,
+  //   agio2: 0,
+  //   amt: 0,
+  //   bzprice: 0,
+  //   bzqty: 0,
+  //   clientid: 0,
+  //   inboundid: 0,
+  //   inqty: 0,
+  //   materials: "",
+  //   materials_d: "",
+  //   netprice: 0,
+  //   packqty: 0,
+  //   price: 0,
+  //   priceqty: 0,
+  //   pricetype: 0,
+  //   printid: 0,
+  //   productcode: "",
+  //   productid: 0,
+  //   productname: "",
+  //   remark: "",
+  //   remarkmx: "",
+  //   rowId: 0,
+  //   spec: "",
+  //   spec_d: "",
+  //   unit: ""
+  //
+  // }
+  // addInboundMx([initInboundMx])
+}
+
 //初始页面
 async function initPage(): Promise<void> {
 
@@ -194,6 +229,9 @@ async function initPage(): Promise<void> {
     state.value.exitMessage = "是否取消新增采购进仓单"
     state.value.edit = true;
     inboundHead.value.warehouseid = Number(route.query.warehouseid) || 0;
+
+    addNullLine()
+
   } else {
     //读取单头
     const inboundList = await inboundService.find({
@@ -236,7 +274,7 @@ async function initPage(): Promise<void> {
     updateButtonState(inboundHead.value.level1review, inboundHead.value.level2review);
 
 
-    await inboundMxTableRef.value?.getGridApi().setRowData([]);
+    inboundMxTableRef.value?.getGridApi().setRowData([]);
     //读取明细
     const inboundMx = await inboundMxService.find({inboundid: inboundHead.value.inboundid});
     addInboundMx(inboundMx);
@@ -350,13 +388,9 @@ function formatProductListToInboundMx(productList: IProduct[]): IBuyInboundMxTab
     const inboundMx: IBuyInboundMxTableData = new BuyInboundMxTableData();
     inboundMx.rowId = 0;
     inboundMx.printid = 0;
-    inboundMx.productid = product.productid;
-    inboundMx.productcode = product.productcode;
-    inboundMx.productname = product.productname;
-    inboundMx.spec = product.spec;
-    inboundMx.materials = product.materials;
-    inboundMx.unit = product.unit;
-    inboundMx.packqty = product.packqty;
+
+    useFormatProductToInboundMx(product, inboundMx)
+
     addItems.push(inboundMx);
   });
   return addItems;
@@ -396,8 +430,10 @@ function unSelectBuy() {
 
 function clickedLevel1review() {
   if (state.value.edit) {
+
     ErpDialog({
       message: `是否保存并审核`,
+
       ok: async () => {
         await save_l1review();
         await initPage();
@@ -405,12 +441,15 @@ function clickedLevel1review() {
           message: `保存审核成功`,
           closeBtnVisible: false
         })
-
       }
+
     })
+
   } else {
+
     ErpDialog({
       message: `是否审核,单号:${inboundHead.value.inboundcode}`,
+
       ok: async () => {
         await inboundService.level1review(inboundHead.value.inboundid);
         await initPage();
@@ -418,9 +457,10 @@ function clickedLevel1review() {
           message: `审核成功`,
           closeBtnVisible: false,
         })
-
       }
+
     })
+
   }
 
 

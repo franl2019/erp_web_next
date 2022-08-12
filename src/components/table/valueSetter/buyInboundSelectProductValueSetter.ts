@@ -1,4 +1,5 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
+import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";
 
 export function buyInboundSelectProductValueSetter(params: ValueSetterParams) {
     //判断是否为数字
@@ -9,13 +10,7 @@ export function buyInboundSelectProductValueSetter(params: ValueSetterParams) {
     ) {
         const product = params.newValue
 
-        params.data.productid = product.productid;
-        params.data.productcode = product.productcode;
-        params.data.productname = product.productname;
-        params.data.spec = product.spec;
-        params.data.materials = product.materials;
-        params.data.unit = product.unit;
-        params.data.packqty = product.packqty;
+        useFormatProductToInboundMx(product,params.data);
 
         params.api.refreshCells({
             rowNodes: [params.node!]

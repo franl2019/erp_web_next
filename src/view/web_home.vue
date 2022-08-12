@@ -1,6 +1,6 @@
 <template>
   <erp-loading></erp-loading>
-  <div class="flex flex-col w-full h-full ">
+  <div class="flex flex-col w-full flex-grow">
 
     <div class="flex flex-none h-12 w-full pt-1.5 bg-gray-200">
 
@@ -18,7 +18,7 @@
 
     </div>
 
-    <div class="flex-grow flex w-full h-full">
+    <div class="flex-grow flex flex-row w-full">
 
       <menu2 v-show="isCollapse"></menu2>
 

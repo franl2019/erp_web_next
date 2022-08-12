@@ -20,7 +20,7 @@
             ref="tableRef"
             class="h-full w-full shadow-md"
             :table-state="tableEditorProductCodeConfig"
-            :config-button-visible="false"
+            :config-button-visible="true"
             :find-dto="findDto"
             :navigateToNextCell="navigateToNextCell"
             @keydown.stop="onKeydownPopover"
@@ -31,9 +31,9 @@
 </template>
 
 <script lang='ts' setup>
-import {nextTick, onMounted, ref, unref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {tableEditorProductCodeConfig} from "@/components/table/components/editor/config/tableEditorProductCodeConfig";
+import {tableEditorProductCodeConfig} from "@/components/table/components/editor/ProductCode/config/tableEditorProductCodeConfig";
 import {ITableRef} from "@/components/table/type";
 import {IFindProductDto} from "@/module/product/dto/findProduct.dto";
 import {ICellEditorParams, NavigateToNextCellParams} from "ag-grid-community";

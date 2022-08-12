@@ -4,8 +4,7 @@ import {useFormatInboundMxNumber} from "@/utils/tableUtils";
 import {IInboundMx} from "@/types/inboundMx/IInboundMx";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
 import {valueName} from "@/config/valueName";
-import TableEditorProductCode from "@/components/table/components/editor/TableEditorProductCode.vue";
-import {NewValueParams} from "ag-grid-community/dist/lib/entities/colDef";
+import TableEditorProductCode from "@/components/table/components/editor/ProductCode/TableEditorProductCode.vue";
 import {buyInboundSelectProductValueSetter} from "@/components/table/valueSetter/buyInboundSelectProductValueSetter";
 
 export const BuyInboundCreateViewMxTableConfig = ref<ITableState<IInboundMx>>({
