@@ -12,8 +12,7 @@
       <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnLevel2review">财务撤审
       </erp-button>
       <erp-delimiter/>
-      <erp-button :disabled="!state.edit" @click="clickedAddInboundMx">选择产品</erp-button>
-      <erp-button :disabled="!state.edit" type="danger" @click="deleteInboundMx">删除明细</erp-button>
+      <erp-button :disabled="!state.edit" type="success" @click="clickedAddInboundMx">选择产品</erp-button>
     </erp-no-title>
 
     <erp-form>
@@ -60,10 +59,18 @@
                :getRowNodeId="getInboundMxTableRowNodeId"
                :table-edit="state.edit"
                :table-state="BuyInboundCreateViewMxTableConfig"
+               :showTopBox="true"
                @cellEditingStarted="bottomRowStopEditing"
                @cellValueChanged="onCellValueChanged"
                @ready="onTableReady"
-    ></erp-table>
+    >
+      <template #topBox>
+
+          <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
+          <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
+
+      </template>
+    </erp-table>
 
     <erp-form>
       <erp-form-item v-if="inboundHead.inboundcode" label-for-name="开单" lg-col="1" md-col="2">
@@ -189,36 +196,36 @@ function getInboundMxSumAmt(): number {
 }
 
 function addNullLine() {
-  // const initInboundMx: IBuyInboundMxTableData = {
-  //   agio: 0,
-  //   agio1: 0,
-  //   agio2: 0,
-  //   amt: 0,
-  //   bzprice: 0,
-  //   bzqty: 0,
-  //   clientid: 0,
-  //   inboundid: 0,
-  //   inqty: 0,
-  //   materials: "",
-  //   materials_d: "",
-  //   netprice: 0,
-  //   packqty: 0,
-  //   price: 0,
-  //   priceqty: 0,
-  //   pricetype: 0,
-  //   printid: 0,
-  //   productcode: "",
-  //   productid: 0,
-  //   productname: "",
-  //   remark: "",
-  //   remarkmx: "",
-  //   rowId: 0,
-  //   spec: "",
-  //   spec_d: "",
-  //   unit: ""
-  //
-  // }
-  // addInboundMx([initInboundMx])
+  const initInboundMx: IBuyInboundMxTableData = {
+    agio: 1,
+    agio1: 1,
+    agio2: 1,
+    amt: 0,
+    bzprice: 0,
+    bzqty: 0,
+    clientid: 0,
+    inboundid: 0,
+    inqty: 0,
+    materials: "",
+    materials_d: "",
+    netprice: 0,
+    packqty: 0,
+    price: 0,
+    priceqty: 0,
+    pricetype: 0,
+    printid: 0,
+    productcode: "",
+    productid: 0,
+    productname: "",
+    remark: "",
+    remarkmx: "",
+    rowId: 0,
+    spec: "",
+    spec_d: "",
+    unit: ""
+
+  }
+  addInboundMx([initInboundMx])
 }
 
 //初始页面
@@ -231,7 +238,6 @@ async function initPage(): Promise<void> {
     inboundHead.value.warehouseid = Number(route.query.warehouseid) || 0;
 
     addNullLine()
-
   } else {
     //读取单头
     const inboundList = await inboundService.find({

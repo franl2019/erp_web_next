@@ -1,30 +1,31 @@
 <template>
   <erp-popover
-    :popover-visible="popoverVisible"
-    width="30rem"
-    :placement="'bottom-start'"
-    :offset-x="-1"
-    :offset-y="1"
+      :offset-x="-1"
+      :offset-y="1"
+      :placement="'bottom-start'"
+      :popover-visible="popoverVisible"
+      width="30rem"
   >
     <template #reference>
       <input
           ref="inputRef"
+          v-model="value"
           class="w-full h-full p-0 rounded-none text-sm px-1"
           type="text"
-          v-model="value"
           @keydown.stop="onKeyDownInput"
       >
     </template>
     <template #popper>
-        <erp-table
-            ref="tableRef"
-            class="h-full w-full shadow-md"
-            :table-state="tableEditorProductCodeConfig"
-            :config-button-visible="true"
-            :find-dto="findDto"
-            :navigateToNextCell="navigateToNextCell"
-            @keydown.stop="onKeydownPopover"
-        ></erp-table>
+      <erp-table
+          ref="tableRef"
+          :config-button-visible="true"
+          :find-dto="findDto"
+          :navigateToNextCell="navigateToNextCell"
+          :table-state="tableEditorProductCodeConfig"
+          class="h-full w-full shadow-md"
+          @cellDoubleClicked="onTableCellDoubleClicked"
+          @keydown.stop="onKeydownPopover"
+      ></erp-table>
     </template>
   </erp-popover>
 
@@ -33,10 +34,12 @@
 <script lang='ts' setup>
 import {nextTick, onMounted, ref, watch} from "vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {tableEditorProductCodeConfig} from "@/components/table/components/editor/ProductCode/config/tableEditorProductCodeConfig";
+import {
+  tableEditorProductCodeConfig
+} from "@/components/table/components/editor/ProductCode/config/tableEditorProductCodeConfig";
 import {ITableRef} from "@/components/table/type";
 import {IFindProductDto} from "@/module/product/dto/findProduct.dto";
-import {ICellEditorParams, NavigateToNextCellParams} from "ag-grid-community";
+import {CellDoubleClickedEvent, ICellEditorParams, NavigateToNextCellParams} from "ag-grid-community";
 import ErpPopover from "@/components/popover/ErpPopover.vue";
 
 
@@ -57,7 +60,7 @@ const inputRef = ref();
 const tableRef = ref<ITableRef>();
 
 const value = ref()
-let productReturn:any = null
+let productReturn: any = null
 const popoverVisible = ref(true);
 
 
@@ -157,16 +160,28 @@ function onKeydownPopover(event: KeyboardEvent) {
   }
 
   if (key === 'Enter') {
-    const product = tableRef.value?.getGridApi().getSelectedRows()[0]
-    if(product){
-      popoverVisible.value = false;
-      productReturn = product
-      nextTick(()=>{
-        props.params.api.tabToNextCell();
-      })
-      // emitter.emit('tableSelectProduct',product);
-    }
+    returnProduct();
+  }
+}
 
+function returnProduct() {
+  const product = tableRef.value?.getGridApi().getSelectedRows()[0]
+  if (product) {
+    popoverVisible.value = false;
+    productReturn = product
+    nextTick(() => {
+      props.params.api.tabToNextCell();
+    })
+    // emitter.emit('tableSelectProduct',product);
+  }
+}
+
+function onTableCellDoubleClicked(event: CellDoubleClickedEvent) {
+  if (
+      event.data.productid !== null
+      && event.data.productid !== 0
+  ) {
+    returnProduct();
   }
 }
 </script>

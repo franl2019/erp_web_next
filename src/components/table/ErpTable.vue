@@ -1,7 +1,11 @@
 <template>
 
   <div class="flex flex-col flex-grow w-full">
-    <div v-if="props.showTopBox" class="flex flex-row flex-none h-8 border border-solid border-black"></div>
+    <div v-if="props.showTopBox" class="flex flex-row flex-none h-9 border-l border-r border-t border-gray-300 border-solid border-black items-center px-2 py-1.5 space-x-3">
+      <slot name="topBox">
+
+      </slot>
+    </div>
     <div class="flex flex-row flex-grow h-0">
       <AgGridVue
           :animateRows="true"
@@ -29,19 +33,17 @@
       >
       </AgGridVue>
       <!--列顺序调节-->
-
-
       <div
           v-show="tableOptionBarVisible"
-          class="w-64 flex flex-col flex-none bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none">
+          class="w-48 flex flex-col flex-none bg-gray-50 border-solid border-t border-r border-b border-gray-300 select-none">
         <div class="flex flex-none font-bold items-center bg-gray-100 py-1 px-2">
           <span class="">调整列顺序:</span>
         </div>
 
         <draggable
-            :list="tableSidebarColumnStateList"
             v-if="tableOptionBarVisible"
-            class="w-64 px-1 py-1 overflow-y-scroll flex flex-col flex-grow h-0"
+            :list="tableSidebarColumnStateList"
+            class="px-2 py-1 overflow-y-scroll flex flex-col flex-grow h-0 space-y-0.5"
             drag-class="drag-class"
             ghost-class="ghost"
             handle=".handle"
@@ -49,10 +51,10 @@
             @end="onTableOptionEndDrag"
         >
           <template #item="{ element }">
-            <div class="flex items-center">
-              <img alt="drag" class="handle w-5 h-5 cursor-move" src="@/assets/apps_black_18dp.svg">
-              <erp_input_re-checkbox v-model="element.hide" @change="clickedOptionItem"></erp_input_re-checkbox>
-              <div>{{ element.name }}</div>
+            <div class="flex h-5 items-center space-x-2">
+              <img alt="drag" class="handle w-4 h-4 cursor-move" src="@/assets/app_black.svg">
+              <erp_input_re-checkbox class="h-4 w-4" v-model="element.hide" @change="clickedOptionItem"></erp_input_re-checkbox>
+              <div class="">{{ element.name }}</div>
             </div>
           </template>
         </draggable>
@@ -63,9 +65,9 @@
         </div>
       </div>
       <!--配置栏按钮-->
-      <div v-show="configButtonVisible" class="w-6 border-solid border-t border-r border-b border-gray-300 ">
+      <div v-show="configButtonVisible" class="w-6 border-solid border-t border-r border-b border-gray-300 flex-none">
         <div
-            class="flex flex-col h-12 items-center justify-center space-y-1.5 text-sm font-semibold bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
+            class="flex flex-col h-12 items-center justify-center space-y-1 text-sm font-semibold bg-gray-50 border-solid border-b border-gray-300 active:bg-gray-200 select-none cursor-pointer"
             @click="showOption">
           <div class="leading-3">
             设
@@ -106,12 +108,12 @@ const props = withDefaults(defineProps<{
   configButtonVisible?: boolean
   rightClickFilter?: boolean
   tableEdit?: boolean
-  showTopBox?:boolean
+  showTopBox?: boolean
 }>(), {
   configButtonVisible: true,
   tableEdit: true,
   rightClickFilter: false,
-  showTopBox:false
+  showTopBox: false
 })
 
 const emits = defineEmits(['ready'])
@@ -147,8 +149,8 @@ let columnApi: ColumnApi;
 //初始化表格数据
 async function initTableData() {
   const data = await tableConfig.tableService.find(tableConfig.findDto);
-  if (gridApi) await gridApi.setRowData([]);
-  await gridApi.applyTransaction({add: data});
+  if (gridApi) gridApi.setRowData([]);
+  gridApi.applyTransaction({add: data});
 }
 
 async function initTableDataList() {
