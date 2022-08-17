@@ -38,6 +38,7 @@
       ></erp_table>
     </template>
   </erp-left-right-page-box>
+
   <add-product-dialog
       v-if="isShowAddProductDialog"
       :dto="createProductDto"
