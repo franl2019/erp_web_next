@@ -3,7 +3,9 @@
     <label :class="labelForNameStyle">
       {{ props.labelForName }}
     </label>
-    <slot></slot>
+    <div class="w-full max-h-10">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

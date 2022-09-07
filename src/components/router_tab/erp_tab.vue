@@ -37,9 +37,9 @@
 </template>
 
 <script lang="ts" setup>
-import Erp_menu_tab_item from "@/components/tab/erp_tab_item.vue";
+import Erp_menu_tab_item from "@/components/router_tab/erp_tab_item.vue";
 import Erp_button_svg from "@/components/button/ErpSvgButton.vue";
-import {Tab} from "@/components/tab/useRouterTab";
+import {Tab} from "@/components/router_tab/useRouterTab";
 import Draggable from "vuedraggable";
 
 const props = withDefaults(

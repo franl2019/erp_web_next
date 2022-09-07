@@ -7,19 +7,19 @@
       <erp_title title="">
         <template v-slot:input>
           <erp-is-use-select v-model="findProductDto.useflag" class="md:w-28"
-                              @change="onSearchProduct"></erp-is-use-select>
+                             @change="onSearchProduct"></erp-is-use-select>
           <erp-warehouse-auth-select-have-root
               v-model="warehouseid"
               class="md:w-32"
               @change="onSearchProduct"
           ></erp-warehouse-auth-select-have-root>
-          <erp_input_rounded v-model="findProductDto.search" class="md:w-52"
-                             :placeholder="'输入'+valueName.product+'名称搜索'"
+          <erp_input_rounded v-model="findProductDto.search" :placeholder="'输入'+valueName.product+'名称搜索'"
+                             class="md:w-52"
                              @keyup.enter="onSearchProduct">
           </erp_input_rounded>
           <erp_button @click="onSearchProduct">刷新</erp_button>
         </template>
-        <erp_button v-if="buttonShowState.create" @click="onClickedAddDialog">新增</erp_button>
+        <erp_button v-if="buttonShowState.create" @click="onClickedCreateProductDialogCancelButton">新增</erp_button>
         <erp_button v-if="buttonShowState.edit" @click="onClickedEditDialog">修改</erp_button>
         <erp_button v-if="buttonShowState.level1review" type="success" @click="onClickedLevel1Review">审核</erp_button>
         <erp_button v-if="buttonShowState.un_level1review" type="danger" @click="onClickedUnLevel1Review">撤审
@@ -34,23 +34,22 @@
                  :find-dto="findProductDto"
                  :getRowNodeId="getRowNodeId"
                  :table-state="defaultProductTableState"
-                 @selection-changed="onSelectRow"
+                 @selection-changed="onSelectProductGridRow"
       ></erp_table>
     </template>
   </erp-left-right-page-box>
 
   <add-product-dialog
       v-if="isShowAddProductDialog"
-      :dto="createProductDto"
-      @clickedCancel="onClickedAddDialog"
-      @clickedConfirm="onClickedAdd"
+      @onClickedCancel="onClickedCreateProductDialogCancelButton"
+      @onClickedConfirm="onClickedCreateProductDialogConfirmButton"
   ></add-product-dialog>
 
   <edit-product-dialog
       v-if="isShowEditProductDialog"
-      :update-product-dto="productTableSelect"
-      @clickedCancel="onClickedEditDialog"
-      @clickedConfirm="onClickedEdit">
+      :product="productTableSelect"
+      :clickedCancel="onClickedUpdateProductDialogCancelButton"
+      :clickedConfirm="onClickedUpdateProductDialogConfirmButton">
   </edit-product-dialog>
 </template>
 
@@ -58,13 +57,12 @@
 import Erp_title from "@/components/title/ErpTitle.vue";
 import Erp_button from "@/components/button/ErpButton.vue";
 import Erp_table from "@/components/table/ErpTable.vue";
-import {onMounted, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import type {ITableRef} from "@/components/table/type";
 import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
 import {getButtonState, IButtonState} from "@/composables/useInfoButtonState";
 import ErpDialog from "@/components/dialog/dialog";
 import {FindProductDto, IFindProductDto} from "@/module/product/dto/findProduct.dto";
-import {CreateProductDto, ICreateProductDto} from "@/module/product/dto/createProduct.dto";
 import {IProduct, Product} from "@/module/product/product";
 import {ProductService} from "@/module/product/product.service";
 import {defaultProductTableState} from "@/view/product/tableConfig/defaultProductTableState";
@@ -78,6 +76,8 @@ import {IProductAreaTree} from "@/module/productArea/productArea";
 import {VerifyParamError} from "@/error/verifyParamError";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
+import {UpdateProductDto} from "@/module/product/dto/updateProduct.dto";
+import {IAddProductOtherUnitMxList} from "@/module/product/dto/createProduct.dto";
 
 onMounted(async () => {
   setDefaultAllWarehouse()
@@ -96,7 +96,7 @@ const productTableRef = ref<ITableRef>();
 const findProductDto = ref<IFindProductDto>(new FindProductDto());
 //产品资料服务
 const productService = new ProductService();
-const {warehouseid,setDefaultAllWarehouse} = useWarehouseSelect(findProductDto)
+const {warehouseid, setDefaultAllWarehouse} = useWarehouseSelect(findProductDto)
 
 //表格行id设置
 function getRowNodeId(data: IProduct) {
@@ -113,10 +113,9 @@ watch(productTableSelect, (value) => {
 
 //根据产品ID选中列表行
 function productIdSelectRow(id: number) {
+  console.log(id)
   productTableRef.value?.getGridApi().getRowNode("" + id)?.setSelected(true);
 }
-
-const createProductDto = ref<ICreateProductDto>(new CreateProductDto());
 
 function onClickProductAreaNode(productAreaItem: IProductAreaTree) {
   findProductDto.value.productareaid = productAreaItem.productareaid
@@ -130,54 +129,46 @@ function onSearchProduct() {
 }
 
 //产品表格行点击事件
-async function onSelectRow() {
+async function onSelectProductGridRow() {
   const product = await getSelected();
-  buttonShowState.value = getButtonState(product.level1review,product.level2review)
+  buttonShowState.value = getButtonState(product.level1review, product.level2review)
 }
 
-//显示新增产品dialog
-function onClickedAddDialog() {
-  initCreateProductDto();
+function onClickedCreateProductDialogCancelButton() {
   isShowAddProductDialog.value = !isShowAddProductDialog.value;
+}
+
+async function onClickedCreateProductDialogConfirmButton(createProductDto: IAddProductOtherUnitMxList) {
+  const result = await productService.create(createProductDto);
+  isShowAddProductDialog.value = false;
+  await productTableRef.value?.initTableData();
+  await productIdSelectRow(result.createResult!.id)
 }
 
 //显示编辑产品dialog
 async function onClickedEditDialog() {
-  isShowEditProductDialog.value = !isShowEditProductDialog.value;
   productTableSelect.value = await getSelected()
+  isShowEditProductDialog.value = true;
 }
 
-function initCreateProductDto() {
-  createProductDto.value = new CreateProductDto();
+function onClickedUpdateProductDialogCancelButton() {
+  isShowEditProductDialog.value = false;
 }
 
-//点击新增按钮事件
-async function onClickedAdd() {
-  if (createProductDto.value) {
-    await productService.create(createProductDto.value);
-    productTableRef.value?.initTableData();
-    initCreateProductDto();
-    isShowAddProductDialog.value = !isShowAddProductDialog.value;
-  }
+async function onClickedUpdateProductDialogConfirmButton(updateProductDto:UpdateProductDto) {
+  isShowEditProductDialog.value = false;
+  await productService.update(updateProductDto);
+  await productTableRef.value?.initTableData();
+  await nextTick()
+  await productIdSelectRow(updateProductDto.productid)
 }
 
-async function getSelected(){
-  const selectRows = productTableRef.value?.getGridApi().getSelectedRows()
-  if(selectRows){
-    return JSON.parse(JSON.stringify(selectRows[0])) as IProduct
-  }else{
+async function getSelected() {
+  const selectRows = productTableRef.value?.getGridApi().getSelectedRows()[0];
+  if (selectRows) {
+    return JSON.parse(JSON.stringify(selectRows)) as IProduct
+  } else {
     return Promise.reject(new VerifyParamError('还未选中产品资料'))
-  }
-}
-
-//点击修改按钮事件
-async function onClickedEdit() {
-  const product = await getSelected();
-  if (product.productid) {
-    await productService.update(productTableSelect.value);
-    await productTableRef.value?.initTableData();
-    isShowEditProductDialog.value = !isShowEditProductDialog.value;
-    buttonShowState.value = getButtonState();
   }
 }
 

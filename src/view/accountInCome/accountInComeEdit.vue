@@ -110,7 +110,7 @@ import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useButtonState} from "@/composables/useButtonState";
 import {VerifyParamError} from "@/error/verifyParamError";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 const {bignumber, chain, round} = mathjs;
 const router = useRouter();

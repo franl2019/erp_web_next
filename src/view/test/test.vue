@@ -1,9 +1,10 @@
 <template>
-<erp-table></erp-table>
+
+
+
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import ErpTable from "@/components/table/ErpTable.vue";
+
 </script>
-

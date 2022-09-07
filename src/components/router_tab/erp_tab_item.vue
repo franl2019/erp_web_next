@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import {Tab, tabMenu} from "@/components/tab/useRouterTab";
+import {Tab, tabMenu} from "@/components/router_tab/useRouterTab";
 
 const props = defineProps<{
   tab: Tab

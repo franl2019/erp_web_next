@@ -65,10 +65,8 @@
                @ready="onTableReady"
     >
       <template #topBox>
-
           <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
           <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
-
       </template>
     </erp-table>
 
@@ -121,7 +119,7 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import * as mathjs from "mathjs";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {VerifyParamError} from "@/error/verifyParamError";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";
 

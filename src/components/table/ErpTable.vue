@@ -3,7 +3,6 @@
   <div class="flex flex-col flex-grow w-full">
     <div v-if="props.showTopBox" class="flex flex-row flex-none h-9 border-l border-r border-t border-gray-300 border-solid border-black items-center px-2 py-1.5 space-x-3">
       <slot name="topBox">
-
       </slot>
     </div>
     <div class="flex flex-row flex-grow h-0">
@@ -95,7 +94,7 @@ import {
 import ErpDialog from "@/components/dialog/dialog";
 import {AgGridVue} from "ag-grid-vue3";
 import {ITableState} from "@/components/table/type";
-import {TableColumnStateService} from "@/module/tableColumnState";
+import {TableColumnStateService} from "@/module/tableColumnState/tableColumnState.service";
 import {LOCALE_CN} from '@/components/table/local/zh_cn';
 import {defaultConfig} from "@/components/table/default/defaultConfig";
 import Draggable from "vuedraggable";
@@ -120,7 +119,7 @@ const emits = defineEmits(['ready'])
 
 const tableConfig = {
   tableName: props.tableState?.tableName || "",
-  columnDefaults: props.tableState?.columnDefaults || [],
+  columnDefaults: props.tableState?.columnDefaults || defaultConfig.value.columnDefaults,
   gridOptions: JSON.parse(JSON.stringify(props.tableState?.gridOptions)) || {},
   tableService: props.tableState?.tableService || defaultConfig.value.tableService,
   findDto: props.findDto || ref({}).value

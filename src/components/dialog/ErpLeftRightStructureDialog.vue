@@ -1,7 +1,7 @@
 <template>
   <div class="absolute top-0 left-0 z-30 h-full w-full">
     <div class="relative p-10 h-full w-full">
-      <div class="flex bg-white rounded-md border-solid border shadow-md pt-1 pb-2 px-2 h-full w-full">
+      <div class="flex bg-white rounded-md border-solid border shadow-md pt-2 pb-2 px-2 h-full w-full">
         <!--left-->
         <div v-show="props.leftMenu && isShowLeft"
              class="flex-col flex-none absolute sm:relative bg-white top-0 sm:left-0 z-30 w-full sm:w-64 h-full pl-2">

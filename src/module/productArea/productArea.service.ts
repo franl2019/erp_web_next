@@ -5,6 +5,7 @@ import {IProductArea, IProductAreaTree, ProductArea, ProductAreaTree} from "@/mo
 import {useFormatDataTree} from "@/utils";
 import {IUpdateProductAreaDto} from "@/module/productArea/dto/updateProductArea.dto";
 import {VerifyParamError} from "@/error/verifyParamError";
+
 export class ProductAreaService {
 
     public async find() {
@@ -18,7 +19,7 @@ export class ProductAreaService {
 
     public async getProductAreaTree() {
         const productAreas = await this.find();
-        return useFormatDataTree<IProductAreaTree>(productAreas, "productareaid", "parentid")
+        return useFormatDataTree<IProductAreaTree>(productAreas, "productareaid", "parentid");
     }
 
     public async getProductAreaTreeHaveRootNode() {
@@ -32,10 +33,10 @@ export class ProductAreaService {
 
     public async getProductAreaHaveRoot() {
         const productAreaList = await this.find();
-            const rootNode = new ProductArea();
-            rootNode.productareaname = "无";
-            productAreaList.unshift(rootNode)
-            return productAreaList;
+        const rootNode = new ProductArea();
+        rootNode.productareaname = "无";
+        productAreaList.unshift(rootNode)
+        return productAreaList;
     }
 
     public async create(createDto: ICreateProductAreaDto) {

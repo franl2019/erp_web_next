@@ -1,9 +1,11 @@
 <template>
   <div class="flex flex-col h-full pr-2">
     <erp_title title="地区">
-      <erp_button size="small" @click="createClientAreaDialogVisible = true">新增</erp_button>
-      <erp_button size="small" v-if="clientArea.clientareaid!==0" @click="updateClientAreaDialogVisible = true">修改</erp_button>
-      <erp_button size="small" v-if="clientArea.clientareaid!==0" @click="onDeleteClientAreaBtn" type="danger">删除</erp_button>
+      <div class="h-10 flex space-x-1">
+        <erp_button size="small" @click="createClientAreaDialogVisible = true">新增</erp_button>
+        <erp_button size="small" v-if="clientArea.clientareaid!==0" @click="updateClientAreaDialogVisible = true">修改</erp_button>
+        <erp_button size="small" v-if="clientArea.clientareaid!==0" @click="onDeleteClientAreaBtn" type="danger">删除</erp_button>
+      </div>
     </erp_title>
 
     <div class="flex-grow border-solid border border-gray-300 overflow-y-auto">
@@ -39,8 +41,8 @@ import {ClientArea, IClientArea, IClientAreaTree} from "@/module/clientArea/clie
 import NewClientAreaDialog from "@/view/clientArea/NewClientAreaDialog.vue";
 import UpdateClientAreaDialog from "@/view/clientArea/UpdateClientAreaDialog.vue";
 import ErpDialog from "@/components/dialog/dialog";
-import Erp_clientAreaTree from "@/components/tree/ErpClientAreaTree.vue";
-import {ITreeRef} from "@/components/tree/ITreeRef";
+import Erp_clientAreaTree from "@/components/tree/aboutComponent/ErpClientAreaTree.vue";
+import {ITreeRef} from "@/components/tree/aboutComponent/ITreeRef";
 import {ClientAreaService} from "@/module/clientArea/clientArea.service";
 
 const emits = defineEmits(['clickedClientAreaTreeNode'])

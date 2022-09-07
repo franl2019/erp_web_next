@@ -2,7 +2,7 @@
   <div ref="referenceRef"
        class="w-full h-full">
     <slot name="reference"></slot>
-    <div ref="popperRef" v-show="props.popoverVisible" class="h-40" :style="'width: '+props.width">
+    <div ref="popperRef" v-show="props.popoverVisible">
       <slot name="popper"></slot>
     </div>
   </div>
@@ -31,13 +31,11 @@ type Placement =
 
 const props = withDefaults(defineProps<{
   popoverVisible?:boolean,
-  width?:string,
   placement?:Placement,
   offsetX?:number,
   offsetY?:number
 }>(),{
   popoverVisible:true,
-  width:"30rem",
   placement:'bottom-start',
   offsetX:0,
   offsetY:0
@@ -46,9 +44,12 @@ const props = withDefaults(defineProps<{
 const referenceRef = ref();
 const popperRef = ref();
 
+
+
+
 onMounted(()=>{
   createPopper(referenceRef.value, popperRef.value, {
-    placement: 'bottom-start',
+    placement: props.placement,
     modifiers: [
       {
         name: 'offset',

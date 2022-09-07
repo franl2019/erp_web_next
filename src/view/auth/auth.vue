@@ -17,7 +17,7 @@
     </div>
     <div class="flex flex-grow flex-col md:flex-row">
       <div class="flex-none md:w-64 overflow-y-auto md:mr-2 border-solid border border-gray-400">
-        <el-tree
+        <erp-tree
             ref="AuthTreeRef"
             :data="authMenuTreeData"
             :props="authTreeConfig"
@@ -61,6 +61,7 @@ import user_buy_operatearea_mx from "@/view/auth/user_operatearea_mx/buy/user_bu
 
 import user_warehouse_mx from "@/view/auth/user_warehouse_mx/user_warehouse_mx.vue";
 import user_account_mx from "@/view/auth/user_account_mx/user_account_mx.vue";
+import ErpTree from "@/components/tree/ErpTree.vue";
 
 
 const router = useRouter();

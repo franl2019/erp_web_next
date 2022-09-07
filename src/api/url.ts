@@ -49,14 +49,21 @@ const API_URL = {
     BUYAREA_DELETE: BASE_PATH + '/erp/buyarea/delete',
 
     //product
-    PRODUCT_SELECT: BASE_PATH + '/erp/product/select',
-    PRODUCT_ADD: BASE_PATH + '/erp/product/add',
+    PRODUCT_FIND: BASE_PATH + '/erp/product/find',
+    PRODUCT_FIND_ONE: BASE_PATH + '/erp/product/findOne',
+    PRODUCT_CREATE: BASE_PATH + '/erp/product/create',
     PRODUCT_UPDATE: BASE_PATH + '/erp/product/update',
     PRODUCT_DELETE: BASE_PATH + '/erp/product/delete',
     PRODUCT_LEVEL1REVIEW: BASE_PATH + '/erp/product/level1Review',
     PRODUCT_UN_LEVEL1REVIEW: BASE_PATH + '/erp/product/unLevel1Review',
     PRODUCT_LEVEL2REVIEW: BASE_PATH + '/erp/product/level2Review',
     PRODUCT_UN_LEVEL2REVIEW: BASE_PATH + '/erp/product/unLevel2Review',
+
+    //productOtherUnit
+    PRODUCT_OTHER_UNIT_FIND : BASE_PATH + '/erp/productOtherUnit/find',
+    PRODUCT_OTHER_UNIT_CREATE : BASE_PATH + '/erp/productOtherUnit/create',
+    PRODUCT_OTHER_UNIT_UPDATE : BASE_PATH + '/erp/productOtherUnit/update',
+    PRODUCT_OTHER_UNIT_DELETE : BASE_PATH + '/erp/productOtherUnit/delete_data',
 
     //productArea
     PRODUCTAREA_SELECT: BASE_PATH + '/erp/productarea/select',

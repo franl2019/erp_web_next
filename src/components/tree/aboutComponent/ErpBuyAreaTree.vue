@@ -1,5 +1,5 @@
 <template>
-      <el-tree
+      <erp-tree
           ref="buyAreaTreeRef"
           :data="buyAreaTreeData"
           :props="buyAreaTreeConfig"
@@ -15,12 +15,13 @@
 import {onMounted, ref} from "vue";
 import {IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {BuyAreaService} from "@/module/buyArea/buyArea.service";
+import ErpTree from "@/components/tree/ErpTree.vue";
 onMounted(()=>{
   initData();
 })
 
 //供应商地区树data
-let buyAreaTreeData = ref<IBuyAreaTree[]>();
+let buyAreaTreeData = ref<IBuyAreaTree[]>([]);
 
 //供应商地区树配置
 const buyAreaTreeConfig = {

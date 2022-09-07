@@ -1,31 +1,36 @@
 <template>
-  <div class="flex flex-col h-full pr-2">
+  <div class="flex flex-col flex-grow pr-2">
     <erp_title title="类别">
-      <erp_button size="small" @click="createProductAreaDialogVisible = true">新增</erp_button>
-      <erp_button size="small" v-if="productAreaId!==0" @click="updateProductAreaDialogVisible = true">修改</erp_button>
-      <erp_button size="small" v-if="productAreaId!==0" type="danger" @click="onDeleteProductAreaBtn">删除</erp_button>
+      <div class="flex h-10 space-x-1">
+        <erp_button size="small" @click="createProductAreaDialogVisible = true">新增</erp_button>
+        <erp_button v-if="productAreaId!==0" size="small" @click="onClickEditButton">修改</erp_button>
+        <erp_button v-if="productAreaId!==0" size="small" type="danger" @click="onDeleteProductAreaBtn">删除</erp_button>
+      </div>
     </erp_title>
-    <div class="flex-grow border-solid border border-gray-300 overflow-y-auto">
+
+    <div class="border-solid border border-gray-300 h-0 flex-grow overflow-y-auto">
       <erp_product-area-tree
           ref="productAreaTreeRef"
-          have-root-node
-          @node-click="onClickProductAreaNode"
-          :expand-on-click-node="false"
+          v-model="productAreaId"
           :default-expand-all="true"
+          :expand-on-click-node="false"
+          :have-root-node="true"
+          @onReady="treeApiOnReady"
+          @node-click="onClickProductAreaNode"
       ></erp_product-area-tree>
     </div>
   </div>
   <new-product-area-dialog
       v-if="createProductAreaDialogVisible"
-      @ok="onNewProductAreaConfirm"
       @close="createProductAreaDialogVisible = false"
+      @ok="onNewProductAreaConfirm"
   ></new-product-area-dialog>
 
   <update-product-dialog
       v-if="updateProductAreaDialogVisible"
       :product-area="productArea"
-      @ok="onUpdateProductAreaConfirm"
-      @close="updateProductAreaDialogVisible = false">
+      @close="updateProductAreaDialogVisible = false"
+      @ok="onUpdateProductAreaConfirm">
   </update-product-dialog>
 
 </template>
@@ -39,8 +44,10 @@ import NewProductAreaDialog from "@/view/productArea/NewProductAreaDialog.vue";
 import UpdateProductDialog from "@/view/productArea/UpdateProductAreaDialog.vue";
 import {ProductAreaService} from "@/module/productArea/productArea.service";
 import {IProductArea, IProductAreaTree, ProductArea} from "@/module/productArea/productArea";
-import Erp_productAreaTree from "@/components/tree/ErpProductAreaTree.vue";
+import Erp_productAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
 import {valueName} from "@/config/valueName";
+import {ICreateProductAreaDto} from "@/module/productArea/dto/createProductArea.dto";
+import {IUpdateProductAreaDto} from "@/module/productArea/dto/updateProductArea.dto";
 
 const emits = defineEmits(['onClickProductAreaNode'])
 
@@ -59,23 +66,45 @@ const productArea = ref<IProductArea>(new ProductArea());
 function onClickProductAreaNode(productAreaItem: IProductAreaTree) {
   productAreaId.value = productAreaItem.productareaid;
   productArea.value = JSON.parse(JSON.stringify(productAreaItem));
-  emits('onClickProductAreaNode',productAreaItem)
+  emits('onClickProductAreaNode', productAreaItem)
+}
+
+interface ITreeApi {
+    getSelectedNode: () => IProductArea
+}
+
+let productAreaTreeApi: ITreeApi | null = null;
+
+function treeApiOnReady(treeApi: ITreeApi) {
+  productAreaTreeApi = treeApi
 }
 
 onMounted(async () => {
-  await productAreaTreeRef.value.initData();
+  console.log(productAreaTreeRef.value)
 })
 
 //新增供应商dialog确定事件
-async function onNewProductAreaConfirm() {
+async function onNewProductAreaConfirm(value: ICreateProductAreaDto) {
+  await productAreaService.create(value);
   await productAreaTreeRef.value.initData();
   createProductAreaDialogVisible.value = false;
 }
 
+function onClickEditButton() {
+  const productAreaItem = productAreaTreeApi?.getSelectedNode();
+  if (productAreaItem && productAreaItem.productareaid !== 0) {
+    productAreaId.value = productAreaItem.productareaid;
+    productArea.value = JSON.parse(JSON.stringify(productAreaItem));
+    updateProductAreaDialogVisible.value = true
+  }
+}
+
 //更新产品类别dialog确定事件
-async function onUpdateProductAreaConfirm() {
-  await productAreaTreeRef.value.initData(productAreaId.value);
-  updateProductAreaDialogVisible.value =false;
+async function onUpdateProductAreaConfirm(value: IUpdateProductAreaDto) {
+  await productAreaService.update(value);
+  await productAreaTreeRef.value.initData();
+  productAreaId.value = value.productareaid
+  updateProductAreaDialogVisible.value = false;
 }
 
 //删除产品类别显示dialog按钮
@@ -87,7 +116,6 @@ function onDeleteProductAreaBtn() {
       ok: async () => {
         await productAreaService.delete_data(productArea.value.productareaid);
         await productAreaTreeRef.value.initData();
-        productAreaId.value = 0
       }
     })
   }

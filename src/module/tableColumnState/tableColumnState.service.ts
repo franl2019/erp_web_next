@@ -3,6 +3,7 @@ import {API_URL} from "@/api/url";
 import {ElMessage} from "element-plus";
 import {ColumnState} from "ag-grid-community/dist/lib/columns/columnModel";
 import {VerifyParamError} from "@/error/verifyParamError";
+import {tableColumnStateCache} from "@/module/tableColumnState/tableColumnState.cache";
 //表格列配置服务
 export class TableColumnStateService {
 
@@ -19,6 +20,7 @@ export class TableColumnStateService {
         })
 
         if (result.code === 200) {
+            tableColumnStateCache.setCache(this.tableName,[])
             ElMessage.success("表格设置保存成功");
         } else {
             return Promise.reject(new VerifyParamError(result.msg))
@@ -31,6 +33,7 @@ export class TableColumnStateService {
             tableName: this.tableName,
         })
         if (result.code === 200) {
+            tableColumnStateCache.setCache(this.tableName,[])
             ElMessage.success("表格设置重置成功");
         } else {
             return Promise.reject(new VerifyParamError(result.msg))
@@ -39,13 +42,19 @@ export class TableColumnStateService {
 
     //获取表格列配置
     public async getColumnState() {
-        const result = await http_post<IApiResult>(API_URL.TABLE_COLUMN_STATE_SELECT, {
-            tableName: this.tableName,
-        })
-        if (result.code === 200) {
-            return result.data as unknown as ColumnState[];
-        } else {
-            return Promise.reject(new VerifyParamError(result.msg))
+        if(tableColumnStateCache.getCache(this.tableName).length ===0){
+            const result = await http_post<IApiResult<ColumnState>>(API_URL.TABLE_COLUMN_STATE_SELECT, {
+                tableName: this.tableName,
+            })
+            if (result.code === 200 && result.data) {
+                tableColumnStateCache.setCache(this.tableName,result.data)
+                return result.data;
+            } else {
+                return Promise.reject(new VerifyParamError(result.msg))
+            }
+        }else{
+            return tableColumnStateCache.getCache(this.tableName);
         }
+
     }
 }

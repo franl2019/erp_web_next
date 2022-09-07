@@ -1,14 +1,15 @@
 import {IFindProductDto} from "@/module/product/dto/findProduct.dto";
 import {http_post, IApiResult} from "@/api/axios";
 import {API_URL} from "@/api/url";
-import {ICreateProductDto} from "@/module/product/dto/createProduct.dto";
-import {IUpdateProductDto} from "@/module/product/dto/updateProduct.dto";
+import {CreateProductDto} from "@/module/product/dto/createProduct.dto";
+import {UpdateProductDto} from "@/module/product/dto/updateProduct.dto";
 import {IProduct} from "@/module/product/product";
 import {VerifyParamError} from "@/error/verifyParamError";
+
 export class ProductService {
 
     public async find(findDto: IFindProductDto) {
-        const result = await http_post<IApiResult<IProduct>>(API_URL.PRODUCT_SELECT, findDto);
+        const result = await http_post<IApiResult<IProduct>>(API_URL.PRODUCT_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -16,16 +17,25 @@ export class ProductService {
         }
     }
 
-    public async create(createDto: ICreateProductDto) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_ADD, createDto);
-        if (result.code === 200) {
-            return true;
+    public async findOne(productid: number): Promise<IProduct> {
+        const result = await http_post<IApiResult<IProduct>>(API_URL.PRODUCT_FIND_ONE, {productid});
+        if (result.code === 200 && result.data) {
+            return result.data[0];
+        } else {
+            return Promise.reject(new VerifyParamError("查询产品资料失败"))
+        }
+    }
+
+    public async create(createDto: CreateProductDto) {
+        const result = await http_post<IApiResult>(API_URL.PRODUCT_CREATE, createDto);
+        if (result.code === 200 && result.createResult && result.createResult.id) {
+            return result;
         } else {
             return Promise.reject(new VerifyParamError("新增产品资料，保存失败"))
         }
     }
 
-    public async update(updateDto: IUpdateProductDto) {
+    public async update(updateDto: UpdateProductDto) {
         updateDto.packqty = Number(updateDto.packqty);
         updateDto.m3 = Number(updateDto.m3);
         updateDto.length = Number(updateDto.length);

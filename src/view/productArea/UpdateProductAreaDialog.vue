@@ -23,7 +23,6 @@ import {onMounted, ref} from "vue";
 import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
 import Erp_form from "@/components/form/ErpForm.vue";
 import Erp_form_item from "@/components/form/ErpFormItem.vue";
-import {ProductAreaService} from "@/module/productArea/productArea.service";
 import {IUpdateProductAreaDto, UpdateProductAreaDto} from "@/module/productArea/dto/updateProductArea.dto";
 import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
 import Erp_select_productarea_root from "@/components/select/ErpProductareaRootSelect.vue";
@@ -39,8 +38,6 @@ onMounted(async () => {
   defaultInputFocus.value.getNode().focus();
 })
 
-const productAreaService = new ProductAreaService();
-
 function setUpdateClientAreaDto() {
   updateProductArea.value = JSON.parse(JSON.stringify(props.productArea))
 }
@@ -50,8 +47,7 @@ let updateProductArea = ref<IUpdateProductAreaDto>(new UpdateProductAreaDto());
 
 //确定按钮
 async function onConfirmDialog() {
-  await productAreaService.update(updateProductArea.value);
-  emits('ok');
+  emits('ok',updateProductArea.value);
 }
 
 // 取消按钮

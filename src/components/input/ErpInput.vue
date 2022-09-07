@@ -2,7 +2,7 @@
   <input :type="props.type"
          required
          :value="modelValue"
-         @input="emit('update:modelValue', $event.target.value)"
+         @input="emits('update:modelValue', $event.target.value)"
          class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
          :placeholder="props.placeholder">
 </template>
@@ -20,6 +20,6 @@ const props = withDefaults(defineProps<{
   type:""
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue'])
 
 </script>

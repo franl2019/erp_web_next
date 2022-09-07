@@ -54,7 +54,7 @@ import {IProduct} from "@/module/product/product";
 import {ITableRef} from "@/components/table/type";
 import Erp_table from "@/components/table/ErpTable.vue";
 import {IProductArea} from "@/module/productArea/productArea";
-import ErpProductAreaTree from "@/components/tree/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
 import {RowDoubleClickedEvent} from "ag-grid-community";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightStructureDialog.vue";
 import {valueName} from "@/config/valueName";

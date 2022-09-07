@@ -39,7 +39,7 @@ import {IClient} from "@/module/client/client";
 import {FindClientDto, IFindClientDto} from "@/module/client/dto/findClient.dto";
 import {IClientArea} from "@/module/clientArea/clientArea";
 import {selectClientTableState} from "@/view/client/tableConfig/selectClientTableState";
-import ErpClientAreaTree from "@/components/tree/ErpClientAreaTree.vue";
+import ErpClientAreaTree from "@/components/tree/aboutComponent/ErpClientAreaTree.vue";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightStructureDialog.vue";
 
 const clientTableRef = ref<ITableRef>()

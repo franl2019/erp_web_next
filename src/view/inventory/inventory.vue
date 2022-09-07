@@ -53,7 +53,7 @@ import Erp_table from "@/components/table/ErpTable.vue";
 import {IInventory} from "@/module/inventory/inventory";
 import {ITableRef} from "@/components/table/type";
 import Erp_select_operatearea_auth from "@/components/select/ErpOperateAreaAuthSelect.vue";
-import Erp_productAreaTree from "@/components/tree/ErpProductAreaTree.vue";
+import Erp_productAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
 import {IProductArea} from "@/module/productArea/productArea";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";

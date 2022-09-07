@@ -3,14 +3,14 @@
          v-bind="$attrs"
          :value="props.modelValue"
          @input="emits('update:modelValue', $event.target.value)"
-         class="focus:ring-indigo-500 focus:border-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300"
+         class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300"
   >
 </template>
 
 <script setup lang='ts'>
 import {ref} from "vue";
 
-const props = defineProps<{ modelValue: any }>()
+const props = defineProps<{ modelValue?: any }>()
 const emits = defineEmits(['update:modelValue'])
 const inputRef = ref();
 

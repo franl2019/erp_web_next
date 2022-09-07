@@ -10,6 +10,9 @@
           <erp-router-button router-name="product">商品资料设置</erp-router-button>
         </div>
         <div class="mr-6">
+          <erp-router-button router-name="productOtherUnit">辅助单位设置</erp-router-button>
+        </div>
+        <div class="mr-6">
           <erp-router-button router-name="client">客户资料设置</erp-router-button>
         </div>
         <div class="mr-6">

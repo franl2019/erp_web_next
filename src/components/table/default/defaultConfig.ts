@@ -15,7 +15,9 @@ export const defaultConfig = ref<ITableState<any>>({
         suppressDragLeaveHidesColumns: true
     },
     columnDefaults: [
+        {
 
+        }
     ],
     tableService: new defaultService(),
 })

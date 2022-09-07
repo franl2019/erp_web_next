@@ -6,7 +6,7 @@
         <div class="flex flex-wrap flex-none space-x-1.5 md:items-center">
           <slot></slot>
         </div>
-        <div class="input-box flex flex-col items-center mb-1 md:flex-wrap md:flex-row md:items-center">
+        <div class="input-box flex flex-col items-center space-x-1.5 md:flex-wrap md:flex-row md:items-center">
           <slot name="input"></slot>
         </div>
       </div>
@@ -20,6 +20,5 @@
 
 <style lang="scss" scoped>
 :deep(.input-box > *) {
-  @apply mr-1 mb-1 md:mb-0
 }
 </style>

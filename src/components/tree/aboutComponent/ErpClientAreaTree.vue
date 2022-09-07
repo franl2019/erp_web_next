@@ -1,5 +1,5 @@
 <template>
-  <el-tree
+  <erp-tree
       ref="clientAreaTreeRef"
       :data="clientAreaTreeData"
       :highlight-current="true"
@@ -16,7 +16,7 @@
 import {onMounted, ref} from "vue";
 import {IClientAreaTree} from "@/module/clientArea/clientArea";
 import {ClientAreaService} from "@/module/clientArea/clientArea.service";
-
+import ErpTree from "@/components/tree/ErpTree.vue";
 const clientAreaTreeRef = ref();
 //客户地区树data
 let clientAreaTreeData = ref<IClientAreaTree[]>([]);

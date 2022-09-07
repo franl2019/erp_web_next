@@ -1,3 +1,5 @@
+import {IProductOtherUnitMx} from "@/module/productOtherUnit/productOtherUnitMx";
+
 export interface ICreateProductDto {
     productcode: string;
     productname: string;
@@ -27,7 +29,11 @@ export interface ICreateProductDto {
     warehouseid: number | null;
 }
 
-export class CreateProductDto implements ICreateProductDto {
+export interface IAddProductOtherUnitMxList extends ICreateProductDto{
+    productOtherUnitMxList:IProductOtherUnitMx[]
+}
+
+export class CreateProductDto implements IAddProductOtherUnitMxList {
     productcode: string = "";
     productname: string = "";
     spec: string = "";
@@ -54,4 +60,5 @@ export class CreateProductDto implements ICreateProductDto {
     createdAt: Date | null = null;
     productareaid: number | null = null;
     warehouseid: number | null = null;
+    productOtherUnitMxList: IProductOtherUnitMx[] = [];
 }

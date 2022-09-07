@@ -9,7 +9,7 @@ module.exports = {
       fontSmoothing: ['hover', 'focus'],
       borderColor: ['checked'],
       backgroundColor: ['active','checked'],
-      opacity: ['disabled']
+      opacity: ['disabled'],
     },
   },
   plugins: [require('@tailwindcss/forms'),],

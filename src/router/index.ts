@@ -9,7 +9,7 @@ import {outboundRouter} from "@/router/outbound.router";
 import {moneyModuleRouter} from "@/router/moneyModuleRouter";
 import {reportRouter} from "@/router/report.router";
 import {valueName} from "@/config/valueName";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -121,6 +121,14 @@ const routes: Array<RouteRecordRaw> = [
                     title: "仓库管理"
                 },
                 component: () => import(/* webpackChunkName: "warehouse" */ '@/view/warehouse/warehouse.vue')
+            },
+            {
+                name: "productOtherUnit",
+                path: "/productOtherUnit",
+                meta: {
+                    title: "辅助单位管理"
+                },
+                component: () => import(/* webpackChunkName: "productOtherUnit" */ '@/view/productOtherUnit/productOtherUnit.vue')
             },
             ...authRouter,
             ...buyInboundRouter,

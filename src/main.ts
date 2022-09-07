@@ -20,13 +20,13 @@ app.directive(v_reqClick.name, v_reqClick);
 
 app.mount('#app');
 
-app.config.errorHandler = (err:any) => {
+app.config.errorHandler = (err: any) => {
     // ErpDialog({
     //     title: "错误提示",
     //     message: (err as Error).message,
     //     closeBtnVisible: false
     // })
-    if(err.errorType === 'verifyParamError'){
+    if (err.errorType === 'verifyParamError') {
         ErpDialog({
             title: "错误提示",
             message: (err as Error).message,

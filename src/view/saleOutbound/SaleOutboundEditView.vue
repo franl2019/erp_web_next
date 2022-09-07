@@ -86,7 +86,7 @@ import {IOutboundMxTableData, OutboundMxSaleTableData} from "@/module/saleOutbou
 import {bignumber, chain, round} from "mathjs";
 import {SaleOutboundMxTableTotal} from "@/module/saleOutbound/SaleOutboundMxTableTotal";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 
 

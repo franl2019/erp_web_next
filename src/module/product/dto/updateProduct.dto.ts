@@ -1,3 +1,6 @@
+import {IProductOtherUnitMx} from "@/module/productOtherUnit/productOtherUnitMx";
+import {IProduct} from "@/module/product/product";
+
 export interface IUpdateProductDto {
     productid: number;
     productcode: string;
@@ -28,7 +31,11 @@ export interface IUpdateProductDto {
     warehouseid: number;
 }
 
-export class UpdateProductDto implements IUpdateProductDto {
+interface IUpdateProductOtherUnitMxList extends IUpdateProductDto{
+    productOtherUnitMxList:IProductOtherUnitMx[]
+}
+
+export class UpdateProductDto implements IUpdateProductOtherUnitMxList {
     productid: number = 0;
     productcode: string = "";
     productname: string = "";
@@ -56,4 +63,36 @@ export class UpdateProductDto implements IUpdateProductDto {
     updatedAt: Date = new Date();
     productareaid: number = 0;
     warehouseid: number = 0;
+    productOtherUnitMxList: IProductOtherUnitMx[] = [];
+
+
+    public productToUpdateProductDto(product:IProduct){
+        this.productid = product.productid;
+        this.productcode = product.productcode;
+        this.productname = product.productname;
+        this.spec = product.spec;
+        this.materials = product.materials;
+        this.unit = product.unit;
+        this.packunit = product.packunit;
+        this.packqty = product.packqty;
+        this.m3 = product.m3;
+        this.length = product.length;
+        this.width = product.width;
+        this.height = product.height;
+        this.remark1 = product.remark1;
+        this.remark2 = product.remark2;
+        this.remark3 = product.remark3;
+        this.remark4 = product.remark4;
+        this.remark5 = product.remark5;
+        this.remark6 = product.remark6;
+        this.remark7 = product.remark7;
+        this.remark8 = product.remark8;
+        this.remark9 = product.remark9;
+        this.remark10 = product.remark10;
+        this.useflag = product.useflag;
+        this.updater = product.updater;
+        this.updatedAt = product.updatedAt;
+        this.productareaid = product.productareaid;
+        this.warehouseid = product.warehouseid;
+    }
 }

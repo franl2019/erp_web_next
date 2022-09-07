@@ -12,13 +12,22 @@
         </div>
 
         <div
-            class="h-7 w-7 rounded bg-red-500 text-2xl text-white flex justify-center items-center select-none pb-1 hover:bg-red-600 shadow-2xl active:bg-red-700" @click="close">
+            class="h-7 w-7 rounded bg-red-500 text-2xl text-white flex justify-center items-center select-none pb-1 hover:bg-red-600 shadow-2xl active:bg-red-700"
+            @click="close">
           ×
         </div>
       </div>
-      <div class="w-full px-4 max-h-96 overflow-y-auto">
-        <slot></slot>
-      </div>
+
+      <template v-if="$slots.default">
+        <div class="w-full px-4 max-h-96 overflow-y-auto">
+          <slot></slot>
+        </div>
+      </template>
+
+      <template v-else>
+        <slot name="custom"></slot>
+      </template>
+
       <div
           class="bg-gray-100 px-4 py-2 md:py-0 md:h-14 md:flex md:items-center sm:px-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row-reverse sm:space-x-reverse sm:space-x-2">
         <erp_button class="" type="success" @click="ok">

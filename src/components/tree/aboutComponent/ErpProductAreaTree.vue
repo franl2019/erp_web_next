@@ -1,5 +1,5 @@
 <template>
-  <el-tree
+  <erp-tree
       ref="productAreaTreeRef"
       :data="productAreaTreeData"
       :props="productAreaTreeConfig"
@@ -15,14 +15,14 @@
 import {onMounted, ref} from "vue";
 import {IProductAreaTree} from "@/module/productArea/productArea";
 import {ProductAreaService} from "@/module/productArea/productArea.service";
-
+import ErpTree from "@/components/tree/ErpTree.vue";
 onMounted(async ()=>{
  await initData();
 })
 
 const props = withDefaults(defineProps<{
   haveRootNode?:boolean;
-}>(),{haveRootNode:false})
+}>(),{haveRootNode:false});
 
 //产品类别树配置
 const productAreaTreeConfig = {
@@ -49,12 +49,8 @@ async function getProductArea() {
 
 }
 
-async function initData(productareaid?: number) {
+async function initData() {
   await getProductArea();
-  if (productareaid) {
-    await productAreaTreeRef.value.setCurrentKey(productareaid);
-    await productAreaTreeRef.value.$emit('node-click', productAreaTreeRef.value.getCurrentNode());
-  }
 }
 
 defineExpose({initData})

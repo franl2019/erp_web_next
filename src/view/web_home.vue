@@ -41,10 +41,10 @@ import {onMounted, ref} from "vue";
 import Menu2 from "@/components/menu2/menu2.vue";
 import {KeepAliveTestApi} from "@/components/ErpKeepAlive/ErpKeepAlive";
 import {ErpKeepAlive} from "@/components/ErpKeepAlive/ErpKeepAlive";
-import ErpRouterTab from "@/components/tab/erp_tab.vue";
+import ErpRouterTab from "@/components/router_tab/erp_tab.vue";
 import {useRouter} from "vue-router";
 import {useRouterPage} from "@/utils";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 const isCollapse = ref(true)
 

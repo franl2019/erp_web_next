@@ -5,7 +5,7 @@ import ErpDialog from "@/components/dialog/dialog";
 import {CodeType} from "@/types/CodeType";
 import router from "@/router";
 import {config} from "@/config";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 import mitt from 'mitt';
 
 export function useLocalStorageSave(key: string, value: string): void {

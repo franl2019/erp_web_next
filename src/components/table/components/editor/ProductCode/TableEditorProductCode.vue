@@ -4,16 +4,15 @@
       :offset-y="1"
       :placement="'bottom-start'"
       :popover-visible="popoverVisible"
-      width="30rem"
   >
     <template #reference>
-      <input
-          ref="inputRef"
-          v-model="value"
-          class="w-full h-full p-0 rounded-none text-sm px-1"
-          type="text"
-          @keydown.stop="onKeyDownInput"
-      >
+       <input
+           ref="inputRef"
+           v-model="value"
+           class="w-full h-full rounded-none text-sm px-1"
+           type="text"
+           @keydown.stop="onKeyDownInput"
+       >
     </template>
     <template #popper>
       <erp-table
@@ -22,7 +21,8 @@
           :find-dto="findDto"
           :navigateToNextCell="navigateToNextCell"
           :table-state="tableEditorProductCodeConfig"
-          class="h-full w-full shadow-md"
+          class="h-52 shadow-md"
+          style="width:30rem"
           @cellDoubleClicked="onTableCellDoubleClicked"
           @keydown.stop="onKeydownPopover"
       ></erp-table>

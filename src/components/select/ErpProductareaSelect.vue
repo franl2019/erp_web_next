@@ -1,31 +1,27 @@
 <template>
-  <!--  <el-select v-bind="$attrs" placeholder="选择所属类别" ref="ElSelectRef">-->
-  <!--    <el-option-->
-  <!--        v-for="item in productAreaSelectList"-->
-  <!--        :key="item.productareaid"-->
-  <!--        :label="item.productareaname"-->
-  <!--        :value="item.productareaid"-->
-  <!--    >-->
-  <!--    </el-option>-->
-  <!--  </el-select>-->
-
-  <el-tree-select
+  <erp-select-tree
       :data="productAreaSelectList"
+      :expandOnClickNode="false"
+      :model-value="props.modelValue"
       :props="productAreaTreeConfig"
       node-key="productareaid"
-      check-strictly
-      filterable
-  />
+      v-bind="$attrs"/>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {onMounted, ref} from "vue";
 import {IProductArea} from "@/module/productArea/productArea";
 import {ProductAreaService} from "@/module/productArea/productArea.service";
+import ErpSelectTree from "@/components/selectTree/ErpSelectTree.vue";
+
+const props = withDefaults(defineProps<{
+  modelValue?: any;
+}>(), {})
+
 
 const ElSelectRef = ref();
 //产品类别选择List
-const productAreaSelectList = ref<IProductArea[]>();
+const productAreaSelectList = ref<IProductArea[]>([]);
 //服务
 const productAreaService = new ProductAreaService();
 //产品类别树配置

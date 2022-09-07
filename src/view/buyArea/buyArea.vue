@@ -1,9 +1,11 @@
 <template>
   <div class="flex flex-col h-full pr-2">
     <erp_title title="地区">
-      <erp_button size="small" @click="createBuyAreaDialogVisible = true">新增</erp_button>
-      <erp_button size="small" v-if="buyAreaId!==0" @click="updateBuyAreaDialogVisible = true">修改</erp_button>
-      <erp_button size="small" v-if="buyAreaId!==0" @click="onDeleteBuyAreaBtn" type="danger">删除</erp_button>
+     <div class="h-10 flex space-x-1">
+       <erp_button size="small" @click="createBuyAreaDialogVisible = true">新增</erp_button>
+       <erp_button size="small" v-if="buyAreaId!==0" @click="updateBuyAreaDialogVisible = true">修改</erp_button>
+       <erp_button size="small" v-if="buyAreaId!==0" @click="onDeleteBuyAreaBtn" type="danger">删除</erp_button>
+     </div>
     </erp_title>
     <div class="flex-grow border-solid border border-gray-300 overflow-y-auto">
       <erp_buy-area-tree
@@ -39,8 +41,8 @@ import UpdateBuyAreaDialog from "@/view/buyArea/UpdateBuyAreaDialog.vue";
 import ErpDialog from "@/components/dialog/dialog";
 import {BuyArea, IBuyArea, IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {BuyAreaService} from "@/module/buyArea/buyArea.service";
-import Erp_buyAreaTree from "@/components/tree/ErpBuyAreaTree.vue";
-import {ITreeRef} from "@/components/tree/ITreeRef";
+import Erp_buyAreaTree from "@/components/tree/aboutComponent/ErpBuyAreaTree.vue";
+import {ITreeRef} from "@/components/tree/aboutComponent/ITreeRef";
 
 const emits = defineEmits(['clickedBuyAreaNode'])
 

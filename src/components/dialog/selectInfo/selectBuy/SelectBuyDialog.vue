@@ -43,7 +43,7 @@ import {FindBuyDto, IFindBuyDto} from "@/module/buy/dto/findBuy.dto";
 import {IBuyArea} from "@/module/buyArea/buyArea";
 import {selectBuyTableState} from "@/view/buy/tableConfig/selectBuyTableState";
 import {IBuy} from "@/module/buy/buy";
-import ErpBuyAreaTree from "@/components/tree/ErpBuyAreaTree.vue";
+import ErpBuyAreaTree from "@/components/tree/aboutComponent/ErpBuyAreaTree.vue";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightStructureDialog.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 

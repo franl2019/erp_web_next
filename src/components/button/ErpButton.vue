@@ -46,7 +46,7 @@ const buttonSizeStyle = computed(() => {
     case 'mini':
       return `${props.disabled ? disabledButtonType[props.type] : buttonType[props.type]} flex items-center justify-center h-auto flex-none border-transparent text-xs p-1 font-bold rounded focus:outline-none disabled:opacity-50`
     case 'small':
-      return `${props.disabled ? disabledButtonType[props.type] : buttonType[props.type]} flex items-center justify-center px-1 py-1 h-auto flex-none border border-transparent text-sm font-medium rounded focus:outline-none disabled:opacity-50`
+      return `${props.disabled ? disabledButtonType[props.type] : buttonType[props.type]} flex items-center justify-center px-2 py-1 h-auto flex-none border border-transparent text-sm font-medium rounded focus:outline-none disabled:opacity-50`
     case 'big':
       return `${props.disabled ? disabledButtonType[props.type] : buttonType[props.type]} flex items-center justify-center px-4 py-2 h-10 flex-none border border-transparent text-sm font-medium rounded focus:outline-none disabled:opacity-50`
     default:

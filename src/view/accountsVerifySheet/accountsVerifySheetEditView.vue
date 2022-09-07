@@ -102,7 +102,7 @@ import {VerifyParamError} from "@/error/verifyParamError";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpDialog from "@/components/dialog/dialog";
-import {tabMenu} from "@/components/tab/useRouterTab";
+import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 onMounted(() => {
   initPage();

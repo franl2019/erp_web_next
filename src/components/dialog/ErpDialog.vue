@@ -82,16 +82,13 @@ const props = withDefaults(defineProps<{
   okBtnVisible: true,
   closeBtnVisible: true,
 });
-const emits = defineEmits(['clickedCancel', 'clickedConfirm'])
 
 async function clickedConfirm() {
-    emits('clickedConfirm');
     await props.ok();
     await props.unmount();
 }
 
 async function clickedCancel() {
-    emits('clickedCancel');
     await props.close();
     await props.unmount();
 }

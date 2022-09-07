@@ -34,7 +34,7 @@
                  @rowDoubleClicked="onSelectTableDoubleClick"
       >
       </erp-table>
-      <erp-title title="已选库存">
+      <erp-title class="mt-1" title="已选库存">
         <erp-button type="danger" @click="clickedDeleteSelected">删除已选</erp-button>
         <erp-button @click="clickedClearSelected">清空已选</erp-button>
       </erp-title>
@@ -58,7 +58,7 @@ import ErpTable from "@/components/table/ErpTable.vue";
 import {IInventory, IInventoryForSelect} from "@/module/inventory/inventory";
 import {ITableRef} from "@/components/table/type";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
-import ErpProductAreaTree from "@/components/tree/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
 import {IProductArea} from "@/module/productArea/productArea";
 import {selectInventoryTableState} from "@/view/inventory/tableConfig/selectInventoryTableState";
 import {selectedInventoryTableState} from "@/view/inventory/tableConfig/selectedInventoryTableState";

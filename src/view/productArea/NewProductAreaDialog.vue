@@ -24,7 +24,6 @@ import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
 import Erp_form from "@/components/form/ErpForm.vue";
 import Erp_form_item from "@/components/form/ErpFormItem.vue";
 import {CreateProductAreaDto, ICreateProductAreaDto} from "@/module/productArea/dto/createProductArea.dto";
-import {ProductAreaService} from "@/module/productArea/productArea.service";
 import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
 import Erp_select_productarea_root from "@/components/select/ErpProductareaRootSelect.vue";
 
@@ -40,9 +39,7 @@ const createProductArea = ref<ICreateProductAreaDto>(new CreateProductAreaDto())
 
 //确定按钮
 async function onConfirmDialog() {
-  const productAreaService = new ProductAreaService();
-  await productAreaService.create(createProductArea.value);
-  emits('ok');
+  emits('ok',createProductArea.value);
 }
 
 // 取消按钮
