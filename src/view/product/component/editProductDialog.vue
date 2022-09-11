@@ -169,7 +169,6 @@ function getProductOtherUnitMx() {
     if (
         productOtherUnitMx.productOtherUnitId
         && !isNaN(productOtherUnitMx.productOtherUnitId)
-        && productOtherUnitMx.conversionRate !== 1
         && productOtherUnitMx.conversionRate !== 0
     ) {
       const productOtherUnitMxCreateDto = new ProductOtherUnitMxCreateDto;
