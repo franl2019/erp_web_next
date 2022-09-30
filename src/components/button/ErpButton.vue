@@ -1,6 +1,7 @@
 <template>
   <button ref="buttonRef"
           v-bind="$attrs"
+          class=""
           :class="buttonSizeStyle"
           :disabled="disabled"
   >
@@ -24,7 +25,7 @@ const props = withDefaults(
 )
 
 const buttonType = {
-  info: `bg-white hover:bg-white active:bg-gray-50 focus:ring-gray-500 text-black border-gray-300 shadow`,
+  info: `bg-white hover:bg-white active:bg-gray-50 focus:ring-gray-500 text-black border-gray-300 shadow border border-gray-200`,
   primary: `bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:ring-blue-500 text-white shadow-lg`,
   success: `bg-green-500 hover:bg-green-600 active:bg-green-700 focus:ring-green-500 text-white shadow-lg`,
   warning: `bg-yellow-500 hover:bg-yellow-600 active:bg-yellow-700 focus:ring-yellow-500 text-white shadow-lg`,

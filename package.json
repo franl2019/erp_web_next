@@ -22,20 +22,23 @@
     "mathjs": "^11.0.1",
     "mitt": "^3.0.0",
     "moment": "^2.29.1",
-    "sass": "^1.43.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4",
+
     "uuid": "^8.3.2",
     "vue": "^3.2.16",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-router": "4",
     "vuedraggable": "^4.1.0",
-    "wait-on": "^6.0.1"
+    "wait-on": "^6.0.1",
+
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.16",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.0.2",
+    "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
     "@types/node": "^18.6.2",
     "@vitejs/plugin-vue": "^3.0.1",
-    "autoprefixer": "^10.4.8",
-    "postcss": "^8.4.4",
     "typescript": "^4.4.4",
     "vite": "^3.0.4",
     "vue-tsc": "^0.39.2"

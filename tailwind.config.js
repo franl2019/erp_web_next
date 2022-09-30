@@ -1,16 +1,19 @@
+const colors = require('tailwindcss/colors')
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    "./index.html",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {
-      fontSmoothing: ['hover', 'focus'],
-      borderColor: ['checked'],
-      backgroundColor: ['active','checked'],
-      opacity: ['disabled'],
+      colors: {
+        green: colors.emerald,
+        gray: colors.neutral,
+      }
     },
   },
   plugins: [require('@tailwindcss/forms'),],
 }
+
