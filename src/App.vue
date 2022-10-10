@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import {onMounted} from "vue";
-import {config} from "@/config";
+import {config} from "@/config/env";
 
 onMounted(()=>{
 

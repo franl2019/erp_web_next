@@ -1,4 +1,4 @@
-import {IInbound} from "@/types/inbound/IInbound";
+import {IInbound} from "@/module/inbound/IInbound";
 import {getToday} from "@/utils";
 
 export class ProductionInbound implements IInbound {

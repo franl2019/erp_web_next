@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
-import {IInboundMx} from "@/types/inboundMx/IInboundMx";
+import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
 import {valueName} from "@/config/valueName";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";

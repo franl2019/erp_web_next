@@ -1,9 +1,9 @@
 //客户地区服务
 import {useFormatDataTree} from "@/utils";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IClientArea, IClientAreaTree, ICreateClientAreaDto, IUpdateClientAreaDto} from "@/module/clientArea/clientArea";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ClientAreaService {
 
     //查询客户地区数据

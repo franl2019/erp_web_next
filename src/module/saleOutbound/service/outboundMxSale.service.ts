@@ -1,8 +1,8 @@
 import {FindOutboundMxSaleDto} from "@/module/saleOutbound/dto/findOutboundMxSale.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IOutboundMxTableData} from "@/module/saleOutbound/outboundMxSaleTableData";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class OutboundMxSaleService {
 
     public async find(findDto: FindOutboundMxSaleDto) {

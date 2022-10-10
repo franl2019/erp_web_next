@@ -2,7 +2,8 @@
   <erp-loading></erp-loading>
   <div class="flex flex-col w-full flex-grow">
 
-    <div class="flex flex-none h-12 w-full pt-1.5 bg-gray-200">
+
+    <div class="flex flex-col flex-none h-14 w-full pt-1.5 bg-gray-200">
 
       <div class="flex flex-col w-full h-full">
 
@@ -16,6 +17,9 @@
 
       </div>
 
+      <div class="h-2 bg-zinc-50 border-b border-solid border-gray-200">
+
+      </div>
     </div>
 
     <div class="flex-grow flex flex-row w-full">

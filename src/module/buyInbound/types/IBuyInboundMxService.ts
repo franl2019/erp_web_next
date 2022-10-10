@@ -1,4 +1,4 @@
-import {IInboundMx} from "@/types/inboundMx/IInboundMx";
+import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 
 export interface IBuyInboundMxTableData extends IInboundMx {
     productcode: string;

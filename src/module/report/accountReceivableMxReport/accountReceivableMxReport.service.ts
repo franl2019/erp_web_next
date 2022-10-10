@@ -1,10 +1,10 @@
 import {
     AccountReceivableMxReportFindDto
 } from "@/module/report/accountReceivableMxReport/dto/accountReceivableMxReportFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IAccountReceivableMxReport} from "@/module/report/accountReceivableMxReport/accountReceivableMxReport";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class AccountReceivableMxReportService {
 

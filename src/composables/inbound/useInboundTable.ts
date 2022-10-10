@@ -1,5 +1,5 @@
-import {IInboundMx} from "@/types/inboundMx/IInboundMx";
-import {IInbound} from "@/types/inbound/IInbound";
+import {IInboundMx} from "@/module/inboundMx/IInboundMx";
+import {IInbound} from "@/module/inbound/IInbound";
 
 export function useInboundTable() {
     //获取进仓单表头行数据ID

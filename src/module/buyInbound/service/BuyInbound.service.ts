@@ -1,10 +1,10 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {
     IBuyInboundCreateDto,
     IBuyInboundFindDto, IBuyInboundFind
 } from "@/module/buyInbound/types/IBuyInboundService";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {IBuyInboundSheetState} from "@/view/home/buyHome.vue";
 import {BuyInboundFindDto} from "@/module/buyInbound/dto/BuyInboundFindDto";
 import {useVerifyParam} from "@/utils/validate";

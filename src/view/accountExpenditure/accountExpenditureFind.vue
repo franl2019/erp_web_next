@@ -84,7 +84,7 @@ import {useDateSelect} from "@/composables/useDateSelect";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useRouterPage} from "@/utils";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 const router = useRouter();
 const accountExpenditureTableRef = ref<ITableRef>();
 const accountExpenditureAmountMxTableRef = ref<ITableRef>();

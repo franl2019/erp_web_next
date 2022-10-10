@@ -2,10 +2,10 @@
 
   <!--激活tab-->
   <div v-if="props.tab.activation" class="w-52 h-full flex flex-none items-center justify-between text-sm select-none">
-    <div class="w-1.5 h-full bg-white">
+    <div class="w-1.5 h-full bg-zinc-50">
       <div class="w-1.5 h-full bg-gray-200 rounded-br-md"></div>
     </div>
-    <div class="flex-grow flex items-center h-full rounded-t-md bg-white active:bg-gray-100 px-2.5"
+    <div class="flex-grow flex items-center h-full rounded-t-md bg-zinc-50 active:bg-gray-100 px-2.5"
          @click.stop="clickedTabButton"
          @click.middle.stop="clickedCloseButton">
       <div class="flex-grow">{{ props.tab.title }}</div>
@@ -17,7 +17,7 @@
              src="@/assets/close_black_18dp.svg"/>
       </div>
     </div>
-    <div class="w-2 h-full bg-white">
+    <div class="w-2 h-full bg-zinc-50">
       <div class="w-2 h-full bg-gray-200 rounded-bl-md"></div>
     </div>
   </div>

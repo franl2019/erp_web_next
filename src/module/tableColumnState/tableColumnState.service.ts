@@ -1,8 +1,8 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {ElMessage} from "element-plus";
 import {ColumnState} from "ag-grid-community/dist/lib/columns/columnModel";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tableColumnStateCache} from "@/module/tableColumnState/tableColumnState.cache";
 //表格列配置服务
 export class TableColumnStateService {

@@ -1,9 +1,9 @@
 import {useVerifyParam} from "@/utils/validate";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 import {AccountInComeAmountMxFindDto} from "@/module/accountInCome/dto/amountMx/accountInComeAmountMxFind.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountInComeAmountMxService {
 
     public async find(accountInComeAmountMxFindDto: AccountInComeAmountMxFindDto): Promise<IAccountInComeAmountMx[]> {

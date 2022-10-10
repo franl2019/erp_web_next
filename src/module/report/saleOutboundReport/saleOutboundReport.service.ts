@@ -1,6 +1,6 @@
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {SaleOutboundMxReportFindDto} from "@/module/report/saleOutboundReport/dto/saleOutboundMxReportFind.dto";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {ISaleOutboundMxReport} from "@/module/report/saleOutboundReport/saleOutboundMxReport";
 
 export class SaleOutboundReportService {

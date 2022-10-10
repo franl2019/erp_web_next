@@ -36,7 +36,7 @@ import {UserAccountAuthDeleteDto} from "@/module/user_account_mx/dto/userAccount
 import ErpDialog from "@/components/dialog/dialog";
 import {IUserAccountMxFind} from "@/module/user_account_mx/userAccountMx";
 import {UserAccountMxService} from "@/module/user_account_mx/userAccountMx.service";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {useRoute} from "vue-router";
 
 const userAccountAuthTableRef = ref<ITableRef>();

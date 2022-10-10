@@ -1,9 +1,9 @@
 import {AccountsReceivableFindDto} from "@/module/accountReceivable/dto/accountReceivableFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceivable";
 import {useVerifyParam} from "@/utils/validate";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountReceivableService {
 
     public async find(accountsReceivableFindDto:AccountsReceivableFindDto):Promise<IAccountsReceivableFind[]>{

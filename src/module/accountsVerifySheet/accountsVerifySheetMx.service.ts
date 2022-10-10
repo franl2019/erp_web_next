@@ -1,8 +1,8 @@
 import {AccountsVerifySheetMxFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetMxFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IAccountsVerifySheetMxFind} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {useVerifyParam} from "@/utils/validate";
 export class AccountsVerifySheetMxService {
 

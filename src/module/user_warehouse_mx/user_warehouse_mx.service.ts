@@ -1,9 +1,9 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IUser_warehouse_mx} from "@/module/user_warehouse_mx/user_warehouse_mx";
 import {ICreateUserWarehousePermissionsDto} from "@/module/user_warehouse_mx/dto/createUserWarehousePermissionsDto";
 import {IDeleteUserWarehousePermissionsDto} from "@/module/user_warehouse_mx/dto/deleteUserWarehousePermissionsDto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class User_warehouse_mxService {
 
     public async find(findDto: { userid: number }) {

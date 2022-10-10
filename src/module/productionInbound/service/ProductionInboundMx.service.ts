@@ -1,8 +1,8 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IProductionInboundMxTableData} from "@/module/productionInbound/types/IProductionInboundMxTableData";
 import {IProductionInboundMxFindDto} from "@/module/productionInbound/types/IProductionInboundService";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ProductionInboundMxService {
     public async find(findDto: IProductionInboundMxFindDto) {
         const result = await http_post<IApiResult<IProductionInboundMxTableData>>(API_URL.INBOUND_FIND_MX, findDto);

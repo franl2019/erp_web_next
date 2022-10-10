@@ -1,9 +1,9 @@
 import {IAccountsPayableFind} from "@/module/accountsPayable/types/IAccountsPayableFind";
 import {AccountsPayableFindDto} from "@/module/accountsPayable/dto/accountsPayableFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/validate";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountsPayableService {
 
     public async find(findDto:AccountsPayableFindDto):Promise<IAccountsPayableFind[]>{

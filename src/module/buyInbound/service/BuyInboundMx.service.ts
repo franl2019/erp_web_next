@@ -1,8 +1,8 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IBuyInboundMxFindDto} from "@/module/buyInbound/types/IBuyInboundService";
 import {IBuyInboundMxTableData} from "@/module/buyInbound/types/IBuyInboundMxService";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class BuyInboundMxService {
     public async find(findDto: IBuyInboundMxFindDto) {

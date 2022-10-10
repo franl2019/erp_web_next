@@ -1,10 +1,11 @@
 import axios, {AxiosResponse} from 'axios';
-import {useLocalStorageGet} from '@/utils';
+import {useLocalStorageGet} from '@/utils/index';
 import {isLoading} from "@/components/loading/loading";
 import ErpDialog from "@/components/dialog/dialog";
 import {ElMessage} from "element-plus";
-import {HttpError} from "@/error/httpError";
-import {config} from "@/config";
+import {HttpError} from "@/types/error/httpError";
+import {config} from "@/config/env";
+import {BASE_PATH} from "@/config/apiUrl";
 
 export interface IApiResult<T = void> {
     code: number;
@@ -57,6 +58,7 @@ axiosInstance.interceptors.request.use(function (config) {
 //post请求
 export function http_post<T>(url: string, params?: any): Promise<T> {
     return new Promise((resolve, reject) => {
+        url = BASE_PATH + url;
         axiosInstance.post(url, params).then((result: AxiosResponse<T>) => {
             if (result) {
                 resolve(result.data);

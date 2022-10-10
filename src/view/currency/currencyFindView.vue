@@ -47,7 +47,7 @@ import {CurrencyCreateDto} from "@/module/currency/dto/currencyCreate.dto";
 import {ICurrency} from "@/module/currency/currency";
 import ErpDialog from "@/components/dialog/dialog";
 import {CurrencyService} from "@/module/currency/currency.service";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 const currencyTableRef = ref<ITableRef>();
 const currencyCreateDialogVisible = ref<boolean>(false);

@@ -4,7 +4,7 @@ import {DirectiveBinding} from "@vue/runtime-core";
 import ErpDialog from "@/components/dialog/dialog";
 import {CodeType} from "@/types/CodeType";
 import router from "@/router";
-import {config} from "@/config";
+import {config} from "@/config/env";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import mitt from 'mitt';
 

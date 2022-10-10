@@ -1,10 +1,10 @@
 import {IFindProductDto} from "@/module/product/dto/findProduct.dto";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {CreateProductDto} from "@/module/product/dto/createProduct.dto";
 import {UpdateProductDto} from "@/module/product/dto/updateProduct.dto";
 import {IProduct} from "@/module/product/product";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class ProductService {
 

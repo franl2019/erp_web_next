@@ -1,12 +1,12 @@
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IUser_operatearea_mx} from "@/module/user_operatearea_mx/user_operatearea_mx";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {IDeleteUserOperateAreaDto} from "@/module/user_operatearea_mx/dto/deleteUserOperateArea.dto";
 import {
     IFindUserOperateAreaDto
 } from "@/module/user_operatearea_mx/dto/findUserClientOperateArea.dto";
 import {ICreateUserOperateAreaDto} from "@/module/user_operatearea_mx/dto/createUserOperateArea.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class User_operatearea_mxService {
     public async find(findDto: IFindUserOperateAreaDto) {
         const result = await http_post<IApiResult<IUser_operatearea_mx>>(API_URL.USER_OPERATEAREA_MX_FIND_INFO, findDto);

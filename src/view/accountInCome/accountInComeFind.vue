@@ -81,7 +81,7 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useRouterPage} from "@/utils";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 async function activated(){
   await initPage()

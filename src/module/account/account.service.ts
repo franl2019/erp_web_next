@@ -1,9 +1,9 @@
 import {FindAccountDto} from "@/module/account/dto/accountFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IAccount} from "@/module/account/account";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {AccountEditDto} from "@/module/account/dto/accountEdit.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class AccountService {
 

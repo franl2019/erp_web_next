@@ -1,12 +1,12 @@
 import {IFindOutboundDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IFindOutbound} from "@/module/saleOutbound/findOutboundSale";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {IOutboundDto} from "@/module/saleOutbound/dto/outboundSale.dto";
 import {IDeleteOutboundDto} from "@/module/saleOutbound/dto/deleteOutboundSale.dto";
 import {ILevel1reviewOutboundDto} from "@/module/saleOutbound/dto/level1reviewOutboundSale.dto";
 import {ILevel2reviewOutboundDto} from "@/module/saleOutbound/dto/level2reviewOutboundSale.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {ISaleOutboundSheetState} from "@/view/home/saleHome.vue";
 export class OutboundSaleService {
 

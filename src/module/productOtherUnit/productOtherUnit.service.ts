@@ -1,7 +1,7 @@
 import {ProductOtherUnitFindDto} from "@/module/productOtherUnit/dto/productOtherUnitFind.dto";
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/validate";
 import {ProductOtherUnitCreateDto} from "@/module/productOtherUnit/dto/productOtherUnitCreate.dto";
 import {ProductOtherUnitUpdateDto} from "@/module/productOtherUnit/dto/productOtherUnitUpdate.dto";

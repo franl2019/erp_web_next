@@ -98,7 +98,7 @@ import {AccountExpenditureSheetMxService} from "@/module/accountExpenditure/acco
 import {AccountCategoryType} from "@/types/AccountCategoryType";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 

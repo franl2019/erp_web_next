@@ -1,9 +1,9 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {ICurrency} from "@/module/currency/currency";
 import {CurrencyCreateDto} from "@/module/currency/dto/currencyCreate.dto";
 import {CurrencyEditDto} from "@/module/currency/dto/currencyEdit.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class CurrencyService {
 
     public async find() {

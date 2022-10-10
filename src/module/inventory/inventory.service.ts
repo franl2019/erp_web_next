@@ -1,7 +1,7 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IFindInventory} from "@/module/inventory/FindInventory";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {FindInventoryDto} from "@/module/inventory/dto/FindInventory.dto";
 export class InventoryService {
 

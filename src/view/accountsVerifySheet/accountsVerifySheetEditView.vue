@@ -98,7 +98,7 @@ import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsV
 import {AccountsVerifySheetMxService} from "@/module/accountsVerifySheet/accountsVerifySheetMx.service";
 import {AccountsVerifySheetUpdateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetUpdate.dto";
 import {getToday, useRouterPage} from "@/utils";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpDialog from "@/components/dialog/dialog";

@@ -73,7 +73,7 @@ import {valueName} from "@/config/valueName";
 import ErpLeftRightPageBox from "@/components/page/ErpLeftRightPageBox.vue";
 import ProductArea from "@/view/productArea/productArea.vue";
 import {IProductAreaTree} from "@/module/productArea/productArea";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {UpdateProductDto} from "@/module/product/dto/updateProduct.dto";

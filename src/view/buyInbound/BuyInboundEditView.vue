@@ -118,7 +118,7 @@ import {useButtonState} from "@/composables/useButtonState";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import * as mathjs from "mathjs";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";

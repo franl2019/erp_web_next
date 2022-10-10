@@ -114,7 +114,7 @@
 <script lang="ts" setup>
 import {nextTick, onMounted, ref} from "vue";
 import {SaleOutboundPrintService} from "@/module/saleOutbound/service/saleOutboundPrint.service";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 onMounted(async () => {
   await nextTick(async () => {
     data.value = await new SaleOutboundPrintService().find();

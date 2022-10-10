@@ -1,10 +1,10 @@
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IBuy} from "@/module/buy/buy";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {IFindBuyDto} from "@/module/buy/dto/findBuy.dto";
 import {ICreateBuyDto} from "@/module/buy/dto/createBuy.dto";
 import {IUpdateBuyDto} from "@/module/buy/dto/updateBuy.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class BuyService {
     public async findOne(buyid:number): Promise<IBuy> {
         const result = await http_post<IApiResult<IBuy>>(API_URL.BUY_FIND_ONE, {buyid});

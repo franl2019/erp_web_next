@@ -3,7 +3,7 @@ import {ITableState} from "@/components/table/type";
 import {ProductionInboundService} from "@/module/productionInbound/service/ProductionInbound.service";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
-import {IInbound} from "@/types/inbound/IInbound";
+import {IInbound} from "@/module/inbound/IInbound";
 
 export const defaultInboundProductionHeadTable = ref<ITableState<IInbound>>({
     tableName: "defaultInboundProductionHeadTable",

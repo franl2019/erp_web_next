@@ -1,13 +1,16 @@
 <template>
   <div class="flex flex-grow">
     <!--menu btn-->
-    <div class="flex h-full items-center justify-center px-1 active:bg-gray-100 rounded-t-md bg-white">
-      <erp_button_svg @click="emits('clickedMenuButton')">
+    <div class="flex flex-none h-full items-center justify-center w-12 bg-zinc-50 rounded-tr-md select-none cursor-pointer">
+      <div class="flex-none flex items-center
+                  flex-row flex-nowrap select-none space-x-4"
+           @click="showMenu">
         <img alt="menu"
-             class="h-5 w-5"
+             class="h-6 w-6"
              src="@/assets/menu_black_18dp.svg"/>
-      </erp_button_svg>
+      </div>
     </div>
+
 
     <div class="flex flex-col w-full h-full">
       <!--拖动tab-->
@@ -18,7 +21,6 @@
           drag-class="drag"
           handle=".handle"
           item-key="key"
-          @end="onDragEndTab"
       >
         <template #item="{ element }">
           <div class="handle">
@@ -38,9 +40,9 @@
 
 <script lang="ts" setup>
 import Erp_menu_tab_item from "@/components/router_tab/erp_tab_item.vue";
-import Erp_button_svg from "@/components/button/ErpSvgButton.vue";
 import {Tab} from "@/components/router_tab/useRouterTab";
 import Draggable from "vuedraggable";
+import {ref} from "vue";
 
 const props = withDefaults(
     defineProps<{
@@ -50,21 +52,23 @@ const props = withDefaults(
       modelValue: () => []
     })
 
+const isShowMenu = ref(true);
 const emits = defineEmits([
   'clickedMenuButton',
 ])
 
-function onDragEndTab(){
-
+function showMenu() {
+  emits('clickedMenuButton');
+  isShowMenu.value = !isShowMenu.value
 }
 </script>
 
 <style lang="scss" scoped>
-.ghost{
+.ghost {
   @apply border-2 border-solid border-indigo-400 rounded
 }
 
-.drag{
+.drag {
   @apply opacity-0
 }
 </style>

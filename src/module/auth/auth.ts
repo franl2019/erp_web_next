@@ -1,8 +1,7 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
-import {LoginDto} from "./dto/login.dto";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {useLocalStorageSave} from "@/utils";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export interface IAuth {
     usercode:string,
@@ -16,11 +15,6 @@ export class Auth {
     constructor(auth:IAuth) {
         this.usercode = auth.usercode;
         this.password = auth.password;
-    }
-
-    private async paramValidation() {
-        const loginDto = new LoginDto(this.usercode, this.password);
-        await loginDto.Validation();
     }
 
     public async login() {

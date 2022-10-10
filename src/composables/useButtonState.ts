@@ -1,5 +1,14 @@
 import {ref} from "vue";
-import {IButtonState} from "@/types/IButtonState";
+
+export interface IButtonState {
+    create: boolean;
+    edit: boolean;
+    level1review: boolean;
+    un_level1review: boolean;
+    level2review: boolean;
+    un_level2review: boolean;
+    delete_data: boolean;
+}
 
 //按钮状态
 export function useButtonState() {

@@ -6,7 +6,7 @@ import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import {IOutbound} from "@/module/saleOutbound/outboundSale";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 //销售单hock
 export function useSaleOutboundFindViewHock(option:{

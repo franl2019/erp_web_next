@@ -72,7 +72,7 @@ import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useButtonState} from "@/composables/useButtonState";
 import {IClient} from "@/module/client/client";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import ErpSelectInventoryDialog from "@/components/dialog/selectInfo/selectInventory/SelectInventoryDialog";
 import {IFindInventory} from "@/module/inventory/FindInventory";
 import {OutboundSaleDto} from "@/module/saleOutbound/dto/outboundSale.dto";

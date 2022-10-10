@@ -2,7 +2,7 @@ import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
 import {ProductionInboundMxService} from "@/module/productionInbound/service/ProductionInboundMx.service";
 import {useFormatInboundMxNumber} from "@/utils/tableUtils";
-import {IInboundMx} from "@/types/inboundMx/IInboundMx";
+import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 import {valueName} from "@/config/valueName";
 
 export const createInboundProductionMxTable = ref<ITableState<IInboundMx>>({

@@ -2,7 +2,7 @@ import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
-import {IInbound} from "@/types/inbound/IInbound";
+import {IInbound} from "@/module/inbound/IInbound";
 import {BuyInboundService} from "@/module/buyInbound/service/BuyInbound.service";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";

@@ -1,9 +1,9 @@
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IWarehouse} from "@/module/warehouse/warehouse";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {ICreateWarehouseDto} from "@/module/warehouse/dto/createWarehouse.dto";
 import {UpdateWarehouseDto} from "@/module/warehouse/dto/updateWarehouse.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class WarehouseService {
 

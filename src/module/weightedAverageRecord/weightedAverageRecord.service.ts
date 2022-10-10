@@ -1,5 +1,5 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import ErpDialog from "@/components/dialog/dialog";
 import {CountWeightedAverageRecordMxDto} from "@/module/weightedAverageRecord/dto/countWeightedAverageRecordMx.dto";
 import {useVerifyParam} from "@/utils/validate";

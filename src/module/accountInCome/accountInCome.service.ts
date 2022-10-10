@@ -1,8 +1,8 @@
 import {AccountInComeFindDto} from "@/module/accountInCome/dto/accountInComeFind.dto";
 import {useVerifyParam} from "@/utils/validate";
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {IAccountInComeFind} from "@/module/accountInCome/accountInCome";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {AccountInComeCreateDto} from "@/module/accountInCome/dto/accountInComeCreate.dto";
 import {AccountInComeUpdateDto} from "@/module/accountInCome/dto/accountInComeUpdate.dto";
 import {AccountInComeDeleteDto} from "@/module/accountInCome/dto/accountInComeDelete.dto";
@@ -11,7 +11,7 @@ import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmount
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
 import {AccountInComeAmountMxCreateDto} from "@/module/accountInCome/dto/amountMx/accountInComeAmountMxCreate.dto";
 import {AccountInComeSheetMxCreateDto} from "@/module/accountInCome/dto/sheetMx/accountInComeSheetMxCreate.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {IAccountInComeSheetState} from "@/view/home/saleHome.vue";
 
 export class AccountInComeService {

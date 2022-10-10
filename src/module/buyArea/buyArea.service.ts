@@ -1,10 +1,10 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {BuyArea, BuyAreaTree, IBuyArea, IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {ICreateBuyAreaDto} from "@/module/buyArea/dto/createBuyArea.dto";
 import {IUpdateBuyAreaDto} from "@/module/buyArea/dto/updateBuyArea.dto";
 import {useFormatDataTree} from "@/utils";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class BuyAreaService {
     public formatBuyAreaListToTreeData(buyAreaList: IBuyArea[]) {
         return useFormatDataTree<IBuyAreaTree>(buyAreaList, "buyareaid", "parentid");

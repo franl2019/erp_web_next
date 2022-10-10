@@ -1,5 +1,5 @@
 import {validate} from "class-validator";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export async function useVerifyParam(obj: object): Promise<void> {
     const errors = await validate(obj);

@@ -45,7 +45,7 @@ import Erp_table from "@/components/table/ErpTable.vue";
 import {ITableRef} from "@/components/table/type";
 import {AccountCreateDto} from "@/module/account/dto/accountCreate.dto";
 import {IAccount} from "@/module/account/account";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 const accountTableRef = ref<ITableRef>();
 const accountCreateDialogVisible = ref(false);

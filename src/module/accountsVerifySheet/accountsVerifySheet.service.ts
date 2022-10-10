@@ -1,6 +1,6 @@
 import {IAccountsVerifySheetFind} from "@/module/accountsVerifySheet/accountsVerifySheet";
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {AccountsVerifySheetFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetFind.dto";
 import {AccountsVerifySheetCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetCreate.dto";
 import {useVerifyParam} from "@/utils/validate";
@@ -8,7 +8,7 @@ import {AccountsVerifySheetMxCreateDto} from "@/module/accountsVerifySheet/dto/a
 import {AccountsVerifySheetUpdateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetUpdate.dto";
 import {AccountsVerifySheetDeleteDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetDelete.dto";
 import {AccountsVerifySheetReviewDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetReview.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 
 export class AccountsVerifySheetService {

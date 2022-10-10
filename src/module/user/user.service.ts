@@ -1,7 +1,7 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IUser} from "@/module/user/user";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class UserService {
     public async find() {
         const result = await http_post<IApiResult<IUser>>(API_URL.USER_SELECT);

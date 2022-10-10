@@ -64,7 +64,7 @@ import {ITableRef} from "@/components/table/type";
 import {useRouterPage} from "@/utils";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {onMounted, ref} from "vue";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {IAccountsVerifySheetFind} from "@/module/accountsVerifySheet/accountsVerifySheet";
 import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 import {AccountsVerifySheetFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetFind.dto";

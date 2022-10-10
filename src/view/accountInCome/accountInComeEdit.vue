@@ -109,7 +109,7 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useButtonState} from "@/composables/useButtonState";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 const {bignumber, chain, round} = mathjs;

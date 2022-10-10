@@ -1,9 +1,9 @@
-import {http_post, IApiResult} from "@/api/axios";
+import {http_post, IApiResult} from "@/utils/axios";
 import {ICashBankDepositJournal} from "@/module/report/cashBankDepositJournal/cashBankDepositJournal";
-import {API_URL} from "@/api/url";
+import {API_URL} from "@/config/apiUrl";
 import {CashBankDepositJournalFindDto} from "@/module/report/cashBankDepositJournal/dto/cashBankDepositJournalFind.dto";
 import {useVerifyParam} from "@/utils/validate";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class CashBankDepositJournalService {
 
     public async find(cashBankDepositJournalFindDto:CashBankDepositJournalFindDto):Promise<ICashBankDepositJournal[]> {

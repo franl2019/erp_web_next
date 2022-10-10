@@ -1,8 +1,8 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {IClient} from "@/module/client/client";
 import {IFindClientDto} from "@/module/client/dto/findClient.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ClientService {
     public async find(findClientDto: IFindClientDto){
         const result = await http_post<IApiResult<IClient>>(API_URL.CLIENT_SELECT, findClientDto);

@@ -1,10 +1,10 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {ICreateProductAreaDto} from "@/module/productArea/dto/createProductArea.dto";
 import {IProductArea, IProductAreaTree, ProductArea, ProductAreaTree} from "@/module/productArea/productArea";
 import {useFormatDataTree} from "@/utils";
 import {IUpdateProductAreaDto} from "@/module/productArea/dto/updateProductArea.dto";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 export class ProductAreaService {
 

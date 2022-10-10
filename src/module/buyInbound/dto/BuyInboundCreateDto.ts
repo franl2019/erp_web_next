@@ -1,5 +1,5 @@
-import {IInbound} from "@/types/inbound/IInbound";
-import {IInboundMx} from "@/types/inboundMx/IInboundMx";
+import {IInbound} from "@/module/inbound/IInbound";
+import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 import {IBuyInboundCreateDto} from "@/module/buyInbound/types/IBuyInboundService";
 import {getToday} from "@/utils";
 

@@ -65,10 +65,10 @@ import {ProductionInboundCreateDto} from "@/module/productionInbound/dto/Product
 import {ProductionInboundMxTableData} from "@/module/productionInbound/ProductionInboundMxTableData";
 import {ProductionInboundMxTableTotal} from "@/module/productionInbound/ProductionInboundMxTableTotal";
 import {CellEditingStartedEvent, CellValueChangedEvent} from "ag-grid-community";
-import {IInbound} from "@/types/inbound/IInbound";
+import {IInbound} from "@/module/inbound/IInbound";
 import {IProductionInboundMxTableData} from "@/module/productionInbound/types/IProductionInboundMxTableData";
 import {ProductionInbound} from "@/module/productionInbound/ProductionInbound";
-import {VerifyParamError} from "@/error/verifyParamError";
+import {VerifyParamError} from "@/types/error/verifyParamError";
 
 
 //设置表格id属性

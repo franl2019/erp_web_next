@@ -1,5 +1,5 @@
-import {http_post, IApiResult} from "@/api/axios";
-import {API_URL} from "@/api/url";
+import {http_post, IApiResult} from "@/utils/axios";
+import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/validate";
 import {SaleGrossMarginMxFindDto} from "@/module/report/saleGrossMarginReport/dto/saleGrossMarginMxFind.dto";
 import {ISaleGrossMarginMx} from "@/module/report/saleGrossMarginReport/saleGrossMarginMx";
