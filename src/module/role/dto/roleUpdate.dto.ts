@@ -17,7 +17,7 @@ export class RoleUpdateDto implements IRole{
     useflagDate: Date | null
 
     creater: string
-    createdAt: Date
+    createdAt: Date | null
     updater: string
     updatedAt: Date | null
     level1Review: number

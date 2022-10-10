@@ -7,6 +7,7 @@
     </erp_form>
   </erp_dialog_form>
 </template>
+
 <script setup lang="ts">
 import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
 import Erp_form from "@/components/form/ErpForm.vue";

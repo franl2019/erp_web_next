@@ -1,4 +1,4 @@
-export const OperateArea = {
+export const OperateAreaApiUrl = {
     //operateArea
     OPERATEAREA_SELECT: '/erp/operateArea/select',
     OPERATEAREA_FIND_DEFAULT: '/erp/operateArea/findDefaultOperatearea',

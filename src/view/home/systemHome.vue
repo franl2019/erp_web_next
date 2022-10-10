@@ -6,6 +6,9 @@
         <div class="mr-6">
           <erp-router-button router-name="auth">权限设置</erp-router-button>
         </div>
+        <div class="mr-6">
+          <erp-router-button router-name="role">用户角色设置</erp-router-button>
+        </div>
 
       </div>
     </div>

@@ -13,7 +13,7 @@
                 <erp-input-round ref="defaultInputFocusRef" v-model="createProductDto.productname"></erp-input-round>
               </erp_form_item>
               <erp_form_item label-for-name="类别" lg-col="4" md-col="4">
-                <erp_select_productarea v-model="createProductDto.productareaid"></erp_select_productarea>
+                <erp-select-productarea v-model="createProductDto.productareaid"></erp-select-productarea>
               </erp_form_item>
               <erp_form_item label-for-name="规格" lg-col="4" md-col="4">
                 <erp-input-round v-model="createProductDto.spec"></erp-input-round>
@@ -55,7 +55,7 @@
                 <erp-input-round v-model.number="createProductDto.height"></erp-input-round>
               </erp_form_item>
               <erp_form_item label-for-name="是否使用" lg-col="2" md-col="2">
-                <erp_checkbox_border v-model="createProductDto.useflag">使用</erp_checkbox_border>
+                <erp-checkbox-border v-model="createProductDto.useflag">使用</erp-checkbox-border>
               </erp_form_item>
               <erp_form_item label-for-name="备注1" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark1"></erp-input-round>
@@ -115,8 +115,8 @@ import Erp_form_item from "@/components/form/ErpFormItem.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import {nextTick, onMounted, ref} from "vue";
 import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.vue";
-import Erp_select_productarea from "@/components/select/ErpProductareaSelect.vue";
-import Erp_checkbox_border from "@/components/input/ErpCheckbox.vue";
+import ErpSelectProductarea from "@/components/select/ErpProductareaSelect.vue";
+import ErpCheckboxBorder from "@/components/input/ErpCheckbox.vue";
 import {valueName} from "@/config/valueName";
 import ErpTable from "@/components/table/ErpTable.vue";
 import {createProductOtherMxTableConfig} from "@/view/product/component/tableConfig/createProductOtherMxTableConfig";
@@ -158,7 +158,7 @@ const emits = defineEmits([
 ])
 
 function onClickedConfirm() {
-   productOtherUnitTableRef.value?.getGridApi().stopEditing()
+   productOtherUnitTableRef.value?.getGridApi().stopEditing();
    setTimeout(()=>{
      emits('onClickedConfirm', createProductDto.value);
    },200)

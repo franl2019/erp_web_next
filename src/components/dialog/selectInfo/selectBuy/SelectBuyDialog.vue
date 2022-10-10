@@ -31,7 +31,8 @@
   </erp-left-right-structure-dialog>
 </template>
 
-<script setup lang='ts'>
+<script lang="ts">
+import {defineComponent} from "vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
@@ -47,63 +48,103 @@ import ErpBuyAreaTree from "@/components/tree/aboutComponent/ErpBuyAreaTree.vue"
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightStructureDialog.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 
-const buyTableRef = ref<ITableRef>()
-const findBuyDto = ref<IFindBuyDto>(new FindBuyDto());
-
-const props = withDefaults(defineProps<{
-  unmount?: Function
-  ok?: Function
-  close?: Function
-}>(), {
-  unmount: () => {
+export default defineComponent({
+  name:'SelectBuyDialog',
+  components: {
+    ErpButton,
+    ErpTable,
+    ErpTitle,
+    ErpBuyAreaTree,
+    ErpInputRound,
+    ErpLeftRightStructureDialog,
+    ErpNoTitle
   },
-  ok: () => {
+  props:{
+    unmount:{
+      type: Function,
+      required: true
+    },
+    ok:{
+      type: Function,
+      required: false,
+      default:()=>{}
+    },
+    close:{
+      type: Function,
+      required: false,
+      default:()=>{}
+    }
   },
-  close: () => {
-  },
-})
+  setup(props) {
+    const buyTableRef = ref<ITableRef>()
+    const findBuyDto = ref<IFindBuyDto>(new FindBuyDto());
+    // const props = withDefaults(defineProps<{
+    //   unmount?: Function
+    //   ok?: Function
+    //   close?: Function
+    // }>(), {
+    //   unmount: () => {
+    //   },
+    //   ok: () => {
+    //   },
+    //   close: () => {
+    //   },
+    // })
 
 //表格行id设置
-function getRowNodeId(data: IBuy) {
-  return data.buyid
-}
+    function getRowNodeId(data: IBuy) {
+      return data.buyid
+    }
 
-onMounted(async () => {
-  await buyTableRef.value?.initTableData();
-})
+    onMounted(async () => {
+      await buyTableRef.value?.initTableData();
+    })
 
 //类别树点击事件
-async function categoryTreeClicked(buyarea: IBuyArea) {
-  findBuyDto.value.buyareaid = buyarea.buyareaid;
-  await buyTableRef.value?.initTableData();
-}
+    async function categoryTreeClicked(buyarea: IBuyArea) {
+      findBuyDto.value.buyareaid = buyarea.buyareaid;
+      await buyTableRef.value?.initTableData();
+    }
 
 //搜索栏
-async function onSearchChange() {
-  await buyTableRef.value?.initTableData();
-}
+    async function onSearchChange() {
+      await buyTableRef.value?.initTableData();
+    }
 
 //产品资料表行双击
-async function onBuyTableDoubleClick(event: RowDoubleClickedEvent) {
-  if (event.data) {
-    await props.ok(event.data);
-    props.unmount();
+    async function onBuyTableDoubleClick(event: RowDoubleClickedEvent) {
+      if (event.data) {
+        await props.ok(event.data);
+        props.unmount();
+      }
+    }
+
+    async function clickedOkSelectedDialog() {
+      await props.ok(getSelectedBuyInfo());
+      props.unmount();
+    }
+
+    async function clickedCloseSelectedDialog() {
+      await props.close();
+      props.unmount();
+    }
+
+    function getSelectedBuyInfo(): IBuy {
+      return buyTableRef.value?.getGridApi().getSelectedRows()[0];
+    }
+
+    return{
+      buyTableRef,
+      findBuyDto,
+      selectBuyTableState,
+      getRowNodeId,
+      categoryTreeClicked,
+      clickedOkSelectedDialog,
+      clickedCloseSelectedDialog,
+      onBuyTableDoubleClick,
+      onSearchChange,
+    }
   }
-}
-
-async function clickedOkSelectedDialog() {
-  await props.ok(getSelectedBuyInfo());
-  props.unmount();
-}
-
-async function clickedCloseSelectedDialog() {
-  await props.close();
-  props.unmount();
-}
-
-function getSelectedBuyInfo(): IBuy {
-  return buyTableRef.value?.getGridApi().getSelectedRows()[0];
-}
-
+})
 
 </script>

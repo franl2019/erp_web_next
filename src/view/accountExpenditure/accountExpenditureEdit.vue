@@ -62,7 +62,7 @@
   </erp-page-box>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
@@ -72,6 +72,7 @@ import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
+import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {AccountExpenditureCreateDto} from "@/module/accountExpenditure/dto/accountExpenditureCreate.dto";
@@ -84,25 +85,22 @@ import {
 import {ITableRef} from "@/components/table/type";
 import {IBuy} from "@/module/buy/buy";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
-import * as mathjs from 'mathjs';
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {AccountExpenditureService} from "@/module/accountExpenditure/accountExpenditure.service";
 import {AccountExpenditureUpdateDto} from "@/module/accountExpenditure/dto/accountExpenditureUpdate.dto";
 import {AccountExpenditureAmountMxService} from "@/module/accountExpenditure/accountExpenditureAmountMx.service";
-import ErpSelectAccountPayableDialog
-  from "@/components/dialog/selectInfo/account/accountPayable/selectAccountPayableDialog";
 import {AccountExpenditureSheetMxCreateDto} from "@/module/accountExpenditure/dto/accountExpenditureSheetMxCreate.dto";
 import {IAccountsPayableFind} from "@/module/accountsPayable/types/IAccountsPayableFind";
-import ErpDialog from "@/components/dialog/dialog";
 import {AccountExpenditureSheetMxService} from "@/module/accountExpenditure/accountExpenditureSheetMx.service";
 import {AccountCategoryType} from "@/types/AccountCategoryType";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
-import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
-
-
+import ErpDialog from "@/components/dialog/dialog";
+import ErpSelectAccountPayableDialog
+  from "@/components/dialog/selectInfo/account/accountPayable/selectAccountPayableDialog";
+import * as mathjs from 'mathjs';
 onMounted(async () => {
   await initPage();
 })

@@ -17,7 +17,7 @@
 import {computed} from "vue";
 
 const props = withDefaults(defineProps<{
-  activationName: string;
+  activationName?: string;
   label: string;
   name: string;
 }>(), {

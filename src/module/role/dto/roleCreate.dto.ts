@@ -1,7 +1,7 @@
 import {IRole} from "../role";
 import {IsInt, IsString} from "class-validator";
 
-export class RoleCreateDto implements IRole{
+export class RoleCreateDto implements IRole {
     roleId: number
 
     @IsString()
@@ -16,7 +16,7 @@ export class RoleCreateDto implements IRole{
     useflagDate: Date | null
 
     creater: string
-    createdAt: Date
+    createdAt: Date | null
     updater: string
     updatedAt: Date | null
     level1Review: number
@@ -30,7 +30,7 @@ export class RoleCreateDto implements IRole{
     deletedAt: Date | null
 
 
-    constructor(role:IRole) {
+    constructor(role: IRole) {
         this.roleId = role.roleId;
         this.roleName = role.roleName;
         this.printid = role.printid;

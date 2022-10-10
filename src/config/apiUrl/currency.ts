@@ -1,4 +1,4 @@
-export const Currency = {
+export const CurrencyUrlApi = {
     //currency
     CURRENCY_SELECT: '/erp/currency/select',
     CURRENCY_ADD: '/erp/currency/add',

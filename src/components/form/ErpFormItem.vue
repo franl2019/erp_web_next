@@ -14,7 +14,7 @@ import {onMounted, ref} from "vue";
 
 const props = withDefaults(defineProps<{
   labelForName?: string;
-  type?: string;
+  type?: "info" | "danger";
   mdCol?: string;
   lgCol?: string;
 }>(), {

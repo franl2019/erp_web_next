@@ -3,10 +3,11 @@ import {RouteRecordRaw} from "vue-router";
 export const authRouter: Array<RouteRecordRaw> = [
     {
         name: "auth",
-        meta:{
-            title:"权限管理"
+        meta: {
+            title: "权限管理"
         },
-        path: "/auth", component: () => import(/* webpackChunkName: "auth" */ '@/view/auth/auth.vue'),
+        path: "/auth",
+        component: () => import(/* webpackChunkName: "auth" */ '@/view/auth/auth.vue'),
         children: [
             {
                 name: "user_warehouse_mx",
@@ -28,6 +29,13 @@ export const authRouter: Array<RouteRecordRaw> = [
                 path: "/user_account_mx",
                 component: () => import(/* webpackChunkName: "user_account_mx" */ '@/view/auth/user_account_mx/user_account_mx.vue'),
             }
-        ]
+        ],
     },
+    {
+        name: "role",
+        meta: {
+            title: "用户角色管理"
+        },
+        path: "/role", component: () => import(/* webpackChunkName: "role" */"@/view/role/role.vue")
+    }
 ]

@@ -130,7 +130,7 @@ import {ProductOtherUnitMxCreateDto} from "@/module/productOtherUnit/dto/product
 
 const props = defineProps<{
   product: IProduct;
-  clickedConfirm: (updateProductDto: UpdateProductDto) => Promise<{}>;
+  clickedConfirm: (updateProductDto: UpdateProductDto) => Promise<void>;
   clickedCancel: () => void;
 }>();
 
