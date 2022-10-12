@@ -1,21 +1,34 @@
 <template>
-  <erp_dialog_form v-bind="$attrs">
-    <erp_form>
-      <erp_form_item label-for-name="选择出纳账号">
-        <erp_select_account v-model="props.dto.accountId"></erp_select_account>
-      </erp_form_item>
-    </erp_form>
-  </erp_dialog_form>
+  <erp-dialog-form v-bind="$attrs">
+    <erp-form>
+      <erp-form-item label-for-name="选择出纳账号">
+        <erp-select-account v-model="dto.accountId"></erp-select-account>
+      </erp-form-item>
+    </erp-form>
+  </erp-dialog-form>
 </template>
 
-<script setup lang="ts">
-import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
-import Erp_form from "@/components/form/ErpForm.vue";
-import Erp_form_item from "@/components/form/ErpFormItem.vue";
-import Erp_select_account from "@/components/select/ErpAcountSelect.vue";
+<script lang="ts">
+import ErpDialogForm from "@/components/dialog/ErpFormDialog.vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpSelectAccount from "@/components/select/ErpAccountSelect.vue";
 import {IUserAccountMx} from "@/module/user_account_mx/userAccountMx";
+import {defineComponent, PropType} from "vue";
 
-const props = defineProps<{
-  dto: IUserAccountMx
-}>()
+export default defineComponent({
+  name:"AccountAuthCreateDialog",
+  components:{
+    ErpDialogForm,
+    ErpForm,
+    ErpFormItem,
+    ErpSelectAccount
+  },
+  props:{
+    dto:{
+      type:Object as PropType<IUserAccountMx>
+    }
+  }
+})
+
 </script>

@@ -9,12 +9,21 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-const props = withDefaults(defineProps<{
-  isVisibleLeft?:boolean
-}>(),{
-  isVisibleLeft:true
-})
+<script lang='ts'>import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name:"ErpLeftRightPageBox",
+  props: {
+    isVisibleLeft: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  setup() {
+    return {
+    };
+  },
+});
 </script>
 
 <style lang='scss' scoped>

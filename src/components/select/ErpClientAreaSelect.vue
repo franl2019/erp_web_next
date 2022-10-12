@@ -1,51 +1,50 @@
 <template>
-  <!--  <el-select v-bind="$attrs" placeholder="选择所属地区" ref="ElSelectRef">-->
-  <!--    <el-option-->
-  <!--        v-for="item in clientAreaSelectList"-->
-  <!--        :key="item.clientareaid"-->
-  <!--        :label="item.clientareaname"-->
-  <!--        :value="item.clientareaid"-->
-  <!--    >-->
-  <!--    </el-option>-->
-  <!--  </el-select>-->
   <el-tree-select
-      v-bind="$attrs"
+      ref="ElSelectRef"
       :data="clientAreaList"
       :props="clientAreaTreeConfig"
-      node-key="clientareaid"
       check-strictly
       filterable
-      ref="ElSelectRef"/>
+      node-key="clientareaid"
+      v-bind="$attrs"/>
 </template>
 
-<script setup lang="ts">
-import {onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, ref} from "vue";
 import {IClientArea} from "@/module/clientArea/clientArea";
 import {ClientAreaService} from "@/module/clientArea/clientArea.service";
 
-const ElSelectRef = ref();
-const clientAreaList = ref<IClientArea[]>([]);
-const clientAreaService = new ClientAreaService();
-//客户地区树配置
-const clientAreaTreeConfig = {
-  children: 'children',
-  label: 'clientareaname',
-}
+export default defineComponent({
+  name:"ErpClientAreaSelect",
+  expose:["focus"],
+  setup() {
+    const ElSelectRef = ref();
+    const clientAreaList = ref<IClientArea[]>([]);
+    const clientAreaService = new ClientAreaService();
+    //客户地区树配置
+    const clientAreaTreeConfig = {
+      children: 'children',
+      label: 'clientareaname',
+    }
 
-onMounted(() => {
-  getClientAreaList();
-})
+    onMounted(() => {
+      getClientAreaList();
+    })
 
-async function getClientAreaList() {
-  clientAreaList.value = await clientAreaService.getClientAreaTree();
-}
+    async function getClientAreaList() {
+      clientAreaList.value = await clientAreaService.getClientAreaTree();
+    }
 
-function focus() {
-  ElSelectRef.value.focus();
-}
+    function focus() {
+      ElSelectRef.value.focus();
+    }
 
-defineExpose({focus});
+    return {
+      ElSelectRef,
+      clientAreaList,
+      clientAreaTreeConfig,
+      focus,
+    };
+  },
+});
 </script>
-
-<style scoped>
-</style>

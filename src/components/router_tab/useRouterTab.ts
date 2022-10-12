@@ -1,5 +1,5 @@
 import {ref, Ref} from "vue";
-import {KeepAliveTestApi} from "@/components/ErpKeepAlive/ErpKeepAlive";
+import {KeepAliveTestApi} from "@/components/erpKeepAlive/ErpKeepAlive";
 
 export interface Tab {
     key: string;

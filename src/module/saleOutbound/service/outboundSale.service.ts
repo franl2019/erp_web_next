@@ -7,7 +7,13 @@ import {IDeleteOutboundDto} from "@/module/saleOutbound/dto/deleteOutboundSale.d
 import {ILevel1reviewOutboundDto} from "@/module/saleOutbound/dto/level1reviewOutboundSale.dto";
 import {ILevel2reviewOutboundDto} from "@/module/saleOutbound/dto/level2reviewOutboundSale.dto";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {ISaleOutboundSheetState} from "@/view/home/saleHome.vue";
+
+export interface ISaleOutboundSheetState {
+    completeL1Review: number;
+    undoneL1Review: number;
+    undoneL2Review: number;
+}
+
 export class OutboundSaleService {
 
     public async find(findDto: IFindOutboundDto) {

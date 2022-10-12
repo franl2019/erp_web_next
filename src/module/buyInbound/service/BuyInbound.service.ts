@@ -5,7 +5,6 @@ import {
     IBuyInboundFindDto, IBuyInboundFind
 } from "@/module/buyInbound/types/IBuyInboundService";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {IBuyInboundSheetState} from "@/view/home/buyHome.vue";
 import {BuyInboundFindDto} from "@/module/buyInbound/dto/BuyInboundFindDto";
 import {useVerifyParam} from "@/utils/validate";
 export class BuyInboundService {
@@ -29,6 +28,7 @@ export class BuyInboundService {
     }
 
     public async create(createDto: IBuyInboundCreateDto) {
+        await useVerifyParam(createDto);
         const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_CREATE, createDto);
         if (result.code === 200) {
             return result
@@ -38,6 +38,7 @@ export class BuyInboundService {
     }
 
     public async create_l1Review(createDto: IBuyInboundCreateDto) {
+        await useVerifyParam(createDto);
         const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_CREATE_L1REVIEW, createDto);
         if (result.code === 200) {
             return result

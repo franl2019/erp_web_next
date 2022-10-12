@@ -6,7 +6,7 @@ import {amountInThousands} from "@/components/table/valueGetter/amountInThousand
 import {toFixed4} from "@/components/table/valueGetter/toFixed4";
 import {ISaleGrossMarginSum} from "@/module/report/saleGrossMarginReport/saleGrossMarginSum";
 import {SaleGrossMarginSumReportService} from "@/module/report/saleGrossMarginReport/saleGrossMarginSumReport.service";
-import Table_Absolutely from "@/components/table/components/renderer/table_Absolutely.vue";
+import Table_Absolutely from "@/components/table/components/renderer/table_absolutely.vue";
 
 export const defaultSaleGrossMarginSumReportTableConfig = ref<ITableState<ISaleGrossMarginSum>>({
     tableName: "defaultSaleGrossMarginSumReportTableConfig",

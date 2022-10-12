@@ -27,12 +27,13 @@
   </erp-page-box>
 </template>
 
-<script lang='ts' setup>
+<script lang='ts'>
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {onMounted, ref} from "vue";
+import ErpInputRound from "@/components/input/ErpInputRound.vue";
+import {defineComponent, onMounted, ref} from "vue";
 import {
   IFindSaleOutboundDto,
   SaleOutboundMxReportFindDto
@@ -41,42 +42,61 @@ import {ITableRef} from "@/components/table/type";
 import {
   saleOutboundMxReportTableConfig
 } from "@/view/report/saleOutbound/saleOutboundMxReport/config/saleOutboundMxReportTableConfig";
-import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import {useRouter} from "vue-router";
 import {CellDoubleClickedEvent} from "ag-grid-community";
 import {useRouterReportToSheet} from "@/utils";
 import {CodeType} from "@/types/CodeType";
 import {useDateSelect} from "@/composables/useDateSelect";
 
-const saleOutboundMxReportTable = ref<ITableRef>();
-const findDto = ref<IFindSaleOutboundDto>(new SaleOutboundMxReportFindDto());
-const {findDate} = useDateSelect(findDto)
-onMounted(async ()=>{
-  await initPage()
-})
-
-async function initPage() {
-  saleOutboundMxReportTable.value?.initTableData();
-}
-
-async function onChangRefresh(){
-  await initPage()
-}
-
-async function onClickRefreshButton(){
-  await initPage()
-}
-
-const router = useRouter();
-
-function cellDoubleClicked(event: CellDoubleClickedEvent){
-
-    useRouterReportToSheet(router,{
-      correlationCode: event.data.outboundcode, correlationId: event.data.outboundid, correlationType: CodeType.XS
+export default defineComponent({
+  name: "saleOutboundMxReport",
+  components: {
+    ErpPageBox,
+    ErpNoTitle,
+    ErpButton,
+    ErpTable,
+    ErpInputRound,
+  },
+  setup() {
+    const saleOutboundMxReportTable = ref<ITableRef>();
+    const findDto = ref<IFindSaleOutboundDto>(new SaleOutboundMxReportFindDto());
+    const {findDate} = useDateSelect(findDto)
+    onMounted(async () => {
+      await initPage()
     })
 
-}
+    async function initPage() {
+      saleOutboundMxReportTable.value?.initTableData();
+    }
 
+    async function onChangRefresh() {
+      await initPage()
+    }
+
+    async function onClickRefreshButton() {
+      await initPage()
+    }
+
+    function cellDoubleClicked(event: CellDoubleClickedEvent) {
+      const router = useRouter();
+      useRouterReportToSheet(router, {
+        correlationCode: event.data.outboundcode, correlationId: event.data.outboundid, correlationType: CodeType.XS
+      })
+
+    }
+
+    return {
+      findDate,
+      findDto,
+      saleOutboundMxReportTable,
+      saleOutboundMxReportTableConfig,
+      initPage,
+      onChangRefresh,
+      onClickRefreshButton,
+      cellDoubleClicked,
+    };
+  },
+});
 </script>
 
 <style lang='scss' scoped>

@@ -2,49 +2,55 @@
   <erp-select-tree
       :data="productAreaSelectList"
       :expandOnClickNode="false"
-      :model-value="props.modelValue"
+      :model-value="modelValue"
       :props="productAreaTreeConfig"
       node-key="productareaid"
       v-bind="$attrs"/>
 </template>
 
-<script lang="ts" setup>
-import {onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, ref} from "vue";
 import {IProductArea} from "@/module/productArea/productArea";
 import {ProductAreaService} from "@/module/productArea/productArea.service";
 import ErpSelectTree from "@/components/selectTree/ErpSelectTree.vue";
 
-const props = withDefaults(defineProps<{
-  modelValue?: any;
-}>(), {})
+export default defineComponent({
+  name: "ErpProductareaSelect",
+  components:{
+    ErpSelectTree
+  },
+  expose: ["focus"],
+  props: ["modelValue"],
+  setup() {
+    const ElSelectRef = ref();
+    //产品类别选择List
+    const productAreaSelectList = ref<IProductArea[]>([]);
+    //服务
+    const productAreaService = new ProductAreaService();
+    //产品类别树配置
+    const productAreaTreeConfig = {
+      children: 'children',
+      label: 'productareaname',
+    }
 
+    onMounted(async () => {
+      await getProductAreaList();
+    })
 
-const ElSelectRef = ref();
-//产品类别选择List
-const productAreaSelectList = ref<IProductArea[]>([]);
-//服务
-const productAreaService = new ProductAreaService();
-//产品类别树配置
-const productAreaTreeConfig = {
-  children: 'children',
-  label: 'productareaname',
-}
+    function focus() {
+      ElSelectRef.value.focus();
+    }
 
-onMounted(async () => {
-  await getProductAreaList();
-})
+    async function getProductAreaList() {
+      productAreaSelectList.value = await productAreaService.getProductAreaTree();
+    }
 
-function focus() {
-  ElSelectRef.value.focus();
-}
-
-async function getProductAreaList() {
-  productAreaSelectList.value = await productAreaService.getProductAreaTree();
-}
-
-defineExpose({focus});
+    return {
+      ElSelectRef,
+      productAreaSelectList,
+      productAreaTreeConfig,
+      focus,
+    };
+  },
+});
 </script>
-
-<style scoped>
-
-</style>

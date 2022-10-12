@@ -1,32 +1,50 @@
 <template>
-  <erp_dialog_form v-bind="$attrs">
-    <erp_form>
-      <erp_form_item label-for-name="币种名称">
-        <erp_input_rounded ref="defaultInputFocusRef" v-model="props.dto.currencyname"></erp_input_rounded>
-      </erp_form_item>
-      <erp_form_item label-for-name="是否本位币">
-        <erp_checkbox_border v-model="props.dto.standardmoneyflag">是</erp_checkbox_border>
-      </erp_form_item>
-    </erp_form>
-  </erp_dialog_form>
+  <erp-form-dialog v-bind="$attrs">
+    <erp-form>
+      <erp-form-item label-for-name="币种名称">
+        <erp-input-round ref="defaultInputFocusRef" v-model="dto.currencyname"></erp-input-round>
+      </erp-form-item>
+      <erp-form-item label-for-name="是否本位币">
+        <erp-checkbox v-model="dto.standardmoneyflag">是</erp-checkbox>
+      </erp-form-item>
+    </erp-form>
+  </erp-form-dialog>
 </template>
 
-<script setup lang="ts">
-import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
-import Erp_form from "@/components/form/ErpForm.vue";
-import Erp_form_item from "@/components/form/ErpFormItem.vue";
-import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
-import Erp_checkbox_border from "@/components/input/ErpCheckbox.vue";
-import {onMounted, ref} from "vue";
+<script lang="ts">
+import ErpFormDialog from "@/components/dialog/ErpFormDialog.vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpInputRound from "@/components/input/ErpInputRound.vue";
+import ErpCheckbox from "@/components/input/ErpCheckbox.vue";
+import {defineComponent, onMounted, PropType, ref} from "vue";
 import {ICurrency} from "@/module/currency/currency";
 
-const props = defineProps<{
-  dto: ICurrency
-}>();
+export default defineComponent({
+  name: "CurrencyEditDialog",
+  components: {
+    ErpFormDialog,
+    ErpForm,
+    ErpFormItem,
+    ErpCheckbox,
+    ErpInputRound
+  },
+  props: {
+    dto: {
+      type: Object as PropType<ICurrency>,
+      required: true,
+    },
+  },
+  setup() {
+    const defaultInputFocusRef = ref();
 
-const defaultInputFocusRef = ref();
+    onMounted(async () => {
+      defaultInputFocusRef.value.getNode().focus();
+    })
 
-onMounted(async () => {
-  defaultInputFocusRef.value.getNode().focus();
-})
+    return {
+      defaultInputFocusRef,
+    };
+  },
+});
 </script>

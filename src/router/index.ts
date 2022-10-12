@@ -4,12 +4,12 @@ import {clientRouter} from "@/router/client.router";
 import {clientAreaRouter} from "@/router/clientArea.router";
 import {authRouter} from "@/router/auth.router";
 import {buyInboundRouter} from "@/router/buyInbound.router";
-import {productionInboundRouter} from "@/router/productionInbound.router";
 import {outboundRouter} from "@/router/outbound.router";
 import {moneyModuleRouter} from "@/router/moneyModuleRouter";
 import {reportRouter} from "@/router/report.router";
 import {valueName} from "@/config/valueName";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
+import Product from "@/view/product/product.vue"
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
                 meta: {
                     title: `${valueName.product}查询`
                 },
-                component: () => import(/* webpackChunkName: "product" */ '@/view/product/product.vue')
+                component: Product
             },
             {
                 name: "productArea",
@@ -132,7 +132,6 @@ const routes: Array<RouteRecordRaw> = [
             },
             ...authRouter,
             ...buyInboundRouter,
-            ...productionInboundRouter,
             {
                 name: "inventory",
                 path: "/inventory", meta: {

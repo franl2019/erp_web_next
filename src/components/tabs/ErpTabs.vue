@@ -10,20 +10,29 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import {useSlots, VNode} from "vue";
+<script lang='ts'>
+import {defineComponent, VNode} from "vue";
 import ErpTabsItem from "@/components/tabs/ErpTabsItem.vue";
 
-const props = withDefaults(defineProps<{
-  modelValue?: string
-}>(), {
-  modelValue: ""
-})
-
-const slots = useSlots()
-
-const defaultSlotVNodeList: VNode[] = slots.default!()
-
+export default defineComponent({
+  name:"ErpTabs",
+  components: {
+    ErpTabsItem
+  },
+  props: {
+    modelValue: {
+      type: String,
+      default: "",
+    },
+  },
+  setup(props, {slots}) {
+    const defaultSlotVNodeList: VNode[] = slots.default!()
+    return {
+      props,
+      defaultSlotVNodeList,
+    };
+  },
+});
 </script>
 
 <style lang='scss' scoped>

@@ -4,27 +4,30 @@
   </div>
 </template>
 
-<script lang='ts' setup>
-import {computed, getCurrentInstance} from "vue";
+<script lang='ts'>
+import { computed, defineComponent, getCurrentInstance } from "vue";
 
-const props = withDefaults(defineProps<{
-  label?: string;
-  name?: string;
-}>(), {
-  label: "",
-  name: ""
-})
-
-const currentInstance = getCurrentInstance();
-
-const activation = computed(() => {
-  const activationName = currentInstance?.parent?.props.modelValue || ''
-  return activationName === props.name
-})
-
-
+export default defineComponent({
+  name:"ErpTabsPane",
+  props: {
+    label: {
+      type: String,
+      default: "",
+    },
+    name: {
+      type: String,
+      default: "",
+    },
+  },
+  setup(props) {
+    const currentInstance = getCurrentInstance();
+    const activation = computed(() => {
+      const activationName = currentInstance?.parent?.props.modelValue || ''
+      return activationName === props.name
+    })
+    return {
+      activation
+    };
+  },
+});
 </script>
-
-<style lang='scss' scoped>
-
-</style>

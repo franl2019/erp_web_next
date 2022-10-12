@@ -1,49 +1,50 @@
 <template>
-<!--  <el-select v-bind="$attrs" placeholder="选择上级地区" ref="ElSelectRef">-->
-<!--    <el-option-->
-<!--        v-for="item in buyAreaSelectList"-->
-<!--        :key="item.buyareaid"-->
-<!--        :label="item.buyareaname"-->
-<!--        :value="item.buyareaid"-->
-<!--    >-->
-<!--    </el-option>-->
-<!--  </el-select>-->
   <el-tree-select
-      v-bind="$attrs"
+      ref="ElSelectRef"
       :data="buyAreaSelectList"
       :props="buyAreaTreeConfig"
-      node-key="buyareaid"
       check-strictly
       filterable
-      ref="ElSelectRef"
-  />
+      node-key="buyareaid"
+      v-bind="$attrs"/>
 </template>
 
-<script setup lang="ts">
-import {onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, ref} from "vue";
 import {IBuyArea} from "@/module/buyArea/buyArea";
 import {BuyAreaService} from "@/module/buyArea/buyArea.service";
 
-const buyAreaSelectList = ref<IBuyArea[]>();
-const buyAreaService = new BuyAreaService();
+export default defineComponent({
+  name:"ErpBuyAreaHaveRootSelect",
+  expose:["focus"],
+  setup() {
+    const buyAreaSelectList = ref<IBuyArea[]>();
+    const buyAreaService = new BuyAreaService();
 
-const buyAreaTreeConfig = {
-  children: 'children',
-  label: 'buyareaname',
-}
+    const buyAreaTreeConfig = {
+      children: 'children',
+      label: 'buyareaname',
+    }
 
-onMounted(async () => {
-  const buyAreaList = await buyAreaService.getBuyAreas();
-  buyAreaSelectList.value =  buyAreaService.formatBuyAreaListToTreeDataHaveRoot(buyAreaList);
-})
+    onMounted(async () => {
+      const buyAreaList = await buyAreaService.getBuyAreas();
+      buyAreaSelectList.value = buyAreaService.formatBuyAreaListToTreeDataHaveRoot(buyAreaList);
+    })
 
-const ElSelectRef = ref();
-function focus() {
-  ElSelectRef.value.focus();
-}
-defineExpose({focus});
+    const ElSelectRef = ref();
 
+    function focus() {
+      ElSelectRef.value.focus();
+    }
 
+    return {
+      buyAreaSelectList,
+      buyAreaTreeConfig,
+      ElSelectRef,
+      focus,
+    };
+  },
+});
 </script>
 
 <style scoped>

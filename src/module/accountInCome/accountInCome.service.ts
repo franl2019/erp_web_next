@@ -12,7 +12,12 @@ import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeShe
 import {AccountInComeAmountMxCreateDto} from "@/module/accountInCome/dto/amountMx/accountInComeAmountMxCreate.dto";
 import {AccountInComeSheetMxCreateDto} from "@/module/accountInCome/dto/sheetMx/accountInComeSheetMxCreate.dto";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {IAccountInComeSheetState} from "@/view/home/saleHome.vue";
+
+export interface IAccountInComeSheetState {
+    completeL1Review: number;
+    undoneL1Review: number;
+    undoneL2Review: number;
+}
 
 export class AccountInComeService {
 

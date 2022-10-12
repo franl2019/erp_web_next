@@ -1,35 +1,27 @@
 <template>
   <div class="flex flex-col h-full">
-    <erp_title title="客户操作区域权限">
-      <erp_button @click="createDialogVisible = true">新增</erp_button>
-      <erp_button @click="onClickedDeleteBtn" v-if="rowClickedValue.operateareaid" type="danger">删除</erp_button>
-    </erp_title>
+    <erp-title title="客户操作区域权限">
+      <erp-button @click="createDialogVisible = true">新增</erp-button>
+      <erp-button v-if="rowClickedValue.operateareaid" type="danger" @click="onClickedDeleteBtn">删除</erp-button>
+    </erp-title>
 
-    <erp_table
-        ref="tableRef"
-        :table-state="DefaultUserClientOperateAreaMxTableState"
-        :find-dto="findUserClientOperateareaDto"
-        @selection-changed="onSelectRow"
-    >
-    </erp_table>
+    <erp-table ref="tableRef" :find-dto="findUserClientOperateareaDto"
+               :table-state="DefaultUserClientOperateAreaMxTableState" @selection-changed="onSelectRow">
+    </erp-table>
   </div>
 
-  <create-user-client-operatearea-permission-dialog
-      v-if="createDialogVisible"
-      v-model:visible="createDialogVisible"
-      @clickedConfirm="onCreateDialogConfirm"
-      :create-client-operatearea-dto="createClientOperateareaDto">
+  <create-user-client-operatearea-permission-dialog v-if="createDialogVisible" v-model:visible="createDialogVisible"
+                                                    :create-client-operatearea-dto="createClientOperateareaDto"
+                                                    @clickedConfirm="onCreateDialogConfirm">
   </create-user-client-operatearea-permission-dialog>
 </template>
 
-<script setup lang='ts'>
-import Erp_title from "@/components/title/ErpTitle.vue";
-import Erp_button from "@/components/button/ErpButton.vue";
-import Erp_table from "@/components/table/ErpTable.vue";
-import {
-  FindUserClientOperateAreaDto
-} from "@/module/user_operatearea_mx/dto/findUserClientOperateArea.dto";
-import {getCurrentInstance, onMounted, ref} from "vue";
+<script lang='ts'>
+import ErpTitle from "@/components/title/ErpTitle.vue";
+import ErpButton from "@/components/button/ErpButton.vue";
+import ErpTable from "@/components/table/ErpTable.vue";
+import {FindUserClientOperateAreaDto} from "@/module/user_operatearea_mx/dto/findUserClientOperateArea.dto";
+import {defineComponent, onMounted, ref} from "vue";
 import {SelectionChangedEvent} from "ag-grid-community";
 import {IUser_operatearea_mx, User_operatearea_mx} from "@/module/user_operatearea_mx/user_operatearea_mx";
 import {
@@ -45,63 +37,80 @@ import {User_operatearea_mxService} from "@/module/user_operatearea_mx/user_oper
 import {ITableRef} from "@/components/table/type";
 import {DeleteUserOperateAreaDto} from "@/module/user_operatearea_mx/dto/deleteUserOperateArea.dto";
 import ErpDialog from "@/components/dialog/dialog";
-import {useRoute} from "vue-router";
 
-onMounted(async () => {
-  await tableRef.value?.initTableData();
-})
+export default defineComponent({
+  name:"user_client_operatearea_mx",
+  components:{
+    ErpTitle,
+    ErpButton,
+    ErpTable,
+    CreateUserClientOperateareaPermissionDialog,
+  },
+  props: ['userid'],
+  setup(props) {
+    onMounted(async () => {
+      await tableRef.value?.initTableData();
+    })
 
-const route = useRoute();
-const props = defineProps(['userid'])
-console.log(getCurrentInstance())
+    //table
+    const tableRef = ref<ITableRef>();
 
-//table
-const tableRef = ref<ITableRef>();
+    const findUserClientOperateareaDto = ref(new FindUserClientOperateAreaDto());
+    findUserClientOperateareaDto.value.userid = Number(props.userid);
 
-const findUserClientOperateareaDto = ref(new FindUserClientOperateAreaDto());
-findUserClientOperateareaDto.value.userid = Number(props.userid);
+    const rowClickedValue = ref<IUser_operatearea_mx>(new User_operatearea_mx());
 
-const rowClickedValue = ref<IUser_operatearea_mx>(new User_operatearea_mx());
-
-function onSelectRow(event: SelectionChangedEvent) {
-  const selectRows = JSON.parse(JSON.stringify(event.api.getSelectedRows()));
-  rowClickedValue.value = selectRows[0];
-}
-
-//user operatearea permission service
-const userOperateareaMxService = new User_operatearea_mxService();
-
-//create dialog visible
-const createDialogVisible = ref<boolean>(false);
-
-//create client operatearea dto
-const createClientOperateareaDto = ref<ICreateUserOperateAreaDto>(new CreateUserOperateAreaDto());
-
-
-//create dialog confirm event
-async function onCreateDialogConfirm() {
-  createClientOperateareaDto.value.userid = Number(props.userid);
-  await userOperateareaMxService.create(createClientOperateareaDto.value);
-  await tableRef.value?.initTableData();
-  createClientOperateareaDto.value = new CreateUserOperateAreaDto();
-}
-
-//delete btn onClick
-async function onClickedDeleteBtn() {
-  ErpDialog({
-    title: "是否删除",
-    message: `用户客户操作区域：${rowClickedValue.value?.operateareaname}`,
-    ok: async () => {
-      if (rowClickedValue.value) {
-        const deleteDto = new DeleteUserOperateAreaDto();
-        deleteDto.userid = Number(props.userid);
-        deleteDto.operateareaid = rowClickedValue.value.operateareaid;
-        await userOperateareaMxService.delete_data(deleteDto);
-        await tableRef.value?.initTableData();
-        rowClickedValue.value = new User_operatearea_mx();
-      }
+    function onSelectRow(event: SelectionChangedEvent) {
+      const selectRows = JSON.parse(JSON.stringify(event.api.getSelectedRows()));
+      rowClickedValue.value = selectRows[0];
     }
-  })
-}
 
+    //user operatearea permission service
+    const userOperateareaMxService = new User_operatearea_mxService();
+
+    //create dialog visible
+    const createDialogVisible = ref<boolean>(false);
+
+    //create client operatearea dto
+    const createClientOperateareaDto = ref<ICreateUserOperateAreaDto>(new CreateUserOperateAreaDto());
+
+    //create dialog confirm event
+    async function onCreateDialogConfirm() {
+      createClientOperateareaDto.value.userid = Number(props.userid);
+      await userOperateareaMxService.create(createClientOperateareaDto.value);
+      await tableRef.value?.initTableData();
+      createClientOperateareaDto.value = new CreateUserOperateAreaDto();
+    }
+
+    //delete btn onClick
+    async function onClickedDeleteBtn() {
+      ErpDialog({
+        title: "是否删除",
+        message: `用户客户操作区域：${rowClickedValue.value?.operateareaname}`,
+        ok: async () => {
+          if (rowClickedValue.value) {
+            const deleteDto = new DeleteUserOperateAreaDto();
+            deleteDto.userid = Number(props.userid);
+            deleteDto.operateareaid = rowClickedValue.value.operateareaid;
+            await userOperateareaMxService.delete_data(deleteDto);
+            await tableRef.value?.initTableData();
+            rowClickedValue.value = new User_operatearea_mx();
+          }
+        }
+      })
+    }
+
+    return {
+      DefaultUserClientOperateAreaMxTableState,
+      tableRef,
+      findUserClientOperateareaDto,
+      rowClickedValue,
+      createDialogVisible,
+      createClientOperateareaDto,
+      onSelectRow,
+      onCreateDialogConfirm,
+      onClickedDeleteBtn,
+    };
+  },
+});
 </script>

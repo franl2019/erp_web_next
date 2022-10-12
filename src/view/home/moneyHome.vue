@@ -65,31 +65,20 @@
   </erp-page-box-row>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import ErpTitle from "@/components/title/ErpTitle.vue";
-import ModuleCard from "@/components/card/moduleCard/moduleCard.vue";
-import ModuleCardItem from "@/components/card/moduleCard/moduleCardItem.vue";
 import ErpBigRightButton from "@/components/button/ErpBigRightButton.vue";
 import ErpBigLeftButton from "@/components/button/ErpBigLeftButton.vue";
-import {useRouter} from "vue-router";
 import ErpRouterButton from "@/components/button/ErpRouterButton.vue";
-import {useRouterPage} from "@/utils";
-import {AccountExpenditureService} from "@/module/accountExpenditure/accountExpenditure.service";
-import {AccountInComeService} from "@/module/accountInCome/accountInCome.service";
-import {onMounted, ref} from "vue";
-import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 import ErpPageBoxRow from "@/components/page/ErpPageBoxRow.vue";
-
-onMounted(() => {
-  findAccountExpenditureState();
-  findAccountInComeSheetState();
-  findAccountsVerifySheetSheetState();
-})
-
-const router = useRouter();
-const accountExpenditureService = new AccountExpenditureService();
-const accountInComeService = new AccountInComeService();
-const accountsVerifySheetService = new AccountsVerifySheetService();
+import ModuleCard from "@/components/card/moduleCard/ModuleCard.vue";
+import ModuleCardItem from "@/components/card/moduleCard/ModuleCardItem.vue";
+import { useRouter } from "vue-router";
+import { useRouterPage } from "@/utils";
+import { AccountExpenditureService } from "@/module/accountExpenditure/accountExpenditure.service";
+import { AccountInComeService } from "@/module/accountInCome/accountInCome.service";
+import { defineComponent, onMounted, ref } from "vue";
+import { AccountsVerifySheetService } from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 
 interface IAccountExpenditureSheetState {
   completeL1Review: number;
@@ -109,95 +98,130 @@ interface IAccountsVerifySheetSheetState {
   undoneL2Review: number;
 }
 
-const accountExpenditureSheetState = ref<IAccountExpenditureSheetState>({
-  completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
-})
+export default defineComponent({
+  name:"moneyHone",
+  components:{
+    ErpTitle,
+    ErpBigRightButton,
+    ErpBigLeftButton,
+    ErpRouterButton,
+    ErpPageBoxRow,
+    ModuleCard,
+    ModuleCardItem
+  },
+  setup() {
 
-const accountInComeSheetState = ref<IAccountInComeSheetState>({
-  completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
-})
+    onMounted(() => {
+      findAccountExpenditureState();
+      findAccountInComeSheetState();
+      findAccountsVerifySheetSheetState();
+    })
 
-const accountsVerifySheetSheetState = ref<IAccountsVerifySheetSheetState>({
-  completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
-})
+    const router = useRouter();
+    const accountExpenditureService = new AccountExpenditureService();
+    const accountInComeService = new AccountInComeService();
+    const accountsVerifySheetService = new AccountsVerifySheetService();
 
-function clickedRouteAccountExpenditureButton() {
-  const route = router.resolve({
-    name: 'accountExpenditureFind'
-  });
+    const accountExpenditureSheetState = ref<IAccountExpenditureSheetState>({
+      completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
+    })
 
-  useRouterPage(route.fullPath,route.meta.title as string)
-}
+    const accountInComeSheetState = ref<IAccountInComeSheetState>({
+      completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
+    })
 
-function clickedRouteAccountVerifySheet() {
-  const route = router.resolve({
-    name: 'accountsVerifySheetFind'
-  })
+    const accountsVerifySheetSheetState = ref<IAccountsVerifySheetSheetState>({
+      completeL1Review: 0, undoneL1Review: 0, undoneL2Review: 0
+    })
 
-  useRouterPage(route.fullPath,route.meta.title as string);
-}
+    function clickedRouteAccountExpenditureButton() {
+      const route = router.resolve({
+        name: 'accountExpenditureFind'
+      });
 
-function clickedRouteAccountInCome() {
-  const route = router.resolve({
-    name: 'accountInComeFind'
-  })
+      useRouterPage(route.fullPath, route.meta.title as string)
+    }
 
-  useRouterPage(route.fullPath,route.meta.title as string);
-}
+    function clickedRouteAccountVerifySheet() {
+      const route = router.resolve({
+        name: 'accountsVerifySheetFind'
+      })
 
-async function findAccountExpenditureState() {
-  const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState({
-    accountExpenditureCode: "",
-    accountExpenditureId: 0,
-    accountExpenditureType: 0,
-    buyid: 0,
-    endDate: "",
-    page: 0,
-    pagesize: 0,
-    startDate: ""
-  });
-  accountExpenditureSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
-  accountExpenditureSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
-  accountExpenditureSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
-}
+      useRouterPage(route.fullPath, route.meta.title as string);
+    }
 
-async function findAccountInComeSheetState() {
-  const sheetCompleteState = await accountInComeService.findSheetState({
-    accountInComeCode: "",
-    accountInComeId: 0,
-    accountInComeType: 0,
-    amount: 0,
-    clientid: 0,
-    endDate: "",
-    page: 0,
-    pagesize: 0,
-    paymentAccount: "",
-    startDate: ""
-  })
-  accountInComeSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
-  accountInComeSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
-  accountInComeSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
-}
+    function clickedRouteAccountInCome() {
+      const route = router.resolve({
+        name: 'accountInComeFind'
+      })
 
-async function findAccountsVerifySheetSheetState() {
-  const sheetCompleteState = await accountsVerifySheetService.findAccountVerifySheetState({
-    accountsVerifySheetCode: "",
-    accountsVerifySheetId: 0,
-    buyid: 0,
-    buyid_b: 0,
-    clientid: 0,
-    clientid_b: 0,
-    endDate: "",
-    level1Review: 0,
-    level2Review: 0,
-    page: 0,
-    pagesize: 0,
-    sheetType: 0,
-    startDate: ""
+      useRouterPage(route.fullPath, route.meta.title as string);
+    }
 
-  })
-  accountsVerifySheetSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
-  accountsVerifySheetSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
-  accountsVerifySheetSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
-}
+    async function findAccountExpenditureState() {
+      const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState({
+        accountExpenditureCode: "",
+        accountExpenditureId: 0,
+        accountExpenditureType: 0,
+        buyid: 0,
+        endDate: "",
+        page: 0,
+        pagesize: 0,
+        startDate: ""
+      });
+      accountExpenditureSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
+      accountExpenditureSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
+      accountExpenditureSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
+    }
+
+    async function findAccountInComeSheetState() {
+      const sheetCompleteState = await accountInComeService.findSheetState({
+        accountInComeCode: "",
+        accountInComeId: 0,
+        accountInComeType: 0,
+        amount: 0,
+        clientid: 0,
+        endDate: "",
+        page: 0,
+        pagesize: 0,
+        paymentAccount: "",
+        startDate: ""
+      })
+      accountInComeSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
+      accountInComeSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
+      accountInComeSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
+    }
+
+    async function findAccountsVerifySheetSheetState() {
+      const sheetCompleteState = await accountsVerifySheetService.findAccountVerifySheetState({
+        accountsVerifySheetCode: "",
+        accountsVerifySheetId: 0,
+        buyid: 0,
+        buyid_b: 0,
+        clientid: 0,
+        clientid_b: 0,
+        endDate: "",
+        level1Review: 0,
+        level2Review: 0,
+        page: 0,
+        pagesize: 0,
+        sheetType: 0,
+        startDate: ""
+
+      })
+      accountsVerifySheetSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
+      accountsVerifySheetSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
+      accountsVerifySheetSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
+    }
+    return {
+      accountExpenditureSheetState,
+      accountInComeSheetState,
+      accountsVerifySheetSheetState,
+      clickedRouteAccountExpenditureButton,
+      clickedRouteAccountVerifySheet,
+      clickedRouteAccountInCome,
+      findAccountExpenditureState,
+    };
+  },
+});
 </script>

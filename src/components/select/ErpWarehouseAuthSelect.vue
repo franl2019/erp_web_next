@@ -1,5 +1,5 @@
 <template>
-  <el-select v-bind="$attrs" ref="ElSelectRef" placeholder="选择所属仓库" >
+  <el-select ref="ElSelectRef" placeholder="选择所属仓库" v-bind="$attrs">
     <el-option
         v-for="item in warehouseSelectList"
         :key="item.warehouseid"
@@ -10,32 +10,41 @@
   </el-select>
 </template>
 
-<script setup lang="ts">
-
-import {onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, onMounted, ref} from "vue";
 import {IWarehouse} from "@/module/warehouse/warehouse";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
 
-onMounted(async () => {
-  warehouseSelectList.value = await getWarehouseList();
-})
+export default defineComponent({
+  name: "ErpWarehouseAuthSelect",
+  expose: ["focus"],
+  setup() {
+    onMounted(async () => {
+      await getWarehouseList();
+    })
 
-const ElSelectRef = ref();
+    const ElSelectRef = ref();
 
-function focus() {
-  ElSelectRef.value.focus();
-}
+    function focus() {
+      ElSelectRef.value.focus();
+    }
 
-defineExpose({focus});
+    //产品类别选择List
+    const warehouseSelectList = ref<IWarehouse[]>([]);
+    //服务
+    const warehouseService = new WarehouseService();
 
-//产品类别选择List
-const warehouseSelectList = ref<IWarehouse[]>([]);
-//服务
-const warehouseService = new WarehouseService();
+    async function getWarehouseList() {
+      warehouseSelectList.value = await warehouseService.find_auth();
+    }
 
-async function getWarehouseList() {
-  return await warehouseService.find_auth();
-}
+    return {
+      ElSelectRef,
+      warehouseSelectList,
+      focus,
+    };
+  },
+});
 </script>
 
 <style scoped>

@@ -3,3 +3,10 @@
     <img src="@/assets/east_black_48dp.svg" alt="btn">
   </div>
 </template>
+
+<script lang="ts">
+import {defineComponent} from "vue";
+export default defineComponent({
+  name:"ErpBigRightButton"
+})
+</script>

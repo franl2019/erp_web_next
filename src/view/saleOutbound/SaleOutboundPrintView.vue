@@ -97,7 +97,7 @@
         <tr>
           <td colspan="4">
             <div>
-              <div class="pageSize">第{{j+1}}页共{{dataList.length}}页</div>
+              <div class="pageSize">第{{ j + 1 }}页共{{ dataList.length }}页</div>
               <div class="h-16 w-full p-1 border border-solid border-black">最新消息:</div>
               <div class="">制单人:张建华</div>
 
@@ -111,75 +111,88 @@
 
 </template>
 
-<script lang="ts" setup>
-import {nextTick, onMounted, ref} from "vue";
+<script lang="ts">
+import {defineComponent, nextTick, onMounted, ref} from "vue";
 import {SaleOutboundPrintService} from "@/module/saleOutbound/service/saleOutboundPrint.service";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-onMounted(async () => {
-  await nextTick(async () => {
-    data.value = await new SaleOutboundPrintService().find();
-  })
-  await test()
-  // window.print();
-})
+
+export default defineComponent({
+  setup() {
+    onMounted(async () => {
+      await nextTick(async () => {
+        data.value = await new SaleOutboundPrintService().find();
+      })
+      await test()
+      // window.print();
+    })
 
 
-const row = ref(50)
-const rowHeightList: number[] = []
-const data = ref([])
+    const row = ref(50)
+    const rowHeightList: number[] = []
+    const data = ref([])
 
-const dataList = ref<any[][]>([])
+    const dataList = ref<any[][]>([])
 
-async function test() {
-  const childNodes = document.getElementsByClassName('row')
-  for (let i = 0; i < childNodes.length; i++) {
-    const childNode = (childNodes[i] as HTMLElement);
-    rowHeightList.push(childNode.offsetHeight);
-  }
-  const pageHeight = (document.getElementsByClassName('page')[0] as HTMLElement).clientHeight || 0;
-  const headHeight = (document.getElementsByClassName('head')[0] as HTMLElement).offsetHeight || 0;
-  const footHeight = (document.getElementsByClassName('foot')[0] as HTMLElement).offsetHeight || 0;
+    async function test() {
+      const childNodes = document.getElementsByClassName('row')
+      for (let i = 0; i < childNodes.length; i++) {
+        const childNode = (childNodes[i] as HTMLElement);
+        rowHeightList.push(childNode.offsetHeight);
+      }
+      const pageHeight = (document.getElementsByClassName('page')[0] as HTMLElement).clientHeight || 0;
+      const headHeight = (document.getElementsByClassName('head')[0] as HTMLElement).offsetHeight || 0;
+      const footHeight = (document.getElementsByClassName('foot')[0] as HTMLElement).offsetHeight || 0;
 
-  const bodyHeight = pageHeight - headHeight - footHeight;
-  dataList.value = await calculate(bodyHeight, rowHeightList, data.value)
+      const bodyHeight = pageHeight - headHeight - footHeight;
+      dataList.value = await calculate(bodyHeight, rowHeightList, data.value)
 
-  const ttt = document.getElementsByClassName('ttt')
-  ttt[0].parentNode!.removeChild(ttt[0])
-  const bbb = document.getElementsByClassName('page')
-  bbb[0].parentNode!.removeChild(bbb[0])
-}
-
-function calculate(pageHeight: number, rowHeightList: number[], data: any[]) {
-  console.log(rowHeightList)
-  if (pageHeight === 0) {
-    return Promise.reject(new VerifyParamError("页面高度不能为0"))
-  }
-
-  if (rowHeightList.length !== data.length) {
-    return Promise.reject(new VerifyParamError("计量数组数量不相等"))
-  }
-
-  let nowPageHeight: number = 0
-  let dataList: any[][] = [[]];
-  let index: number = 0
-  for (let i = 0; i < rowHeightList.length; i++) {
-    const rowHeight = rowHeightList[i];
-    console.log(pageHeight, nowPageHeight, rowHeight)
-    //如果大于页面高度
-    nowPageHeight = nowPageHeight + rowHeight
-    if (pageHeight >= nowPageHeight) {
-      dataList[index].push(data[i])
-    } else {
-      nowPageHeight = rowHeight
-      index = index + 1
-      dataList.push([data[i]])
+      const ttt = document.getElementsByClassName('ttt')
+      ttt[0].parentNode!.removeChild(ttt[0])
+      const bbb = document.getElementsByClassName('page')
+      bbb[0].parentNode!.removeChild(bbb[0])
     }
-  }
 
-  console.dir(dataList)
+    function calculate(pageHeight: number, rowHeightList: number[], data: any[]) {
+      console.log(rowHeightList)
+      if (pageHeight === 0) {
+        return Promise.reject(new VerifyParamError("页面高度不能为0"))
+      }
 
-  return dataList
-}
+      if (rowHeightList.length !== data.length) {
+        return Promise.reject(new VerifyParamError("计量数组数量不相等"))
+      }
+
+      let nowPageHeight: number = 0
+      let dataList: any[][] = [[]];
+      let index: number = 0
+      for (let i = 0; i < rowHeightList.length; i++) {
+        const rowHeight = rowHeightList[i];
+        console.log(pageHeight, nowPageHeight, rowHeight)
+        //如果大于页面高度
+        nowPageHeight = nowPageHeight + rowHeight
+        if (pageHeight >= nowPageHeight) {
+          dataList[index].push(data[i])
+        } else {
+          nowPageHeight = rowHeight
+          index = index + 1
+          dataList.push([data[i]])
+        }
+      }
+
+      console.dir(dataList)
+
+      return dataList
+    }
+
+    return {
+      row,
+      rowHeightList,
+      data,
+      dataList,
+      calculate,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
@@ -196,7 +209,7 @@ body {
   padding: 0;
 }
 
-.pageWidth{
+.pageWidth {
   width: 210mm;
 
 }

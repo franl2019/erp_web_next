@@ -1,28 +1,34 @@
 <template>
-  <input ref="inputRef" type="text"
+  <input ref="inputRef" :value="modelValue" class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300" type="text"
          v-bind="$attrs"
-         :value="props.modelValue"
-         @input="emits('update:modelValue', $event.target.value)"
-         class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300"
-  >
+         @input="$emit('update:modelValue', $event.target.value)">
 </template>
 
-<script setup lang='ts'>
-import {ref} from "vue";
+<script lang='ts'>
+import {defineComponent, ref} from "vue";
 
-const props = defineProps<{ modelValue?: any }>()
-const emits = defineEmits(['update:modelValue'])
-const inputRef = ref();
+export default defineComponent({
+  name: "ErpInputRound",
+  expose: ["getNode"],
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
+  setup() {
+    const inputRef = ref();
 
-function getNode() {
-  return inputRef.value
-}
+    function getNode() {
+      return inputRef.value
+    }
 
-defineExpose({getNode});
+    return {
+      inputRef,
+      getNode,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-input:disabled{
+input:disabled {
   background-color: #F5F7FA;
   //color: #A8ABB2;
 }

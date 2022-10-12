@@ -29,7 +29,19 @@
   </erp-page-box-row>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import ErpRouterButton from "@/components/button/ErpRouterButton.vue";
 import ErpPageBoxRow from "@/components/page/ErpPageBoxRow.vue";
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  name: "baseInfoHome",
+  components: {
+    ErpRouterButton,
+    ErpPageBoxRow,
+  },
+  setup() {
+    return {}
+  },
+});
 </script>

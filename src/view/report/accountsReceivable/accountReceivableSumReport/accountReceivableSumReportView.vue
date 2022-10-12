@@ -25,21 +25,21 @@
     </erp-title>
     <erp-table
         ref="accountReceivableSumReportRef"
-        :table-state="defaultAccountReceivableSumReportTableConfig"
         :find-dto="findDto"
+        :table-state="defaultAccountReceivableSumReportTableConfig"
     ></erp-table>
   </erp-page-box>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import {onMounted, ref} from "vue";
-import {ITableRef} from "@/components/table/type";
 import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
-import {IClient} from "@/module/client/client";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
+import {defineComponent, onMounted, ref} from "vue";
+import {ITableRef} from "@/components/table/type";
+import {IClient} from "@/module/client/client";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {
   defaultAccountReceivableSumReportTableConfig
@@ -48,29 +48,51 @@ import {
   AccountReceivableSumReportFindDto
 } from "@/module/report/accountReceivableSumReport/dto/accountReceivableSumReportFind.dto";
 
-onMounted(async () => {
-  await initPage();
-})
+export default defineComponent({
+  name: "AccountReceivableSumReportView",
+  components: {
+    ErpButton,
+    ErpTitle,
+    ErpSelectClientBtn,
+    ErpTable,
+    ErpPageBox
+  },
+  setup() {
+    onMounted(async () => {
+      await initPage();
+    })
 
-const accountReceivableSumReportRef = ref<ITableRef>();
-const findDto = ref(new AccountReceivableSumReportFindDto());
+    const accountReceivableSumReportRef = ref<ITableRef>();
+    const findDto = ref(new AccountReceivableSumReportFindDto());
 
 //设置默认日期
-const {findDate} = useDateSelect(findDto)
+    const {findDate} = useDateSelect(findDto)
 
-async function initPage() {
-  await accountReceivableSumReportRef.value?.initTableData();
-}
+    async function initPage() {
+      await accountReceivableSumReportRef.value?.initTableData();
+    }
 
-function selectClient(client: IClient) {
-  findDto.value.clientid = client.clientid;
-  findDto.value.clientname = client.clientname;
-  initPage();
-}
+    function selectClient(client: IClient) {
+      findDto.value.clientid = client.clientid;
+      findDto.value.clientname = client.clientname;
+      initPage();
+    }
 
-function unselectClient() {
-  findDto.value.clientid = 0;
-  findDto.value.clientname = '';
-  initPage();
-}
+    function unselectClient() {
+      findDto.value.clientid = 0;
+      findDto.value.clientname = '';
+      initPage();
+    }
+
+    return {
+      findDto,
+      findDate,
+      accountReceivableSumReportRef,
+      defaultAccountReceivableSumReportTableConfig,
+      initPage,
+      selectClient,
+      unselectClient,
+    };
+  },
+});
 </script>

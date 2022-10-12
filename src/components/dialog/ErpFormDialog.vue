@@ -30,41 +30,59 @@
 
       <div
           class="bg-gray-100 px-4 py-2 md:py-0 md:h-14 md:flex md:items-center sm:px-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row-reverse sm:space-x-reverse sm:space-x-2">
-        <erp_button class="" type="success" @click="ok">
+        <erp-button class="" type="success" @click="ok">
           确定
-        </erp_button>
-        <erp_button class="" type="info" @click="close">
+        </erp-button>
+        <erp-button class="" type="info" @click="close">
           取消
-        </erp_button>
+        </erp-button>
       </div>
     </div>
   </div>
 </template>
 
-<script lang='ts' setup>
-import Erp_button from "@/components/button/ErpButton.vue";
+<script lang='ts'>
+import ErpButton from "@/components/button/ErpButton.vue";
+import {defineComponent} from "vue";
 
-const props = withDefaults(defineProps<{
-  title?: string;
-  visible?: boolean;
-}>(), {
-  title: ""
-})
+export default defineComponent({
+  name: "ErpFormDialog",
+  components: {
+    ErpButton
+  },
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
+    visible: {
+      type: Boolean,
+      default: false
+    },
+  },
+  emits: [
+    'clickedConfirm',
+    'clickedCancel',
+    'clickedClose',
+    'update:visible',
+  ],
+  setup(props, {emit: emits}) {
 
-const emits = defineEmits([
-  'clickedConfirm',
-  'clickedCancel',
-  'clickedClose',
-  'update:visible',
-])
+    async function ok() {
+      emits('clickedConfirm');
+      emits('update:visible', false);
+    }
 
-async function ok() {
-  emits('clickedConfirm');
-  emits('update:visible', false);
-}
+    function close() {
+      emits('clickedCancel');
+      emits('update:visible', false);
+    }
 
-function close() {
-  emits('clickedCancel');
-  emits('update:visible', false);
-}
+    return {
+      props,
+      ok,
+      close,
+    };
+  },
+});
 </script>

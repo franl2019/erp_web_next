@@ -3,7 +3,7 @@ import {IAccountExpenditureCreate} from "@/module/accountExpenditure/types/IAcco
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {IAccountExpenditure} from "@/module/accountExpenditure/accountExpenditure";
-import {getToday} from "@/utils";
+import {getToday, useDateFormat} from "@/utils";
 
 export class AccountExpenditureUpdateDto implements IAccountExpenditureCreate {
     @IsInt()
@@ -46,7 +46,7 @@ export class AccountExpenditureUpdateDto implements IAccountExpenditureCreate {
         this.accountExpenditureId = accountExpenditure.accountExpenditureId;
         this.accountExpenditureCode = accountExpenditure.accountExpenditureCode;
         this.buyid = accountExpenditure.buyid;
-        this.indate = accountExpenditure.indate;
+        this.indate = useDateFormat(accountExpenditure.indate);
         this.accountExpenditureType = accountExpenditure.accountExpenditureType;
         this.amount = accountExpenditure.amount;
         this.reMark = accountExpenditure.reMark;

@@ -2,7 +2,7 @@ import {IsArray, IsInt, IsNumber, IsString} from "class-validator";
 import {IAccountInComeCreateDto, IAccountInComeFind} from "../accountInCome";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
-import {getToday} from "@/utils";
+import {useDateFormat} from "@/utils";
 
 export class AccountInComeUpdateDto implements IAccountInComeCreateDto {
     accountInComeId: number = 0;
@@ -13,7 +13,7 @@ export class AccountInComeUpdateDto implements IAccountInComeCreateDto {
     amount: number = 0;
     @IsInt()
     clientid: number = 0;
-    indate: string = getToday();
+    indate: string = "";
     @IsString()
     reMark: string = "";
     creater: string = "";
@@ -41,7 +41,7 @@ export class AccountInComeUpdateDto implements IAccountInComeCreateDto {
         this.accountInComeType = accountInComeFind.accountInComeType;
         this.amount = accountInComeFind.amount;
         this.clientid = accountInComeFind.clientid;
-        this.indate = accountInComeFind.indate;
+        this.indate = useDateFormat(accountInComeFind.indate)
         this.reMark = accountInComeFind.reMark;
         this.creater = accountInComeFind.creater;
         this.createdAt = accountInComeFind.createdAt;

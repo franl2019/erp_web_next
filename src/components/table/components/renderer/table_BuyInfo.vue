@@ -1,11 +1,11 @@
 <template>
 
   <el-popover
-      placement="right"
-      width="20rem"
-      trigger="click"
-      transition=""
       :hide-after="0"
+      placement="right"
+      transition=""
+      trigger="click"
+      width="20rem"
   >
     <template #default>
       <div class="w-full pl-3 pr-2 py-2">
@@ -49,68 +49,72 @@
 
 </template>
 
-<script lang='ts' setup>
-import {ref} from "vue";
+<script lang='ts'>
+import {defineComponent, ref} from "vue";
 import {BuyService} from "@/module/buy/buy.service";
 import {IBuy} from "@/module/buy/buy";
 
-const props = defineProps<{
-  params: {
-    data: any
-    value: any
-  }
-}>()
+export default defineComponent({
+  name: "TableBuyInfo",
+  props:["params"],
+  setup(props) {
+    const buttonRef = ref();
+    const buy = ref<IBuy>({
+      accountspayabletype: 0,
+      address: "",
+      buyareaid: 0,
+      buycode: "",
+      buyid: 0,
+      buyname: "",
+      contactperson: "",
+      createdAt: null,
+      creater: "",
+      del_uuid: 0,
+      deleteAt: null,
+      deleter: "",
+      email: "",
+      level1date: null,
+      level1name: "",
+      level1review: 0,
+      level2date: null,
+      level2name: "",
+      level2review: 0,
+      moneytype: "",
+      operateareaid: 0,
+      phone_no: "",
+      remark1: "",
+      remark10: "",
+      remark2: "",
+      remark3: "",
+      remark4: "",
+      remark5: "",
+      remark6: "",
+      remark7: "",
+      remark8: "",
+      remark9: "",
+      salesman: "",
+      tel_no: "",
+      updatedAt: null,
+      updater: "",
+      useflag: 0,
+      ymrep: ""
+    })
 
-const buttonRef = ref();
+    async function onClickTitle() {
+      const buyService = new BuyService();
+      const buyid = props.params.data["buyid"]
+      if (buyid) {
+        buy.value = await buyService.findOne(buyid);
+      } else {
+        console.log("无")
+      }
+    }
 
-const buy = ref<IBuy>({
-  accountspayabletype: 0,
-  address: "",
-  buyareaid: 0,
-  buycode: "",
-  buyid: 0,
-  buyname: "",
-  contactperson: "",
-  createdAt: null,
-  creater: "",
-  del_uuid: 0,
-  deleteAt: null,
-  deleter: "",
-  email: "",
-  level1date: null,
-  level1name: "",
-  level1review: 0,
-  level2date: null,
-  level2name: "",
-  level2review: 0,
-  moneytype: "",
-  operateareaid: 0,
-  phone_no: "",
-  remark1: "",
-  remark10: "",
-  remark2: "",
-  remark3: "",
-  remark4: "",
-  remark5: "",
-  remark6: "",
-  remark7: "",
-  remark8: "",
-  remark9: "",
-  salesman: "",
-  tel_no: "",
-  updatedAt: null,
-  updater: "",
-  useflag: 0,
-  ymrep: ""
-})
-
-async function onClickTitle() {
-  const buyService = new BuyService();
-  const buyid = props.params.data["buyid"]
-  if (buyid) {
-    buy.value = await buyService.findOne(buyid);
-  } else {
-    console.log("无")
-  }
-}
+    return {
+      buttonRef,
+      buy,
+      onClickTitle,
+    };
+  },
+});
 </script>

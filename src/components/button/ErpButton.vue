@@ -1,7 +1,6 @@
 <template>
   <button ref="buttonRef"
           v-bind="$attrs"
-          class=""
           :class="buttonSizeStyle"
           :disabled="disabled"
   >

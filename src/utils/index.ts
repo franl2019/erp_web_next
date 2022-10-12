@@ -42,6 +42,11 @@ export function useDisableKey(isDisable: boolean) {
 }
 
 //获取今天日期
+export function useDateFormat(date:any): string {
+    return moment(date).format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取今天日期
 export function getToday(): string {
     return moment().format('YYYY-MM-DD HH:mm:ss');
 }

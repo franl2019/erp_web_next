@@ -6,10 +6,20 @@
   </div>
 </template>
 
-<script setup lang='ts'>
-const props = withDefaults(defineProps<{
-  px?:boolean
-}>(),{
-  px:false
-})
+<script lang='ts'>import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name:"ErpForm",
+  props: {
+    px: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props) {
+    return {
+      props,
+    };
+  },
+});
 </script>

@@ -1,40 +1,56 @@
 <template>
-  <erp_dialog_form v-bind="$attrs" title="新增仓库资料">
-    <erp_form>
-      <erp_form_item label-for-name="仓库编号" md-col="8" lg-col="8">
-        <erp_input_rounded ref="defaultInputFocusRef" v-model="createWarehouseDto.warehousecode"></erp_input_rounded>
-      </erp_form_item>
-      <erp_form_item label-for-name="仓库名称" md-col="8" lg-col="8">
-        <erp_input_rounded v-model="createWarehouseDto.warehousename"></erp_input_rounded>
-      </erp_form_item>
-    </erp_form>
-  </erp_dialog_form>
+  <erp-form-dialog
+      title="新增仓库资料"
+      @clickedConfirm="clickedConfirm"
+  >
+    <erp-form>
+      <erp-form-item label-for-name="仓库编号" lg-col="8" md-col="8">
+        <erp-input-round ref="defaultInputFocusRef" v-model="createWarehouseDto.warehousecode"></erp-input-round>
+      </erp-form-item>
+      <erp-form-item label-for-name="仓库名称" lg-col="8" md-col="8">
+        <erp-input-round v-model="createWarehouseDto.warehousename"></erp-input-round>
+      </erp-form-item>
+    </erp-form>
+  </erp-form-dialog>
 </template>
 
-<script setup lang='ts'>
-import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
-import Erp_form from "@/components/form/ErpForm.vue";
-import Erp_form_item from "@/components/form/ErpFormItem.vue";
-import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
-import {onMounted, ref} from "vue";
+<script lang='ts'>
+import ErpFormDialog from "@/components/dialog/ErpFormDialog.vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpInputRound from "@/components/input/ErpInputRound.vue";
+import {defineComponent, onMounted, ref} from "vue";
 import {CreateWarehouseDto, ICreateWarehouseDto} from "@/module/warehouse/dto/createWarehouse.dto";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
 
-const defaultInputFocusRef = ref();
-onMounted(async () => {
-  defaultInputFocusRef.value.getNode().focus();
-})
+export default defineComponent({
+  name: "AddWarehouseDialog",
+  components: {
+    ErpForm,
+    ErpFormItem,
+    ErpInputRound,
+    ErpFormDialog
+  },
+  emits:["ok"],
+  setup(_props,{emit}) {
+    const defaultInputFocusRef = ref();
+    onMounted(async () => {
+      defaultInputFocusRef.value.getNode().focus();
+    })
 
-const createWarehouseDto = ref<ICreateWarehouseDto>(new CreateWarehouseDto());
-async function createWarehouse() {
-  const warehouseService = new WarehouseService();
-  await warehouseService.create(createWarehouseDto.value);
-}
+    const createWarehouseDto = ref<ICreateWarehouseDto>(new CreateWarehouseDto());
 
-defineExpose({createWarehouse});
+    async function clickedConfirm() {
+      const warehouseService = new WarehouseService();
+      const createResult = await warehouseService.create(createWarehouseDto.value);
+      emit('ok',createResult);
+    }
 
-export interface ICreateWarehouseRef {
-  createWarehouse: () => void
-}
-
+    return {
+      defaultInputFocusRef,
+      createWarehouseDto,
+      clickedConfirm,
+    };
+  },
+});
 </script>

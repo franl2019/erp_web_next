@@ -17,22 +17,22 @@
           @unSelect="unselectBuy"
       ></erp-select-buy-btn>
       <erp-pop-over-button
-          @ok="clickedFilterOkBtn"
           @close="clickedFilterCloseBtn"
+          @ok="clickedFilterOkBtn"
           @reset="clickedFilterResetBtn"
       >
         <template #default>筛选</template>
         <template #form>
           <erp-form>
             <erp-form-item :label-for-name="valueName.product+'名称'">
-              <erp-input-round class="w-6" v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
+              <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'" class="w-6"
                                @change="onChangRefresh"></erp-input-round>
             </erp-form-item>
             <erp-form-item label-for-name="操作区域">
               <erp-operate-area-auth-select
                   v-model="operateAreaId"
-                  :operateareatype="1"
                   :have-root-node="true"
+                  :operateareatype="1"
                   @change="onChangRefresh"
               ></erp-operate-area-auth-select>
             </erp-form-item>
@@ -64,13 +64,13 @@
       </erp-pop-over-button>
       <erp-button @click="onClickRefreshButton">刷新</erp-button>
       <template #input>
-        <erp-input-round class="w-6" v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
+        <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'" class="w-6"
                          @change="onChangRefresh"></erp-input-round>
       </template>
     </erp-no-title>
 
     <erp-table
-        ref="buyInboundProductSumReportTable"
+        ref="buyInboundProductSumReportTableRef"
         :find-dto="findDto"
         :table-state="buyInboundProductSumReportTableConfig"
     >
@@ -78,14 +78,20 @@
   </erp-page-box>
 </template>
 
-<script lang='ts' setup>
-import {valueName} from "@/config/valueName";
+<script lang='ts'>
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
-import {onMounted, ref} from "vue";
+import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
+import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
+import ErpPopOverButton from "@/components/button/ErpPopOverButton.vue";
+import {valueName} from "@/config/valueName";
+import {defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {
   buyInboundProductSumReportTableConfig
@@ -94,66 +100,95 @@ import {
   BuyInboundProductSummaryReportFindDto
 } from "@/module/report/buyInboundProductSumReport/dto/saleOutboundMxReportFind.dto";
 import {useDateSelect} from "@/composables/useDateSelect";
-import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
 import {IBuy} from "@/module/buy/buy";
-import ErpForm from "@/components/form/ErpForm.vue";
-import ErpFormItem from "@/components/form/ErpFormItem.vue";
-import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
-import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
-import ErpPopOverButton from "@/components/button/ErpPopOverButton.vue";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
 
-const buyInboundProductSumReportTable = ref<ITableRef>();
-const findDto = ref(new BuyInboundProductSummaryReportFindDto());
-const {findDate} = useDateSelect(findDto);
-const {warehouseid} = useWarehouseSelect(findDto);
-const {operateAreaId} = useOperateAreaSelect(findDto)
+export default defineComponent({
+  name: "BuyInboundProductSumReport",
+  components: {
+    ErpPageBox,
+    ErpNoTitle,
+    ErpButton,
+    ErpTable,
+    ErpInputRound,
+    ErpSelectBuyBtn,
+    ErpForm,
+    ErpFormItem,
+    ErpWarehouseAuthSelectHaveRoot,
+    ErpOperateAreaAuthSelect,
+    ErpPopOverButton,
+  },
+  setup() {
+    const buyInboundProductSumReportTableRef = ref<ITableRef>();
+    const findDto = ref(new BuyInboundProductSummaryReportFindDto());
+    const {findDate} = useDateSelect(findDto);
+    const {warehouseid} = useWarehouseSelect(findDto);
+    const {operateAreaId} = useOperateAreaSelect(findDto)
 
-onMounted(async () => {
-  await initPage()
-})
+    onMounted(async () => {
+      await initPage()
+    })
 
-async function initPage() {
-  buyInboundProductSumReportTable.value?.initTableData();
-}
+    async function initPage() {
+      buyInboundProductSumReportTableRef.value?.initTableData();
+    }
 
-async function onChangRefresh() {
-  await initPage()
-}
+    async function onChangRefresh() {
+      await initPage()
+    }
 
-async function onClickRefreshButton() {
-  await initPage()
-}
+    async function onClickRefreshButton() {
+      await initPage()
+    }
 
-function selectBuy(buy: IBuy) {
-  findDto.value.buyid = buy.buyid;
-  findDto.value.buyname = buy.buyname;
-  initPage();
-}
+    function selectBuy(buy: IBuy) {
+      findDto.value.buyid = buy.buyid;
+      findDto.value.buyname = buy.buyname;
+      initPage();
+    }
 
-function unselectBuy() {
-  findDto.value.buyid = 0;
-  findDto.value.buyname = '';
-  initPage();
-}
+    function unselectBuy() {
+      findDto.value.buyid = 0;
+      findDto.value.buyname = '';
+      initPage();
+    }
 
-async function clickedFilterOkBtn() {
-  await initPage()
-}
+    async function clickedFilterOkBtn() {
+      await initPage()
+    }
 
-async function clickedFilterCloseBtn() {
-  await initPage()
-}
+    async function clickedFilterCloseBtn() {
+      await initPage()
+    }
 
-async function clickedFilterResetBtn() {
+    async function clickedFilterResetBtn() {
 //重置查询参数
-  for (let valueKey in findDto.value) {
-    (findDto.value as any)[valueKey] = (new BuyInboundProductSummaryReportFindDto() as any)[valueKey]
-  }
-  await initPage()
-}
+      for (let valueKey in findDto.value) {
+        (findDto.value as any)[valueKey] = (new BuyInboundProductSummaryReportFindDto() as any)[valueKey]
+      }
+      await initPage()
+    }
 
+    return {
+      findDto,
+      findDate,
+      warehouseid,
+      operateAreaId,
+      valueName,
+      buyInboundProductSumReportTableRef,
+      buyInboundProductSumReportTableConfig,
+      initPage,
+      onChangRefresh,
+      onClickRefreshButton,
+      selectBuy,
+      unselectBuy,
+      clickedFilterOkBtn,
+      clickedFilterCloseBtn,
+      clickedFilterResetBtn,
+    };
+  },
+});
 </script>
 
 <style lang='scss' scoped>

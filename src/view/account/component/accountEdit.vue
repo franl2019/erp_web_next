@@ -1,38 +1,58 @@
 <template>
-  <erp_dialog_form v-bind="$attrs">
-    <erp_form>
-      <erp_form_item label-for-name="账户编号">
-        <erp_input_rounded ref="defaultInputFocusRef" v-model="props.dto.accountCode"></erp_input_rounded>
-      </erp_form_item>
-      <erp_form_item label-for-name="账户名称">
-        <erp_input_rounded v-model="props.dto.accountName"></erp_input_rounded>
-      </erp_form_item>
-      <erp_form_item label-for-name="币种">
-        <erp_select_currency v-model="props.dto.currencyid"></erp_select_currency>
-      </erp_form_item>
-      <erp_form_item label-for-name="是否公户">
-       <erp_checkbox_border v-model="props.dto.companyFlag">公户</erp_checkbox_border>
-      </erp_form_item>
-    </erp_form>
-  </erp_dialog_form>
+  <erp-dialog-form v-bind="$attrs">
+    <erp-form>
+      <erp-form-item label-for-name="账户编号">
+        <erp-input-rounded ref="defaultInputFocusRef" v-model="dto.accountCode"></erp-input-rounded>
+      </erp-form-item>
+      <erp-form-item label-for-name="账户名称">
+        <erp-input-rounded v-model="dto.accountName"></erp-input-rounded>
+      </erp-form-item>
+      <erp-form-item label-for-name="币种">
+        <erp-select-currency v-model="dto.currencyid"></erp-select-currency>
+      </erp-form-item>
+      <erp-form-item label-for-name="是否公户">
+        <erp-checkbox-border v-model="dto.companyFlag">公户</erp-checkbox-border>
+      </erp-form-item>
+    </erp-form>
+  </erp-dialog-form>
 </template>
 
-<script setup lang="ts">
-import Erp_dialog_form from "@/components/dialog/ErpFormDialog.vue";
-import Erp_form_item from "@/components/form/ErpFormItem.vue";
-import Erp_form from "@/components/form/ErpForm.vue";
-import {onMounted, ref} from "vue";
-import Erp_input_rounded from "@/components/input/ErpInputRound.vue";
+<script lang="ts">
+import {defineComponent, PropType} from "vue";
 import {IAccount} from "@/module/account/account";
-import Erp_select_currency from "@/components/select/ErpCurrencySelect.vue";
-import Erp_checkbox_border from "@/components/input/ErpCheckbox.vue";
+import {onMounted, ref} from "vue";
+import ErpDialogForm from "@/components/dialog/ErpFormDialog.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpInputRounded from "@/components/input/ErpInputRound.vue";
+import ErpSelectCurrency from "@/components/select/ErpCurrencySelect.vue";
+import ErpCheckboxBorder from "@/components/input/ErpCheckbox.vue";
 
-const props = defineProps<{
-  dto:IAccount
-}>();
-const defaultInputFocusRef = ref();
+export default defineComponent({
+  name: "AccountEdit",
+  components: {
+    ErpDialogForm,
+    ErpFormItem,
+    ErpForm,
+    ErpInputRounded,
+    ErpSelectCurrency,
+    ErpCheckboxBorder
+  },
+  props: {
+    dto: {
+      type: Object as PropType<IAccount>
+    }
+  },
+  setup() {
+    const defaultInputFocusRef = ref();
 
-onMounted(async () => {
-  defaultInputFocusRef.value.getNode().focus();
+    onMounted(async () => {
+      defaultInputFocusRef.value.getNode().focus();
+    })
+
+    return {
+      defaultInputFocusRef,
+    }
+  }
 })
 </script>
