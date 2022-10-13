@@ -15,8 +15,7 @@ import {ProductAreaService} from "@/module/productArea/productArea.service";
 
 export default defineComponent({
   name: "ErpProductareaRootSelect",
-  expose: ["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const ElSelectRef = ref();
     const productAreaSelectList = ref<IProductArea[]>();
     const productAreaService = new ProductAreaService();
@@ -34,12 +33,12 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus});
 
     return {
       ElSelectRef,
       productAreaSelectList,
       productAreaTreeConfig,
-      focus,
     };
   },
 });

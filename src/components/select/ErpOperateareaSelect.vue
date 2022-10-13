@@ -13,14 +13,13 @@ import {FindOperateareaDto} from "@/module/operatearea/dto/findOperatearea.dto";
 
 export default defineComponent({
   name: "ErpOperateareaSelect",
-  expose: ["focus"],
   props: {
     operateareatype: {
       type: Number,
       default: 0,
     },
   },
-  setup(props) {
+  setup(props,{expose}) {
     onMounted(() => {
       getOperateareaList();
     })
@@ -30,6 +29,8 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+
+    expose({focus})
 
     //操作区域选择Data
     const operateareaSelectList = ref<IOperatearea[]>([]);
@@ -43,8 +44,7 @@ export default defineComponent({
 
     return {
       ElSelectRef,
-      operateareaSelectList,
-      focus,
+      operateareaSelectList
     };
   },
 });

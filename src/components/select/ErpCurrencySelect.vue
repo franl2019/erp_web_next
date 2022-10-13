@@ -13,7 +13,6 @@ import {ICurrency} from "@/module/currency/currency";
 
 export default defineComponent({
   name: "ErpCurrencySelect",
-  expose: ["focus"],
   props: {
     modelValue:{
       type:Number,
@@ -21,7 +20,7 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue'],
-  setup(_props, {emit}) {
+  setup(_props, {emit,expose}) {
     onMounted(async () => {
       await getCurrencyList();
       await setDefaultCurrency(currencySelectList.value);
@@ -44,11 +43,11 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus});
 
     return {
       ElSelectRef,
-      currencySelectList,
-      focus,
+      currencySelectList
     };
   },
 });

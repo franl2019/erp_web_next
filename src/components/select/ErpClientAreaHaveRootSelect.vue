@@ -15,8 +15,7 @@ import {ClientAreaService} from "@/module/clientArea/clientArea.service";
 
 export default defineComponent({
   name: "ErpClientAreaHaveRootSelect",
-  expose: ["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const ElSelectRef = ref();
     const clientAreaSelectList = ref<IClientArea[]>([]);
     const clientAreaService = new ClientAreaService();
@@ -39,11 +38,12 @@ export default defineComponent({
       ElSelectRef.value.focus();
     }
 
+    expose({focus});
+
     return {
       ElSelectRef,
       clientAreaSelectList,
-      clientAreaTreeConfig,
-      focus,
+      clientAreaTreeConfig
     };
   },
 });

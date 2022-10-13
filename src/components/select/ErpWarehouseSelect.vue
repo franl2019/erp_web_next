@@ -15,14 +15,13 @@ import {WarehouseService} from "@/module/warehouse/warehouse.service";
 
 export default defineComponent({
   name: "ErpWarehouseSelect",
-  expose: ["focus"],
   props: {
     haveRootNode: {
       type: Boolean,
       default: false,
     },
   },
-  setup(props) {
+  setup(props,{expose}) {
     onMounted(async () => {
       await getWarehouseList();
     })
@@ -32,6 +31,7 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus})
 
     //产品类别选择List
     const warehouseSelectList = ref<IWarehouse[]>();
@@ -48,10 +48,8 @@ export default defineComponent({
     }
 
     return {
-      props,
       ElSelectRef,
       warehouseSelectList,
-      focus,
     };
   },
 });

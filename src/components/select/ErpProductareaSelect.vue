@@ -19,9 +19,8 @@ export default defineComponent({
   components:{
     ErpSelectTree
   },
-  expose: ["focus"],
   props: ["modelValue"],
-  setup() {
+  setup(_props,{expose}) {
     const ElSelectRef = ref();
     //产品类别选择List
     const productAreaSelectList = ref<IProductArea[]>([]);
@@ -40,6 +39,7 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus})
 
     async function getProductAreaList() {
       productAreaSelectList.value = await productAreaService.getProductAreaTree();
@@ -49,7 +49,6 @@ export default defineComponent({
       ElSelectRef,
       productAreaSelectList,
       productAreaTreeConfig,
-      focus,
     };
   },
 });

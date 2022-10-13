@@ -14,7 +14,6 @@ import {Operatearea} from "@/module/operatearea/operatearea";
 
 export default defineComponent({
   name: "ErpOperateAreaAuthSelect",
-  expose: ["focus"],
   props: {
     operateareatype: {
       type: Number,
@@ -25,7 +24,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  setup(props,{expose}) {
     const {operateareatype, haveRootNode} = unref(props)
     onMounted(async () => {
       await getOperateareaList();
@@ -36,6 +35,7 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus})
 
     //操作区域选择Data
     const operateareaSelectList = ref<IOperatearea[]>([]);
@@ -56,7 +56,6 @@ export default defineComponent({
     return {
       ElSelectRef,
       operateareaSelectList,
-      focus,
     };
   },
 });

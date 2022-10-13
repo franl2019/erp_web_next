@@ -10,8 +10,7 @@ import {defineComponent, ref} from "vue";
 
 export default defineComponent({
   name: "ErpIsUseSelect",
-  expose: ["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const booleanList = [{
       key: 1,
       label: "使用"
@@ -25,11 +24,11 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus});
 
     return {
       booleanList,
       ElSelectRef,
-      focus,
     };
   },
 });
