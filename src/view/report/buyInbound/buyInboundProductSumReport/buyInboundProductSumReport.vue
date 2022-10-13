@@ -25,7 +25,7 @@
         <template #form>
           <erp-form>
             <erp-form-item :label-for-name="valueName.product+'名称'">
-              <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'" class="w-6"
+              <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
                                @change="onChangRefresh"></erp-input-round>
             </erp-form-item>
             <erp-form-item label-for-name="操作区域">
@@ -64,7 +64,7 @@
       </erp-pop-over-button>
       <erp-button @click="onClickRefreshButton">刷新</erp-button>
       <template #input>
-        <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'" class="w-6"
+        <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
                          @change="onChangRefresh"></erp-input-round>
       </template>
     </erp-no-title>
