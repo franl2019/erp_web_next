@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {IAccountPayableSumReport} from "@/module/report/accountPayableSumReport/accountPayableSumReport";
@@ -10,7 +10,7 @@ import {
 export class AccountPayableSumReportService {
 
     public async find(findDto:AccountPayableSumReportFindDto):Promise<IAccountPayableSumReport[]>{
-        const result = await http_post<IApiResult<IAccountPayableSumReport>>(API_URL.ACCOUNT_PAYABLE_SUM_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<IAccountPayableSumReport>>(API_URL.ACCOUNT_PAYABLE_SUM_REPORT,findDto);
         if(result.code === 200 && result.data){
             return result.data
         }else{

@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {ElMessage} from "element-plus";
 import {ColumnState} from "ag-grid-community/dist/lib/columns/columnModel";
@@ -14,7 +14,7 @@ export class TableColumnStateService {
     }
 
     public async saveColumnState(ColumnState: never[]) {
-        const result = await http_post<IApiResult>(API_URL.TABLE_COLUMN_STATE_ADD, {
+        const result = await useHttpPost<IApiResult>(API_URL.TABLE_COLUMN_STATE_ADD, {
             tableName: this.tableName,
             tableColumnState: ColumnState
         })
@@ -29,7 +29,7 @@ export class TableColumnStateService {
 
     //重置表格列配置
     public async removeColumnState() {
-        const result = await http_post<IApiResult>(API_URL.TABLE_COLUMN_STATE_DELETE, {
+        const result = await useHttpPost<IApiResult>(API_URL.TABLE_COLUMN_STATE_DELETE, {
             tableName: this.tableName,
         })
         if (result.code === 200) {
@@ -43,7 +43,7 @@ export class TableColumnStateService {
     //获取表格列配置
     public async getColumnState() {
         if(tableColumnStateCache.getCache(this.tableName).length ===0){
-            const result = await http_post<IApiResult<ColumnState>>(API_URL.TABLE_COLUMN_STATE_SELECT, {
+            const result = await useHttpPost<IApiResult<ColumnState>>(API_URL.TABLE_COLUMN_STATE_SELECT, {
                 tableName: this.tableName,
             })
             if (result.code === 200 && result.data) {

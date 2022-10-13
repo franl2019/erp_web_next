@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {
     ISaleOutboundProductSummaryReport
@@ -12,7 +12,7 @@ export class SaleOutboundProductSummaryReportService {
 
     public async find(findDto:SaleOutboundProductSummaryReportFindDto):Promise<ISaleOutboundProductSummaryReport[]>{
         await useVerifyParam(findDto)
-        const result = await http_post<IApiResult<ISaleOutboundProductSummaryReport>>(API_URL.SALE_OUTBOUND_PRODUCT_COLLECT_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<ISaleOutboundProductSummaryReport>>(API_URL.SALE_OUTBOUND_PRODUCT_COLLECT_REPORT,findDto);
         if(result.code === 200&& result.data){
             return result.data;
         }else{

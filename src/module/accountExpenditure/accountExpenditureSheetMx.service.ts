@@ -1,5 +1,5 @@
 import {useVerifyParam} from "@/utils/validate";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {AccountExpenditureSheetMxFindDto} from "@/module/accountExpenditure/dto/accountExpenditureSheetMxFind.dto";
@@ -10,7 +10,7 @@ export class AccountExpenditureSheetMxService {
         const accountExpenditureSheetMxFindDto = new AccountExpenditureSheetMxFindDto()
         accountExpenditureSheetMxFindDto.accountExpenditureId = accountExpenditure.accountExpenditureId
         await useVerifyParam(accountExpenditureSheetMxFindDto)
-        const result = await http_post<IApiResult<IAccountExpenditureSheetMx>>(API_URL.ACCOUNT_EXPENDITURE_SHEET_MX_FIND,accountExpenditureSheetMxFindDto);
+        const result = await useHttpPost<IApiResult<IAccountExpenditureSheetMx>>(API_URL.ACCOUNT_EXPENDITURE_SHEET_MX_FIND,accountExpenditureSheetMxFindDto);
         if(result&&result.code === 200&&result.data){
             return result.data
         }else{

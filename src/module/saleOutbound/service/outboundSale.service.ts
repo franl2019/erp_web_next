@@ -1,5 +1,5 @@
 import {IFindOutboundDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IFindOutbound} from "@/module/saleOutbound/findOutboundSale";
 import {API_URL} from "@/config/apiUrl";
 import {IOutboundDto} from "@/module/saleOutbound/dto/outboundSale.dto";
@@ -17,7 +17,7 @@ export interface ISaleOutboundSheetState {
 export class OutboundSaleService {
 
     public async find(findDto: IFindOutboundDto) {
-        const result = await http_post<IApiResult<IFindOutbound>>(API_URL.SALE_OUTBOUND_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IFindOutbound>>(API_URL.SALE_OUTBOUND_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -26,7 +26,7 @@ export class OutboundSaleService {
     }
 
     public async findSheetState(findDto: IFindOutboundDto) {
-        const result = await http_post<IApiResult<ISaleOutboundSheetState>>(API_URL.SALE_OUTBOUND_FIND_SHEET_STATE, findDto);
+        const result = await useHttpPost<IApiResult<ISaleOutboundSheetState>>(API_URL.SALE_OUTBOUND_FIND_SHEET_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState
         } else {
@@ -35,7 +35,7 @@ export class OutboundSaleService {
     }
 
     public async create(outboundDto: IOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_CREATE, outboundDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE, outboundDto);
         if (result.code === 200) {
             return result;
         } else {
@@ -44,7 +44,7 @@ export class OutboundSaleService {
     }
 
     public async create_l1Review(outboundDto: IOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_CREATE_L1REVIEW, outboundDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE_L1REVIEW, outboundDto);
         if (result.code === 200) {
             return result;
         } else {
@@ -53,7 +53,7 @@ export class OutboundSaleService {
     }
 
     public async update(outboundDto: IOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE, outboundDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE, outboundDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -62,7 +62,7 @@ export class OutboundSaleService {
     }
 
     public async updateAndL1Review(outboundDto: IOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE_L1REVIEW, outboundDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE_L1REVIEW, outboundDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -71,7 +71,7 @@ export class OutboundSaleService {
     }
 
     public async delete_data(deleteDto: IDeleteOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_DELETE, deleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_DELETE, deleteDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -80,7 +80,7 @@ export class OutboundSaleService {
     }
 
     public async undelete_data(deleteDto: IDeleteOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_UN_DELETE, deleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UN_DELETE, deleteDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -89,7 +89,7 @@ export class OutboundSaleService {
     }
 
     public async l1Review(l1Dto: ILevel1reviewOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_L1REVIEW, l1Dto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_L1REVIEW, l1Dto);
         if (result.code === 200) {
             return true;
         } else {
@@ -98,7 +98,7 @@ export class OutboundSaleService {
     }
 
     public async unL1Review(l1Dto: ILevel1reviewOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_UN_L1REVIEW, l1Dto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UN_L1REVIEW, l1Dto);
         if (result.code === 200) {
             return true;
         } else {
@@ -107,7 +107,7 @@ export class OutboundSaleService {
     }
 
     public async l2Review(l2Dto: ILevel2reviewOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_L2REVIEW, l2Dto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_L2REVIEW, l2Dto);
         if (result.code === 200) {
             return true;
         } else {
@@ -116,7 +116,7 @@ export class OutboundSaleService {
     }
 
     public async unL2Review(l2Dto: ILevel2reviewOutboundDto) {
-        const result = await http_post<IApiResult>(API_URL.SALE_OUTBOUND_UN_L2REVIEW, l2Dto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UN_L2REVIEW, l2Dto);
         if (result.code === 200) {
             return true;
         } else {

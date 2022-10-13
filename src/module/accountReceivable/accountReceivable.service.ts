@@ -1,5 +1,5 @@
 import {AccountsReceivableFindDto} from "@/module/accountReceivable/dto/accountReceivableFind.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceivable";
 import {useVerifyParam} from "@/utils/validate";
@@ -8,7 +8,7 @@ export class AccountReceivableService {
 
     public async find(accountsReceivableFindDto:AccountsReceivableFindDto):Promise<IAccountsReceivableFind[]>{
         await useVerifyParam(accountsReceivableFindDto);
-        const result = await http_post<IApiResult<IAccountsReceivableFind>>(API_URL.ACCOUNT_RECEIVABLE_FIND,accountsReceivableFindDto);
+        const result = await useHttpPost<IApiResult<IAccountsReceivableFind>>(API_URL.ACCOUNT_RECEIVABLE_FIND,accountsReceivableFindDto);
         if(result.code === 200 && result.data){
             return result.data;
         }else{

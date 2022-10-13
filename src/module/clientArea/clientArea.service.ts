@@ -1,6 +1,6 @@
 //客户地区服务
 import {useFormatDataTree} from "@/utils";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IClientArea, IClientAreaTree, ICreateClientAreaDto, IUpdateClientAreaDto} from "@/module/clientArea/clientArea";
 import {VerifyParamError} from "@/types/error/verifyParamError";
@@ -35,7 +35,7 @@ export class ClientAreaService {
     }
 
     public async getClientAreaList(): Promise<IClientArea[]> {
-        const result = await http_post<IApiResult<IClientArea>>(API_URL.CLIENTAREA_SELECT);
+        const result = await useHttpPost<IApiResult<IClientArea>>(API_URL.CLIENTAREA_SELECT);
         if (result.data) {
             return result.data
         } else {
@@ -64,7 +64,7 @@ export class ClientAreaService {
     }
 
     public async create(addClientAreaDto: ICreateClientAreaDto): Promise<IApiResult> {
-        const result = await http_post<IApiResult>(API_URL.CLIENTAREA_ADD, addClientAreaDto);
+        const result = await useHttpPost<IApiResult>(API_URL.CLIENTAREA_ADD, addClientAreaDto);
         if (result.code === 200) {
             return result;
         } else {
@@ -73,7 +73,7 @@ export class ClientAreaService {
     }
 
     public async update(updateClientAreaDto: IUpdateClientAreaDto): Promise<IApiResult> {
-        const result = await http_post<IApiResult>(API_URL.CLIENTAREA_UPDATE, updateClientAreaDto);
+        const result = await useHttpPost<IApiResult>(API_URL.CLIENTAREA_UPDATE, updateClientAreaDto);
         if (result.code === 200) {
             return result;
         } else {
@@ -82,7 +82,7 @@ export class ClientAreaService {
     }
 
     public async deleteData(clientAreaId: number): Promise<Boolean> {
-        const result = await http_post<IApiResult>(API_URL.CLIENTAREA_DELETE, {clientareaid: clientAreaId});
+        const result = await useHttpPost<IApiResult>(API_URL.CLIENTAREA_DELETE, {clientareaid: clientAreaId});
         if (result.code === 200) {
             return true
         } else {

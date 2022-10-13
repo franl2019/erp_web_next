@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IUserAccountMx} from "@/module/user_account_mx/userAccountMx";
 import {UserAccountAuthFindDto} from "@/module/user_account_mx/dto/userAccountAuthFind.dto";
@@ -13,7 +13,7 @@ export class UserAccountMxService {
         userAccountAuthFindDto.accountId = findDto.accountId;
         userAccountAuthFindDto.userid = findDto.userid;
         await useVerifyParam(userAccountAuthFindDto);
-        const result = await http_post<IApiResult<IUserAccountMx>>(API_URL.USER_ACCOUNT_MX_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IUserAccountMx>>(API_URL.USER_ACCOUNT_MX_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -22,7 +22,7 @@ export class UserAccountMxService {
     }
 
     public async create(createDto:UserAccountAuthCreateDto){
-        const result = await http_post<IApiResult>(API_URL.USER_ACCOUNT_MX_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.USER_ACCOUNT_MX_CREATE, createDto);
         if (result.code === 200) {
             return result.data
         } else {
@@ -31,7 +31,7 @@ export class UserAccountMxService {
     }
 
     public async delete_data(deleteDto:UserAccountAuthDeleteDto){
-        const result = await http_post<IApiResult>(API_URL.USER_ACCOUNT_MX_DELETE,deleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.USER_ACCOUNT_MX_DELETE,deleteDto);
         if (result.code === 200) {
             return result.data
         } else {

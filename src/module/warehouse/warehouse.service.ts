@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IWarehouse} from "@/module/warehouse/warehouse";
 import {API_URL} from "@/config/apiUrl";
 import {ICreateWarehouseDto} from "@/module/warehouse/dto/createWarehouse.dto";
@@ -8,7 +8,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class WarehouseService {
 
     public async find() {
-        const result = await http_post<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT);
+        const result = await useHttpPost<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT);
         if (result.code === 200 && result.data) {
 
             return result.data
@@ -19,7 +19,7 @@ export class WarehouseService {
 
     public async find_auth() {
 
-        const result = await http_post<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT_AUTH);
+        const result = await useHttpPost<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT_AUTH);
         if (result.code === 200 && result.data) {
 
             return result.data
@@ -30,7 +30,7 @@ export class WarehouseService {
     }
 
     public async find_auth_default(): Promise<IWarehouse> {
-        const result = await http_post<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT_AUTH_DEFAULT);
+        const result = await useHttpPost<IApiResult<IWarehouse>>(API_URL.WAREHOUSE_SELECT_AUTH_DEFAULT);
         if (result.code === 200 && result.data && result.data.length > 0) {
             return result.data[0];
         } else {
@@ -39,7 +39,7 @@ export class WarehouseService {
     }
 
     public async create(createDto: ICreateWarehouseDto) {
-        const result = await http_post<IApiResult>(API_URL.WAREHOUSE_ADD, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.WAREHOUSE_ADD, createDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -48,7 +48,7 @@ export class WarehouseService {
     }
 
     public async update(updateDto: UpdateWarehouseDto) {
-        const result = await http_post<IApiResult>(API_URL.WAREHOUSE_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.WAREHOUSE_UPDATE, updateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -57,7 +57,7 @@ export class WarehouseService {
     }
 
     public async delete_data(warehouseid: number) {
-        const result = await http_post<IApiResult>(API_URL.WAREHOUSE_DELETE, {
+        const result = await useHttpPost<IApiResult>(API_URL.WAREHOUSE_DELETE, {
             warehouseid: warehouseid
         });
         if (result.code === 200) {

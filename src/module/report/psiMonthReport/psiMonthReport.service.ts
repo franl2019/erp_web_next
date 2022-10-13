@@ -1,12 +1,12 @@
 import {PsiMonthReportFindDto} from "@/module/report/psiMonthReport/dto/psiMonthReportFind.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IPsiMonthReport} from "@/module/report/psiMonthReport/psiMonthReport";
 
 export class PsiMonthReportService {
 
     public async find(findDto: PsiMonthReportFindDto) {
-        const result = await http_post<IApiResult<IPsiMonthReport>>(API_URL.PSI_MONTH_REPORT, findDto);
+        const result = await useHttpPost<IApiResult<IPsiMonthReport>>(API_URL.PSI_MONTH_REPORT, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         }else{

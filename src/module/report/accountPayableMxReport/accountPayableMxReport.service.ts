@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {
     AccountPayableMxReportFindDto
@@ -8,7 +8,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountPayableMxReportService {
 
     public async find(findDto:AccountPayableMxReportFindDto):Promise<IAccountPayableMxReport[]>{
-        const result = await http_post<IApiResult<IAccountPayableMxReport>>(API_URL.ACCOUNT_PAYABLE_MX_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<IAccountPayableMxReport>>(API_URL.ACCOUNT_PAYABLE_MX_REPORT,findDto);
         if(result.code === 200 && result.data){
             return result.data
         }else{

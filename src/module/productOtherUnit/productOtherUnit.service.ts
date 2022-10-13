@@ -1,5 +1,5 @@
 import {ProductOtherUnitFindDto} from "@/module/productOtherUnit/dto/productOtherUnitFind.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
 import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/validate";
@@ -11,7 +11,7 @@ export class ProductOtherUnitService {
 
     public async find(findDto: ProductOtherUnitFindDto) {
         await useVerifyParam(findDto);
-        const result = await http_post<IApiResult<IProductOtherUnit>>(API_URL.PRODUCT_OTHER_UNIT_FIND,findDto);
+        const result = await useHttpPost<IApiResult<IProductOtherUnit>>(API_URL.PRODUCT_OTHER_UNIT_FIND,findDto);
         if (result.code === 200 && result.data) {
             return result.data
         }else{
@@ -21,7 +21,7 @@ export class ProductOtherUnitService {
 
     public async create(createDto:ProductOtherUnitCreateDto){
         await useVerifyParam(createDto);
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_CREATE,createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_CREATE,createDto);
         if(result.code === 200){
             return true
         }else{
@@ -31,7 +31,7 @@ export class ProductOtherUnitService {
 
     public async update(updateDto:ProductOtherUnitUpdateDto){
         await useVerifyParam(updateDto);
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_UPDATE,updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_UPDATE,updateDto);
         if(result.code === 200){
             return true
         }else{
@@ -41,7 +41,7 @@ export class ProductOtherUnitService {
 
     public async delete_data(deleteDto:ProductOtherUnitDeleteDto){
         await useVerifyParam(deleteDto);
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_DELETE,deleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_OTHER_UNIT_DELETE,deleteDto);
         if(result.code === 200){
             return true
         }else{

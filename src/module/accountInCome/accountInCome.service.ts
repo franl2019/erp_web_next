@@ -1,6 +1,6 @@
 import {AccountInComeFindDto} from "@/module/accountInCome/dto/accountInComeFind.dto";
 import {useVerifyParam} from "@/utils/validate";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IAccountInComeFind} from "@/module/accountInCome/accountInCome";
 import {API_URL} from "@/config/apiUrl";
 import {AccountInComeCreateDto} from "@/module/accountInCome/dto/accountInComeCreate.dto";
@@ -35,7 +35,7 @@ export class AccountInComeService {
 
     public async find(accountInComeFindDto: AccountInComeFindDto): Promise<IAccountInComeFind[]> {
         await useVerifyParam(accountInComeFindDto);
-        const result = await http_post<IApiResult<IAccountInComeFind>>(API_URL.ACCOUNT_INCOME_FIND, accountInComeFindDto);
+        const result = await useHttpPost<IApiResult<IAccountInComeFind>>(API_URL.ACCOUNT_INCOME_FIND, accountInComeFindDto);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -45,7 +45,7 @@ export class AccountInComeService {
 
     public async findSheetState(accountInComeFindDto: AccountInComeFindDto) {
         await useVerifyParam(accountInComeFindDto);
-        const result = await http_post<IApiResult<IAccountInComeSheetState>>(API_URL.ACCOUNT_INCOME_FIND_SHEET_STATE, accountInComeFindDto);
+        const result = await useHttpPost<IApiResult<IAccountInComeSheetState>>(API_URL.ACCOUNT_INCOME_FIND_SHEET_STATE, accountInComeFindDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState;
         } else {
@@ -56,7 +56,7 @@ export class AccountInComeService {
     public async create(accountInComeCreateDto: AccountInComeCreateDto) {
         await useVerifyParam(accountInComeCreateDto);
         await AccountInComeService.validationParameters(accountInComeCreateDto.accountInComeAmountMx, accountInComeCreateDto.accountInComeSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_CREATE, accountInComeCreateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_CREATE, accountInComeCreateDto);
         if (result.code === 200 && result.createResult) {
             return result.createResult;
         } else {
@@ -67,7 +67,7 @@ export class AccountInComeService {
     public async create_l1Review(accountInComeCreateDto: AccountInComeCreateDto) {
         await useVerifyParam(accountInComeCreateDto);
         await AccountInComeService.validationParameters(accountInComeCreateDto.accountInComeAmountMx, accountInComeCreateDto.accountInComeSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_CREATE_L1REVIEW, accountInComeCreateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_CREATE_L1REVIEW, accountInComeCreateDto);
         if (result.code === 200 && result.createResult) {
             return result.createResult;
         } else {
@@ -78,7 +78,7 @@ export class AccountInComeService {
     public async update(accountInComeUpdateDto: AccountInComeUpdateDto) {
         await useVerifyParam(accountInComeUpdateDto);
         await AccountInComeService.validationParameters(accountInComeUpdateDto.accountInComeAmountMx, accountInComeUpdateDto.accountInComeSheetMx)
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_UPDATE, accountInComeUpdateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_UPDATE, accountInComeUpdateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -89,7 +89,7 @@ export class AccountInComeService {
     public async update_l1Review(accountInComeUpdateDto: AccountInComeUpdateDto) {
         await useVerifyParam(accountInComeUpdateDto);
         await AccountInComeService.validationParameters(accountInComeUpdateDto.accountInComeAmountMx, accountInComeUpdateDto.accountInComeSheetMx)
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_UPDATE_L1REVIEW, accountInComeUpdateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_UPDATE_L1REVIEW, accountInComeUpdateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -99,7 +99,7 @@ export class AccountInComeService {
 
     public async delete_data(accountInComeDeleteDto: AccountInComeDeleteDto) {
         await useVerifyParam(accountInComeDeleteDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_DELETE, accountInComeDeleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_DELETE, accountInComeDeleteDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -109,7 +109,7 @@ export class AccountInComeService {
 
     public async level1Review(accountInComeL1ReviewDto: AccountInComeL1ReviewDto) {
         await useVerifyParam(accountInComeL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_L1REVIEW, accountInComeL1ReviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_L1REVIEW, accountInComeL1ReviewDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -119,7 +119,7 @@ export class AccountInComeService {
 
     public async unLevel1Review(accountInComeL1ReviewDto: AccountInComeL1ReviewDto) {
         await useVerifyParam(accountInComeL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_INCOME_UN_L1REVIEW, accountInComeL1ReviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_INCOME_UN_L1REVIEW, accountInComeL1ReviewDto);
         if (result.code === 200) {
             return true;
         } else {

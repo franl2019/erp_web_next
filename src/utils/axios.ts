@@ -56,7 +56,7 @@ axiosInstance.interceptors.request.use(function (config) {
 // });
 
 //post请求
-export function http_post<T>(url: string, params?: any): Promise<T> {
+export function useHttpPost<T>(url: string, params?: any): Promise<T> {
     return new Promise((resolve, reject) => {
         url = BASE_PATH + url;
         axiosInstance.post(url, params).then((result: AxiosResponse<T>) => {

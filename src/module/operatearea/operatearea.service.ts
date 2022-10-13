@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {FindOperateareaDto} from "@/module/operatearea/dto/findOperatearea.dto";
 import {VerifyParamError} from "@/types/error/verifyParamError";
@@ -19,7 +19,7 @@ export interface IOperatearea {
 export class OperateareaService {
 
     public async findAll(finDto: FindOperateareaDto) {
-        const result = await http_post<IApiResult<IOperatearea>>(API_URL.OPERATEAREA_SELECT, finDto);
+        const result = await useHttpPost<IApiResult<IOperatearea>>(API_URL.OPERATEAREA_SELECT, finDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -28,7 +28,7 @@ export class OperateareaService {
     }
 
     public async findDefault(finDto: FindOperateareaDto):Promise<IOperatearea> {
-        const result = await http_post<IApiResult<IOperatearea>>(API_URL.OPERATEAREA_FIND_DEFAULT, finDto);
+        const result = await useHttpPost<IApiResult<IOperatearea>>(API_URL.OPERATEAREA_FIND_DEFAULT, finDto);
         if (result.code === 200 && result.data&&result.data.length>0) {
             return result.data[0]
         } else {

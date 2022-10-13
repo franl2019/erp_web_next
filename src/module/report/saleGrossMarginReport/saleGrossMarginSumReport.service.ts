@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {ISaleGrossMarginSum} from "@/module/report/saleGrossMarginReport/saleGrossMarginSum";
 import {SaleGrossMarginSumFindDto} from "@/module/report/saleGrossMarginReport/dto/saleGrossMarginSumFind.dto";
@@ -8,7 +8,7 @@ export class SaleGrossMarginSumReportService {
 
     public async find(findDto:SaleGrossMarginSumFindDto){
         await useVerifyParam(findDto)
-        const result = await http_post<IApiResult<ISaleGrossMarginSum>>(API_URL.SALE_GROSS_MARGIN_SUM_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<ISaleGrossMarginSum>>(API_URL.SALE_GROSS_MARGIN_SUM_REPORT,findDto);
         if(result.code&&result.data){
             return result.data
         }else {

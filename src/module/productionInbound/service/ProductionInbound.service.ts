@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IProductionInboundTableData} from "@/module/productionInbound/types/IProductionInboundTableData";
 import {
@@ -8,7 +8,7 @@ import {
 import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ProductionInboundService {
     public async find(findDto: IProductionInboundFindDto) {
-        const result = await http_post<IApiResult<IProductionInboundTableData>>(API_URL.INBOUND_PRODUCTION_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IProductionInboundTableData>>(API_URL.INBOUND_PRODUCTION_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -17,7 +17,7 @@ export class ProductionInboundService {
     }
 
     public async create(createDto: IProductionInboundCreateDto) {
-        const result = await http_post<IApiResult>(API_URL.INBOUND_PRODUCTION_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.INBOUND_PRODUCTION_CREATE, createDto);
         if (result.code === 200) {
             return true
         } else {
@@ -26,7 +26,7 @@ export class ProductionInboundService {
     }
 
     public async update(updateDto: IProductionInboundCreateDto) {
-        const result = await http_post<IApiResult>(API_URL.INBOUND_PRODUCTION_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.INBOUND_PRODUCTION_UPDATE, updateDto);
         if (result.code === 200) {
             return true
         } else {
@@ -35,7 +35,7 @@ export class ProductionInboundService {
     }
 
     public async level1review(inboundId: number) {
-        const result = await http_post<IApiResult>(API_URL.INBOUND_PRODUCTION_LEVEL1REVIEW, {inboundid:inboundId});
+        const result = await useHttpPost<IApiResult>(API_URL.INBOUND_PRODUCTION_LEVEL1REVIEW, {inboundid:inboundId});
         if (result.code === 200) {
             return true
         } else {
@@ -44,7 +44,7 @@ export class ProductionInboundService {
     }
 
     public async unLevel1review(inboundId: number) {
-        const result = await http_post<IApiResult>(API_URL.INBOUND_PRODUCTION_UN_LEVEL1REVIEW, {inboundid:inboundId});
+        const result = await useHttpPost<IApiResult>(API_URL.INBOUND_PRODUCTION_UN_LEVEL1REVIEW, {inboundid:inboundId});
         if (result.code === 200) {
             return true
         } else {
@@ -53,7 +53,7 @@ export class ProductionInboundService {
     }
 
     public async delete_data(inboundId: number) {
-        const result = await http_post<IApiResult>(API_URL.INBOUND_PRODUCTION_DELETE, {inboundid:inboundId});
+        const result = await useHttpPost<IApiResult>(API_URL.INBOUND_PRODUCTION_DELETE, {inboundid:inboundId});
         if (result.code === 200) {
             return true
         } else {

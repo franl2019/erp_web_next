@@ -1,10 +1,10 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IUser} from "@/module/user/user";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 export class UserService {
     public async find() {
-        const result = await http_post<IApiResult<IUser>>(API_URL.USER_SELECT);
+        const result = await useHttpPost<IApiResult<IUser>>(API_URL.USER_SELECT);
         if (result.code === 200 && result.data) {
             return result.data;
         }else{

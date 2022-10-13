@@ -1,5 +1,5 @@
 import {IFindProductDto} from "@/module/product/dto/findProduct.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {CreateProductDto} from "@/module/product/dto/createProduct.dto";
 import {UpdateProductDto} from "@/module/product/dto/updateProduct.dto";
@@ -9,7 +9,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ProductService {
 
     public async find(findDto: IFindProductDto) {
-        const result = await http_post<IApiResult<IProduct>>(API_URL.PRODUCT_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IProduct>>(API_URL.PRODUCT_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -18,7 +18,7 @@ export class ProductService {
     }
 
     public async findOne(productid: number): Promise<IProduct> {
-        const result = await http_post<IApiResult<IProduct>>(API_URL.PRODUCT_FIND_ONE, {productid});
+        const result = await useHttpPost<IApiResult<IProduct>>(API_URL.PRODUCT_FIND_ONE, {productid});
         if (result.code === 200 && result.data) {
             return result.data[0];
         } else {
@@ -27,7 +27,7 @@ export class ProductService {
     }
 
     public async create(createDto: CreateProductDto) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_CREATE, createDto);
         if (result.code === 200 && result.createResult && result.createResult.id) {
             return result;
         } else {
@@ -41,7 +41,7 @@ export class ProductService {
         updateDto.length = Number(updateDto.length);
         updateDto.width = Number(updateDto.width);
         updateDto.height = Number(updateDto.height);
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_UPDATE, updateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -50,7 +50,7 @@ export class ProductService {
     }
 
     public async delete_data(productid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_DELETE, {productid});
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_DELETE, {productid});
         if (result.code === 200) {
             return true;
         } else {
@@ -59,7 +59,7 @@ export class ProductService {
     }
 
     public async level1Review(productid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_LEVEL1REVIEW, {productid});
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_LEVEL1REVIEW, {productid});
         if (result.code === 200) {
             return true;
         } else {
@@ -69,7 +69,7 @@ export class ProductService {
 
 
     public async unLevel1Review(productid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_UN_LEVEL1REVIEW, {productid});
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_UN_LEVEL1REVIEW, {productid});
         if (result.code === 200) {
             return true;
         } else {
@@ -78,7 +78,7 @@ export class ProductService {
     }
 
     public async level2Review(productid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_LEVEL2REVIEW, {productid});
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_LEVEL2REVIEW, {productid});
         if (result.code === 200) {
             return true;
         } else {
@@ -87,7 +87,7 @@ export class ProductService {
     }
 
     public async unLevel2Review(productid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCT_UN_LEVEL2REVIEW, {productid});
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCT_UN_LEVEL2REVIEW, {productid});
         if (result.code === 200) {
             return true;
         } else {

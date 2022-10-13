@@ -1,5 +1,5 @@
 import {IAccountsVerifySheetFind} from "@/module/accountsVerifySheet/accountsVerifySheet";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {AccountsVerifySheetFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetFind.dto";
 import {AccountsVerifySheetCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetCreate.dto";
@@ -15,7 +15,7 @@ export class AccountsVerifySheetService {
 
     public async find(findDto: AccountsVerifySheetFindDto): Promise<IAccountsVerifySheetFind[]> {
         await useVerifyParam(findDto);
-        const result = await http_post<IApiResult<IAccountsVerifySheetFind>>(API_URL.ACCOUNTS_VERIFY_SHEET_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IAccountsVerifySheetFind>>(API_URL.ACCOUNTS_VERIFY_SHEET_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -25,7 +25,7 @@ export class AccountsVerifySheetService {
 
     public async findAccountVerifySheetState(findDto: AccountsVerifySheetFindDto){
         await useVerifyParam(findDto);
-        const result = await http_post<IApiResult<IAccountsVerifySheetFind>>(API_URL.ACCOUNTS_VERIFY_SHEET_FIND_STATE, findDto);
+        const result = await useHttpPost<IApiResult<IAccountsVerifySheetFind>>(API_URL.ACCOUNTS_VERIFY_SHEET_FIND_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState
         } else {
@@ -64,7 +64,7 @@ export class AccountsVerifySheetService {
             const accountsVerifySheetMxCreateDto = new AccountsVerifySheetMxCreateDto(createDto.accountsVerifySheetMx[i]);
             await useVerifyParam(accountsVerifySheetMxCreateDto);
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_CREATE, createDto);
         if (result.code === 200) {
             return result.createResult
         } else {
@@ -78,7 +78,7 @@ export class AccountsVerifySheetService {
             const accountsVerifySheetMxCreateDto = new AccountsVerifySheetMxCreateDto(createDto.accountsVerifySheetMx[i]);
             await useVerifyParam(accountsVerifySheetMxCreateDto);
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_CREATE_L1REVIEW, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_CREATE_L1REVIEW, createDto);
         if (result.code === 200 && result.createResult) {
             return result.createResult
         } else {
@@ -92,7 +92,7 @@ export class AccountsVerifySheetService {
             const accountsVerifySheetMxCreateDto = new AccountsVerifySheetMxCreateDto(updateDto.accountsVerifySheetMx[i]);
             await useVerifyParam(accountsVerifySheetMxCreateDto);
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UPDATE, updateDto);
         if (result.code === 200) {
             return result
         } else {
@@ -106,7 +106,7 @@ export class AccountsVerifySheetService {
             const accountsVerifySheetMxCreateDto = new AccountsVerifySheetMxCreateDto(updateDto.accountsVerifySheetMx[i]);
             await useVerifyParam(accountsVerifySheetMxCreateDto);
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UPDATE_L1REVIEW, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UPDATE_L1REVIEW, updateDto);
         if (result.code === 200) {
             return result
         } else {
@@ -116,7 +116,7 @@ export class AccountsVerifySheetService {
 
     public async delete_data(deleteDto: AccountsVerifySheetDeleteDto) {
         await useVerifyParam(deleteDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_DELETE, deleteDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_DELETE, deleteDto);
         if (result.code === 200) {
             return result
         } else {
@@ -126,7 +126,7 @@ export class AccountsVerifySheetService {
 
     public async L1Review(reviewDto: AccountsVerifySheetReviewDto) {
         await useVerifyParam(reviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_L1REVIEW, reviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_L1REVIEW, reviewDto);
         if (result.code === 200) {
             return result
         } else {
@@ -136,7 +136,7 @@ export class AccountsVerifySheetService {
 
     public async unL1Review(reviewDto: AccountsVerifySheetReviewDto) {
         await useVerifyParam(reviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UNL1REVIEW, reviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNTS_VERIFY_SHEET_UNL1REVIEW, reviewDto);
         if (result.code === 200) {
             return result
         } else {

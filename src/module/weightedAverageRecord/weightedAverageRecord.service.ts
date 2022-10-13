@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {CountWeightedAverageRecordMxDto} from "@/module/weightedAverageRecord/dto/countWeightedAverageRecordMx.dto";
@@ -8,7 +8,7 @@ import {WeightedAverageRecordL1ReviewDto} from "@/module/weightedAverageRecord/d
 export class WeightedAverageRecordService {
 
     public async checkIfCountIsRequired(inDate: string,callback:()=>Promise<any>) {
-        const result = await http_post<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_CHECK_IF_COUNT_IS_REQUIRED);
+        const result = await useHttpPost<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_CHECK_IF_COUNT_IS_REQUIRED);
         if (result.code === 200 && result.related) {
             if (result.related.isRequired) {
                 useErpDialog({
@@ -31,7 +31,7 @@ export class WeightedAverageRecordService {
         const countWeightedAverageRecordMxDto = new CountWeightedAverageRecordMxDto()
         countWeightedAverageRecordMxDto.inDate = inDate;
         await useVerifyParam(countWeightedAverageRecordMxDto);
-        const result = await http_post<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_COUNT_MX,countWeightedAverageRecordMxDto);
+        const result = await useHttpPost<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_COUNT_MX,countWeightedAverageRecordMxDto);
         if (result.code === 200) {
             return true
         } else {
@@ -43,7 +43,7 @@ export class WeightedAverageRecordService {
         const weightedAverageRecordL1ReviewDto = new WeightedAverageRecordL1ReviewDto()
         weightedAverageRecordL1ReviewDto.inDate = inDate;
         await useVerifyParam(weightedAverageRecordL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_L1REVIEW,weightedAverageRecordL1ReviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_L1REVIEW,weightedAverageRecordL1ReviewDto);
         if (result.code === 200) {
             return true
         } else {
@@ -55,7 +55,7 @@ export class WeightedAverageRecordService {
         const weightedAverageRecordL1ReviewDto = new WeightedAverageRecordL1ReviewDto()
         weightedAverageRecordL1ReviewDto.inDate = inDate;
         await useVerifyParam(weightedAverageRecordL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_UNL1REVIEW,weightedAverageRecordL1ReviewDto);
+        const result = await useHttpPost<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_UNL1REVIEW,weightedAverageRecordL1ReviewDto);
         if (result.code === 200) {
             return true
         } else {

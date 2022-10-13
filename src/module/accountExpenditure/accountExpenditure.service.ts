@@ -1,6 +1,6 @@
 import {AccountExpenditureFindDto} from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
 import {IAccountExpenditureFind} from "@/module/accountExpenditure/accountExpenditure";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {AccountExpenditureCreateDto} from "@/module/accountExpenditure/dto/accountExpenditureCreate.dto";
 import {AccountExpenditureUpdateDto} from "@/module/accountExpenditure/dto/accountExpenditureUpdate.dto";
@@ -19,7 +19,7 @@ export class AccountExpenditureService {
 
     public async find(accountExpenditureFindDto: AccountExpenditureFindDto): Promise<IAccountExpenditureFind[]> {
         await useVerifyParam(accountExpenditureFindDto);
-        const result = await http_post<IApiResult<IAccountExpenditureFind>>(API_URL.ACCOUNT_EXPENDITURE_FIND, accountExpenditureFindDto);
+        const result = await useHttpPost<IApiResult<IAccountExpenditureFind>>(API_URL.ACCOUNT_EXPENDITURE_FIND, accountExpenditureFindDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -29,7 +29,7 @@ export class AccountExpenditureService {
 
     public async findAccountExpenditureState(accountExpenditureFindDto: AccountExpenditureFindDto){
         await useVerifyParam(accountExpenditureFindDto);
-        const result = await http_post<IApiResult<IAccountExpenditureFind>>(API_URL.ACCOUNT_EXPENDITURE_FIND_STATE, accountExpenditureFindDto);
+        const result = await useHttpPost<IApiResult<IAccountExpenditureFind>>(API_URL.ACCOUNT_EXPENDITURE_FIND_STATE, accountExpenditureFindDto);
 
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState
@@ -41,7 +41,7 @@ export class AccountExpenditureService {
     public async create(accountExpenditureCreateDto: AccountExpenditureCreateDto) {
         await useVerifyParam(accountExpenditureCreateDto);
         await AccountExpenditureService.validationParameters(accountExpenditureCreateDto.accountExpenditureAmountMx, accountExpenditureCreateDto.accountExpenditureSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_CREATE, accountExpenditureCreateDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_CREATE, accountExpenditureCreateDto)
         if (result.code === 200 && result.createResult) {
             return result.createResult
         } else {
@@ -52,7 +52,7 @@ export class AccountExpenditureService {
     public async create_l1Review(accountExpenditureCreateDto: AccountExpenditureCreateDto) {
         await useVerifyParam(accountExpenditureCreateDto);
         await AccountExpenditureService.validationParameters(accountExpenditureCreateDto.accountExpenditureAmountMx, accountExpenditureCreateDto.accountExpenditureSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_CREATE_L1REVIEW, accountExpenditureCreateDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_CREATE_L1REVIEW, accountExpenditureCreateDto)
         if (result.code === 200 && result.createResult) {
             return result.createResult
         } else {
@@ -63,7 +63,7 @@ export class AccountExpenditureService {
     public async update(accountExpenditureUpdateDto: AccountExpenditureUpdateDto) {
         await useVerifyParam(accountExpenditureUpdateDto);
         await AccountExpenditureService.validationParameters(accountExpenditureUpdateDto.accountExpenditureAmountMx, accountExpenditureUpdateDto.accountExpenditureSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UPDATE, accountExpenditureUpdateDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UPDATE, accountExpenditureUpdateDto)
         if (result.code === 200) {
             return true
         } else {
@@ -74,7 +74,7 @@ export class AccountExpenditureService {
     public async update_l1Review(accountExpenditureUpdateDto: AccountExpenditureUpdateDto) {
         await useVerifyParam(accountExpenditureUpdateDto);
         await AccountExpenditureService.validationParameters(accountExpenditureUpdateDto.accountExpenditureAmountMx, accountExpenditureUpdateDto.accountExpenditureSheetMx);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UPDATE_L1REVIEW, accountExpenditureUpdateDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UPDATE_L1REVIEW, accountExpenditureUpdateDto)
         if (result.code === 200) {
             return true
         } else {
@@ -84,7 +84,7 @@ export class AccountExpenditureService {
 
     public async delete_data(accountExpenditureDeleteDto: AccountExpenditureDeleteDto) {
         await useVerifyParam(accountExpenditureDeleteDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_DELETE, accountExpenditureDeleteDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_DELETE, accountExpenditureDeleteDto)
         if (result.code === 200) {
             return true
         } else {
@@ -94,7 +94,7 @@ export class AccountExpenditureService {
 
     public async level1Review(accountExpenditureL1ReviewDto: AccountExpenditureL1ReviewDto) {
         await useVerifyParam(accountExpenditureL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_L1REVIEW, accountExpenditureL1ReviewDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_L1REVIEW, accountExpenditureL1ReviewDto)
         if (result.code === 200) {
             return true
         } else {
@@ -104,7 +104,7 @@ export class AccountExpenditureService {
 
     public async unLevel1Review(accountExpenditureL1ReviewDto: AccountExpenditureL1ReviewDto) {
         await useVerifyParam(accountExpenditureL1ReviewDto);
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UN_L1REVIEW, accountExpenditureL1ReviewDto)
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_EXPENDITURE_UN_L1REVIEW, accountExpenditureL1ReviewDto)
         if (result.code === 200) {
             return true
         } else {

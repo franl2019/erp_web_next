@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {BuyArea, BuyAreaTree, IBuyArea, IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {ICreateBuyAreaDto} from "@/module/buyArea/dto/createBuyArea.dto";
@@ -19,7 +19,7 @@ export class BuyAreaService {
     }
 
     public async getBuyAreas() {
-        const result = await http_post<IApiResult<IBuyArea>>(API_URL.BUYAREA_SELECT);
+        const result = await useHttpPost<IApiResult<IBuyArea>>(API_URL.BUYAREA_SELECT);
         if (result.code === 200&&result.data) {
             return result.data;
         } else {
@@ -29,7 +29,7 @@ export class BuyAreaService {
 
     //包含根节点
     public async getBuyAreasIncludeRoot() {
-        const result = await http_post<IApiResult<IBuyArea>>(API_URL.BUYAREA_SELECT);
+        const result = await useHttpPost<IApiResult<IBuyArea>>(API_URL.BUYAREA_SELECT);
         if (result.code === 200 && result.data) {
             const rootNode = new BuyArea();
             rootNode.buyareaname = "根节点";
@@ -41,7 +41,7 @@ export class BuyAreaService {
     }
 
     public async create(createDto: ICreateBuyAreaDto) {
-        const result = await http_post<IApiResult>(API_URL.BUYAREA_ADD, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUYAREA_ADD, createDto);
         if (result.code === 200) {
             return true
         } else {
@@ -50,7 +50,7 @@ export class BuyAreaService {
     }
 
     public async update(updateDto: IUpdateBuyAreaDto) {
-        const result = await http_post<IApiResult>(API_URL.BUYAREA_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUYAREA_UPDATE, updateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -59,7 +59,7 @@ export class BuyAreaService {
     }
 
     public async delete_data(buyAreaId: number) {
-        const result = await http_post<IApiResult>(API_URL.BUYAREA_DELETE, {buyareaid: buyAreaId});
+        const result = await useHttpPost<IApiResult>(API_URL.BUYAREA_DELETE, {buyareaid: buyAreaId});
         if (result.code === 200) {
             return true;
         } else {

@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {SaleOutboundMxReportFindDto} from "@/module/report/saleOutboundReport/dto/saleOutboundMxReportFind.dto";
 import {API_URL} from "@/config/apiUrl";
 import {ISaleOutboundMxReport} from "@/module/report/saleOutboundReport/saleOutboundMxReport";
@@ -6,7 +6,7 @@ import {ISaleOutboundMxReport} from "@/module/report/saleOutboundReport/saleOutb
 export class SaleOutboundReportService {
 
     public async find(findDto:SaleOutboundMxReportFindDto):Promise<ISaleOutboundMxReport[]>{
-        const result = await http_post<IApiResult<ISaleOutboundMxReport>>(API_URL.SALE_OUTBOUND_MX_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<ISaleOutboundMxReport>>(API_URL.SALE_OUTBOUND_MX_REPORT,findDto);
         if(result.code === 200&& result.data){
             return result.data;
         }else{

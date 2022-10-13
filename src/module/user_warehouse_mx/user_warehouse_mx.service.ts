@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IUser_warehouse_mx} from "@/module/user_warehouse_mx/user_warehouse_mx";
 import {ICreateUserWarehousePermissionsDto} from "@/module/user_warehouse_mx/dto/createUserWarehousePermissionsDto";
@@ -7,7 +7,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class User_warehouse_mxService {
 
     public async find(findDto: { userid: number }) {
-        const result = await http_post<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_FIND_INFO, findDto);
+        const result = await useHttpPost<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_FIND_INFO, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -16,7 +16,7 @@ export class User_warehouse_mxService {
     }
 
     public async create(createDto:ICreateUserWarehousePermissionsDto){
-        const result = await http_post<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_ADD, createDto);
+        const result = await useHttpPost<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_ADD, createDto);
         if (result.code === 200) {
             return true
         } else {
@@ -25,7 +25,7 @@ export class User_warehouse_mxService {
     }
 
     public async delete_data(deleteDto:IDeleteUserWarehousePermissionsDto){
-        const result = await http_post<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_DELETE, deleteDto);
+        const result = await useHttpPost<IApiResult<IUser_warehouse_mx>>(API_URL.USER_WAREHOUSE_MX_DELETE, deleteDto);
         if (result.code === 200) {
             return true
         } else {

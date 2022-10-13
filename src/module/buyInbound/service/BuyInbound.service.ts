@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {
     IBuyInboundCreateDto,
@@ -10,7 +10,7 @@ import {useVerifyParam} from "@/utils/validate";
 export class BuyInboundService {
     public async find(findDto: BuyInboundFindDto) {
         await useVerifyParam(findDto)
-        const result = await http_post<IApiResult<IBuyInboundFind>>(API_URL.BUY_INBOUND_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IBuyInboundFind>>(API_URL.BUY_INBOUND_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -19,7 +19,7 @@ export class BuyInboundService {
     }
 
     public async findSheetCompleteState(findDto: IBuyInboundFindDto) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_FIND_SHEET_COMPLETE_STATE, findDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_FIND_SHEET_COMPLETE_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState
         } else {
@@ -29,7 +29,7 @@ export class BuyInboundService {
 
     public async create(createDto: IBuyInboundCreateDto) {
         await useVerifyParam(createDto);
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_CREATE, createDto);
         if (result.code === 200) {
             return result
         } else {
@@ -39,7 +39,7 @@ export class BuyInboundService {
 
     public async create_l1Review(createDto: IBuyInboundCreateDto) {
         await useVerifyParam(createDto);
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_CREATE_L1REVIEW, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_CREATE_L1REVIEW, createDto);
         if (result.code === 200) {
             return result
         } else {
@@ -48,7 +48,7 @@ export class BuyInboundService {
     }
 
     public async update(updateDto: IBuyInboundCreateDto) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_UPDATE, updateDto);
         if (result.code === 200) {
             return result
         } else {
@@ -57,7 +57,7 @@ export class BuyInboundService {
     }
 
     public async update_l1Review(updateDto: IBuyInboundCreateDto) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_UPDATE_L1REVIEW, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_UPDATE_L1REVIEW, updateDto);
         if (result.code === 200) {
             return result
         } else {
@@ -66,7 +66,7 @@ export class BuyInboundService {
     }
 
     public async level1review(inboundid: number) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_L1REVIEW, {inboundid});
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_L1REVIEW, {inboundid});
         if (result.code === 200) {
             return result
         } else {
@@ -75,7 +75,7 @@ export class BuyInboundService {
     }
 
     public async unLevel1review(inboundid: number) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_UN_L1REVIEW, {inboundid});
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_UN_L1REVIEW, {inboundid});
         if (result.code === 200) {
             return result
         } else {
@@ -84,7 +84,7 @@ export class BuyInboundService {
     }
 
     public async level2review(inboundid: number) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_L2REVIEW, {inboundid});
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_L2REVIEW, {inboundid});
         if (result.code === 200) {
             return result
         } else {
@@ -93,7 +93,7 @@ export class BuyInboundService {
     }
 
     public async unLevel2review(inboundid: number) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_UN_L2REVIEW, {inboundid});
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_UN_L2REVIEW, {inboundid});
         if (result.code === 200) {
             return result
         } else {
@@ -102,7 +102,7 @@ export class BuyInboundService {
     }
 
     public async delete_data(inboundid: number) {
-        const result = await http_post<IApiResult>(API_URL.BUY_INBOUND_DELETE, {inboundid});
+        const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_DELETE, {inboundid});
         if (result.code === 200) {
             return result
         } else {

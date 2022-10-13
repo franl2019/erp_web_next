@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {useLocalStorageSave} from "@/utils";
 import {VerifyParamError} from "@/types/error/verifyParamError";
@@ -18,7 +18,7 @@ export class Auth {
     }
 
     public async login() {
-        const result = await http_post<IApiResult>(API_URL.USER_LOGIN, {
+        const result = await useHttpPost<IApiResult>(API_URL.USER_LOGIN, {
             usercode: this.usercode,
             password: this.password
         })

@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {ICreateProductAreaDto} from "@/module/productArea/dto/createProductArea.dto";
 import {IProductArea, IProductAreaTree, ProductArea, ProductAreaTree} from "@/module/productArea/productArea";
@@ -9,7 +9,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class ProductAreaService {
 
     public async find() {
-        const result = await http_post<IApiResult<IProductArea>>(API_URL.PRODUCTAREA_SELECT);
+        const result = await useHttpPost<IApiResult<IProductArea>>(API_URL.PRODUCTAREA_SELECT);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -40,7 +40,7 @@ export class ProductAreaService {
     }
 
     public async create(createDto: ICreateProductAreaDto) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCTAREA_ADD, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCTAREA_ADD, createDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -49,7 +49,7 @@ export class ProductAreaService {
     }
 
     public async update(updateDto: IUpdateProductAreaDto) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCTAREA_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCTAREA_UPDATE, updateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -58,7 +58,7 @@ export class ProductAreaService {
     }
 
     public async delete_data(productareaid: number) {
-        const result = await http_post<IApiResult>(API_URL.PRODUCTAREA_DELETE, {
+        const result = await useHttpPost<IApiResult>(API_URL.PRODUCTAREA_DELETE, {
             productareaid: productareaid
         });
         if (result.code === 200) {

@@ -1,5 +1,5 @@
 import {FindAccountDto} from "@/module/account/dto/accountFind.dto";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IAccount} from "@/module/account/account";
 import {API_URL} from "@/config/apiUrl";
 import {AccountEditDto} from "@/module/account/dto/accountEdit.dto";
@@ -8,7 +8,7 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountService {
 
     public async find(findDto: FindAccountDto) {
-        const result = await http_post<IApiResult<IAccount>>(API_URL.ACCOUNT_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IAccount>>(API_URL.ACCOUNT_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -17,7 +17,7 @@ export class AccountService {
     }
 
     public async findAuth() {
-        const result = await http_post<IApiResult<IAccount>>(API_URL.ACCOUNT_AUTH_FIND);
+        const result = await useHttpPost<IApiResult<IAccount>>(API_URL.ACCOUNT_AUTH_FIND);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {
@@ -37,7 +37,7 @@ export class AccountService {
         if (createDto.currencyid === 0) {
             return Promise.reject(new VerifyParamError('请选择币种'))
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_CREATE, createDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_CREATE, createDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -57,7 +57,7 @@ export class AccountService {
         if (updateDto.currencyid === 0) {
             return Promise.reject(new VerifyParamError('请选择币种'))
         }
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_UPDATE, updateDto);
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_UPDATE, updateDto);
         if (result.code === 200) {
             return true;
         } else {
@@ -66,7 +66,7 @@ export class AccountService {
     }
 
     public async delete_data(accountId: number) {
-        const result = await http_post<IApiResult>(API_URL.ACCOUNT_DELETE, {accountId: accountId});
+        const result = await useHttpPost<IApiResult>(API_URL.ACCOUNT_DELETE, {accountId: accountId});
         if (result.code === 200) {
             return true;
         } else {

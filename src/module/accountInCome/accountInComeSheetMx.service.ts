@@ -1,5 +1,5 @@
 import {useVerifyParam} from "@/utils/validate";
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
 import {AccountInComeSheetMxFindDto} from "@/module/accountInCome/dto/sheetMx/accountInComeSheetMxFind.dto";
@@ -8,7 +8,7 @@ export class AccountInComeSheetMxService {
 
     public async find(accountInComeAmountMxFindDto: AccountInComeSheetMxFindDto): Promise<IAccountInComeSheetMxFind[]> {
         await useVerifyParam(accountInComeAmountMxFindDto);
-        const result = await http_post<IApiResult<IAccountInComeSheetMxFind>>(API_URL.ACCOUNT_INCOME_SHEET_MX_FIND, accountInComeAmountMxFindDto);
+        const result = await useHttpPost<IApiResult<IAccountInComeSheetMxFind>>(API_URL.ACCOUNT_INCOME_SHEET_MX_FIND, accountInComeAmountMxFindDto);
         if (result.code === 200 && result.data) {
             return result.data;
         } else {

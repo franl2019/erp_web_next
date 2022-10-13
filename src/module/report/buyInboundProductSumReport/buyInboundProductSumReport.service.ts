@@ -1,4 +1,4 @@
-import {http_post, IApiResult} from "@/utils/axios";
+import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IBuyInboundProductSumReport} from "@/module/report/buyInboundProductSumReport/buyInboundProductSumReport";
 import {
@@ -8,7 +8,7 @@ import {
 export class BuyInboundProductSumReportService {
 
     public async find(findDto:BuyInboundProductSummaryReportFindDto):Promise<IBuyInboundProductSumReport[]>{
-        const result = await http_post<IApiResult<IBuyInboundProductSumReport>>(API_URL.BUY_INBOUND_PRODUCT_SUM_REPORT,findDto);
+        const result = await useHttpPost<IApiResult<IBuyInboundProductSumReport>>(API_URL.BUY_INBOUND_PRODUCT_SUM_REPORT,findDto);
         if(result.code === 200 && result.data){
             return result.data;
         }else{
