@@ -38,13 +38,13 @@
 <script lang='ts'>
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import ErpClientAreaTree from "@/components/tree/aboutComponent/ErpClientAreaTree.vue";
+import ErpClientAreaTree from "@/components/tree/component/ErpClientAreaTree.vue";
 import NewClientAreaDialog from "@/view/clientArea/component/CreateClientAreaDialog.vue";
 import UpdateClientAreaDialog from "@/view/clientArea/component/UpdateClientAreaDialog.vue";
 import ErpDialog from "@/components/dialog/dialog";
 import {defineComponent, ref} from "vue";
 import {ClientArea, IClientArea, IClientAreaTree} from "@/module/clientArea/clientArea";
-import {ITreeRef} from "@/components/tree/aboutComponent/ITreeRef";
+import {ITreeRef} from "@/components/tree/component/ITreeRef";
 import {ClientAreaService} from "@/module/clientArea/clientArea.service";
 
 export default defineComponent({

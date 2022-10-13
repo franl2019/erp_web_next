@@ -1,13 +1,11 @@
 <template>
-  <erp-tree
-      ref="buyAreaTreeRef"
-      :config="buyAreaTreeConfig"
-      :data="buyAreaTreeData"
-      :expand-on-click-node="false"
-      :highlight-current="true"
-      default-expand-all
-      node-key="buyareaid"
-      v-bind="$attrs"
+  <erp-tree ref="buyAreaTreeRef"
+            :config="buyAreaTreeConfig"
+            :data="buyAreaTreeData"
+            :expand-all="true"
+            :highlight-current="true"
+            node-key="buyareaid"
+            v-bind="$attrs"
   />
 </template>
 
@@ -34,11 +32,10 @@ export default defineComponent({
       label: 'buyareaname',
     }
 
-    //供应商地区服务
-    const buyAreaService = new BuyAreaService();
-
     //获取供应商地区数据
     async function getBuyArea() {
+      //供应商地区服务
+      const buyAreaService = new BuyAreaService();
       const buyAreaList = await buyAreaService.getBuyAreas();
       buyAreaTreeData.value = buyAreaService.formatBuyAreaListToTreeDataHaveRoot(buyAreaList)
     }
@@ -47,15 +44,19 @@ export default defineComponent({
     const buyAreaTreeRef = ref();
 
     //初始化数据
-    async function initData(buyareaid?: number) {
+    async function initData() {
       await getBuyArea();
-      if (buyareaid) {
-        await buyAreaTreeRef.value.setCurrentKey(buyareaid);
-        await buyAreaTreeRef.value.$emit('node-click', buyAreaTreeRef.value.getCurrentNode());
-      }
     }
 
-    expose({initData});
+    function getSelectedNode() {
+      return buyAreaTreeRef.value.getSelectedNode()
+    }
+
+    function setSelectedNode() {
+      return buyAreaTreeRef.value.setSelectedNode()
+    }
+
+    expose({initData,getSelectedNode,setSelectedNode});
 
     return {
       initData,

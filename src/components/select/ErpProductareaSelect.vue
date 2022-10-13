@@ -3,7 +3,7 @@
       :data="productAreaSelectList"
       :expandOnClickNode="false"
       :model-value="modelValue"
-      :props="productAreaTreeConfig"
+      :config="productAreaTreeConfig"
       node-key="productareaid"
       v-bind="$attrs"/>
 </template>

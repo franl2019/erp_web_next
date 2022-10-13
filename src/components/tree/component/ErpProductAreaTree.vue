@@ -2,11 +2,11 @@
   <erp-tree ref="productAreaTreeRef"
             :config="productAreaTreeConfig"
             :data="productAreaTreeData"
-            :expand-on-click-node="false"
+            :expand-all="false"
             :highlight-current="true"
-            default-expand-all
             node-key="productareaid"
-            v-bind="$attrs"/>
+            v-bind="$attrs"
+  />
 </template>
 
 <script lang="ts">
@@ -53,26 +53,28 @@ export default defineComponent({
       } else {
         productAreaTreeData.value = await productAreaService.getProductAreaTree();
       }
+    }
 
+    function getSelectedNode() {
+      return productAreaTreeRef.value.getSelectedNode()
+    }
+
+    function setSelectedNode() {
+      return productAreaTreeRef.value.setSelectedNode()
     }
 
     async function initData() {
       await getProductArea();
     }
 
-    expose({initData});
+    expose({initData, getSelectedNode, setSelectedNode});
 
     return {
       productAreaTreeConfig,
       productAreaTreeRef,
       productAreaTreeData,
-      productAreaService,
       initData,
     };
   },
 });
 </script>
-
-<style scoped>
-
-</style>

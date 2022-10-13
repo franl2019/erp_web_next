@@ -12,11 +12,9 @@
     <div class="border-solid border border-gray-300 h-0 flex-grow overflow-y-auto">
       <erp-product-area-tree
           ref="productAreaTreeRef"
-          v-model="productAreaId"
           :default-expand-all="true"
           :expand-on-click-node="false"
           :have-root-node="true"
-          @onReady="treeApiOnReady"
           @node-click="onClickProductAreaNode">
       </erp-product-area-tree>
     </div>
@@ -39,7 +37,7 @@
 <script lang='ts'>
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import NewProductAreaDialog from "@/view/productArea/component/NewProductAreaDialog.vue";
 import UpdateProductDialog from "@/view/productArea/component/UpdateProductAreaDialog.vue";
 import ErpDialog from "@/components/dialog/dialog";
@@ -49,10 +47,6 @@ import {IProductArea, IProductAreaTree, ProductArea} from "@/module/productArea/
 import {valueName} from "@/config/valueName";
 import {ICreateProductAreaDto} from "@/module/productArea/dto/createProductArea.dto";
 import {IUpdateProductAreaDto} from "@/module/productArea/dto/updateProductArea.dto";
-
-interface ITreeApi {
-  getSelectedNode: () => IProductArea
-}
 
 export default defineComponent({
   name: "ProductAreaView",
@@ -83,12 +77,6 @@ export default defineComponent({
       emit('onClickProductAreaNode', productAreaItem)
     }
 
-    let productAreaTreeApi: ITreeApi | null = null;
-
-    function treeApiOnReady(treeApi: ITreeApi) {
-      productAreaTreeApi = treeApi
-    }
-
     onMounted(async () => {
       console.log(productAreaTreeRef.value)
     })
@@ -101,7 +89,7 @@ export default defineComponent({
     }
 
     function onClickEditButton() {
-      const productAreaItem = productAreaTreeApi?.getSelectedNode();
+      const productAreaItem = productAreaTreeRef.value.getSelectedNode();
       if (productAreaItem && productAreaItem.productareaid !== 0) {
         productAreaId.value = productAreaItem.productareaid;
         productArea.value = JSON.parse(JSON.stringify(productAreaItem));
@@ -137,8 +125,6 @@ export default defineComponent({
       updateProductAreaDialogVisible,
       productArea,
       productAreaId,
-      productAreaTreeApi,
-      treeApiOnReady,
       onClickEditButton,
       onClickProductAreaNode,
       onNewProductAreaConfirm,

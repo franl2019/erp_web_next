@@ -1,6 +1,10 @@
 <template>
-  <erp-tree ref="clientAreaTreeRef" :config="clientAreaTreeConfig" :data="clientAreaTreeData"
-            :expand-on-click-node="false" :highlight-current="true" default-expand-all node-key="clientareaid"
+  <erp-tree ref="clientAreaTreeRef"
+            :config="clientAreaTreeConfig"
+            :data="clientAreaTreeData"
+            :expand-all="false"
+            :highlight-current="true"
+            node-key="clientareaid"
             v-bind="$attrs"/>
 </template>
 

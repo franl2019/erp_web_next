@@ -1,6 +1,6 @@
 <template>
   <el-tree-select
-      ref="ElSelectRef"
+      ref="elSelectRef"
       :data="clientAreaList"
       :props="clientAreaTreeConfig"
       check-strictly
@@ -16,9 +16,8 @@ import {ClientAreaService} from "@/module/clientArea/clientArea.service";
 
 export default defineComponent({
   name:"ErpClientAreaSelect",
-  expose:["focus"],
-  setup() {
-    const ElSelectRef = ref();
+  setup(_props,{expose}) {
+    const elSelectRef = ref();
     const clientAreaList = ref<IClientArea[]>([]);
     const clientAreaService = new ClientAreaService();
     //客户地区树配置
@@ -36,14 +35,15 @@ export default defineComponent({
     }
 
     function focus() {
-      ElSelectRef.value.focus();
+      elSelectRef.value.focus();
     }
 
+    expose({focus})
+
     return {
-      ElSelectRef,
+      elSelectRef,
       clientAreaList,
       clientAreaTreeConfig,
-      focus,
     };
   },
 });

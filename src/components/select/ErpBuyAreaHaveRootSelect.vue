@@ -1,6 +1,6 @@
 <template>
   <el-tree-select
-      ref="ElSelectRef"
+      ref="elSelectRef"
       :data="buyAreaSelectList"
       :props="buyAreaTreeConfig"
       check-strictly
@@ -16,8 +16,7 @@ import {BuyAreaService} from "@/module/buyArea/buyArea.service";
 
 export default defineComponent({
   name:"ErpBuyAreaHaveRootSelect",
-  expose:["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const buyAreaSelectList = ref<IBuyArea[]>();
     const buyAreaService = new BuyAreaService();
 
@@ -31,17 +30,18 @@ export default defineComponent({
       buyAreaSelectList.value = buyAreaService.formatBuyAreaListToTreeDataHaveRoot(buyAreaList);
     })
 
-    const ElSelectRef = ref();
+    const elSelectRef = ref();
 
     function focus() {
-      ElSelectRef.value.focus();
+      elSelectRef.value.focus();
     }
+
+    expose({focus})
 
     return {
       buyAreaSelectList,
       buyAreaTreeConfig,
-      ElSelectRef,
-      focus,
+      elSelectRef,
     };
   },
 });

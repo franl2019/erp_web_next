@@ -55,7 +55,7 @@ import ErpTable from "@/components/table/ErpTable.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpLeftRightPageBox from "@/components/page/ErpLeftRightPageBox.vue";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
-import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import {defaultInventoryTableState} from "@/view/inventory/tableConfig/defaultInventoryTableState";
 import {FindInventoryDto, IFindInventoryDto,} from "@/module/inventory/dto/FindInventory.dto";

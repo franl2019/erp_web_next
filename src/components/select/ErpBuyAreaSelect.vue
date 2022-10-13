@@ -1,6 +1,6 @@
 <template>
   <el-tree-select
-      ref="ElSelectRef"
+      ref="elSelectRef"
       :data="buyAreaSelectList"
       :props="buyAreaTreeConfig"
       check-strictly
@@ -16,8 +16,7 @@ import {BuyAreaService} from "@/module/buyArea/buyArea.service";
 
 export default defineComponent({
   name:"ErpBuyAreaSelect",
-  expose:["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const buyAreaTreeConfig = {
       children: 'children',
       label: 'buyareaname',
@@ -31,11 +30,13 @@ export default defineComponent({
       buyAreaSelectList.value = await getBuyAreaList();
     })
 
-    const ElSelectRef = ref();
+    const elSelectRef = ref();
 
     function focus() {
-      ElSelectRef.value.focus();
+      elSelectRef.value.focus();
     }
+
+    expose({focus})
 
     async function getBuyAreaList() {
       const buyAreaList = await buyAreaService.getBuyAreas();
@@ -45,7 +46,7 @@ export default defineComponent({
     return {
       buyAreaTreeConfig,
       buyAreaSelectList,
-      ElSelectRef,
+      elSelectRef,
       focus,
     };
   },

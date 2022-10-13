@@ -1,31 +1,45 @@
 <template>
-  <div :id="id" :class="selected?'bg-gray-100':''" :style="`padding-left:${props.pl}px;`"
-       class="flex items-center h-10 w-full bg-white hover:bg-gray-50 active:bg-gray-100 select-none px-2 overflow-x-hidden cursor-pointer"
-       @click.stop="onClickedTreeItem(props.item)">
+  <div :id="item[nodeKey]"
+       :class="selected?'bg-gray-100':''"
+       :style="`padding-left:${pl}px;`"
+       class="flex items-center h-10 w-full
+              bg-white hover:bg-gray-50 active:bg-gray-100
+              select-none px-2 overflow-x-hidden cursor-pointer"
+       @click.stop="onClickedTreeItem(item)">
+    <!--展开按钮-->
     <div class="w-6">
       <div v-show="isShowExpansionButton" @click.stop="onClickedTreeItemIcon">
         <img :class="isExpansion?'rotate-0':'-rotate-90'" alt="button"
              class="transform" src="@/assets/arrow_drop_down_black_24dp.svg">
       </div>
-
     </div>
+    <!--文本-->
     <div class="flex flex-none justify-start items-center text-sm text-gray-600">{{ item[label] }}</div>
   </div>
-  <div v-show="isExpansion" class="w-full">
-    <erp-tree-item v-for="itemChildren in item[children]" :id="itemChildren[nodeKey]" :key="itemChildren[nodeKey]"
-                   :children="children" :expand-on-click-node="props.expandOnClickNode" :item="itemChildren"
-                   :label="label"
-                   :modelValue="modelValue" :nodeKey="nodeKey" :pl="props.pl+18" :uuid="props.uuid"></erp-tree-item>
+  <div v-show="isExpansion">
+    <erp-tree-item
+        v-for="itemChildren in item[children]"
+        :key="itemChildren[nodeKey]"
+        :children="children"
+        :expandAll="expandAll"
+        :item="itemChildren"
+        :label="label"
+        :modelValue="modelValue"
+        :nodeKey="nodeKey"
+        :pl="pl+18"
+        :select-node-call-back="selectNodeCallBack"
+    >
+    </erp-tree-item>
   </div>
+
 
 </template>
 
 <script lang='ts'>
-import {computed, defineComponent, onMounted, PropType, ref, watch} from "vue";
-import {erpTreeEventBus} from "@/components/tree/eventBus";
+import {computed, defineComponent, onMounted, PropType, ref} from "vue";
 
 export default defineComponent({
-  name:"ErpTreeItem",
+  name: "ErpTreeItem",
   props: {
     label: {
       type: String,
@@ -40,10 +54,6 @@ export default defineComponent({
       required: true,
     },
     modelValue: null as any as PropType<any>,
-    id: {
-      type: null as any as PropType<string | number>,
-      required: true,
-    },
     item: {
       type: null as any as PropType<any>,
       default: [],
@@ -52,29 +62,21 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    expandOnClickNode: {
+    expandAll: {
       type: Boolean,
       default: true,
     },
-    uuid: {
-      type: String,
-      required: true,
-    },
+    selectNodeCallBack:{
+      type:Function as PropType<(node:any)=>void>,
+      required:true
+    }
   },
   setup(props) {
 
     onMounted(() => {
       //根据modelValue找到当前选中
       if (props.item[props.nodeKey] === props.modelValue) {
-        erpTreeEventBus.emit('treeItemClickNode' + props.uuid, props.item)
-      }
-    })
-
-    watch(() => props.item, () => {
-      console.log(props.modelValue)
-      if (props.item[props.nodeKey] === props.modelValue) {
-        console.log('我要出来了!!')
-        erpTreeEventBus.emit('treeItemClickNode' + props.uuid, props.item)
+        props.selectNodeCallBack(props.item);
       }
     })
 
@@ -92,22 +94,21 @@ export default defineComponent({
     })
 
     function onClickedTreeItem(item: any) {
-      if (props.expandOnClickNode) {
+      if (props.expandAll) {
         isExpansion.value = !isExpansion.value;
-        erpTreeEventBus.emit('treeItemClickNode' + props.uuid, item)
+        props.selectNodeCallBack(item)
       } else {
-        erpTreeEventBus.emit('treeItemClickNode' + props.uuid, item)
+        props.selectNodeCallBack(item)
       }
     }
 
     function onClickedTreeItemIcon() {
-      if (!props.expandOnClickNode) {
+      if (!props.expandAll) {
         isExpansion.value = !isExpansion.value;
       }
     }
 
     return {
-      props,
       selected,
       isExpansion,
       isShowExpansionButton,

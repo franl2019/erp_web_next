@@ -16,13 +16,13 @@ interface IAccountsVerifySheetType {
 
 export default defineComponent({
   name:"ErpAccountsVerifySheetTypeSelect",
-  expose:["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const ElSelectRef = ref();
 
     function focus() {
       ElSelectRef.value.focus();
     }
+    expose({focus})
 
     const accountsVerifySheetTypeList = ref<IAccountsVerifySheetType[]>([
       {
@@ -49,7 +49,6 @@ export default defineComponent({
     ]);
     return {
       ElSelectRef,
-      focus,
       accountsVerifySheetTypeList,
     };
   },

@@ -1,5 +1,5 @@
 <template>
-  <el-select v-bind="$attrs" placeholder="选择应付账款类型" ref="ElSelectRef">
+  <el-select v-bind="$attrs" placeholder="选择应付账款类型" ref="elSelectRef">
     <el-option v-for="item in accountspayabletypeSelectList" :key="item.accountspayabletypeid"
       :label="item.accountspayabletypename" :value="item.accountspayabletypeid">
     </el-option>
@@ -11,22 +11,22 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name:"ErpAccountsPayableTypeSelect",
-  expose:["focus"],
-  setup() {
+  setup(_props,{expose}) {
     const accountspayabletypeSelectList = ref([{
       accountspayabletypeid: 0,
       accountspayabletypename: "应付账款"
     }]);
 
-    const ElSelectRef = ref();
+    const elSelectRef = ref();
     function focus() {
-      ElSelectRef.value.focus();
+      elSelectRef.value.focus();
     }
 
+    expose({focus})
+
     return {
+      elSelectRef,
       accountspayabletypeSelectList,
-      ElSelectRef,
-      focus,
     };
   },
 });

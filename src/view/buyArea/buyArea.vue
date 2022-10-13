@@ -8,8 +8,11 @@
       </div>
     </erp-title>
     <div class="flex-grow h-0 border-solid border border-gray-300 overflow-y-auto">
-      <erp-buy-area-tree ref="buyAreaTreeRef" :default-expand-all="true" :expand-on-click-node="false"
-                         @node-click="onClickBuyAreaNode">
+      <erp-buy-area-tree
+          ref="buyAreaTreeRef"
+          :default-expand-all="true"
+          :expand-on-click-node="false"
+          @node-click="onClickBuyAreaNode">
       </erp-buy-area-tree>
     </div>
   </div>
@@ -26,14 +29,14 @@
 <script lang='ts'>
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import ErpBuyAreaTree from "@/components/tree/aboutComponent/ErpBuyAreaTree.vue";
+import ErpBuyAreaTree from "@/components/tree/component/ErpBuyAreaTree.vue";
 import NewBuyAreaDialog from "@/view/buyArea/component/NewBuyAreaDialog.vue";
 import UpdateBuyAreaDialog from "@/view/buyArea/component/UpdateBuyAreaDialog.vue";
 import {defineComponent, ref} from "vue";
 import ErpDialog from "@/components/dialog/dialog";
 import {BuyArea, IBuyArea, IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {BuyAreaService} from "@/module/buyArea/buyArea.service";
-import {ITreeRef} from "@/components/tree/aboutComponent/ITreeRef";
+import {ITreeRef} from "@/components/tree/component/ITreeRef";
 
 export default defineComponent({
   name: "buyArea",

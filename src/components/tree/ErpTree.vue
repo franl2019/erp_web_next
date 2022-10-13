@@ -1,27 +1,32 @@
 <template>
   <div class="w-full h-full">
-    <erp-tree-item v-for="item in data" :id="item[nodeKey]" :children="treeProps.config.children"
-      :expand-on-click-node="treeProps.expandOnClickNode" :item="item" :key="item[nodeKey]"
-      :label="treeProps.config.label" :model-value="selectedNodeId" :modelValue="modelValue" :nodeKey="nodeKey"
-      :uuid="treeUuid">
+    <erp-tree-item
+        v-for="item in data"
+        :key="item[nodeKey]"
+        :children="config.children"
+        :expandAll="expandAll"
+        :item="item"
+        :label="config.label"
+        :modelValue="selectedNodeId"
+        :nodeKey="nodeKey"
+        :select-node-call-back="selectNodeCallBack"
+    >
     </erp-tree-item>
   </div>
 </template>
 
 <script lang='ts'>
 import ErpTreeItem from "@/components/tree/ErpTreeItem.vue";
-import { defineComponent, nextTick, onMounted, PropType, ref, watch } from "vue";
-import { erpTreeEventBus } from "@/components/tree/eventBus";
-import { v4 as uuidV4 } from 'uuid';
+import {defineComponent, nextTick, onMounted, PropType, ref, watch} from "vue";
 
 export default defineComponent({
-  name:"ErpTree",
-  components:{
+  name: "ErpTree",
+  components: {
     ErpTreeItem
   },
   props: {
     data: {
-      type: Object as PropType<Array<any>>,
+      type: Array as PropType<Array<any>>,
       required: true,
     },
     config: {
@@ -35,49 +40,50 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    modelValue: null as any as PropType<any>,
-    expandOnClickNode: {
+    modelValue: {
+      type:null as any as PropType<any>,
+      default:0
+    },
+    expandAll: {
       type: Boolean,
       default: true,
     },
   },
-  emits: ['node-click', 'onReady', 'update:modelValue'],
-  setup(treeProps, { emit: emits }) {
-    const treeUuid = uuidV4();
-    const selectedNodeId = ref(treeProps.modelValue) || ref(0)
+  emits: ['node-click', 'update:modelValue'],
+  setup(props, {emit, expose}) {
+    const selectedNodeId = ref(props.modelValue) || ref(0)
     const selectedNode = ref();
 
-    erpTreeEventBus.on('treeItemClickNode' + treeUuid, (event: any) => {
-      selectedNode.value = event;
-      selectedNodeId.value = event[treeProps.nodeKey];
-      emits('node-click', event)
-    })
+    function selectNodeCallBack(node:any) {
+      selectedNode.value = node;
+      selectedNodeId.value = node[props.nodeKey];
+      emit('node-click', node)
+    }
 
     onMounted(() => {
       nextTick(() => {
-        window.document.getElementById(treeProps.modelValue)?.scrollIntoView(true)
+        window.document.getElementById(selectedNodeId)?.scrollIntoView(true)
       })
-      emits('onReady', treeApi)
     })
 
-    watch(() => treeProps.data, () => {
-      emits('update:modelValue', 0)
+    watch(() => props.data, () => {
+      emit('update:modelValue', 0)
     });
 
-    const treeApi = {
-      getSelectedNode: () => {
-        return selectedNode.value
-      }, setSelectedNode: (id: number) => {
-        emits('update:modelValue', id)
-      }
+    function getSelectedNode() {
+      return selectedNode.value
     }
 
+    function setSelectedNode(id: number) {
+      emit('update:modelValue', id)
+    }
+
+    expose({getSelectedNode, setSelectedNode});
+
     return {
-      uuidV4,
-      treeProps,
-      treeUuid,
       selectedNodeId,
       selectedNode,
+      selectNodeCallBack,
     };
   },
 });

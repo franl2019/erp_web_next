@@ -16,14 +16,14 @@
                   :highlight-current="true" node-key="authMenuId" @node-click="onClickTreeNode"/>
       </div>
       <div class="flex-grow h-96 md:h-full">
-        <template v-if="propsUserid">
+        <template v-if="userid">
           <Component :is="user_client_operatearea_mx" v-if="showComponent==='user_client_operatearea_mx'"
-                     :userid="propsUserid"></Component>
+                     :userid="userid"></Component>
           <Component :is="user_buy_operatearea_mx" v-else-if="showComponent==='user_buy_operatearea_mx'"
-                     :userid="propsUserid"></Component>
-          <Component :is="user_warehouse_mx" v-else-if="showComponent==='user_warehouse_mx'" :userid="propsUserid">
+                     :userid="userid"></Component>
+          <Component :is="user_warehouse_mx" v-else-if="showComponent==='user_warehouse_mx'" :userid="userid">
           </Component>
-          <Component :is="user_account_mx" v-else-if="showComponent==='user_account_mx'" :userid="propsUserid">
+          <Component :is="user_account_mx" v-else-if="showComponent==='user_account_mx'" :userid="userid">
           </Component>
         </template>
       </div>
@@ -125,11 +125,9 @@ export default defineComponent({
     ])
 
     let showComponent = ref()
-    let propsUserid = ref()
 
     function onClickTreeNode(authMenu: IAuthMenuTree) {
       if (authMenu.component && userid.value) {
-        propsUserid.value = userid.value
         showComponent.value = authMenu.router
       }
     }
@@ -141,12 +139,11 @@ export default defineComponent({
       authTreeConfig,
       authMenuTreeData,
       showComponent,
-      propsUserid,
-      onClickTreeNode,
-      user_client_operatearea_mx,
-      user_buy_operatearea_mx,
-      user_warehouse_mx,
       user_account_mx,
+      user_warehouse_mx,
+      user_buy_operatearea_mx,
+      user_client_operatearea_mx,
+      onClickTreeNode,
     };
   },
 });
