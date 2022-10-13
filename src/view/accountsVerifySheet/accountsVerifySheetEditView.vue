@@ -82,10 +82,10 @@ import {useRoute, useRouter} from "vue-router";
 import {defineComponent, onMounted, ref} from "vue";
 import {AccountsVerifySheetCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetCreate.dto";
 import {AccountsVerifySheetType} from "@/module/accountsVerifySheet/accountsVerifySheet";
-import {ErpSelectAccountPayableDialog} from "@/components/dialog/selectInfo/accountPayable";
+import {useErpSelectAccountPayableDialog} from "@/components/dialog/selectInfo/accountPayable/useErpSelectAccountPayableDialog";
 import {IAccountsPayableFind} from "@/module/accountsPayable/types/IAccountsPayableFind";
 import {AccountCategoryType} from "@/types/AccountCategoryType";
-import {ErpSelectAccountReceivableDialog} from "@/components/dialog/selectInfo/accountReceivable";
+import {useErpSelectAccountReceivableDialog} from "@/components/dialog/selectInfo/accountReceivable/useErpSelectAccountReceivableDialog";
 import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceivable";
 import {AccountsVerifySheetMxCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetMxCreate.dto";
 import {IAccountsVerifySheetMx} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
@@ -97,7 +97,7 @@ import {getToday, useRouterPage} from "@/utils";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 
 export default defineComponent({
@@ -201,7 +201,7 @@ export default defineComponent({
 
     async function clickedDeleteButton() {
       const {accountsVerifySheetCode, accountsVerifySheetId} = await editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除 ${accountsVerifySheetCode} 核销单`,
         ok: async () => {
@@ -221,7 +221,7 @@ export default defineComponent({
       accountsVerifySheetMxEditRef.value?.getGridApi().stopEditing();
       if (state.value.accountsVerifySheetId !== 0) {
         const {accountsVerifySheetCode} = await editDto.value;
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否审核 ${accountsVerifySheetCode} 核销单`,
           ok: async () => {
@@ -232,7 +232,7 @@ export default defineComponent({
           }
         })
       } else {
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否保存并审核`,
           ok: async () => {
@@ -258,7 +258,7 @@ export default defineComponent({
 
     async function clickedUnL1ReviewButton() {
       const {accountsVerifySheetCode, accountsVerifySheetId} = await editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审 ${accountsVerifySheetCode} 核销单`,
         ok: async () => {
@@ -385,7 +385,7 @@ export default defineComponent({
           if (editDto.value.clientid === 0) {
             return Promise.reject(new VerifyParamError('请先选择客户'))
           }
-          ErpSelectAccountReceivableDialog({
+          useErpSelectAccountReceivableDialog({
             clientid: editDto.value.clientid,
             ok: (accountsReceivableFinds: IAccountsReceivableFind[]) => {
               accountsReceivablesAddToSheetMx(accountsReceivableFinds);
@@ -397,7 +397,7 @@ export default defineComponent({
           if (editDto.value.buyid === 0) {
             return Promise.reject(new VerifyParamError('请先选择供应商'))
           }
-          ErpSelectAccountPayableDialog({
+          useErpSelectAccountPayableDialog({
                 buyid: editDto.value.buyid,
                 ok: (accountsPayableFinds: IAccountsPayableFind[]) => {
                   accountPayableAddToSheetMx(accountsPayableFinds);
@@ -414,7 +414,7 @@ export default defineComponent({
           if (editDto.value.clientid_b === 0) {
             return Promise.reject(new VerifyParamError('请先选择转入客户'))
           }
-          ErpSelectAccountReceivableDialog({
+          useErpSelectAccountReceivableDialog({
             clientid: editDto.value.clientid,
             ok: (accountsReceivableFinds: IAccountsReceivableFind[]) => {
               accountsReceivablesAddToSheetMx(accountsReceivableFinds);
@@ -430,7 +430,7 @@ export default defineComponent({
           if (editDto.value.buyid_b === 0) {
             return Promise.reject(new VerifyParamError('请先选择转入供应商'))
           }
-          ErpSelectAccountPayableDialog({
+          useErpSelectAccountPayableDialog({
                 buyid: editDto.value.buyid,
                 ok: (accountsPayableFinds: IAccountsPayableFind[]) => {
                   accountPayableAddToSheetMx(accountsPayableFinds);
@@ -449,7 +449,7 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError('请先选择客户'))
       }
 
-      ErpSelectAccountReceivableDialog({
+      useErpSelectAccountReceivableDialog({
         clientid: editDto.value.clientid,
         ok: (accountsReceivableFinds: IAccountsReceivableFind[]) => {
           accountsReceivablesAddToSheetMx(accountsReceivableFinds);
@@ -463,7 +463,7 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError('请先选择供应商'))
       }
 
-      ErpSelectAccountPayableDialog({
+      useErpSelectAccountPayableDialog({
             buyid: editDto.value.buyid,
             ok: (accountsPayableFinds: IAccountsPayableFind[]) => {
               accountPayableAddToSheetMx(accountsPayableFinds);

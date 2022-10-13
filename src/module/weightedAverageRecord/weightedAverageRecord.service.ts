@@ -1,6 +1,6 @@
 import {http_post, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {CountWeightedAverageRecordMxDto} from "@/module/weightedAverageRecord/dto/countWeightedAverageRecordMx.dto";
 import {useVerifyParam} from "@/utils/validate";
 import {WeightedAverageRecordL1ReviewDto} from "@/module/weightedAverageRecord/dto/weightedAverageRecordL1Review.dto";
@@ -11,7 +11,7 @@ export class WeightedAverageRecordService {
         const result = await http_post<IApiResult>(API_URL.WEIGHTED_AVERAGE_RECORD_CHECK_IF_COUNT_IS_REQUIRED);
         if (result.code === 200 && result.related) {
             if (result.related.isRequired) {
-                ErpDialog({
+                useErpDialog({
                     title: "提示",
                     message: "有新业务发生，即将进行成本核算，是否继续?",
                     ok: () => {

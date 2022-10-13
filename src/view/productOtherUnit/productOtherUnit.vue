@@ -63,7 +63,7 @@ import {ITableRef} from "@/components/table/type";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
 import {ProductOtherUnitUpdateDto} from "@/module/productOtherUnit/dto/productOtherUnitUpdate.dto";
 import {ProductOtherUnitDeleteDto} from "@/module/productOtherUnit/dto/productOtherUnitDelete.dto";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 export default defineComponent({
   components: {
@@ -144,7 +144,7 @@ export default defineComponent({
         return Promise.reject(new Error("请先选中辅助单位"));
       }
 
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: "是否删除辅助单位",
         ok: async () => {

@@ -61,14 +61,14 @@ import {RowDoubleClickedEvent} from "ag-grid-community";
 import {IFindInventory} from "@/module/inventory/FindInventory";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
-import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 
 export default defineComponent({
-  name: "SelectInventoryDialog",
+  name: "ErpSelectInventoryDialog",
   components: {
     ErpLeftRightStructureDialog,
     ErpOperateAreaAuthSelect,

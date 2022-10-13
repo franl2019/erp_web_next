@@ -82,10 +82,10 @@ import {editAccountInComeSheetMxTableConfig} from "@/view/accountInCome/config/e
 import {AccountInComeSheetMxCreateDto} from "@/module/accountInCome/dto/sheetMx/accountInComeSheetMxCreate.dto";
 import * as mathjs from 'mathjs';
 import {AccountInComeService} from "@/module/accountInCome/accountInCome.service";
-import {ErpSelectAccountReceivableDialog} from "@/components/dialog/selectInfo/accountReceivable";
+import {useErpSelectAccountReceivableDialog} from "@/components/dialog/selectInfo/accountReceivable/useErpSelectAccountReceivableDialog";
 import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceivable";
 import {AccountInComeAmountMxCreateDto} from "@/module/accountInCome/dto/amountMx/accountInComeAmountMxCreate.dto";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {AccountInComeUpdateDto} from "@/module/accountInCome/dto/accountInComeUpdate.dto";
 import {AccountInComeAmountMxService} from "@/module/accountInCome/accountInComeAmountMx.service";
 import {AccountInComeSheetMxService} from "@/module/accountInCome/accountInComeSheetMx.service";
@@ -267,7 +267,7 @@ export default defineComponent({
         await initPage();
       }
 
-      ErpDialog({
+      useErpDialog({
         title: '提示',
         message: '保存成功',
         closeBtnVisible: false
@@ -277,7 +277,7 @@ export default defineComponent({
     //点击删除按钮
     async function clickedDeleteBtn() {
       const {accountInComeCode, accountInComeId} = editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除 ${accountInComeCode}`,
         ok: async () => {
@@ -304,7 +304,7 @@ export default defineComponent({
 
       if (editDto.value.accountInComeId !== 0) {
         const {accountInComeCode} = editDto.value;
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否审核 ${accountInComeCode}`,
           ok: async () => {
@@ -318,7 +318,7 @@ export default defineComponent({
           }
         })
       } else {
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否保存并审核`,
           ok: async () => {
@@ -343,7 +343,7 @@ export default defineComponent({
     //点击取消审核按钮
     async function clickedUnLevel1ReviewBtn() {
       const {accountInComeCode, amount, accountInComeId} = editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审 ${accountInComeCode} 金额:${amount}`,
         ok: async () => {
@@ -412,7 +412,7 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError('请选择客户'))
       }
 
-      ErpSelectAccountReceivableDialog({
+      useErpSelectAccountReceivableDialog({
         clientid: editDto.value.clientid,
         ok: (accountsReceivableFindList: IAccountsReceivableFind[]) => {
           const accountInComeSheetMxList: IAccountInComeSheetMxFind[] = [];
@@ -469,7 +469,7 @@ export default defineComponent({
           if (accountInComeSheetMx_existing.correlationId === accountInComeSheetMx.correlationId &&
               accountInComeSheetMx_existing.correlationType === accountInComeSheetMx.correlationType
           ) {
-            ErpDialog({
+            useErpDialog({
               title: '错误提示',
               message: '选择的应收账款存在重复添加',
               closeBtnVisible: false

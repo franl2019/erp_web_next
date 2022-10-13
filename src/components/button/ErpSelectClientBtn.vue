@@ -24,9 +24,9 @@
 </template>
 
 <script lang='ts'>
-import {ErpSelectClientDialog} from "@/components/dialog/selectInfo/client";
+import {useErpSelectClientDialog} from "@/components/dialog/selectInfo/client";
 import {IClient} from "@/module/client/client";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import {defineComponent} from "vue";
 
@@ -53,7 +53,7 @@ export default defineComponent({
   setup(props, {emit: emits}) {
 
     function clickedSelect() {
-      ErpSelectClientDialog({
+      useErpSelectClientDialog({
         ok: (client: IClient) => {
           emits('select', client);
         }
@@ -62,7 +62,7 @@ export default defineComponent({
 
     function clickedUnSelect() {
       if (props.unSelectSure) {
-        ErpDialog({
+        useErpDialog({
           title: "注意",
           message: "取消选择客户将会清空单据明细！",
           ok: () => {

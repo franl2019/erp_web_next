@@ -73,10 +73,10 @@ import {useRoute, useRouter} from "vue-router";
 import {useButtonState} from "@/composables/useButtonState";
 import {IClient} from "@/module/client/client";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {ErpSelectInventoryDialog} from "@/components/dialog/selectInfo/inventory";
+import {useErpSelectInventoryDialog} from "@/components/dialog/selectInfo/inventory/useErpSelectInventoryDialog";
 import {IFindInventory} from "@/module/inventory/FindInventory";
 import {OutboundSaleDto} from "@/module/saleOutbound/dto/outboundSale.dto";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {CellEditingStartedEvent} from "ag-grid-community";
 import {OutboundSaleService} from "@/module/saleOutbound/service/outboundSale.service";
 import {OutboundMxSaleService} from "@/module/saleOutbound/service/outboundMxSale.service";
@@ -160,7 +160,7 @@ export default defineComponent({
       if (outboundHead.value.warehouseid === 0) {
         return Promise.reject(new VerifyParamError('请先选择仓库'))
       }
-      ErpSelectInventoryDialog({
+      useErpSelectInventoryDialog({
         clientid: outboundHead.value.clientid,
         warehouseid: outboundHead.value.warehouseid,
         //回调返回选中库存
@@ -245,7 +245,7 @@ export default defineComponent({
       //区分新增的审核还是编辑的审核
       if (state.value.outboundid === 0) {
         const outbound = await getCreateDto();
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否保存并审核`,
           ok: async () => {
@@ -269,7 +269,7 @@ export default defineComponent({
       } else {
         const outbound = await getCreateDto();
         const {outboundcode} = outbound;
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否审核,单号:${outboundcode}`,
           ok: async () => {
@@ -284,7 +284,7 @@ export default defineComponent({
     //撤审出仓单按钮
     async function clickedUnL1Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审,单号:${outboundcode}`,
         ok: async () => {
@@ -298,7 +298,7 @@ export default defineComponent({
     //审核出仓单按钮
     async function clickedL2Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否财审,单号:${outboundcode}`,
         ok: async () => {
@@ -312,7 +312,7 @@ export default defineComponent({
     //撤审出仓单按钮
     async function clickedUnL2Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审财审,单号:${outboundcode}`,
         ok: async () => {
@@ -325,7 +325,7 @@ export default defineComponent({
 
     async function clickedDeleteData() {
       const {outboundid, outboundcode} = outboundHead.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除,单号:${outboundcode}`,
         ok: async () => {

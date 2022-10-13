@@ -43,12 +43,12 @@ import {FindBuyDto, IFindBuyDto} from "@/module/buy/dto/findBuy.dto";
 import {IBuyArea} from "@/module/buyArea/buyArea";
 import {selectBuyTableState} from "@/view/buy/tableConfig/selectBuyTableState";
 import {IBuy} from "@/module/buy/buy";
-import ErpBuyAreaTree from "@/components/tree/aboutComponent/ErpBuyAreaTree.vue";
+import ErpBuyAreaTree from "@/components/tree/component/ErpBuyAreaTree.vue";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 
 export default defineComponent({
-  name: 'SelectBuyDialog',
+  name: 'ErpSelectBuyDialog',
   components: {
     ErpButton,
     ErpTable,

@@ -41,7 +41,7 @@ import {IWarehouse, Warehouse} from "@/module/warehouse/warehouse";
 import {SelectionChangedEvent} from "ag-grid-community";
 import {defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
 
 export default defineComponent({
@@ -103,7 +103,7 @@ export default defineComponent({
 
     async function onClickedDeleteDialog() {
       if (warehouseTableSelectRows.value.length > 1) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `批量删除 ${warehouseTableSelect.value.warehousename} ···，等${warehouseTableSelectRows.value.length}个仓管资料？`,
           ok: async () => {
@@ -115,7 +115,7 @@ export default defineComponent({
           }
         });
       } else {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `仓库名称: ${warehouseTableSelect.value.warehousename}`,
           ok: async () => {

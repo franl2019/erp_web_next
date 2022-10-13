@@ -23,8 +23,8 @@
 </template>
 
 <script lang='ts'>
-import {ErpSelectBuyDialog} from "@/components/dialog/selectInfo/buy";
-import ErpDialog from "@/components/dialog/dialog";
+import {useErpSelectBuyDialog} from "@/components/dialog/selectInfo/buy/useErpSelectBuyDialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {IBuy} from "@/module/buy/buy";
 import {defineComponent} from "vue";
 
@@ -48,7 +48,7 @@ export default defineComponent({
   setup(props, {emit: emits}) {
 
     function clickedSelect() {
-      ErpSelectBuyDialog({
+      useErpSelectBuyDialog({
         ok: (buy: IBuy) => {
           emits('select', buy);
         }
@@ -57,7 +57,7 @@ export default defineComponent({
 
     function clickedUnSelect(): void {
       if (props.unSelectSure) {
-        ErpDialog({
+        useErpDialog({
           title: "注意",
           message: "取消选择供应商将会清空单据明细",
           ok: () => {

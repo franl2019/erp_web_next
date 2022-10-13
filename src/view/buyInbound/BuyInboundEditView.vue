@@ -86,8 +86,8 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.vue";
-import {ErpSelectProductDialog} from "@/components/dialog/selectInfo/product";
-import ErpDialog from "@/components/dialog/dialog";
+import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {useRoute, useRouter} from "vue-router";
 import {defineComponent, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
@@ -262,7 +262,7 @@ export default defineComponent({
         });
 
         if (inboundList.length === 0 || state.value.inboundcode.length === 0) {
-          ErpDialog({
+          useErpDialog({
             message: "查无此单",
             ok: () => {
               window.close()
@@ -352,7 +352,7 @@ export default defineComponent({
     //增加明细按钮
     function clickedAddInboundMx() {
       if (inboundHead.value.buyid !== 0) {
-        ErpSelectProductDialog({
+        useErpSelectProductDialog({
           //回调返回选中资料
           ok: (productList: IProduct[]) => {
             //添加到明细
@@ -360,7 +360,7 @@ export default defineComponent({
           }
         })
       } else {
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: "请先选择供应商",
           closeBtnVisible: false
@@ -427,13 +427,13 @@ export default defineComponent({
     function clickedLevel1review() {
       if (state.value.edit) {
 
-        ErpDialog({
+        useErpDialog({
           message: `是否保存并审核`,
 
           ok: async () => {
             await save_l1review();
             await initPage();
-            ErpDialog({
+            useErpDialog({
               message: `保存审核成功`,
               closeBtnVisible: false
             })
@@ -443,13 +443,13 @@ export default defineComponent({
 
       } else {
 
-        ErpDialog({
+        useErpDialog({
           message: `是否审核,单号:${inboundHead.value.inboundcode}`,
 
           ok: async () => {
             await inboundService.level1review(inboundHead.value.inboundid);
             await initPage();
-            ErpDialog({
+            useErpDialog({
               message: `审核成功`,
               closeBtnVisible: false,
             })
@@ -465,13 +465,13 @@ export default defineComponent({
     function clickedUnLevel1review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审,单号:${inboundCode}`,
         ok: async () => {
           await inboundService.unLevel1review(inboundId);
           await initPage();
-          ErpDialog({
+          useErpDialog({
             title: "提示",
             message: `撤审成功`,
             closeBtnVisible: false
@@ -483,13 +483,13 @@ export default defineComponent({
     function clickedLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否财务审核,单号:${inboundCode}`,
         ok: async () => {
           await inboundService.level2review(inboundId);
           await initPage();
-          ErpDialog({
+          useErpDialog({
             title: "提示",
             message: `财务审核成功`,
             closeBtnVisible: false
@@ -501,13 +501,13 @@ export default defineComponent({
     function clickedUnLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤销财务审核,单号:${inboundCode}`,
         ok: async () => {
           await inboundService.unLevel2review(inboundId);
           await initPage();
-          ErpDialog({
+          useErpDialog({
             title: "提示",
             message: `撤销财务审核成功`,
             closeBtnVisible: false
@@ -519,12 +519,12 @@ export default defineComponent({
     function clickedDeleteData() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除,单号:${inboundCode}`,
         ok: async () => {
           await inboundService.delete_data(inboundId);
-          ErpDialog({
+          useErpDialog({
             title: "提示",
             message: `删除成功`,
             ok: async () => {

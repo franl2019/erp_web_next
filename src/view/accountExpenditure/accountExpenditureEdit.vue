@@ -87,9 +87,9 @@ import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
-import ErpDialog from "@/components/dialog/dialog";
-import {ErpSelectAccountPayableDialog}
-  from "@/components/dialog/selectInfo/accountPayable";
+import useErpDialog from "@/components/dialog/useErpDialog";
+import {useErpSelectAccountPayableDialog}
+  from "@/components/dialog/selectInfo/accountPayable/useErpSelectAccountPayableDialog";
 import * as mathjs from 'mathjs';
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
@@ -355,7 +355,7 @@ export default defineComponent({
           if (accountExpenditureSheetMxList_existing[i].correlationId === accountsPayable.accountsPayableId &&
               accountExpenditureSheetMxList_existing[i].correlationType === accountsPayable.accountsPayableType
           ) {
-            ErpDialog({
+            useErpDialog({
               title: '错误提示',
               message: '选择的应付账款存在重复添加',
               closeBtnVisible: false
@@ -403,7 +403,7 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError('请选择供应商'));
       }
 
-      ErpSelectAccountPayableDialog({
+      useErpSelectAccountPayableDialog({
             buyid: editDto.value.buyid,
             ok: (accountsPayableList: IAccountsPayableFind[]) => {
               addSheetMxForAccountPayable(accountsPayableList);
@@ -452,7 +452,7 @@ export default defineComponent({
     //单击删除按钮
     async function clickedDeleteButton() {
       const {accountExpenditureCode, amount, accountExpenditureId} = await editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
@@ -477,7 +477,7 @@ export default defineComponent({
       editDto.value.accountExpenditureSheetMx = getSheetMxDataForTable();
       const {accountExpenditureCode, amount, accountExpenditureId} = await editDto.value;
       if (accountExpenditureId) {
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否审核单据${accountExpenditureCode},金额:${amount}`,
           ok: async () => {
@@ -490,7 +490,7 @@ export default defineComponent({
       } else {
         editDto.value.accountExpenditureAmountMx = getAmountMxDataForTable();
         editDto.value.accountExpenditureSheetMx = getSheetMxDataForTable();
-        ErpDialog({
+        useErpDialog({
           title: "提示",
           message: `是否保存审核单据,金额:${amount}`,
           ok: async () => {
@@ -515,7 +515,7 @@ export default defineComponent({
     //单击撤审按钮
     async function clickedUnL1ReviewBtn() {
       const {accountExpenditureCode, amount, accountExpenditureId} = await editDto.value;
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {

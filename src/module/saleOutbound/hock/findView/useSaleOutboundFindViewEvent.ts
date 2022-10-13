@@ -1,4 +1,4 @@
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import {useRouter} from "vue-router";
 import {OutboundSaleService} from "@/module/saleOutbound/service/outboundSale.service";
@@ -94,7 +94,7 @@ export function useSaleOutboundFindViewEvent(
     //审核出仓单按钮
     async function clickedL1Review() {
         const {outboundid,outboundcode} = await getSelectRow();
-        ErpDialog({
+        useErpDialog({
             title: "提示",
             message: `是否审核,单号:${outboundcode}`,
             ok: async () => {
@@ -108,7 +108,7 @@ export function useSaleOutboundFindViewEvent(
     //撤审出仓单按钮
     async function clickedUnL1Review() {
         const {outboundid,outboundcode} = await getSelectRow();
-        ErpDialog({
+        useErpDialog({
             title: "提示",
             message: `是否撤审,单号:${outboundcode}`,
             ok: async () => {
@@ -122,7 +122,7 @@ export function useSaleOutboundFindViewEvent(
     //审核出仓单按钮
     async function clickedL2Review() {
         const {outboundid,outboundcode} = await getSelectRow();
-        ErpDialog({
+        useErpDialog({
             title: "提示",
             message: `是否财审,单号:${outboundcode}`,
             ok: async () => {
@@ -136,7 +136,7 @@ export function useSaleOutboundFindViewEvent(
     //撤审出仓单按钮
     async function clickedUnL2Review() {
         const {outboundid,outboundcode} = await getSelectRow();
-        ErpDialog({
+        useErpDialog({
             title: "提示",
             message: `是否撤审财审,单号:${outboundcode}`,
             ok: async () => {
@@ -149,7 +149,7 @@ export function useSaleOutboundFindViewEvent(
 
     async function clickedDeleteData() {
         const {outboundid,outboundcode} = await getSelectRow();
-        ErpDialog({
+        useErpDialog({
             title: "提示",
             message: `是否删除,单号:${outboundcode}`,
             ok: async () => {

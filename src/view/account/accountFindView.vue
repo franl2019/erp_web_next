@@ -28,7 +28,7 @@ import AccountCreateDialog from "@/view/account/component/accountEdit.vue";
 import AccountEditDialog from "@/view/account/component/accountEdit.vue";
 import {AccountEditDto} from "@/module/account/dto/accountEdit.dto";
 import {AccountService} from "@/module/account/account.service";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {defaultAccountTableConfig} from "@/view/account/config/defaultAccountTableConfig";
 import {FindAccountDto} from "@/module/account/dto/accountFind.dto";
 import {ITableRef} from "@/components/table/type";
@@ -107,7 +107,7 @@ export default defineComponent({
 
     async function clickedDeleteAccount() {
       const account = await getSelectedAccount();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除${account.accountName}?`,
         ok: async () => {

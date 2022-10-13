@@ -6,7 +6,7 @@ import 'element-plus/dist/index.css'
 import './index.css'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {v_douClick, v_reqClick} from "@/utils";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 const app = createApp(App)
 
@@ -27,7 +27,7 @@ app.config.errorHandler = (err: any) => {
     //     closeBtnVisible: false
     // })
     if (err.errorType === 'verifyParamError') {
-        ErpDialog({
+        useErpDialog({
             title: "错误提示",
             message: (err as Error).message,
             closeBtnVisible: false

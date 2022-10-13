@@ -44,11 +44,11 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import ErpProductAreaTree from "@/components/tree/aboutComponent/ErpProductAreaTree.vue";
+import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
 
 export default defineComponent({
-  name:"SelectProductDialog",
+  name:"ErpSelectProductDialog",
   components: {
     ErpButton,
     ErpTitle,

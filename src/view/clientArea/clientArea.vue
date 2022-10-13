@@ -41,7 +41,7 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpClientAreaTree from "@/components/tree/component/ErpClientAreaTree.vue";
 import NewClientAreaDialog from "@/view/clientArea/component/CreateClientAreaDialog.vue";
 import UpdateClientAreaDialog from "@/view/clientArea/component/UpdateClientAreaDialog.vue";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {defineComponent, ref} from "vue";
 import {ClientArea, IClientArea, IClientAreaTree} from "@/module/clientArea/clientArea";
 import {ITreeRef} from "@/components/tree/component/ITreeRef";
@@ -87,7 +87,7 @@ export default defineComponent({
     //删除客户地区显示dialog按钮
     function onDeleteClientAreaBtn() {
       if (clientArea.value.clientareaid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除客户地区",
           message: `客户地区编号:${clientArea.value.clientareacode},客户地区名:${clientArea.value.clientareaname}`,
           ok: async () => {

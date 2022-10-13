@@ -33,7 +33,7 @@ import ErpBuyAreaTree from "@/components/tree/component/ErpBuyAreaTree.vue";
 import NewBuyAreaDialog from "@/view/buyArea/component/NewBuyAreaDialog.vue";
 import UpdateBuyAreaDialog from "@/view/buyArea/component/UpdateBuyAreaDialog.vue";
 import {defineComponent, ref} from "vue";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {BuyArea, IBuyArea, IBuyAreaTree} from "@/module/buyArea/buyArea";
 import {BuyAreaService} from "@/module/buyArea/buyArea.service";
 import {ITreeRef} from "@/components/tree/component/ITreeRef";
@@ -86,7 +86,7 @@ export default defineComponent({
     //删除供应商地区显示dialog按钮
     function onDeleteBuyAreaBtn() {
       if (buyArea.value.buyareaid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除供应商地区",
           message: `供应商地区编号:${buyArea.value.buyareacode},供应商地区名:${buyArea.value.buyareaname}`,
           ok: async () => {

@@ -34,11 +34,11 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import ErpClientAreaTree from "@/components/tree/aboutComponent/ErpClientAreaTree.vue";
+import ErpClientAreaTree from "@/components/tree/component/ErpClientAreaTree.vue";
 import ErpLeftRightLayoutDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
 
 export default defineComponent({
-  name:"SelectClientDialog",
+  name:"ErpSelectClientDialog",
   components: {
     ErpLeftRightLayoutDialog,
     ErpButton,

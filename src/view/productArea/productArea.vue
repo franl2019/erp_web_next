@@ -40,7 +40,7 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import NewProductAreaDialog from "@/view/productArea/component/NewProductAreaDialog.vue";
 import UpdateProductDialog from "@/view/productArea/component/UpdateProductAreaDialog.vue";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {defineComponent, onMounted, ref} from "vue";
 import {ProductAreaService} from "@/module/productArea/productArea.service";
 import {IProductArea, IProductAreaTree, ProductArea} from "@/module/productArea/productArea";
@@ -108,7 +108,7 @@ export default defineComponent({
     //删除产品类别显示dialog按钮
     function onDeleteProductAreaBtn() {
       if (productArea.value.productareaid) {
-        ErpDialog({
+        useErpDialog({
           title: `是否删除${valueName.product}类别`,
           message: `${valueName.product}类别编号:${productArea.value.productareacode},产品类别名:${productArea.value.productareaname}`,
           ok: async () => {

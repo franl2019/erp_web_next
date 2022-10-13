@@ -1,5 +1,5 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 export function formatEditAccountExpenditureSheetMx(params: ValueSetterParams): boolean {
         const colId:string = params.column.getColId()
@@ -11,7 +11,7 @@ export function formatEditAccountExpenditureSheetMx(params: ValueSetterParams): 
         switch (colId) {
             case 'amountsThisVerify':
                 if(params.data.amountsNotVerify < params.data.amountsMantissa + Number(params.newValue)){
-                    ErpDialog({
+                    useErpDialog({
                         title:'错误',
                         message:`'未核销金额' 不能大于 '冲尾数金额' 和 '本次核销金额' 的合计`,
                         closeBtnVisible:false
@@ -21,7 +21,7 @@ export function formatEditAccountExpenditureSheetMx(params: ValueSetterParams): 
                 break;
             case 'amountsMantissa':
                 if(params.data.amountsNotVerify < params.data.amountsMantissa + Number(params.newValue)){
-                    ErpDialog({
+                    useErpDialog({
                         title:'错误',
                         message:`'未核销金额' 不能大于 '冲尾数金额' 和 '本次核销金额' 的合计`,
                         closeBtnVisible:false

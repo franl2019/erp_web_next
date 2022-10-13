@@ -35,7 +35,7 @@ import {
   CreateUserWarehousePermissionsDto,
   ICreateUserWarehousePermissionsDto
 } from "@/module/user_warehouse_mx/dto/createUserWarehousePermissionsDto";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 export default defineComponent({
   name:"user_warehouse_mx",
@@ -82,7 +82,7 @@ export default defineComponent({
 
     function onClickedDeleteBtn() {
       if (Number(props.userid) !== 0) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `${rowClickedValue.value?.warehousename},仓库权限？`,
           ok: async () => {

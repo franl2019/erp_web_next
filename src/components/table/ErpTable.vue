@@ -68,7 +68,7 @@ import {
   NavigateToNextCellParams,
   RowClassParams
 } from "ag-grid-community";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {AgGridVue} from "ag-grid-vue3";
 import {ITableState} from "@/components/table/type";
 import {TableColumnStateService} from "@/module/tableColumnState/tableColumnState.service";
@@ -315,7 +315,7 @@ export default defineComponent({
         const headerName = event.colDef.headerName || '';
         const field = event.colDef.field || ''
         if (field) {
-          ErpDialog({
+          useErpDialog({
             title: headerName,
             message: field
           })

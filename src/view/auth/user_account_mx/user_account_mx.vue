@@ -28,7 +28,7 @@ import {
 } from "@/view/auth/user_account_mx/tableConfig/defaultUserAccountAuthTableState";
 import {UserAccountAuthCreateDto} from "@/module/user_account_mx/dto/userAccountAuthCreate.dto";
 import {UserAccountAuthDeleteDto} from "@/module/user_account_mx/dto/userAccountAuthDeleteDto";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {IUserAccountMxFind} from "@/module/user_account_mx/userAccountMx";
 import {UserAccountMxService} from "@/module/user_account_mx/userAccountMx.service";
 import {VerifyParamError} from "@/types/error/verifyParamError";
@@ -93,7 +93,7 @@ export default defineComponent({
 
     async function clickedDeleteBtn() {
       const userAccountAuth = await getUserAccountAuthTableSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除${userAccountAuth.accountName}`,
         ok: async () => {

@@ -43,7 +43,7 @@ import {
 import {
   accountsVerifySheetMxFindTableConfig
 } from "@/view/accountsVerifySheet/tableConfig/accountsVerifySheetMxFindTableConfig";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {useRouter} from "vue-router";
 import {ITableRef} from "@/components/table/type";
 import {useRouterPage} from "@/utils";
@@ -168,7 +168,7 @@ export default defineComponent({
 
     async function clickedDeleteButton() {
       const {accountsVerifySheetCode, accountsVerifySheetId} = await getTableSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除 ${accountsVerifySheetCode} 核销单`,
         ok: async () => {
@@ -182,7 +182,7 @@ export default defineComponent({
 
     async function clickedL1ReviewButton() {
       const {accountsVerifySheetCode, accountsVerifySheetId} = await getTableSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否审核 ${accountsVerifySheetCode} 核销单`,
         ok: async () => {
@@ -196,7 +196,7 @@ export default defineComponent({
 
     async function clickedUnL1ReviewButton() {
       const {accountsVerifySheetCode, accountsVerifySheetId} = await getTableSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审 ${accountsVerifySheetCode} 核销单`,
         ok: async () => {

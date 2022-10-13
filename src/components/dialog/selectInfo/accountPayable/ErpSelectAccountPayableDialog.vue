@@ -41,7 +41,7 @@ import {
 import { IAccountsPayableFind } from "@/module/accountsPayable/types/IAccountsPayableFind";
 
 export default defineComponent({
-  name:"SelectAccountPayableDialog",
+  name:"ErpSelectAccountPayableDialog",
   components:{
     ErpButton,
     ErpTitle,

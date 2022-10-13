@@ -36,7 +36,7 @@ import {roleTableConfig} from "@/view/role/tableConfig/roleTableConfig";
 import RoleCreateDialog from "@/view/role/roleCreateDialog.vue";
 import RoleUpdateDialog from "@/view/role/roleUpdateDialog.vue";
 import {SelectionChangedEvent} from "ag-grid-community";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {RoleUpdateDto} from "@/module/role/dto/roleUpdate.dto";
 
 export default defineComponent({
@@ -100,7 +100,7 @@ export default defineComponent({
     }
 
     function onClickedDeleteRoleButton() {
-      ErpDialog({
+      useErpDialog({
         title: '提示',
         message: "是否删除该角色",
         ok: async () => {

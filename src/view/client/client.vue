@@ -58,7 +58,7 @@ import {Client, IClient} from "@/module/client/client";
 import type {ITableRef} from "@/components/table/type";
 import {SelectionChangedEvent} from "ag-grid-community";
 import {getButtonState, IButtonState} from "@/composables/useInfoButtonState";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {ClientService} from "@/module/client/client.service";
 import {FindClientDto, IFindClientDto} from "@/module/client/dto/findClient.dto";
 import {User_operatearea_mxService} from "@/module/user_operatearea_mx/user_operatearea_mx.service";
@@ -192,7 +192,7 @@ export default defineComponent({
     //点击审核按钮
     async function onClickedLevel1Review() {
       if (clientTableSelect.value.clientid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否审核",
           message: `客户编号:${clientTableSelect.value.clientcode},客户名称:${clientTableSelect.value.clientname}`,
           ok: async () => {
@@ -208,7 +208,7 @@ export default defineComponent({
     //点击撤审按钮
     async function onClickedUnLevel1Review() {
       if (clientTableSelect.value.clientid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤审",
           message: `客户编号:${clientTableSelect.value.clientcode},客户名称:${clientTableSelect.value.clientname}`,
           ok: async () => {
@@ -224,7 +224,7 @@ export default defineComponent({
     //点击财务审核按钮
     async function onClickedLevel2Review() {
       if (clientTableSelect.value.clientid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否财务审核",
           message: `客户编号:${clientTableSelect.value.clientcode},客户名称:${clientTableSelect.value.clientname}`,
           ok: async () => {
@@ -240,7 +240,7 @@ export default defineComponent({
     //点击撤销财务审核按钮
     async function onClickedUnLevel2Review() {
       if (clientTableSelect.value.clientid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤销财务审核",
           message: `客户编号:${clientTableSelect.value.clientcode},客户名称:${clientTableSelect.value.clientname}`,
           ok: async () => {
@@ -256,7 +256,7 @@ export default defineComponent({
     //点击删除按钮事件
     async function onClickedDelete() {
       if (clientTableSelect.value.clientid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `客户编号: ${clientTableSelect.value.clientcode},客户名称: ${clientTableSelect.value.clientname}`,
           ok: async () => {

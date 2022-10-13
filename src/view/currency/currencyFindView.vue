@@ -42,7 +42,7 @@ import {ITableRef} from "@/components/table/type";
 import {CurrencyEditDto} from "@/module/currency/dto/currencyEdit.dto";
 import {CurrencyCreateDto} from "@/module/currency/dto/currencyCreate.dto";
 import {ICurrency} from "@/module/currency/currency";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {CurrencyService} from "@/module/currency/currency.service";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 
@@ -93,7 +93,7 @@ export default defineComponent({
 
     async function clickedDeleteBtn() {
       const currency = await getTableSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除${currency.currencyname}`,
         ok: async () => {

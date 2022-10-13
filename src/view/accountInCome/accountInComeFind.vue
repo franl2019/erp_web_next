@@ -49,7 +49,7 @@ import { AccountInComeFindDto } from "@/module/accountInCome/dto/accountInComeFi
 import { ITableRef } from "@/components/table/type";
 import { useRouter } from "vue-router";
 import { IAccountInCome, IAccountInComeFind } from "@/module/accountInCome/accountInCome";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import { AccountInComeService } from "@/module/accountInCome/accountInCome.service";
 import { getButtonState, IButtonState } from "@/composables/useSheetButtonState";
 import {
@@ -167,7 +167,7 @@ export default defineComponent({
     //点击删除按钮
     async function clickedDeleteBtn() {
       const { accountInComeCode, amount, accountInComeId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除 ${accountInComeCode} 金额:${amount}`,
         ok: async () => {
@@ -182,7 +182,7 @@ export default defineComponent({
     //点击审核按钮
     async function clickedLevel1ReviewBtn() {
       const { accountInComeCode, amount, accountInComeId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否审核 ${accountInComeCode} 金额:${amount}`,
         ok: async () => {
@@ -200,7 +200,7 @@ export default defineComponent({
     //点击取消审核按钮
     async function clickedUnLevel1ReviewBtn() {
       const { accountInComeCode, amount, accountInComeId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审 ${accountInComeCode} 金额:${amount}`,
         ok: async () => {

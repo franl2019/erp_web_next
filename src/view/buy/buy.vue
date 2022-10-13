@@ -59,7 +59,7 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import type {ITableRef} from "@/components/table/type";
 import {SelectionChangedEvent} from "ag-grid-community";
 import {getButtonState, IButtonState} from "@/composables/useInfoButtonState";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {FindBuyDto, IFindBuyDto} from "@/module/buy/dto/findBuy.dto";
 import {defaultBuyTableState} from "@/view/buy/tableConfig/defaultBuyTableState";
 import {Buy, IBuy} from "@/module/buy/buy";
@@ -179,7 +179,7 @@ export default defineComponent({
     //点击审核按钮
     async function onClickedLevel1Review() {
       if (buyTableSelect.value.buyid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否审核",
           message: `供应商编号:${buyTableSelect.value.buycode},供应商名称:${buyTableSelect.value.buyname}`,
           ok: async () => {
@@ -195,7 +195,7 @@ export default defineComponent({
     //点击撤审按钮
     async function onClickedUnLevel1Review() {
       if (buyTableSelect.value.buyid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤审",
           message: `供应商编号:${buyTableSelect.value.buycode},供应商名称:${buyTableSelect.value.buyname}`,
           ok: async () => {
@@ -211,7 +211,7 @@ export default defineComponent({
     //点击财务审核按钮
     async function onClickedLevel2Review() {
       if (buyTableSelect.value.buyid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否财务审核",
           message: `供应商编号:${buyTableSelect.value.buycode},供应商名称:${buyTableSelect.value.buyname}`,
           ok: async () => {
@@ -227,7 +227,7 @@ export default defineComponent({
     //点击撤销财务审核按钮
     async function onClickedUnLevel2Review() {
       if (buyTableSelect.value.buyid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤销财务审核",
           message: `供应商编号:${buyTableSelect.value.buycode},供应商名称:${buyTableSelect.value.buyname}`,
           ok: async () => {
@@ -243,7 +243,7 @@ export default defineComponent({
     //点击删除按钮事件
     async function onClickedDelete() {
       if (buyTableSelect.value.buyid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `供应商编号: ${buyTableSelect.value.buycode},供应商名称: ${buyTableSelect.value.buyname}`,
           ok: async () => {

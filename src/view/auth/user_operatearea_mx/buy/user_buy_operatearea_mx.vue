@@ -37,7 +37,7 @@ import {
   ICreateUserOperateAreaDto
 } from "@/module/user_operatearea_mx/dto/createUserOperateArea.dto";
 import {ITableRef} from "@/components/table/type";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {DeleteUserOperateAreaDto} from "@/module/user_operatearea_mx/dto/deleteUserOperateArea.dto";
 
 export default defineComponent({
@@ -92,7 +92,7 @@ export default defineComponent({
 
     //delete btn onClick
     async function onClickedDeleteBtn() {
-      ErpDialog({
+      useErpDialog({
         title: "是否删除",
         message: `用户供应商操作区域：${rowClickedValue.value?.operateareaname}`,
         ok: async () => {

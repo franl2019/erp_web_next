@@ -61,7 +61,7 @@ import AddProductDialog from "@/view/product/component/addProductDialog.vue";
 import ErpLeftRightPageBox from "@/components/page/ErpLeftRightPageBox.vue";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import ProductArea from "@/view/productArea/productArea.vue";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {defineComponent, nextTick, onMounted, ref, watch} from "vue";
 import type {ITableRef} from "@/components/table/type";
 import {getButtonState, IButtonState} from "@/composables/useInfoButtonState";
@@ -188,7 +188,7 @@ export default defineComponent({
     async function onClickedLevel1Review() {
       const product = await getSelected();
       if (product.productid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否审核",
           message: `${valueName.product}编号:${product.productcode},${valueName.product}名称:${product.productname}`,
           ok: async () => {
@@ -204,7 +204,7 @@ export default defineComponent({
     async function onClickedUnLevel1Review() {
       const product = await getSelected();
       if (product.productid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤审",
           message: `${valueName.product}编号:${product.productcode},${valueName.product}名称:${product.productname}`,
           ok: async () => {
@@ -221,7 +221,7 @@ export default defineComponent({
     async function onClickedLevel2Review() {
       const product = await getSelected();
       if (product.productid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否财务审核",
           message: `${valueName.product}编号:${product.productcode},${valueName.product}名称:${product.productname}`,
           ok: async () => {
@@ -238,7 +238,7 @@ export default defineComponent({
     async function onClickedUnLevel2Review() {
       const product = await getSelected();
       if (product.productid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否撤销财务审核",
           message: `${valueName.product}编号:${product.productcode},${valueName.product}名称:${product.productname}`,
           ok: async () => {
@@ -255,7 +255,7 @@ export default defineComponent({
     async function onClickedDelete() {
       const product = await getSelected();
       if (product.productid) {
-        ErpDialog({
+        useErpDialog({
           title: "是否删除",
           message: `${valueName.product}编号: ${product.productcode},${valueName.product}名称: ${product.productname}`,
           ok: async () => {

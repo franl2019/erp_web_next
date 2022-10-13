@@ -45,7 +45,7 @@ import {AccountsReceivableFindDto} from "@/module/accountReceivable/dto/accountR
 import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceivable";
 
 export default defineComponent({
-  name:"SelectAccountReceivableDialog",
+  name:"ErpSelectAccountReceivableDialog",
   props: {
     unmount: {
       type: Function,

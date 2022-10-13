@@ -1,12 +1,11 @@
 import moment from "moment";
 import {Router} from "vue-router";
 import {DirectiveBinding} from "@vue/runtime-core";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {CodeType} from "@/types/CodeType";
 import router from "@/router";
 import {config} from "@/config/env";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
-import mitt from 'mitt';
 
 export function useLocalStorageSave(key: string, value: string): void {
     window.localStorage.setItem(key, value)
@@ -211,14 +210,14 @@ export const v_reqClick = {
                 el.disabled = false;
             }, (err: any) => {
                 el.disabled = false;
-                ErpDialog({
+                useErpDialog({
                     title: "错误提示",
                     message: (err as Error).message,
                     closeBtnVisible: false
                 })
             }).catch((err: any) => {
                 el.disabled = false;
-                ErpDialog({
+                useErpDialog({
                     title: "错误提示",
                     message: (err as Error).message,
                     closeBtnVisible: false
@@ -247,5 +246,3 @@ export const v_reqClick = {
     unmounted() {
     }
 }
-
-export const emitter = mitt()

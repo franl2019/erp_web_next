@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import {useLocalStorageGet} from '@/utils/index';
 import {isLoading} from "@/components/loading/loading";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {ElMessage} from "element-plus";
 import {HttpError} from "@/types/error/httpError";
 import {config} from "@/config/env";
@@ -71,7 +71,7 @@ export function http_post<T>(url: string, params?: any): Promise<T> {
             if (error.response) {
                 // 请求后端有响应状态码
                 // 超出2xx
-                ErpDialog({
+                useErpDialog({
                     title: '错误提示',
                     message: `${error.response.data.msg || '请求错误'}`,
                     closeBtnVisible: false
@@ -83,7 +83,7 @@ export function http_post<T>(url: string, params?: any): Promise<T> {
                 })
             } else {
                 // Something happened in setting up the request that triggered an Error
-                ErpDialog({
+                useErpDialog({
                     title: '错误提示',
                     message: error.message,
                     closeBtnVisible: false

@@ -89,7 +89,7 @@ import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import {defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {useRouter} from "vue-router";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import {BuyInboundFindViewHeadTableConfig} from "@/view/buyInbound/tableConfig/BuyInboundFindViewHeadTableConfig";
 import {BuyInboundFindViewMxTableConfig} from "@/view/buyInbound/tableConfig/BuyInboundFindViewMxTableConfig";
 import {IBuyInboundFindDto, IBuyInboundMxFindDto} from "@/module/buyInbound/types/IBuyInboundService";
@@ -228,7 +228,7 @@ export default defineComponent({
 
     function clickedLevel1review() {
       const {inboundid, inboundcode} = getSelectRow();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否审核,单号:${inboundcode}`,
         ok: async () => {
@@ -241,7 +241,7 @@ export default defineComponent({
 
     function clickedUnLevel1review() {
       const {inboundid, inboundcode} = getSelectRow();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审,单号:${inboundcode}`,
         ok: async () => {
@@ -254,7 +254,7 @@ export default defineComponent({
 
     function clickedLevel2review() {
       const {inboundid, inboundcode} = getSelectRow();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否财务审核,单号:${inboundcode}`,
         ok: async () => {
@@ -267,7 +267,7 @@ export default defineComponent({
 
     function clickedUnLevel2review() {
       const {inboundid, inboundcode} = getSelectRow();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤销财务审核,单号:${inboundcode}`,
         ok: async () => {
@@ -280,7 +280,7 @@ export default defineComponent({
 
     function clickedDeleteData() {
       const {inboundid, inboundcode} = getSelectRow();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除,单号:${inboundcode}`,
         ok: async () => {

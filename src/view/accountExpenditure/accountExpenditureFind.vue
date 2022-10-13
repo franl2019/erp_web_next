@@ -51,7 +51,7 @@ import {
 import { AccountExpenditureFindDto } from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
 import { getButtonState, IButtonState } from "@/composables/useSheetButtonState";
 import { IAccountExpenditureFind } from "@/module/accountExpenditure/accountExpenditure";
-import ErpDialog from "@/components/dialog/dialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 import { AccountExpenditureService } from "@/module/accountExpenditure/accountExpenditure.service";
 import {
   defaultAccountExpenditureAmountMxTableConfig
@@ -207,7 +207,7 @@ export default defineComponent({
     //单击删除按钮
     async function clickedDeleteButton() {
       const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否删除单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
@@ -224,7 +224,7 @@ export default defineComponent({
     //单击审核按钮
     async function clickedL1ReviewButton() {
       const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否审核单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
@@ -240,7 +240,7 @@ export default defineComponent({
     //单击撤审按钮
     async function clickedUnL1ReviewBtn() {
       const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
-      ErpDialog({
+      useErpDialog({
         title: "提示",
         message: `是否撤审单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
