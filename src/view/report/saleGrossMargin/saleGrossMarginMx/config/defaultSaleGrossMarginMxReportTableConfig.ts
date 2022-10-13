@@ -2,7 +2,7 @@ import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
-import Table_Absolutely from "@/components/table/components/renderer/table_absolutely.vue";
+import Table_Absolutely from "@/components/table/components/renderer/table_absoluteley.vue";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {ISaleGrossMarginMx} from "@/module/report/saleGrossMarginReport/saleGrossMarginMx";

@@ -1,5 +1,11 @@
 <template>
-  <el-popover :visible="visible" :width="300" placement="bottom-end" transition="" trigger="click">
+  <el-popover
+      :visible="visible"
+      :width="300"
+      placement="bottom-end"
+      transition=""
+      :teleported="false"
+      trigger="click">
     <template #reference>
       <erp-button id="filterButton" @click="clickedBtn">
         <div class="w-5 h-5 relative mt-0.5">

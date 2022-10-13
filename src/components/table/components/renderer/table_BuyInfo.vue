@@ -1,7 +1,5 @@
 <template>
-
   <el-popover
-      :hide-after="0"
       placement="right"
       transition=""
       trigger="click"
