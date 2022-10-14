@@ -79,7 +79,7 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpInputReCheckbox from "@/components/input/ErpInputReCheckbox.vue";
 
 export default defineComponent({
-  expose:["initTableData", "initTableDataList", "getGridApi", "getColumnApi"],
+  expose: ["initTableData", "initTableDataList", "getGridApi", "getColumnApi"],
   components: {
     AgGridVue,
     Draggable,
@@ -275,22 +275,26 @@ export default defineComponent({
     }
 
     function startEditTable() {
-      //拖动显示
-      gridApi.setSuppressRowDrag(false);
-      //可以编辑
-      for (let j = 0; j < canEditCol.length; j++) {
-        const col = gridApi.getColumnDef(canEditCol[j])
-        if (col) col.editable = true;
+      if (gridApi) {
+        //拖动显示
+        gridApi.setSuppressRowDrag(false);
+        //可以编辑
+        for (let j = 0; j < canEditCol.length; j++) {
+          const col = gridApi.getColumnDef(canEditCol[j])
+          if (col) col.editable = true;
+        }
       }
     }
 
     function endEditTable() {
-      //拖动隐藏
-      gridApi.setSuppressRowDrag(true);
-      //禁止编辑
-      for (let j = 0; j < canEditCol.length; j++) {
-        const col = gridApi.getColumnDef(canEditCol[j])
-        if (col) col.editable = false;
+      if(gridApi){
+        //拖动隐藏
+        gridApi.setSuppressRowDrag(true);
+        //禁止编辑
+        for (let j = 0; j < canEditCol.length; j++) {
+          const col = gridApi.getColumnDef(canEditCol[j])
+          if (col) col.editable = false;
+        }
       }
     }
 
