@@ -6,7 +6,7 @@ import {
 import {
     SaleOutboundClientProductSummaryReportFindDto
 } from "@/module/report/saleOutboundClientProductSummaryReport/dto/saleOutboundMxReportFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 
 export class SaleOutboundClientProductSummaryReportService {
 

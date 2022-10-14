@@ -6,7 +6,7 @@ import {AccountExpenditureCreateDto} from "@/module/accountExpenditure/dto/accou
 import {AccountExpenditureUpdateDto} from "@/module/accountExpenditure/dto/accountExpenditureUpdate.dto";
 import {AccountExpenditureDeleteDto} from "@/module/accountExpenditure/dto/accountExpenditureDelete.dto";
 import {AccountExpenditureL1ReviewDto} from "@/module/accountExpenditure/dto/accountExpenditureL1Review.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {

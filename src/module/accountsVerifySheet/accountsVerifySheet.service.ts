@@ -3,7 +3,7 @@ import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {AccountsVerifySheetFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetFind.dto";
 import {AccountsVerifySheetCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetCreate.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {AccountsVerifySheetMxCreateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetMxCreate.dto";
 import {AccountsVerifySheetUpdateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetUpdate.dto";
 import {AccountsVerifySheetDeleteDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetDelete.dto";

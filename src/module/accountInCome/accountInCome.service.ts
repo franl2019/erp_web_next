@@ -1,5 +1,5 @@
 import {AccountInComeFindDto} from "@/module/accountInCome/dto/accountInComeFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {useHttpPost, IApiResult} from "@/utils/axios";
 import {IAccountInComeFind} from "@/module/accountInCome/accountInCome";
 import {API_URL} from "@/config/apiUrl";

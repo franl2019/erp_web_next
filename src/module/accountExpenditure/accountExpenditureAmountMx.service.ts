@@ -1,5 +1,5 @@
 import {AccountExpenditureAmountMxFindDto} from "@/module/accountExpenditure/dto/accountExpenditureAmountMxFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";

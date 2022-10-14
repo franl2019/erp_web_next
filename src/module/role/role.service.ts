@@ -1,7 +1,7 @@
 import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {RoleCreateDto} from "@/module/role/dto/roleCreate.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {IRole} from "@/module/role/role";
 import {RoleUpdateDto} from "@/module/role/dto/roleUpdate.dto";
 import {RoleDeleteDto} from "@/module/role/dto/roleDelete.dto";

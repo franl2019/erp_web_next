@@ -2,7 +2,7 @@ import {IAccountsPayableFind} from "@/module/accountsPayable/types/IAccountsPaya
 import {AccountsPayableFindDto} from "@/module/accountsPayable/dto/accountsPayableFind.dto";
 import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 export class AccountsPayableService {
 

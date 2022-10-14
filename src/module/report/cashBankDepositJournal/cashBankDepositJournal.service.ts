@@ -2,7 +2,7 @@ import {useHttpPost, IApiResult} from "@/utils/axios";
 import {ICashBankDepositJournal} from "@/module/report/cashBankDepositJournal/cashBankDepositJournal";
 import {API_URL} from "@/config/apiUrl";
 import {CashBankDepositJournalFindDto} from "@/module/report/cashBankDepositJournal/dto/cashBankDepositJournalFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 export class CashBankDepositJournalService {
 

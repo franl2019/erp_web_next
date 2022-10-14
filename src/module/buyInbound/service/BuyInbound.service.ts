@@ -6,7 +6,7 @@ import {
 } from "@/module/buyInbound/types/IBuyInboundService";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {BuyInboundFindDto} from "@/module/buyInbound/dto/BuyInboundFindDto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 export class BuyInboundService {
     public async find(findDto: BuyInboundFindDto) {
         await useVerifyParam(findDto)

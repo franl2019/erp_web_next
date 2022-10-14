@@ -2,7 +2,7 @@ import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IUserAccountMx} from "@/module/user_account_mx/userAccountMx";
 import {UserAccountAuthFindDto} from "@/module/user_account_mx/dto/userAccountAuthFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {UserAccountAuthCreateDto} from "@/module/user_account_mx/dto/userAccountAuthCreate.dto";
 import {UserAccountAuthDeleteDto} from "@/module/user_account_mx/dto/userAccountAuthDeleteDto";
 import {VerifyParamError} from "@/types/error/verifyParamError";

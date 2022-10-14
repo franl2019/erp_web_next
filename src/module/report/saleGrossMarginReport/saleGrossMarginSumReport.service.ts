@@ -2,7 +2,7 @@ import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {ISaleGrossMarginSum} from "@/module/report/saleGrossMarginReport/saleGrossMarginSum";
 import {SaleGrossMarginSumFindDto} from "@/module/report/saleGrossMarginReport/dto/saleGrossMarginSumFind.dto";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 
 export class SaleGrossMarginSumReportService {
 

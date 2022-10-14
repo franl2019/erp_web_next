@@ -3,7 +3,7 @@ import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {IAccountsVerifySheetMxFind} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {useVerifyParam} from "@/utils/validate";
+import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 export class AccountsVerifySheetMxService {
 
     public async find(accountsVerifySheetMxFindDto:AccountsVerifySheetMxFindDto):Promise<IAccountsVerifySheetMxFind[]>{
