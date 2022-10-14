@@ -1,4 +1,4 @@
-import {IsInt, IsNumber, IsString} from "class-validator";
+import {IsInt, IsNumber, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 
 export class AccountInComeAmountMxCreateDto implements IAccountInComeAmountMx {

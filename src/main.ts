@@ -22,10 +22,11 @@ app.directive(v_reqClick.name, v_reqClick);
 app.mount('#app');
 
 app.config.errorHandler = (err: any) => {
+    console.dir(err)
     if (err.errorType === 'verifyParamError') {
         useErpErrorDialog({
             title: "错误提示",
-            message: "错误提示",
+            message: err.message,
             messageList: useErrorsToArrayString(err),
             closeBtnVisible: false
         })

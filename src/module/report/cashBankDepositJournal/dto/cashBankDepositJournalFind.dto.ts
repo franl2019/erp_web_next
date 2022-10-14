@@ -1,4 +1,4 @@
-import {IsInt} from "class-validator";
+import {IsInt} from "@/utils/verifyParam/customValidationDecorators";
 import {getEndDate, getStartDate} from "@/utils";
 
 export class CashBankDepositJournalFindDto{

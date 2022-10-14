@@ -1,5 +1,5 @@
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
-import {IsInt, IsNumber, IsString} from "class-validator";
+import {IsInt, IsNumber, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export class AccountExpenditureAmountMxCreateDto implements IAccountExpenditureAmountMx{
     @IsInt()

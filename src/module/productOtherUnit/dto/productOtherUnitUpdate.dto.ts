@@ -1,4 +1,4 @@
-import {IsInt, IsString, NotEquals} from "class-validator";
+import {IsInt, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
 
 export class ProductOtherUnitUpdateDto implements IProductOtherUnit {

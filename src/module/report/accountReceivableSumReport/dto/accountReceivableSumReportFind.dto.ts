@@ -1,4 +1,4 @@
-import {IsInt, IsString} from "class-validator";
+import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {getEndDate, getStartDate} from "@/utils";
 
 export class AccountReceivableSumReportFindDto {

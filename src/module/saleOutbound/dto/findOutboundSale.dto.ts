@@ -1,5 +1,5 @@
 import {getEndDate, getStartDate} from "@/utils";
-import {IsString} from "class-validator";
+import {IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export interface IFindOutboundDto {
     warehouseids: number[];

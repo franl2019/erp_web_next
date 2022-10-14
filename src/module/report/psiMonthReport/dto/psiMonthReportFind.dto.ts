@@ -1,4 +1,4 @@
-import {IsString} from "class-validator";
+import {IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {getEndDate, getStartDate} from "@/utils";
 
 export class PsiMonthReportFindDto {

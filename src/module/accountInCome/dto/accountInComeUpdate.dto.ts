@@ -1,4 +1,4 @@
-import {IsArray, IsInt, IsNumber, IsString} from "class-validator";
+import {IsArray, IsInt, IsNumber, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {IAccountInComeCreateDto, IAccountInComeFind} from "../accountInCome";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";

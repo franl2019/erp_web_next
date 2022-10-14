@@ -1,5 +1,5 @@
 import {IProductOtherUnitMx} from "@/module/productOtherUnit/productOtherUnitMx";
-import {IsInt, NotEquals} from "class-validator";
+import {IsInt, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
 export class ProductOtherUnitMxCreateDto implements IProductOtherUnitMx{
     @IsInt()

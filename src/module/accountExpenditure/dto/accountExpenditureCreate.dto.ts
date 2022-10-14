@@ -1,4 +1,4 @@
-import {IsArray, IsInt, IsNumber, IsString} from "class-validator";
+import {IsArray, IsInt, IsNumber, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {IAccountExpenditureCreate} from "@/module/accountExpenditure/types/IAccountExpenditureCreate";

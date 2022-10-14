@@ -1,4 +1,4 @@
-import {IsInt, NotEquals} from "class-validator";
+import {IsInt, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
 export class ProductOtherUnitDeleteDto{
     //id

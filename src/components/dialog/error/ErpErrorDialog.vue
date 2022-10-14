@@ -19,7 +19,12 @@
             <h3 id="modal-title" class="text-lg leading-6 font-bold text-gray-900">
               {{ props.title }}
             </h3>
-            <erp-error-dialog-message-list :message-list="messageList"/>
+            <div v-if="messageList.length===0" class="mt-2 flex items-center justify-center">
+              <p class="text-lg text-black w-auto">
+                {{ props.message }}
+              </p>
+            </div>
+            <erp-error-dialog-message-list v-else :message-list="messageList"/>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import {IsArray, IsInt, IsString} from "class-validator";
+import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {getEndDate, getStartDate} from "@/utils";
 
 export interface IFindSaleOutboundDto {

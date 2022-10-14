@@ -1,4 +1,4 @@
-import {IsInt, IsNumber, NotEquals} from "class-validator";
+import {IsInt, IsNumber, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 import {IAccountsVerifySheetMx, IAccountsVerifySheetMxFind} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
 
 export class AccountsVerifySheetMxUpdateDto implements IAccountsVerifySheetMxFind {

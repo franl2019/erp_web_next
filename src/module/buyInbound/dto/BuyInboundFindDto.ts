@@ -1,6 +1,6 @@
 import {IBuyInboundFindDto} from "@/module/buyInbound/types/IBuyInboundService";
 import {getEndDate, getStartDate} from "@/utils";
-import {IsArray, IsInt, IsString} from "class-validator";
+import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export class BuyInboundFindDto implements IBuyInboundFindDto {
     @IsArray()

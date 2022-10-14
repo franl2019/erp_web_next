@@ -3,7 +3,7 @@ import {
     IAccountsVerifySheet,
     IAccountsVerifySheetAndMx
 } from "@/module/accountsVerifySheet/accountsVerifySheet";
-import {IsArray, IsInt, IsString, NotEquals} from "class-validator";
+import {IsArray, IsInt, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 import {IAccountsVerifySheetMx} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
 
 

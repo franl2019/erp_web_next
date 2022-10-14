@@ -1,4 +1,4 @@
-import {IsInt, IsString} from "class-validator";
+import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
 import {IProductOtherUnitMx} from "@/module/productOtherUnit/productOtherUnitMx";
 

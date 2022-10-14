@@ -1,4 +1,4 @@
-import {IsArray, IsInt, IsNumber, IsString} from "class-validator";
+import {IsArray, IsInt, IsNumber, IsString} from "@/utils/verifyParam/customValidationDecorators";
 import {AccountCategoryType} from "@/types/AccountCategoryType";
 
 export class AccountsReceivableFindDto {

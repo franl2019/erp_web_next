@@ -1,5 +1,5 @@
 import {IAccountsVerifySheetMx, IAccountsVerifySheetMxFind} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
-import {IsInt, IsNumber, NotEquals} from "class-validator";
+import {IsInt, IsNumber, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
 export class AccountsVerifySheetMxCreateDto implements IAccountsVerifySheetMxFind {
     //账款核销明细Id

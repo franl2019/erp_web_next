@@ -1,5 +1,5 @@
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
-import {IsInt, IsNumber} from "class-validator";
+import {IsInt, IsNumber} from "@/utils/verifyParam/customValidationDecorators";
 
 export interface IAccountExpenditureSheetMxTableData extends IAccountExpenditureSheetMx{
     correlationCode:string

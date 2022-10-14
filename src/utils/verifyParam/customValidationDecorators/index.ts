@@ -4,6 +4,7 @@ import {IsNumber} from "@/utils/verifyParam/customValidationDecorators/IsNumber"
 import {IsString} from "@/utils/verifyParam/customValidationDecorators/IsString";
 import {NotEquals} from "@/utils/verifyParam/customValidationDecorators/NotEquals";
 import {IsNotEmpty} from "@/utils/verifyParam/customValidationDecorators/IsNotEmpty";
+import {IsDateString} from "@/utils/verifyParam/customValidationDecorators/IsDateString";
 
 export {
     IsArray,
@@ -12,4 +13,5 @@ export {
     IsString,
     NotEquals,
     IsNotEmpty,
+    IsDateString
 }
