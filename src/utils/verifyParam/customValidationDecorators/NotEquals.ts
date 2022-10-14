@@ -1,18 +1,18 @@
 import {notEquals, registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
-import {valueName} from "@/config/valueName";
 
-export function ErpNotEquals(comparison:any,validationOptions?: ValidationOptions) {
+export function NotEquals(comparison:any, validationOptions?: ValidationOptions) {
     return function (object: Object, propertyName: string) {
         registerDecorator({
             name: 'ErpNotEquals',
             target: object.constructor,
             propertyName: propertyName,
             options: {
-                message:`请选择${valueName[propertyName] || propertyName}`,
+                message:`未选择`,
                 ...validationOptions,
             },
             validator: {
                 validate(value: any, _args: ValidationArguments) {
+                    console.log(notEquals("",""))
                     return notEquals(value,comparison)
                 },
             },

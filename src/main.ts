@@ -6,7 +6,8 @@ import 'element-plus/dist/index.css'
 import './index.css'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {v_douClick, v_reqClick} from "@/utils";
-import useErpDialog from "@/components/dialog/useErpDialog";
+import {useErrorsToArrayString} from "@/utils/useErrorsToArrayString";
+import useErpErrorDialog from "@/components/dialog/error/useErpErrorDialog";
 
 const app = createApp(App)
 
@@ -21,15 +22,11 @@ app.directive(v_reqClick.name, v_reqClick);
 app.mount('#app');
 
 app.config.errorHandler = (err: any) => {
-    // ErpDialog({
-    //     title: "错误提示",
-    //     message: (err as Error).message,
-    //     closeBtnVisible: false
-    // })
     if (err.errorType === 'verifyParamError') {
-        useErpDialog({
+        useErpErrorDialog({
             title: "错误提示",
-            message: (err as Error).message,
+            message: "错误提示",
+            messageList: useErrorsToArrayString(err),
             closeBtnVisible: false
         })
     }

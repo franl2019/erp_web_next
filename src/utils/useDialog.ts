@@ -1,7 +1,7 @@
 import {h, render} from "vue";
 
 
-export function useDialogDemo<T>(component:any,option:T) {
+export function useDialogDemo<T>(component: any, option: T) {
     const container = document.createElement('div');
     render(h(component, {
         unmount: () => {

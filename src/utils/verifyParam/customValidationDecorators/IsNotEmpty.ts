@@ -1,18 +1,18 @@
-import {isString, registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
+import {isNotEmpty, registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
 
-export function IsString(validationOptions?: ValidationOptions) {
+export function IsNotEmpty(validationOptions?: ValidationOptions) {
     return function (object: Object, propertyName: string) {
         registerDecorator({
-            name: 'ErpIsString',
+            name: 'IsNotEmpty',
             target: object.constructor,
             propertyName: propertyName,
             options: {
-                message:`只能输入字符`,
+                message:`未填写`,
                 ...validationOptions,
             },
             validator: {
                 validate(value: any, _args: ValidationArguments) {
-                    return isString(value)
+                    return isNotEmpty(value)
                 },
             },
         });

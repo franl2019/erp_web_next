@@ -1,16 +1,19 @@
 import {IRole} from "../role";
-import {IsInt, IsString} from "class-validator";
+import {IsInt, IsArray} from "@/utils/verifyParam/customValidationDecorators";
 
 export class RoleCreateDto implements IRole {
     roleId: number
 
-    @IsString()
+    @IsInt()
+    @IsArray()
     roleName: string
 
     @IsInt()
+    @IsArray()
     printid: number
 
     @IsInt()
+    @IsArray()
     useflag: number
 
     useflagDate: Date | null
