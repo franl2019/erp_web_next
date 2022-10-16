@@ -1,4 +1,4 @@
-import {isNumber, registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
+import {isArray, registerDecorator, ValidationArguments, ValidationOptions} from 'class-validator';
 
 export function IsArray(validationOptions?: ValidationOptions) {
     return function (object: Object, propertyName: string) {
@@ -7,12 +7,12 @@ export function IsArray(validationOptions?: ValidationOptions) {
             target: object.constructor,
             propertyName: propertyName,
             options: {
-                message:`未添加`,
+                message: `未添加`,
                 ...validationOptions,
             },
             validator: {
                 validate(value: any, _args: ValidationArguments) {
-                    return isNumber(value)
+                    return isArray(value)
                 },
             },
         });

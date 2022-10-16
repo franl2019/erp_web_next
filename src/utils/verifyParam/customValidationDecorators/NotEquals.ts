@@ -12,7 +12,6 @@ export function NotEquals(comparison:any, validationOptions?: ValidationOptions)
             },
             validator: {
                 validate(value: any, _args: ValidationArguments) {
-                    console.log(notEquals("",""))
                     return notEquals(value,comparison)
                 },
             },
