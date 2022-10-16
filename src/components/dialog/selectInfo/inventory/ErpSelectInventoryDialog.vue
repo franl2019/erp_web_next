@@ -19,7 +19,8 @@
               class="md:w-36"
               @change="onSearchChange"
           ></erp-operate-area-auth-select>
-          <erp-input-round v-model="findInventoryDto.productname" :placeholder='"输入"+valueName.product+"名称"' class="md:w-52"
+          <erp-input-round v-model="findInventoryDto.productname" :placeholder='"输入"+valueName.product+"名称"'
+                           class="md:w-52"
                            @change="onSearchChange"></erp-input-round>
         </template>
         <erp-button @click="onSearchChange">刷新</erp-button>
@@ -119,7 +120,6 @@ export default defineComponent({
     function getMxRowNodeId(data: IInventoryForSelect) {
       return data.rowNodeId;
     }
-
 
     onMounted(() => {
       inventoryTableRef.value?.initTableData();
@@ -224,13 +224,13 @@ export default defineComponent({
       addSelected([inventory]);
     }
 
-//取消选择按钮
+    //取消选择按钮
     async function onClickedClose() {
       await props.close();
       await props.unmount();
     }
 
-//确定选择按钮
+    //确定选择按钮
     async function onClickedOk() {
       await props.ok(getSelectedList());
       await props.unmount();

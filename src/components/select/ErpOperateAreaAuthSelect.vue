@@ -1,5 +1,5 @@
 <template>
-  <el-select ref="ElSelectRef" placeholder="选择所属操作区域" v-bind="$attrs">
+  <el-select ref="elSelectRef" placeholder="选择所属操作区域" v-bind="$attrs">
     <el-option v-for="item in operateareaSelectList" :key="item.operateareaid" :label="item.operateareaname"
                :value="item.operateareaid">
     </el-option>
@@ -11,9 +11,13 @@ import {defineComponent, onMounted, ref, unref} from "vue";
 import {IOperatearea, OperateareaService} from "@/module/operatearea/operatearea.service";
 import {FindOperateareaDto} from "@/module/operatearea/dto/findOperatearea.dto";
 import {Operatearea} from "@/module/operatearea/operatearea";
+import {ElSelect,ElOption} from "element-plus";
 
 export default defineComponent({
   name: "ErpOperateAreaAuthSelect",
+  components:{
+    ElSelect,ElOption
+  },
   props: {
     operateareatype: {
       type: Number,
@@ -25,15 +29,16 @@ export default defineComponent({
     },
   },
   setup(props,{expose}) {
+
     const {operateareatype, haveRootNode} = unref(props)
     onMounted(async () => {
       await getOperateareaList();
     })
 
-    const ElSelectRef = ref();
+    const elSelectRef = ref();
 
     function focus() {
-      ElSelectRef.value.focus();
+      elSelectRef.value.focus();
     }
     expose({focus})
 
@@ -54,7 +59,7 @@ export default defineComponent({
     }
 
     return {
-      ElSelectRef,
+      elSelectRef,
       operateareaSelectList,
     };
   },
