@@ -1,5 +1,5 @@
 import type {ComponentOptions, ConcreteComponent, SetupContext, VNode} from 'vue'
-import {getCurrentInstance,onUpdated} from 'vue'
+import {getCurrentInstance, onUpdated} from 'vue'
 
 type CacheKey = string | number | symbol | ConcreteComponent
 export type Cache = Map<CacheKey, VNode>
@@ -90,13 +90,13 @@ export const ErpKeepAlive: ComponentOptions = {
             }
 
             //keepAlive 缓存组件重新激活的生命周期
-            const exposedList: Function[] = vNode.component.exposed
-            if (exposedList&&exposedList.length > 0) {
-                for (let i = 0; i < exposedList.length; i++) {
-                    const exposed = exposedList[i]
-                    if (exposed.name === 'activated') {
-                        exposed();
-                    }
+            const exposed = vNode.component.exposed
+            for (const exposedKey in exposed) {
+                if (
+                    exposedKey === 'activated'
+                    && typeof (exposed[exposedKey]) === 'function'
+                ) {
+                    exposed[exposedKey]();
                 }
             }
 

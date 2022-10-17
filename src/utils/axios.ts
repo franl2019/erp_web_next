@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from 'axios';
+import axios, {AxiosRequestTransformer, AxiosResponse} from 'axios';
 import {useLocalStorageGet} from '@/utils/index';
 import {isLoading} from "@/components/loading/loading";
 import useErpDialog from "@/components/dialog/useErpDialog";
@@ -7,7 +7,7 @@ import {HttpError} from "@/types/error/httpError";
 import {config} from "@/config/env";
 import {BASE_PATH} from "@/config/apiUrl";
 
-export interface IApiResult<T = void> {
+export interface IApiResult<T = any> {
     code: number;
     msg: string;
     error?: any[];
@@ -21,14 +21,40 @@ export interface IApiResult<T = void> {
         completeL1Review: number;
         undoneL1Review: number;
         undoneL2Review: number;
-    },related?:any
+    },
+    related?: any
 }
 
 //axios实例
 const axiosInstance = axios.create({
     baseURL: config.isDev ? "" : config.serviceUrl,
     timeout: 12000,
+
+    // `transformRequest` 允许在向服务器发送前，修改请求数据
+    // 它只能用于 'PUT', 'POST' 和 'PATCH' 这几个请求方法
+    // 数组中最后一个函数必须返回一个字符串， 一个Buffer实例，ArrayBuffer，FormData，或 Stream
+    // 你可以修改请求头。
+    transformRequest: [(data) => {
+        // // 对发送的 data 进行任意转换处理
+        // for (const dataKey in data) {
+        //     if (dataKey === 'indate' || dataKey === 'outdate') {
+        //         console.log(data[dataKey]);
+        //         console.log(
+        //             moment(new Date())
+        //                 .utc(true)
+        //                 .format('YYYY-MM-DD HH:mm:ss')
+        //         )
+        //     }
+        // }
+        return data
+    }, ...(axios.defaults.transformRequest as AxiosRequestTransformer[])],
+
+    // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
+    // transformResponse:[function (data){
+    //     return data
+    // }]
 })
+
 const notTokenUrls = [
     "/users/login",
     "/users/register"
@@ -46,14 +72,6 @@ axiosInstance.interceptors.request.use(function (config) {
         return config
     }
 });
-
-// // 添加响应拦截器
-// axiosInstance.interceptors.response.use(function (res: AxiosResponse<IApiResult>) {
-//     isLoading.value = false;
-//     return res
-// }, function () {
-//     isLoading.value = false;
-// });
 
 //post请求
 export function useHttpPost<T>(url: string, params?: any): Promise<T> {

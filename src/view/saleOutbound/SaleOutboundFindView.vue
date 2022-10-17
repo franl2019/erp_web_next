@@ -2,9 +2,8 @@
   <erp-page-box>
     <erp-no-title title="">
       <template #input>
-        <el-date-picker v-model="findDate" class="w-full" end-placeholder="结束日期" range-separator="-"
-                        start-placeholder="开始日期" type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss"
-                        @change="onChange">
+        <el-date-picker v-model="findDate" end-placeholder="结束日期" range-separator="-" start-placeholder="开始日期"
+                        type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss" @change="onChange">
         </el-date-picker>
         <erp-warehouse-auth-select-have-root v-model="warehouseid" style="width: 10rem" @change="onChange">
         </erp-warehouse-auth-select-have-root>
@@ -101,8 +100,8 @@ import {useSaleOutboundFindViewHock} from "@/module/saleOutbound/hock/findView/u
 import {ITableRef} from "@/components/table/type";
 import {useSaleOutboundFindViewEvent} from "@/module/saleOutbound/hock/findView/useSaleOutboundFindViewEvent";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
-import {FindOutboundSaleDto, IFindOutboundDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
-import {FindOutboundMxSaleDto, IFindOutboundMxDto} from "@/module/saleOutbound/dto/findOutboundMxSale.dto";
+import {SaleOutboundFindDataDto, ISaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {SaleOutboundMxFindDto, ISaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {IButtonState} from "@/composables/useSheetButtonState";
 
@@ -124,10 +123,10 @@ export default defineComponent({
   },
   setup(_props,{expose}) {
     //销售单查询页单头查询请求参数
-    const saleOutboundHeadFindDto = ref<IFindOutboundDto>(new FindOutboundSaleDto());
+    const saleOutboundHeadFindDto = ref<ISaleOutboundFindDataDto>(new SaleOutboundFindDataDto());
 
     //销售单查询页明细查询请求参数
-    const saleOutboundMxFindDto = ref<IFindOutboundMxDto>(new FindOutboundMxSaleDto());
+    const saleOutboundMxFindDto = ref<ISaleOutboundMxFindDto>(new SaleOutboundMxFindDto());
 
     //仓库
     const {warehouseid} = useWarehouseSelect(saleOutboundHeadFindDto);

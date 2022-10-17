@@ -21,5 +21,5 @@ export interface IOutboundMx {
     agio2: number;
     pricetype: number;
     clientid: number;
-    warehouseid: number
+    warehouseid: number;
 }

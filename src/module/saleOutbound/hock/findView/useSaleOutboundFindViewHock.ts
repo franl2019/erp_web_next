@@ -1,17 +1,17 @@
 import {Ref} from "vue";
 import {ITableRef} from "@/components/table/type";
-import {IFindOutboundDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
-import {IFindOutboundMxDto} from "@/module/saleOutbound/dto/findOutboundMxSale.dto";
+import {ISaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {ISaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
-import {IOutbound} from "@/module/saleOutbound/outboundSale";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {VerifyParamError} from "@/types/error/verifyParamError";
+import {IOutbound} from "@/module/outbound/types/IOutbound";
 
 //销售单hock
 export function useSaleOutboundFindViewHock(option:{
-    saleOutboundHeadFindDto:Ref<IFindOutboundDto>;
-    saleOutboundMxFindDto:Ref<IFindOutboundMxDto>;
+    saleOutboundHeadFindDto:Ref<ISaleOutboundFindDataDto>;
+    saleOutboundMxFindDto:Ref<ISaleOutboundMxFindDto>;
     buttonVisibleState:Ref<IButtonState>;
     outboundHeadRef:Ref<ITableRef | undefined>;
     outboundMxRef:Ref<ITableRef | undefined>;

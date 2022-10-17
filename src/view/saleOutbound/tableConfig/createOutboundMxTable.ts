@@ -1,7 +1,7 @@
 import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
 import {useFormatOutboundMxNumber} from "@/utils/tableUtils";
-import {OutboundMxSaleService} from "@/module/saleOutbound/service/outboundMxSale.service";
+import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundMx.service";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {valueName} from "@/config/valueName";
 
@@ -130,5 +130,5 @@ export const createOutboundMxTable = ref<ITableState<IOutboundMx>>({
         {headerName: '销售订单号', field: 'saleordercode'},
         {headerName: '客户名称', field: 'clientname'},
     ],
-    tableService: new OutboundMxSaleService()
+    tableService: new SaleOutboundMxService()
 })

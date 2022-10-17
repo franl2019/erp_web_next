@@ -1,7 +1,7 @@
 import {getEndDate, getStartDate} from "@/utils";
-import {IsString} from "@/utils/verifyParam/customValidationDecorators";
+import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
-export interface IFindOutboundDto {
+export interface ISaleOutboundFindDataDto {
     warehouseids: number[];
     operateareaids: number[];
     clientid: number;
@@ -14,8 +14,6 @@ export interface IFindOutboundDto {
     ymrep: string;
     page: number;
     pagesize: number;
-
-
     clientname: string;
     moneytype: string;
     remark1: string;
@@ -25,18 +23,24 @@ export interface IFindOutboundDto {
     remark5: string;
 }
 
-export class FindOutboundSaleDto implements IFindOutboundDto {
+export class SaleOutboundFindDataDto implements ISaleOutboundFindDataDto {
+    @IsArray()
     warehouseids: number[] = [];
+    @IsArray()
     operateareaids: number[] = [];
+    @IsInt()
     clientid: number = 0;
     startDate: string = getStartDate();
     endDate: string = getEndDate();
+    @IsInt()
     outboundid: number = 0;
+    @IsString()
     outboundcode: string = "";
     outboundtype: number = 8;
     relatednumber: string = "";
     page: number = 0;
     pagesize: number = 0;
+    @IsString()
     ymrep: string = "";
 
     @IsString()

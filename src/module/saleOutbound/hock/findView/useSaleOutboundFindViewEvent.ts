@@ -1,13 +1,13 @@
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import {useRouter} from "vue-router";
-import {OutboundSaleService} from "@/module/saleOutbound/service/outboundSale.service";
+import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
 import {
     useSaleOutboundFindViewHock
 } from "@/module/saleOutbound/hock/findView/useSaleOutboundFindViewHock";
-import {FindOutboundSaleDto, IFindOutboundDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
+import {SaleOutboundFindDataDto, ISaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
 import {Ref} from "vue";
-import {IFindOutboundMxDto} from "@/module/saleOutbound/dto/findOutboundMxSale.dto";
+import {ISaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {ITableRef} from "@/components/table/type";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useRouterPage} from "@/utils";
@@ -15,8 +15,8 @@ import {useRouterPage} from "@/utils";
 
 export function useSaleOutboundFindViewEvent(
     option: {
-        saleOutboundHeadFindDto: Ref<IFindOutboundDto>;
-        saleOutboundMxFindDto: Ref<IFindOutboundMxDto>;
+        saleOutboundHeadFindDto: Ref<ISaleOutboundFindDataDto>;
+        saleOutboundMxFindDto: Ref<ISaleOutboundMxFindDto>;
         buttonVisibleState: Ref<IButtonState>;
         outboundHeadRef: Ref<ITableRef | undefined>;
         outboundMxRef: Ref<ITableRef | undefined>;
@@ -25,7 +25,7 @@ export function useSaleOutboundFindViewEvent(
 
     //service
     const router = useRouter();
-    const outboundService = new OutboundSaleService();
+    const outboundService = new SaleOutboundService();
     const {saleOutboundHeadFindDto, buttonVisibleState} = option
     const {getSelectRow,selectRow, initPage, initOutboundHeadTable, initOutboundMx} = useSaleOutboundFindViewHock(option);
     const {warehouseid} = useWarehouseSelect(saleOutboundHeadFindDto);
@@ -64,7 +64,7 @@ export function useSaleOutboundFindViewEvent(
     async function clickedFilterResetBtn() {
         //重置查询参数
         for (let valueKey in saleOutboundHeadFindDto.value) {
-            (saleOutboundHeadFindDto.value as any)[valueKey] = (new FindOutboundSaleDto() as any)[valueKey]
+            (saleOutboundHeadFindDto.value as any)[valueKey] = (new SaleOutboundFindDataDto() as any)[valueKey]
         }
         await initPage()
     }
@@ -98,7 +98,7 @@ export function useSaleOutboundFindViewEvent(
             title: "提示",
             message: `是否审核,单号:${outboundcode}`,
             ok: async () => {
-                await outboundService.l1Review({outboundid});
+                await outboundService.l1Review(outboundid);
                 await initOutboundHeadTable();
                 await selectRow(outboundid);
             }
@@ -112,7 +112,7 @@ export function useSaleOutboundFindViewEvent(
             title: "提示",
             message: `是否撤审,单号:${outboundcode}`,
             ok: async () => {
-                await outboundService.unL1Review({outboundid});
+                await outboundService.unL1Review(outboundid);
                 await initOutboundHeadTable();
                 await selectRow(outboundid);
             }
@@ -126,7 +126,7 @@ export function useSaleOutboundFindViewEvent(
             title: "提示",
             message: `是否财审,单号:${outboundcode}`,
             ok: async () => {
-                await outboundService.l2Review({outboundid});
+                await outboundService.l2Review(outboundid);
                 await initOutboundHeadTable();
                 await selectRow(outboundid);
             }
@@ -140,7 +140,7 @@ export function useSaleOutboundFindViewEvent(
             title: "提示",
             message: `是否撤审财审,单号:${outboundcode}`,
             ok: async () => {
-                await outboundService.unL2Review({outboundid});
+                await outboundService.unL2Review(outboundid);
                 await initOutboundHeadTable();
                 await selectRow(outboundid);
             }
@@ -153,7 +153,7 @@ export function useSaleOutboundFindViewEvent(
             title: "提示",
             message: `是否删除,单号:${outboundcode}`,
             ok: async () => {
-                await outboundService.delete_data({outboundid});
+                await outboundService.delete_data(outboundid);
                 await initOutboundMx();
                 await initOutboundHeadTable();
                 buttonVisibleState.value = getButtonState()

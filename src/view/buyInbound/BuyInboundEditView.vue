@@ -235,7 +235,6 @@ export default defineComponent({
         state.value.exitMessage = "是否取消新增采购进仓单"
         state.value.edit = true;
         inboundHead.value.warehouseid = Number(route.query.warehouseid) || 0;
-
         addNullLine()
       } else {
         //读取单头

@@ -68,26 +68,28 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {defineComponent, onMounted, ref} from "vue";
 import {createOutboundMxTable} from "@/view/saleOutbound/tableConfig/createOutboundMxTable";
 import {ITableRef} from "@/components/table/type";
-import {ISaleOutboundFindTable, SaleOutboundFindTable} from "@/module/saleOutbound/outboundSale";
 import {useRoute, useRouter} from "vue-router";
 import {useButtonState} from "@/composables/useButtonState";
 import {IClient} from "@/module/client/client";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {useErpSelectInventoryDialog} from "@/components/dialog/selectInfo/inventory/useErpSelectInventoryDialog";
 import {IFindInventory} from "@/module/inventory/FindInventory";
-import {OutboundSaleDto} from "@/module/saleOutbound/dto/outboundSale.dto";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {CellEditingStartedEvent} from "ag-grid-community";
-import {OutboundSaleService} from "@/module/saleOutbound/service/outboundSale.service";
-import {OutboundMxSaleService} from "@/module/saleOutbound/service/outboundMxSale.service";
-import {FindOutboundSaleDto} from "@/module/saleOutbound/dto/findOutboundSale.dto";
-import {FindOutboundMxSaleDto} from "@/module/saleOutbound/dto/findOutboundMxSale.dto";
-import {IOutboundMxTableData, OutboundMxSaleTableData} from "@/module/saleOutbound/outboundMxSaleTableData";
+import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
+import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundMx.service";
+import {SaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {bignumber, chain, round} from "mathjs";
-import {SaleOutboundMxTableTotal} from "@/module/saleOutbound/SaleOutboundMxTableTotal";
+import {SaleOutboundMxTableTotal} from "@/module/saleOutbound/saleOutboundMxTableTotal";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
+import {SaleOutboundAndMxCreateDto} from "@/module/saleOutbound/dto/saleOutboundAndMxCreate.dto";
+import {SaleOutboundCreateDto} from "@/module/saleOutbound/dto/outbound/saleOutboundCreate.dto";
+import {SaleOutboundUpdateDto} from "@/module/saleOutbound/dto/outbound/saleOutboundUpdate.dto";
+import {SaleOutboundAndMxUpdateDto} from "@/module/saleOutbound/dto/saleOutboundAndMxUpdate.dto";
+import {SaleOutboundMxCreateInTableDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreateInTable.dto";
 
 export default defineComponent({
   name: "SaleOutboundEditView",
@@ -109,7 +111,7 @@ export default defineComponent({
     //单据明细表格Ref
     const outboundMxTableRef = ref<ITableRef>();
     //单头
-    const outboundHead = ref<ISaleOutboundFindTable>(new SaleOutboundFindTable());
+    const outboundHead = ref(new SaleOutboundCreateDto());
 
     const state = ref({
       edit: true,
@@ -130,6 +132,49 @@ export default defineComponent({
       //初始化页面
       await initPage();
     })
+
+    //初始页面，根据state.outboundid 0新增 !0编辑
+    async function initPage(): Promise<void> {
+
+      if (state.value.outboundid === 0) {
+        state.value.title = "新增销售单";
+        state.value.exitMessage = "是否取消新增销售单"
+        state.value.edit = true;
+        if (outboundHead.value) {
+          outboundHead.value.warehouseid = Number(state.value.warehouseid);
+        }
+      } else {
+        //查询单头
+        const findSaleOutboundDto = new SaleOutboundFindDataDto();
+        findSaleOutboundDto.outboundid = state.value.outboundid;
+        findSaleOutboundDto.startDate = '';
+        findSaleOutboundDto.endDate = '';
+        const saleOutboundHeadList = await outboundService.find(findSaleOutboundDto);
+        if (saleOutboundHeadList.length !== 1) {
+          return Promise.reject(new VerifyParamError('单头数量异常,联系管理员!!'))
+        }
+        //读取单头
+        outboundHead.value = new SaleOutboundUpdateDto(saleOutboundHeadList[0]);
+
+        //读取明细
+        const findMxDto = new SaleOutboundMxFindDto();
+        findMxDto.outboundid = state.value.outboundid;
+        const outboundMxList = await outboundMxService.find(findMxDto);
+
+        addOutboundMx(outboundMxList);
+
+        state.value.title = "编辑销售单";
+        state.value.exitMessage = "是否取消编辑销售单";
+
+        //判断是否可以编辑
+        state.value.edit = outboundHead.value.level1review === 0 && outboundHead.value.level2review === 0;
+
+        //更新按钮状态
+        updateButtonState(outboundHead.value.level1review, outboundHead.value.level2review);
+
+        updateTableAmtTotal()
+      }
+    }
 
     //Event 事件
 
@@ -178,55 +223,37 @@ export default defineComponent({
       updateTableAmtTotal();
     }
 
-    async function getCreateDto() {
+    async function getSaleOutboundCreateDto() {
       outboundMxTableRef.value?.getGridApi().stopEditing();
-
-      if (!outboundHead.value.clientid || outboundHead.value.clientid === 0) {
-        return Promise.reject(new VerifyParamError("请选择客户"));
-      }
-
-      if (!outboundHead.value.warehouseid || outboundHead.value.warehouseid === 0) {
-        return Promise.reject(new VerifyParamError("请选择仓库"));
-      }
-
-      if (outboundHead.value.clientid === 0) {
-        return Promise.reject(new VerifyParamError("请选择客户"))
-      }
-
-
-      if (outboundHead.value.warehouseid === 0) {
-        return Promise.reject(new VerifyParamError("请选择仓库"))
-      }
-
       //获取明细
       const outboundMx = setOutboundSetPrintId(getOutboundMx());
-
       //组合单据对象
-      const outbound = new OutboundSaleDto();
-      outbound.setHead(outboundHead.value);
-      outbound.setOutboundMx(outboundMx);
+      return new SaleOutboundAndMxCreateDto()
+          .setOrderHead(outboundHead.value)
+          .setOrderMx(outboundMx)
+    }
 
-      if (outbound.outboundMx.length <= 0) {
-        return Promise.reject(new VerifyParamError("请填写明细"));
-      }
-
-      return outbound
+    async function getSaleOutboundUpdateDto() {
+      outboundMxTableRef.value?.getGridApi().stopEditing();
+      //获取明细
+      const outboundMx = setOutboundSetPrintId(getOutboundMx());
+      //组合单据对象
+      return new SaleOutboundAndMxUpdateDto()
+          .setOrderHead(outboundHead.value)
+          .setOrderMx(outboundMx)
     }
 
     //保存按钮
     async function clickedSaveButton(): Promise<void> {
 
-      const outbound = await getCreateDto();
       //根据页面状态新增或修改
       if (state.value.outboundid === 0) {
-        const result = await outboundService.create(outbound);
-        if (result && result.createResult) {
-          state.value.outboundid = result.createResult.id
-        } else {
-          return Promise.reject(new Error("保存失败,返回缺少'createResult'"))
-        }
+        const saleOutboundAndMxCreateDto = await getSaleOutboundCreateDto();
+        const result = await outboundService.create(saleOutboundAndMxCreateDto);
+        state.value.outboundid = result.createResult!.id
       } else {
-        await outboundService.update(outbound);
+        const saleOutboundAndMxUpdateDto = await getSaleOutboundUpdateDto()
+        await outboundService.update(saleOutboundAndMxUpdateDto);
       }
 
       tabMenu.closeTab(route.fullPath)
@@ -244,7 +271,7 @@ export default defineComponent({
 
       //区分新增的审核还是编辑的审核
       if (state.value.outboundid === 0) {
-        const outbound = await getCreateDto();
+        const outbound = await getSaleOutboundCreateDto();
         useErpDialog({
           title: "提示",
           message: `是否保存并审核`,
@@ -263,11 +290,10 @@ export default defineComponent({
               }
             });
             useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
-
           }
         })
       } else {
-        const outbound = await getCreateDto();
+        const outbound = await getSaleOutboundCreateDto();
         const {outboundcode} = outbound;
         useErpDialog({
           title: "提示",
@@ -288,7 +314,7 @@ export default defineComponent({
         title: "提示",
         message: `是否撤审,单号:${outboundcode}`,
         ok: async () => {
-          await outboundService.unL1Review({outboundid});
+          await outboundService.unL1Review(outboundid);
           await clearMx();
           await initPage();
         }
@@ -302,7 +328,7 @@ export default defineComponent({
         title: "提示",
         message: `是否财审,单号:${outboundcode}`,
         ok: async () => {
-          await outboundService.l2Review({outboundid});
+          await outboundService.l2Review(outboundid);
           await clearMx();
           await initPage();
         }
@@ -316,7 +342,7 @@ export default defineComponent({
         title: "提示",
         message: `是否撤审财审,单号:${outboundcode}`,
         ok: async () => {
-          await outboundService.unL2Review({outboundid});
+          await outboundService.unL2Review(outboundid);
           await clearMx();
           await initPage();
         }
@@ -329,7 +355,7 @@ export default defineComponent({
         title: "提示",
         message: `是否删除,单号:${outboundcode}`,
         ok: async () => {
-          await outboundService.delete_data({outboundid});
+          await outboundService.delete_data(outboundid);
           //跳转
           tabMenu.closeTab(route.fullPath)
           const newRoute = router.resolve({
@@ -355,105 +381,31 @@ export default defineComponent({
 
     //Hock
     //销售单单头服务
-    const outboundService = new OutboundSaleService();
+    const outboundService = new SaleOutboundService();
     //销售单明细服务
-    const outboundMxService = new OutboundMxSaleService();
-
-
-    //初始页面，根据state.outboundid 0新增 !0编辑
-    async function initPage(): Promise<void> {
-
-      if (state.value.outboundid === 0) {
-        state.value.title = "新增销售单";
-        state.value.exitMessage = "是否取消新增销售单"
-        state.value.edit = true;
-        if (outboundHead.value) {
-          outboundHead.value.warehouseid = Number(state.value.warehouseid);
-        }
-
-      } else {
-        //查询单头
-        const findHeadDto = new FindOutboundSaleDto();
-        findHeadDto.outboundid = state.value.outboundid;
-        findHeadDto.startDate = '';
-        findHeadDto.endDate = '';
-        const saleOutboundHeadData = await outboundService.find(findHeadDto);
-        if (saleOutboundHeadData.length > 1) {
-          return Promise.reject(new VerifyParamError('单头数量异常,联系管理员!!'))
-        }
-
-        //读取单头
-        outboundHead.value = saleOutboundHeadData[0];
-
-
-        //读取明细
-        const findMxDto = new FindOutboundMxSaleDto();
-        findMxDto.outboundid = state.value.outboundid;
-        const outboundMxList = await outboundMxService.find(findMxDto);
-
-        addOutboundMx(outboundMxList);
-
-        state.value.title = "编辑销售单";
-        state.value.exitMessage = "是否取消编辑销售单";
-
-        //判断是否可以编辑
-        state.value.edit = outboundHead.value.level1review === 0 && outboundHead.value.level2review === 0;
-
-        //更新按钮状态
-        updateButtonState(outboundHead.value.level1review, outboundHead.value.level2review);
-
-        updateTableAmtTotal()
-      }
-    }
+    const outboundMxService = new SaleOutboundMxService();
 
     function clearMx() {
       outboundMxTableRef.value?.getGridApi().setRowData([])
     }
 
-    function formatInventoryListToOutboundMx(inventories: IFindInventory[]): IOutboundMxTableData[] {
-      const addItems: IOutboundMxTableData[] = [];
+    function formatInventoryListToOutboundMx(inventories: IFindInventory[]): SaleOutboundMxCreateInTableDto[] {
+      const addItems: SaleOutboundMxCreateInTableDto[] = [];
       inventories.forEach(inventory => {
-        const outboundMxTableData: IOutboundMxTableData = new OutboundMxSaleTableData();
-        outboundMxTableData.printid = 0;
-        outboundMxTableData.productid = inventory.productid;
-        outboundMxTableData.productcode = inventory.productcode;
-        outboundMxTableData.productname = inventory.productname;
-        outboundMxTableData.unit = inventory.unit;
-        outboundMxTableData.spec = inventory.spec;
-        outboundMxTableData.materials = inventory.materials;
-        outboundMxTableData.materials_d = inventory.materials_d;
-        outboundMxTableData.spec_d = inventory.spec_d;
-        outboundMxTableData.remark = inventory.remark;
-        outboundMxTableData.remarkmx = inventory.remarkmx;
-        outboundMxTableData.packqty = inventory.packqty;
-        outboundMxTableData.outqty = Number(inventory.qty);
-        outboundMxTableData.priceqty = Number(inventory.qty);
-        outboundMxTableData.bzqty = round(
-            Number(
-                chain(bignumber(inventory.qty))
-                    .divide(bignumber(inventory.packqty))
-                    .done()
-            ), 4);
-        //仓库
-        outboundMxTableData.warehouseid = inventory.warehouseid;
-        outboundMxTableData.warehousename = inventory.warehousename;
-        //客户
-        outboundMxTableData.clientid = inventory.clientid;
-        outboundMxTableData.clientcode = inventory.clientcode;
-        outboundMxTableData.clientname = inventory.clientname;
-        addItems.push(outboundMxTableData);
+        const saleOutboundMxCreateInTableDto = new SaleOutboundMxCreateInTableDto(inventory)
+        addItems.push(saleOutboundMxCreateInTableDto);
       })
       return addItems;
     }
 
     //set mx table id
-    function getRowNodeId(data: IOutboundMxTableData) {
+    function getRowNodeId(data: SaleOutboundMxCreateInTableDto) {
       return data.printid
     }
 
     //获取明细
-    function getOutboundMx(): IOutboundMxTableData[] {
-      const outboundMxTableDataList: IOutboundMxTableData[] = [];
+    function getOutboundMx(): SaleOutboundMxCreateInTableDto[] {
+      const outboundMxTableDataList: SaleOutboundMxCreateInTableDto[] = [];
       outboundMxTableRef.value?.getGridApi().forEachNode((rowNode) => {
         outboundMxTableDataList.push(rowNode.data);
       })
@@ -463,7 +415,7 @@ export default defineComponent({
     let rowIdCount: number = 0;
 
     //增加明细
-    function addOutboundMx(addItems: IOutboundMxTableData[]) {
+    function addOutboundMx(addItems: SaleOutboundMxCreateInTableDto[]) {
       for (let i = 0; i < addItems.length; i++) {
         rowIdCount = rowIdCount + 1
         addItems[i].printid = rowIdCount;

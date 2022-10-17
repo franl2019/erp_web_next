@@ -1,10 +1,10 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
 import {chain, bignumber, round} from 'mathjs';
-import {IOutboundMxTableData} from "@/module/saleOutbound/outboundMxSaleTableData";
+import {SaleOutboundMxCreateInTableDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreateInTable.dto";
 
 export class ErpOutboundMxMath {
 
-    private outboundMx: IOutboundMxTableData
+    private outboundMx: SaleOutboundMxCreateInTableDto
     private readonly colField: string;
 
     constructor(params: ValueSetterParams) {

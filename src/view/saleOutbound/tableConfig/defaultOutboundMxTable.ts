@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {ITableState} from "@/components/table/type";
-import {OutboundMxSaleService} from "@/module/saleOutbound/service/outboundMxSale.service";
+import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundMx.service";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {valueName} from "@/config/valueName";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
@@ -59,5 +59,5 @@ export const defaultOutboundMxTable = ref<ITableState<IOutboundMx>>({
 
 
     ],
-    tableService: new OutboundMxSaleService()
+    tableService: new SaleOutboundMxService()
 })

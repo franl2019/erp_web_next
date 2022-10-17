@@ -115,8 +115,8 @@ import { useRouter } from "vue-router";
 import { useRouterPage } from "@/utils";
 import {
   ISaleOutboundSheetState,
-  OutboundSaleService,
-} from "@/module/saleOutbound/service/outboundSale.service";
+  SaleOutboundService,
+} from "@/module/saleOutbound/service/saleOutbound.service";
 import { defineComponent, onMounted, ref } from "vue";
 import {
   AccountInComeService,
@@ -135,7 +135,7 @@ export default defineComponent({
   },
   setup(prop,{expose}) {
     const router = useRouter();
-    const outboundSaleService = new OutboundSaleService();
+    const outboundSaleService = new SaleOutboundService();
     const accountInComeService = new AccountInComeService();
 
     async function activated() {

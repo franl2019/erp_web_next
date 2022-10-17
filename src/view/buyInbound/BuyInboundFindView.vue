@@ -104,7 +104,6 @@ import {useRouterPage} from "@/utils";
 
 export default defineComponent({
   name: "BuyInboundFindView",
-  expose:["activated"],
   components: {
     ErpTitle,
     ErpNoTitle,
@@ -118,10 +117,11 @@ export default defineComponent({
     ErpFormItem,
     ErpWarehouseAuthSelectHaveRoot,
   },
-  setup() {
+  setup(_prop,{expose}) {
     async function activated() {
       await initPage()
     }
+    expose({activated})
 
     const inboundHeadFindDto = ref<IBuyInboundFindDto>(new BuyInboundFindDto());
     const inboundMxFindDto = ref<IBuyInboundMxFindDto>(new BuyInboundMxFindDto());
@@ -295,7 +295,6 @@ export default defineComponent({
     return {
       BuyInboundFindViewHeadTableConfig,
       BuyInboundFindViewMxTableConfig,
-      activated,
       inboundHeadFindDto,
       inboundMxFindDto,
       getMxTableRowNodeId,
