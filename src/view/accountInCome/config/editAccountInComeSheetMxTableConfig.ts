@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
 import {AccountInComeSheetMxService} from "@/module/accountInCome/accountInComeSheetMx.service";
 import {onlyNumberValueSetter} from "@/components/table/valueSetter/onlyNumberValueSetter";
 import Table_accountReceivableType from "@/components/table/components/renderer/table_accountReceivableType.vue";
 
-export const editAccountInComeSheetMxTableConfig = ref<ITableState<IAccountInComeSheetMxFind>>({
+export const editAccountInComeSheetMxTableConfig = ref<ITableConfig<IAccountInComeSheetMxFind>>({
     tableName: "editAccountInComeSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import Table_accountsVerifySheetType from "@/components/table/components/renderer/table_accountsVerifySheetType.vue";
 import {IAccountsVerifySheetFind} from "@/module/accountsVerifySheet/accountsVerifySheet";
 import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 
-export const accountsVerifySheetFindTableConfig = ref<ITableState<IAccountsVerifySheetFind>>({
+export const accountsVerifySheetFindTableConfig = ref<ITableConfig<IAccountsVerifySheetFind>>({
     tableName: "accountsVerifySheetFindTableConfig",
     gridOptions: {
         defaultColDef: {

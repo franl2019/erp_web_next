@@ -1,10 +1,10 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {User_operatearea_mxService} from "@/module/user_operatearea_mx/user_operatearea_mx.service";
 import {IUser_operatearea_mx} from "@/module/user_operatearea_mx/user_operatearea_mx";
 
-export const DefaultUserBuyOperateAreaMxTableState = ref<ITableState<IUser_operatearea_mx>>({
+export const DefaultUserBuyOperateAreaMxTableState = ref<ITableConfig<IUser_operatearea_mx>>({
     tableName: "defaultUserBuyOperateAreaMxTableState",
     gridOptions: {
         defaultColDef: {

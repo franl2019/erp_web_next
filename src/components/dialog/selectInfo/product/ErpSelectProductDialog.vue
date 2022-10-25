@@ -4,15 +4,22 @@
       <div class="flex flex-col h-full pr-4">
         <erp-title title="类别"></erp-title>
         <div class="flex-grow overflow-y-auto">
-          <erp-product-area-tree :haveRootNode="true" @node-click="categoryTreeClicked"></erp-product-area-tree>
+          <erp-product-area-tree
+              :haveRootNode="true"
+              @node-click="categoryTreeClicked"
+          ></erp-product-area-tree>
         </div>
       </div>
     </template>
     <template v-slot:default>
       <erp-title :title="'请选择'+valueName.product">
         <template v-slot:input>
-          <erp-input-round v-model="findProductDto.search" class="md:w-52" placeholder="输入关键词"
-                           @change="onSearchChange">
+          <erp-input-round
+              v-model="findProductDto.search"
+              class="md:w-52"
+              placeholder="输入关键词"
+              @change="onSearchChange"
+          >
           </erp-input-round>
         </template>
         <erp-button ref="defaultFocus" type="success" @click="clickedOkSelectedDialog">确定选择</erp-button>
@@ -33,7 +40,7 @@
 <script lang='ts'>
 import {selectedProductTableState} from "@/view/product/tableConfig/selectedProductTableState";
 import {selectProductTableState} from "@/view/product/tableConfig/selectProductTableState";
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, PropType, ref} from "vue";
 import {FindProductDto, IFindProductDto} from "@/module/product/dto/findProduct.dto";
 import {IProduct} from "@/module/product/product";
 import {ITableRef} from "@/components/table/type";
@@ -48,7 +55,7 @@ import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.v
 import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
 
 export default defineComponent({
-  name:"ErpSelectProductDialog",
+  name: "ErpSelectProductDialog",
   components: {
     ErpButton,
     ErpTitle,
@@ -58,17 +65,15 @@ export default defineComponent({
     ErpLeftRightStructureDialog,
   },
   props: {
+    resolve_dialog: {
+      type: Function as PropType<(value: unknown) => void>,
+      required: true
+    },
+    reject_dialog: {
+      type: Function as PropType<(reason?: any) => void>,
+      required: true
+    },
     unmount: {
-      type: Function,
-      default: () => {
-      },
-    },
-    ok: {
-      type: Function,
-      default: () => {
-      },
-    },
-    close: {
       type: Function,
       default: () => {
       },
@@ -114,12 +119,12 @@ export default defineComponent({
     }
 
     async function clickedOkSelectedDialog() {
-      await props.ok(getSelectedProductInfoList());
+      props.resolve_dialog(getSelectedProductInfoList());
       props.unmount();
     }
 
     async function clickedCloseSelectedDialog() {
-      await props.close();
+      props.resolve_dialog(null);
       props.unmount();
     }
 
@@ -171,7 +176,6 @@ export default defineComponent({
       productTableRef,
       selectedTableRef,
       findProductDto,
-      props,
       defaultFocus,
       getRowNodeId,
       categoryTreeClicked,

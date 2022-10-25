@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import Table_accountReceivableType from "@/components/table/components/renderer/table_accountReceivableType.vue";
 import Table_CodeType from "@/components/table/components/renderer/table_CodeType.vue";
@@ -8,7 +8,7 @@ import {IAccountsReceivableFind} from "@/module/accountReceivable/accountReceiva
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const selectAccountInComeSheetMxTableConfig = ref<ITableState<IAccountsReceivableFind>>({
+export const selectAccountInComeSheetMxTableConfig = ref<ITableConfig<IAccountsReceivableFind>>({
     tableName: "selectAccountInComeSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -1,13 +1,13 @@
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {AccountExpenditureSheetMxService} from "@/module/accountExpenditure/accountExpenditureSheetMx.service";
 import Table_accountPayableType from "@/components/table/components/renderer/table_accountPayableType.vue";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
 
-export const defaultAccountExpenditureSheetMxTableConfig = ref<ITableState<IAccountExpenditureSheetMx>>({
+export const defaultAccountExpenditureSheetMxTableConfig = ref<ITableConfig<IAccountExpenditureSheetMx>>({
     tableName: "defaultAccountExpenditureSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {BuyService} from "@/module/buy/buy.service";
 import {IBuy} from "@/module/buy/buy";
 
-export const selectBuyTableState = ref<ITableState<IBuy>>({
+export const selectBuyTableState = ref<ITableConfig<IBuy>>({
     tableName: "selectBuyTableState",
     gridOptions: {
         defaultColDef: {

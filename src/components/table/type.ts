@@ -1,4 +1,4 @@
-import {GridApi, GridOptions, ColDef, ColumnApi} from "ag-grid-community";
+import {GridApi, GridOptions, ColDef, ColumnApi, ColGroupDef} from "ag-grid-community";
 
 export interface ITableRef {
     initTableData: (callback?:Function) => Promise<void>;
@@ -12,13 +12,9 @@ export interface ITableService<T> {
     find: (findDto: any) => Promise<T[]>
 }
 
-interface columnDefaults extends ColDef {
-    children?: ColDef[];
-}
-
-export interface ITableState<T> {
+export interface ITableConfig<T> {
     tableName: string;
     gridOptions: GridOptions;
-    columnDefaults:columnDefaults[];
+    columnDefaults:(ColDef | ColGroupDef)[];
     tableService: ITableService<T>;
 }

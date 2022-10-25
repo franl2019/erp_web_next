@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
 import {IBuyInboundProductSumReport} from "@/module/report/buyInboundProductSumReport/buyInboundProductSumReport";
 import {
@@ -9,7 +9,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {ValueGetterParams} from "ag-grid-community";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const buyInboundProductSumReportTableConfig = ref<ITableState<IBuyInboundProductSumReport>>({
+export const buyInboundProductSumReportTableConfig = ref<ITableConfig<IBuyInboundProductSumReport>>({
     tableName: "buyInboundProductSumReportTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -92,15 +92,15 @@ import {useRouter} from "vue-router";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {BuyInboundFindViewHeadTableConfig} from "@/view/buyInbound/tableConfig/BuyInboundFindViewHeadTableConfig";
 import {BuyInboundFindViewMxTableConfig} from "@/view/buyInbound/tableConfig/BuyInboundFindViewMxTableConfig";
-import {IBuyInboundFindDto, IBuyInboundMxFindDto} from "@/module/buyInbound/types/IBuyInboundService";
-import {BuyInboundFindDto} from "@/module/buyInbound/dto/BuyInboundFindDto";
-import {BuyInboundMxFindDto} from "@/module/buyInbound/dto/BuyInboundMxFindDto";
+import {BuyInboundFindDto, IBuyInboundFindDto} from "@/module/buyInbound/dto/inbound/buyInboundFind.dto";
+import {BuyInboundMxFindDto} from "@/module/buyInbound/dto/inboundMx/BuyInboundMxFind.dto";
 import {BuyInboundService} from "@/module/buyInbound/service/BuyInbound.service";
 import {useInboundTable} from "@/composables/inbound/useInboundTable";
 import {useButtonState} from "@/composables/useButtonState";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {useRouterPage} from "@/utils";
+import {IBuyInboundMxFindDto} from "@/module/buyInbound/dto/inboundMx/types/buyInboundMxFind";
 
 export default defineComponent({
   name: "BuyInboundFindView",

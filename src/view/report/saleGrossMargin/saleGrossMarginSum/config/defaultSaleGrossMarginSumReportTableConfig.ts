@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
@@ -8,7 +8,7 @@ import {ISaleGrossMarginSum} from "@/module/report/saleGrossMarginReport/saleGro
 import {SaleGrossMarginSumReportService} from "@/module/report/saleGrossMarginReport/saleGrossMarginSumReport.service";
 import Table_Absolutely from "@/components/table/components/renderer/table_absoluteley.vue";
 
-export const defaultSaleGrossMarginSumReportTableConfig = ref<ITableState<ISaleGrossMarginSum>>({
+export const defaultSaleGrossMarginSumReportTableConfig = ref<ITableConfig<ISaleGrossMarginSum>>({
     tableName: "defaultSaleGrossMarginSumReportTableConfig",
     gridOptions: {
         defaultColDef: {

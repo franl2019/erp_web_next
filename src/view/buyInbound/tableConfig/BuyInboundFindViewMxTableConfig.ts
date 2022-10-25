@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
 import {valueName} from "@/config/valueName";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const BuyInboundFindViewMxTableConfig = ref<ITableState<IInboundMx>>({
+export const BuyInboundFindViewMxTableConfig = ref<ITableConfig<IInboundMx>>({
     tableName:"buyInboundFindViewMxTableConfig",
     gridOptions:{
         defaultColDef: {

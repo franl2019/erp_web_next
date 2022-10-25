@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IAccountExpenditureFind} from "@/module/accountExpenditure/accountExpenditure";
@@ -8,7 +8,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
 
-export const defaultAccountExpenditureTableConfig = ref<ITableState<IAccountExpenditureFind>>({
+export const defaultAccountExpenditureTableConfig = ref<ITableConfig<IAccountExpenditureFind>>({
     tableName: "defaultAccountExpenditureTableConfig",
     gridOptions: {
         defaultColDef: {

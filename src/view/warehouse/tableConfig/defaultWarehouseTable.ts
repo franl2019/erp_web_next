@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IWarehouse} from "@/module/warehouse/warehouse";
 
-export const DefaultWarehouseTable = ref<ITableState<IWarehouse>>({
+export const DefaultWarehouseTable = ref<ITableConfig<IWarehouse>>({
     tableName: "defaultWarehouseTable",
     tableService: new WarehouseService(),
     gridOptions: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-solid border-gray-200 w-0.5 h-8"></div>
+  <div class="bg-gray-200 h-8 mx-1" style="width: 1px"></div>
 </template>
 
 <script lang="ts">

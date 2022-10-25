@@ -5,7 +5,7 @@
         <erp-input-round v-model="roleUpdateDto.roleName"></erp-input-round>
       </erp-form-item>
       <erp-form-item label-for-name="顺序号" lg-col="4" md-col="4">
-        <erp-input-round v-model="roleUpdateDto.printid"></erp-input-round>
+        <erp-input-round v-model.number="roleUpdateDto.printid" :type="'number'"></erp-input-round>
       </erp-form-item>
       <erp-form-item label-for-name="资料是否使用" lg-col="4" md-col="4">
         <erp-checkbox v-model="roleUpdateDto.useflag">使用</erp-checkbox>
@@ -40,15 +40,15 @@ export default defineComponent({
     ErpInputRound,
     ErpCheckbox,
   },
-  setup(props, {emit: emits}) {
+  setup(props, {emit}) {
     const roleUpdateDto = ref(new RoleUpdateDto(JSON.parse(JSON.stringify(props.role))));
 
     function clickedCancel() {
-      emits('clickedCancel')
+      emit('clickedCancel');
     }
 
     function clickedConfirm() {
-      emits("clickedConfirm", JSON.parse(JSON.stringify(roleUpdateDto.value)))
+      emit("clickedConfirm", JSON.parse(JSON.stringify(roleUpdateDto.value)));
     }
 
     return {

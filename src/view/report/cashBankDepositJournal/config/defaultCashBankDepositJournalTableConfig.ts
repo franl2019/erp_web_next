@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import Table_CodeType from "@/components/table/components/renderer/table_CodeType.vue";
 import {ICashBankDepositJournal} from "@/module/report/cashBankDepositJournal/cashBankDepositJournal";
@@ -8,7 +8,7 @@ import {ValueGetterParams} from "ag-grid-community";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const defaultCashBankDepositJournalTableConfig = ref<ITableState<ICashBankDepositJournal>>({
+export const defaultCashBankDepositJournalTableConfig = ref<ITableConfig<ICashBankDepositJournal>>({
     tableName: "defaultCashBankDepositJournalTableConfig",
     gridOptions: {
         defaultColDef: {

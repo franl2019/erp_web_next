@@ -1,8 +1,8 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {defaultService} from "@/components/table/default/defaultService";
 
-export const defaultConfig = ref<ITableState<any>>({
+export const defaultConfig = ref<ITableConfig<any>>({
     tableName: "defaultConfig",
     gridOptions: {
         defaultColDef: {

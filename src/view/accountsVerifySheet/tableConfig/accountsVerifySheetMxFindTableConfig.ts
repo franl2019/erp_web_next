@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountsVerifySheetMx} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
 import {AccountsVerifySheetMxService} from "@/module/accountsVerifySheet/accountsVerifySheetMx.service";
 import Table_account_Receivable_Payable_Type from "@/components/table/components/renderer/table_account_Receivable_Payable_Type.vue";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const accountsVerifySheetMxFindTableConfig = ref<ITableState<IAccountsVerifySheetMx>>({
+export const accountsVerifySheetMxFindTableConfig = ref<ITableConfig<IAccountsVerifySheetMx>>({
     tableName: "accountsVerifySheetMxFindTableConfig",
     gridOptions: {
         defaultColDef: {

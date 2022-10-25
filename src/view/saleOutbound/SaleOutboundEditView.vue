@@ -122,7 +122,7 @@ export default defineComponent({
       warehouseid: Number(route.query.warehouseid || 0)
     })
 
-    const {buttonShowState, updateButtonState} = useButtonState();
+    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault:true});
 
     onMounted(async () => {
       //form默认的input.focus
@@ -135,7 +135,6 @@ export default defineComponent({
 
     //初始页面，根据state.outboundid 0新增 !0编辑
     async function initPage(): Promise<void> {
-
       if (state.value.outboundid === 0) {
         state.value.title = "新增销售单";
         state.value.exitMessage = "是否取消新增销售单"

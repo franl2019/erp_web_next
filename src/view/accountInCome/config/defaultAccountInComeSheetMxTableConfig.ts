@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
 import {AccountInComeSheetMxService} from "@/module/accountInCome/accountInComeSheetMx.service";
 import Table_accountReceivableType from "@/components/table/components/renderer/table_accountReceivableType.vue";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const defaultAccountInComeSheetMxTableConfig = ref<ITableState<IAccountInComeSheetMxFind>>({
+export const defaultAccountInComeSheetMxTableConfig = ref<ITableConfig<IAccountInComeSheetMxFind>>({
     tableName: "defaultAccountInComeSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

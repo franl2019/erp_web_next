@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {useFormatOutboundMxNumber} from "@/utils/tableUtils";
 import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundMx.service";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {valueName} from "@/config/valueName";
 
-export const createOutboundMxTable = ref<ITableState<IOutboundMx>>({
+export const createOutboundMxTable = ref<ITableConfig<IOutboundMx>>({
     tableName: "createOutboundMxTable",
     gridOptions: {
         defaultColDef: {

@@ -1,27 +1,63 @@
 <template>
-  <input ref="inputRef" :value="modelValue" class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300" type="text"
+  <input ref="inputRef"
+         :type="$props.type"
+         :value="$props.modelValue"
+         class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300"
          v-bind="$attrs"
          @input="$emit('update:modelValue', $event.target.value)">
 </template>
 
 <script lang='ts'>
-import {defineComponent, ref} from "vue";
+import {defineComponent, PropType, ref} from "vue";
+
+type HTMLInputTypeAttributeType =
+    "button"
+    | "checkbox"
+    | "color"
+    | "date"
+    | "datetime-local"
+    | "email"
+    | "file"
+    | "hidden"
+    | "image"
+    | "month"
+    | "number"
+    | "password"
+    | "radio"
+    | "range"
+    | "reset"
+    | "search"
+    | "submit"
+    | "tel"
+    | "text"
+    | "time"
+    | "url"
+    | "week"
+
 
 export default defineComponent({
   name: "ErpInputRound",
-  expose: ["getNode"],
-  props: ["modelValue"],
+  props: {
+    modelValue: {
+      type: null as any as PropType<any>
+    },
+    type: {
+      type: String as PropType<HTMLInputTypeAttributeType>,
+      default: 'text'
+    }
+  },
   emits: ["update:modelValue"],
-  setup() {
+  setup(_props, {expose}) {
     const inputRef = ref();
 
     function getNode() {
       return inputRef.value
     }
 
+    expose({getNode})
+
     return {
       inputRef,
-      getNode,
     };
   },
 });
@@ -30,6 +66,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 input:disabled {
   background-color: #F5F7FA;
-  //color: #A8ABB2;
 }
 </style>

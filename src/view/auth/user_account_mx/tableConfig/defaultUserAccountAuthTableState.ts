@@ -1,10 +1,10 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IUserAccountMx} from "@/module/user_account_mx/userAccountMx";
 import {UserAccountMxService} from "@/module/user_account_mx/userAccountMx.service";
 
-export const defaultUserAccountAuthTableState = ref<ITableState<IUserAccountMx>>({
+export const defaultUserAccountAuthTableState = ref<ITableConfig<IUserAccountMx>>({
     tableName: "defaultUserAccountAuthTableState",
     gridOptions: {
         defaultColDef: {

@@ -1,11 +1,15 @@
 <template>
-  <erp-form-dialog title="新增用户角色" @clickedCancel="clickedCancel" @clickedConfirm="clickedConfirm">
+  <erp-form-dialog
+      title="新增用户角色"
+      @clickedCancel="clickedCancel"
+      @clickedConfirm="clickedConfirm"
+  >
     <erp-form>
       <erp-form-item label-for-name="角色名称" type="danger">
         <erp-input-round v-model="roleCreateDto.roleName"></erp-input-round>
       </erp-form-item>
       <erp-form-item label-for-name="顺序号" lg-col="4" md-col="4">
-        <erp-input-round v-model="roleCreateDto.printid"></erp-input-round>
+        <erp-input-round v-model.number="roleCreateDto.printid" :type="'number'"></erp-input-round>
       </erp-form-item>
       <erp-form-item label-for-name="资料是否使用" lg-col="4" md-col="4">
         <erp-checkbox v-model="roleCreateDto.useflag">使用</erp-checkbox>
@@ -24,44 +28,24 @@ import ErpCheckbox from "@/components/input/ErpCheckbox.vue";
 import {RoleCreateDto} from "@/module/role/dto/roleCreate.dto";
 
 export default defineComponent({
-  name:"RoleCreateDialog",
+  name: "RoleCreateDialog",
   emits: ["clickedCancel", "clickedConfirm"],
-  components:{
+  components: {
     ErpFormDialog,
     ErpForm,
     ErpFormItem,
     ErpInputRound,
     ErpCheckbox,
   },
-  setup(_props, {emit: emits}) {
-    const roleCreateDto = ref(new RoleCreateDto({
-      createdAt: null,
-      creater: "",
-      del_uuid: 0,
-      deletedAt: null,
-      deleter: "",
-      level1Date: null,
-      level1Name: "",
-      level1Review: 0,
-      level2Date: null,
-      level2Name: "",
-      level2Review: 0,
-      printid: 0,
-      roleId: 0,
-      roleName: "",
-      updatedAt: null,
-      updater: "",
-      useflag: 1,
-      useflagDate: null
-    }))
-
+  setup(_props, {emit}) {
+    const roleCreateDto = ref(new RoleCreateDto())
 
     function clickedCancel() {
-      emits('clickedCancel')
+      emit('clickedCancel')
     }
 
     function clickedConfirm() {
-      emits("clickedConfirm", JSON.parse(JSON.stringify(roleCreateDto.value)))
+      emit("clickedConfirm", JSON.parse(JSON.stringify(roleCreateDto.value)))
     }
 
     return {

@@ -50,7 +50,8 @@
 
     <erp-table ref="inboundMxTableRef" :find-dto="{}" :getRowNodeId="getInboundMxTableRowNodeId"
                :showTopBox="true" :table-edit="state.edit" :table-state="BuyInboundCreateViewMxTableConfig"
-               @cellEditingStarted="bottomRowStopEditing" @cellValueChanged="onCellValueChanged" @ready="onTableReady">
+               @cellEditingStarted="bottomRowStopEditing" @cellValueChanged="onCellValueChanged"
+               @ready="onTableReady">
       <template #topBox>
         <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
         <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
@@ -95,20 +96,20 @@ import {IProduct} from "@/module/product/product";
 import {CellEditingStartedEvent} from "ag-grid-community";
 import {BuyInboundCreateViewMxTableConfig} from "@/view/buyInbound/tableConfig/BuyInboundCreateViewMxTableConfig";
 import {BuyInboundService} from "@/module/buyInbound/service/BuyInbound.service";
-import {BuyInbound} from "@/module/buyInbound/BuyInbound";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
 import {BuyInboundMxTableTotal} from "@/module/buyInbound/BuyInboundMxTableTotal";
-import {BuyInboundCreateDto} from "@/module/buyInbound/dto/BuyInboundCreateDto";
-import {IBuyInboundMxTableData} from "@/module/buyInbound/types/IBuyInboundMxService";
-import {BuyInboundMxTableData} from "@/module/buyInbound/BuyInboundMxTableData";
+import {BuyInboundAndMxCreateDto} from "@/module/buyInbound/dto/buyInboundAndMxCreate.dto";
+import {BuyInboundMxCreateInTableDto} from "@/module/buyInbound/dto/inboundMx/buyInboundMxCreateInTable.dto";
 import {IBuy} from "@/module/buy/buy";
-import {IBuyInboundFind} from "@/module/buyInbound/types/IBuyInboundService";
 import {useButtonState} from "@/composables/useButtonState";
 import * as mathjs from "mathjs";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
-import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";
+import {IBuyInboundMxInTable} from "@/module/buyInbound/dto/inboundMx/types/buyInboundMxInTable";
+import {BuyInboundCreateInViewDto} from "@/module/buyInbound/dto/inbound/buyInboundCreateInView.dto";
+import {BuyInboundUpdateInViewDto} from "@/module/buyInbound/dto/inbound/buyInboundUpdateInView.dto";
+import {BuyInboundMxUpdateInTableDto} from "@/module/buyInbound/dto/inboundMx/buyInboundMxUpdateInTable.dto";
 
 export default defineComponent({
   name: "BuyInboundEditView",
@@ -128,8 +129,8 @@ export default defineComponent({
     const {chain, round, bignumber} = mathjs;
 
     //设置表格id属性
-    function getInboundMxTableRowNodeId(params: IBuyInboundMxTableData) {
-      return params.rowId;
+    function getInboundMxTableRowNodeId(params: IBuyInboundMxInTable) {
+      return params.printid;
     }
 
     async function onTableReady() {
@@ -142,7 +143,7 @@ export default defineComponent({
     //单头service
     const inboundService = new BuyInboundService();
     //单头
-    const inboundHead = ref<IBuyInboundFind>(new BuyInbound());
+    const inboundHead = ref(new BuyInboundCreateInViewDto());
     //明细service
     const inboundMxService = new BuyInboundMxService();
     //单据页面状态
@@ -153,7 +154,7 @@ export default defineComponent({
       edit: true
     })
 
-    const {buttonShowState, updateButtonState} = useButtonState();
+    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault:true});
 
     //单据明细表格Ref
     const inboundMxTableRef = ref<ITableRef>();
@@ -196,34 +197,7 @@ export default defineComponent({
     }
 
     function addNullLine() {
-      const initInboundMx: IBuyInboundMxTableData = {
-        agio: 1,
-        agio1: 1,
-        agio2: 1,
-        amt: 0,
-        bzprice: 0,
-        bzqty: 0,
-        clientid: 0,
-        inboundid: 0,
-        inqty: 0,
-        materials: "",
-        materials_d: "",
-        netprice: 0,
-        packqty: 0,
-        price: 0,
-        priceqty: 0,
-        pricetype: 0,
-        printid: 0,
-        productcode: "",
-        productid: 0,
-        productname: "",
-        remark: "",
-        remarkmx: "",
-        rowId: 0,
-        spec: "",
-        spec_d: "",
-        unit: ""
-      }
+      const initInboundMx = new BuyInboundMxCreateInTableDto();
       addInboundMx([initInboundMx])
     }
 
@@ -261,17 +235,12 @@ export default defineComponent({
         });
 
         if (inboundList.length === 0 || state.value.inboundcode.length === 0) {
-          useErpDialog({
-            message: "查无此单",
-            ok: () => {
-              window.close()
-            },
-            closeBtnVisible: false
-          })
+          await useErpDialog({message: "查无此单", closeBtnVisible: false})
+          window.close();
           return
         }
 
-        inboundHead.value = {...inboundList[0]};
+        inboundHead.value = new BuyInboundUpdateInViewDto().init(inboundList[0]);
 
         state.value.edit = inboundHead.value.level1review + inboundHead.value.level2review === 0;
 
@@ -309,11 +278,9 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError("请填写明细"));
       }
       //组合单据对象
-      const inbound = new BuyInboundCreateDto();
-      inbound.setHead(inboundHead.value);
-      inbound.setInboundMx(inboundMx);
-
-      return inbound;
+      return new BuyInboundAndMxCreateDto()
+          .setHead(inboundHead.value)
+          .setInboundMx(inboundMx);
     }
 
     //保存按钮
@@ -343,33 +310,18 @@ export default defineComponent({
       }
     }
 
-    // emitter.on('tableSelectProduct',(event)=>{
-    //   const product = event as IProduct
-    //   addInboundMx(formatProductListToInboundMx([product]))
-    // })
-
     //增加明细按钮
-    function clickedAddInboundMx() {
-      if (inboundHead.value.buyid !== 0) {
-        useErpSelectProductDialog({
-          //回调返回选中资料
-          ok: (productList: IProduct[]) => {
-            //添加到明细
-            addInboundMx(formatProductListToInboundMx(productList));
-          }
-        })
-      } else {
-        useErpDialog({
-          title: "提示",
-          message: "请先选择供应商",
-          closeBtnVisible: false
-        })
+    async function clickedAddInboundMx() {
+      if (inboundHead.value.buyid === 0) {
+        return await useErpDialog({message: "请先选择供应商", closeBtnVisible: false});
       }
+      const productList = await useErpSelectProductDialog<IProduct[]>();
+      addInboundMx(setProductToMx(productList));
     }
 
     //获取明细
-    function getInboundMx(): IBuyInboundMxTableData[] {
-      const inboundMx: IBuyInboundMxTableData[] = [];
+    function getInboundMx(): IBuyInboundMxInTable[] {
+      const inboundMx: IBuyInboundMxInTable[] = [];
       inboundMxTableRef.value?.getGridApi().forEachNode((rowNode, index) => {
         rowNode.data.printid = index + 1
         inboundMx.push(rowNode.data);
@@ -377,16 +329,10 @@ export default defineComponent({
       return inboundMx
     }
 
-    function formatProductListToInboundMx(productList: IProduct[]): IBuyInboundMxTableData[] {
-      const addItems: IBuyInboundMxTableData[] = [];
+    function setProductToMx(productList: IProduct[]){
+      const addItems: IBuyInboundMxInTable[] = [];
       productList.forEach(product => {
-        const inboundMx: IBuyInboundMxTableData = new BuyInboundMxTableData();
-        inboundMx.rowId = 0;
-        inboundMx.printid = 0;
-
-        useFormatProductToInboundMx(product, inboundMx)
-
-        addItems.push(inboundMx);
+        addItems.push(new BuyInboundMxCreateInTableDto().setProductToMx(product));
       });
       return addItems;
     }
@@ -395,12 +341,15 @@ export default defineComponent({
     let rowIdCount = 0;
 
     //增加明细
-    function addInboundMx(addItems: IBuyInboundMxTableData[]) {
+    function addInboundMx(addItems: IBuyInboundMxInTable[]) {
+      const buyInboundMxList = []
       for (let i = 0; i < addItems.length; i++) {
         rowIdCount = rowIdCount + 1;
-        addItems[i].rowId = rowIdCount
+        addItems[i].printid = rowIdCount;
+        const buyInboundMxUpdateInTableDto = new BuyInboundMxUpdateInTableDto(addItems[i]);
+        buyInboundMxList.push(buyInboundMxUpdateInTableDto);
       }
-      inboundMxTableRef.value?.getGridApi().applyTransaction({add: addItems});
+      inboundMxTableRef.value?.getGridApi().applyTransaction({add: buyInboundMxList});
     }
 
     //删除明细
@@ -423,122 +372,77 @@ export default defineComponent({
       inboundMxTableRef.value?.getGridApi().applyTransaction({remove: getInboundMx()})
     }
 
-    function clickedLevel1review() {
+    async function clickedLevel1review() {
       if (state.value.edit) {
-
-        useErpDialog({
-          message: `是否保存并审核`,
-
-          ok: async () => {
-            await save_l1review();
-            await initPage();
-            useErpDialog({
-              message: `保存审核成功`,
-              closeBtnVisible: false
-            })
-          }
-
-        })
-
+        const dialogResult = await useErpDialog({message: `是否保存并审核`})
+        if (!dialogResult) return
+        await save_l1review();
+        await useErpDialog({message: `保存审核成功`, closeBtnVisible: false});
+        await initPage();
       } else {
-
-        useErpDialog({
-          message: `是否审核,单号:${inboundHead.value.inboundcode}`,
-
-          ok: async () => {
-            await inboundService.level1review(inboundHead.value.inboundid);
-            await initPage();
-            useErpDialog({
-              message: `审核成功`,
-              closeBtnVisible: false,
-            })
-          }
-
-        })
-
+        const dialogResult = await useErpDialog({message: `是否审核,单号:${inboundHead.value.inboundcode}`});
+        if (!dialogResult) return
+        await inboundService.level1review(inboundHead.value.inboundid);
+        await useErpDialog({message: `审核成功`, closeBtnVisible: false});
+        await initPage();
       }
-
-
     }
 
-    function clickedUnLevel1review() {
+    async function clickedUnLevel1review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      useErpDialog({
-        title: "提示",
-        message: `是否撤审,单号:${inboundCode}`,
-        ok: async () => {
-          await inboundService.unLevel1review(inboundId);
-          await initPage();
-          useErpDialog({
-            title: "提示",
-            message: `撤审成功`,
-            closeBtnVisible: false
-          })
-        }
-      })
+      const dialogResult = await useErpDialog({title: "提示", message: `是否撤审,单号:${inboundCode}`});
+      if (!dialogResult) return
+      await inboundService.unLevel1review(inboundId);
+      await useErpDialog({message: `撤审成功`, closeBtnVisible: false});
+      await initPage();
     }
 
-    function clickedLevel2review() {
+    async function clickedLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      useErpDialog({
-        title: "提示",
+      const dialogResult = await useErpDialog({
         message: `是否财务审核,单号:${inboundCode}`,
-        ok: async () => {
-          await inboundService.level2review(inboundId);
-          await initPage();
-          useErpDialog({
-            title: "提示",
-            message: `财务审核成功`,
-            closeBtnVisible: false
-          })
-        }
       })
+      if (!dialogResult) return
+      await inboundService.level2review(inboundId);
+      await useErpDialog({message: `财务审核成功`, closeBtnVisible: false});
+      await initPage();
     }
 
-    function clickedUnLevel2review() {
+    async function clickedUnLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      useErpDialog({
-        title: "提示",
-        message: `是否撤销财务审核,单号:${inboundCode}`,
-        ok: async () => {
-          await inboundService.unLevel2review(inboundId);
-          await initPage();
-          useErpDialog({
-            title: "提示",
-            message: `撤销财务审核成功`,
-            closeBtnVisible: false
-          })
-        }
+      const dialogResult = await useErpDialog({
+        message: `是否撤销财务审核,单号:${inboundCode}`
       })
+      if (!dialogResult) return
+      await inboundService.unLevel2review(inboundId);
+      await useErpDialog({
+        message: `撤销财务审核成功`,
+        closeBtnVisible: false
+      })
+      await initPage();
     }
 
-    function clickedDeleteData() {
+    async function clickedDeleteData() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      useErpDialog({
-        title: "提示",
+      const dialogResult = await useErpDialog({
         message: `是否删除,单号:${inboundCode}`,
-        ok: async () => {
-          await inboundService.delete_data(inboundId);
-          useErpDialog({
-            title: "提示",
-            message: `删除成功`,
-            ok: async () => {
-              //跳转
-              tabMenu.closeTab(route.fullPath)
-              const newRoute = router.resolve({
-                name: "buyInbound"
-              });
-              useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
-            },
-            closeBtnVisible: false
-          })
-
-        }
       })
+      if (!dialogResult) return
+      await inboundService.delete_data(inboundId);
+      await useErpDialog({
+        message: `删除成功`,
+        closeBtnVisible: false
+      })
+      //跳转
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "buyInbound"
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
 
     return {

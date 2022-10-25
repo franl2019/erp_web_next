@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
 import {
     ISaleOutboundProductSummaryReport
@@ -10,7 +10,7 @@ import {
     SaleOutboundClientProductSummaryReportService
 } from "@/module/report/saleOutboundClientProductSummaryReport/saleOutboundClientProductSummaryReport.service";
 
-export const saleOutboundClientProductSummaryReportTableConfig = ref<ITableState<ISaleOutboundProductSummaryReport>>({
+export const saleOutboundClientProductSummaryReportTableConfig = ref<ITableConfig<ISaleOutboundProductSummaryReport>>({
     tableName: "saleOutboundClientProductSummaryReportTableConfig",
     gridOptions: {
         defaultColDef: {

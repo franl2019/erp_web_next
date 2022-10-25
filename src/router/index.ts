@@ -10,6 +10,7 @@ import {reportRouter} from "@/router/report.router";
 import {valueName} from "@/config/valueName";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import Product from "@/view/product/product.vue"
+import {permissionsTheme} from "@/router/permissionsTheme";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -142,6 +143,8 @@ const routes: Array<RouteRecordRaw> = [
             ...outboundRouter,
             //资金管理
             ...moneyModuleRouter,
+            //权限管理
+            ...permissionsTheme,
             ...reportRouter
         ]
     },

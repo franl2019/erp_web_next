@@ -1,5 +1,5 @@
 import ErpSelectAccountPayableDialog from '@/components/dialog/selectInfo/accountPayable/ErpSelectAccountPayableDialog.vue'
-import {useDialogDemo} from "@/utils/useDialog";
+import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
 
 interface IDialogOption {
     unmount?: Function;
@@ -10,6 +10,6 @@ interface IDialogOption {
 }
 
 export function useErpSelectAccountPayableDialog(option: IDialogOption) {
-   useDialogDemo(ErpSelectAccountPayableDialog,option);
+   useErpDialogDemo(ErpSelectAccountPayableDialog,option);
 }
 

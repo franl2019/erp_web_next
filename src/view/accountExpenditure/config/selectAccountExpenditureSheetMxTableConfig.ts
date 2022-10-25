@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {AccountsPayableService} from "@/module/accountsPayable/accountsPayable.service";
 import {IAccountsPayableFind} from "@/module/accountsPayable/types/IAccountsPayableFind";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
@@ -8,7 +8,7 @@ import Table_CodeType from "@/components/table/components/renderer/table_CodeTyp
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const selectAccountExpenditureSheetMxTableConfig = ref<ITableState<IAccountsPayableFind>>({
+export const selectAccountExpenditureSheetMxTableConfig = ref<ITableConfig<IAccountsPayableFind>>({
     tableName: "selectAccountExpenditureSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

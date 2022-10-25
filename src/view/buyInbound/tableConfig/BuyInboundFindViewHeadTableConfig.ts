@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IInbound} from "@/module/inbound/IInbound";
@@ -8,7 +8,7 @@ import {amountInThousands} from "@/components/table/valueGetter/amountInThousand
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
-export const BuyInboundFindViewHeadTableConfig = ref<ITableState<IInbound>>({
+export const BuyInboundFindViewHeadTableConfig = ref<ITableConfig<IInbound>>({
     tableName: "buyInboundFindViewHeadTableConfig",
     gridOptions: {
         defaultColDef: {

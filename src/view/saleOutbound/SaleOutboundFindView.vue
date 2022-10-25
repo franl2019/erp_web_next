@@ -69,12 +69,17 @@
       <erp-button v-reqClick="initPage">刷新</erp-button>
     </erp-no-title>
 
-    <erp-table ref="outboundHeadRef" :find-dto="saleOutboundHeadFindDto" :getRowNodeId="getHeadTableRowNodeId"
-               :table-state="defaultOutboundHeadTable" @selectionChanged="onSelectedRows"></erp-table>
+    <erp-table ref="outboundHeadRef"
+               :find-dto="saleOutboundHeadFindDto"
+               :getRowNodeId="getHeadTableRowNodeId"
+               @ready="activated"
+               :table-state="defaultOutboundHeadTable"
+               @selectionChanged="onSelectedRows"></erp-table>
 
-    <erp-title title="单据明细"></erp-title>
 
-    <erp-table ref="outboundMxRef" :find-dto="saleOutboundMxFindDto" :getRowNodeId="getMxTableRowNodeId"
+    <erp-table ref="outboundMxRef" :find-dto="saleOutboundMxFindDto"
+               :getRowNodeId="getMxTableRowNodeId"
+               :table-name="'单据明细'"
                :table-state="defaultOutboundMxTable"></erp-table>
   </erp-page-box>
 </template>
@@ -94,14 +99,17 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {defaultOutboundMxTable} from "@/view/saleOutbound/tableConfig/defaultOutboundMxTable";
 import {defaultOutboundHeadTable} from "@/view/saleOutbound/tableConfig/defaultOutboundHeadTable";
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, ref} from "vue";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {useSaleOutboundFindViewHock} from "@/module/saleOutbound/hock/findView/useSaleOutboundFindViewHock";
 import {ITableRef} from "@/components/table/type";
 import {useSaleOutboundFindViewEvent} from "@/module/saleOutbound/hock/findView/useSaleOutboundFindViewEvent";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
-import {SaleOutboundFindDataDto, ISaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
-import {SaleOutboundMxFindDto, ISaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
+import {
+  ISaleOutboundFindDataDto,
+  SaleOutboundFindDataDto
+} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {ISaleOutboundMxFindDto, SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {IButtonState} from "@/composables/useSheetButtonState";
 
@@ -121,7 +129,7 @@ export default defineComponent({
     ErpPageBox,
     ErpDelimiter,
   },
-  setup(_props,{expose}) {
+  setup(_props, {expose}) {
     //销售单查询页单头查询请求参数
     const saleOutboundHeadFindDto = ref<ISaleOutboundFindDataDto>(new SaleOutboundFindDataDto());
 
@@ -184,10 +192,6 @@ export default defineComponent({
 
     expose({activated})
 
-    onMounted(async () => {
-      console.log('activated')
-      await initPage()
-    })
     return {
       defaultOutboundMxTable,
       defaultOutboundHeadTable,

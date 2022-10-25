@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 import {AccountInComeAmountMxService} from "@/module/accountInCome/accountInComeAmountMx.service";
 import Table_renderer_account from "@/components/table/components/renderer/table_renderer_account.vue";
@@ -10,7 +10,7 @@ import {onlyNumberValueSetter} from "@/components/table/valueSetter/onlyNumberVa
 import {AccountInComeAmountMxEditMath} from "@/module/accountInCome/math/accountInComeAmountMxEdit.math";
 
 
-export const editAccountInComeAmountMxTableConfig = ref<ITableState<IAccountInComeAmountMx>>({
+export const editAccountInComeAmountMxTableConfig = ref<ITableConfig<IAccountInComeAmountMx>>({
     tableName: "editAccountInComeAmountMxTableConfig",
     gridOptions: {
         defaultColDef: {

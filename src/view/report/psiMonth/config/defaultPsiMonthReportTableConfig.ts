@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {ValueGetterParams} from "ag-grid-community";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
@@ -7,7 +7,7 @@ import {IPsiMonthReport} from "@/module/report/psiMonthReport/psiMonthReport";
 import {PsiMonthReportService} from "@/module/report/psiMonthReport/psiMonthReport.service";
 import {toFixed4} from "@/components/table/valueGetter/toFixed4";
 
-export const defaultPsiMonthReportTableConfig = ref<ITableState<IPsiMonthReport>>({
+export const defaultPsiMonthReportTableConfig = ref<ITableConfig<IPsiMonthReport>>({
     tableName: "defaultPsiMonthReportTableConfig",
     gridOptions: {
         defaultColDef: {

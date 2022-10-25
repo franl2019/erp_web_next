@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {useFormatInboundMxNumber} from "@/utils/tableUtils";
 import {IInboundMx} from "@/module/inboundMx/IInboundMx";
 import {BuyInboundMxService} from "@/module/buyInbound/service/BuyInboundMx.service";
@@ -7,7 +7,7 @@ import {valueName} from "@/config/valueName";
 import TableEditorProductCode from "@/components/table/components/editor/ProductCode/TableEditorProductCode.vue";
 import {buyInboundSelectProductValueSetter} from "@/components/table/valueSetter/buyInboundSelectProductValueSetter";
 
-export const BuyInboundCreateViewMxTableConfig = ref<ITableState<IInboundMx>>({
+export const BuyInboundCreateViewMxTableConfig = ref<ITableConfig<IInboundMx>>({
     tableName: "buyInboundCreateViewMxTableConfig",
     gridOptions: {
         defaultColDef: {

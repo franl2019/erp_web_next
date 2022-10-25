@@ -1,10 +1,11 @@
-import {useHttpPost, IApiResult} from "@/utils/axios";
+import {IApiResult, useHttpPost} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {RoleCreateDto} from "@/module/role/dto/roleCreate.dto";
 import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {IRole} from "@/module/role/role";
 import {RoleUpdateDto} from "@/module/role/dto/roleUpdate.dto";
 import {RoleDeleteDto} from "@/module/role/dto/roleDelete.dto";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 export class RoleService {
 
@@ -18,7 +19,7 @@ export class RoleService {
     }
 
     public async create(roleCreateDto: RoleCreateDto) {
-        await useVerifyParam(new RoleCreateDto(roleCreateDto));
+        await useVerifyParam(roleCreateDto);
         const result = await useHttpPost<IApiResult>(API_URL.ROLE_CREATE, roleCreateDto);
         if (result.code === 200) {
             return true
@@ -28,7 +29,7 @@ export class RoleService {
     }
 
     public async update(roleUpdateDto: RoleUpdateDto) {
-        await useVerifyParam(new RoleUpdateDto(roleUpdateDto));
+        await useVerifyParam(roleUpdateDto);
         const result = await useHttpPost<IApiResult>(API_URL.ROLE_UPDATE, roleUpdateDto);
         if (result.code === 200) {
             return true
@@ -37,8 +38,10 @@ export class RoleService {
         }
     }
 
-    public async delete_data(roleDeleteDto: RoleDeleteDto) {
-        await useVerifyParam(new RoleDeleteDto(roleDeleteDto));
+    public async delete_data(roleId:number) {
+        await useErpDialog({message: "是否删除该角色"});
+        const roleDeleteDto = new RoleDeleteDto(roleId)
+        await useVerifyParam(roleDeleteDto);
         const result = await useHttpPost<IApiResult>(API_URL.ROLE_DELETE, roleDeleteDto);
         if (result.code === 200) {
             return true

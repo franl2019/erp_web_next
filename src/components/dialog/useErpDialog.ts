@@ -1,5 +1,5 @@
 import ErpDialog from './ErpDialog.vue'
-import {useDialogDemo} from "@/utils/useDialog";
+import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
 
 export interface IErpDialogOption {
     unmount?: Function;
@@ -11,7 +11,7 @@ export interface IErpDialogOption {
     closeBtnVisible?: boolean;
 }
 
-export default function useErpDialog(option: IErpDialogOption) {
-    useDialogDemo<IErpDialogOption>(ErpDialog,option)
+export default function useErpDialog<T = boolean>(option: IErpDialogOption):Promise<T> {
+   return useErpDialogDemo<IErpDialogOption>(ErpDialog,option)
 }
 

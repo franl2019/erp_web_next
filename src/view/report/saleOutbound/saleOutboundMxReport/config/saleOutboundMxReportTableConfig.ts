@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ISaleOutboundMxReport} from "@/module/report/saleOutboundReport/saleOutboundMxReport";
 import {SaleOutboundReportService} from "@/module/report/saleOutboundReport/saleOutboundReport.service";
@@ -8,7 +8,7 @@ import {valueName} from "@/config/valueName";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 
-export const saleOutboundMxReportTableConfig = ref<ITableState<ISaleOutboundMxReport>>({
+export const saleOutboundMxReportTableConfig = ref<ITableConfig<ISaleOutboundMxReport>>({
     tableName: "saleOutboundMxReportTableConfig",
     gridOptions: {
         defaultColDef: {

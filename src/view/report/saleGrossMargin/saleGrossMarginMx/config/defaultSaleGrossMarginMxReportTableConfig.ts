@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
 import Table_Absolutely from "@/components/table/components/renderer/table_absoluteley.vue";
@@ -9,7 +9,7 @@ import {ISaleGrossMarginMx} from "@/module/report/saleGrossMarginReport/saleGros
 import {SaleGrossMarginMxReportService} from "@/module/report/saleGrossMarginReport/saleGrossMarginMxReport.service";
 import {toFixed4} from "@/components/table/valueGetter/toFixed4";
 
-export const defaultSaleGrossMarginMxReportTableConfig = ref<ITableState<ISaleGrossMarginMx>>({
+export const defaultSaleGrossMarginMxReportTableConfig = ref<ITableConfig<ISaleGrossMarginMx>>({
     tableName: "defaultSaleGrossMarginMxReportTableConfig",
     gridOptions: {
         defaultColDef: {

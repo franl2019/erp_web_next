@@ -4,7 +4,7 @@
       <div class="text-xl font-bold">{{ title }}</div>
       <div class="text-sm text-gray-900 cursor-pointer">查看</div>
     </div>
-    <div class="border border-solid border-black mb-2"></div>
+    <div class="bg-black w-full my-1" style="height: 2px"></div>
     <slot></slot>
   </div>
 </template>

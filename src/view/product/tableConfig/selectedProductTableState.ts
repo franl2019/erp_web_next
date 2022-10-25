@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ProductService} from "@/module/product/product.service";
 import {IProduct} from "@/module/product/product";
 import {valueName} from "@/config/valueName";
 
-export const selectedProductTableState = ref<ITableState<IProduct>>({
+export const selectedProductTableState = ref<ITableConfig<IProduct>>({
     //selectedProductTableState
     tableName: "selectProductTableState",
     gridOptions: {

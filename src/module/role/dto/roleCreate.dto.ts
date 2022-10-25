@@ -1,19 +1,16 @@
 import {IRole} from "../role";
-import {IsInt, IsArray} from "@/utils/verifyParam/customValidationDecorators";
+import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export class RoleCreateDto implements IRole {
     roleId: number
 
-    @IsInt()
-    @IsArray()
+    @IsString()
     roleName: string
 
     @IsInt()
-    @IsArray()
     printid: number
 
     @IsInt()
-    @IsArray()
     useflag: number
 
     useflagDate: Date | null
@@ -33,24 +30,24 @@ export class RoleCreateDto implements IRole {
     deletedAt: Date | null
 
 
-    constructor(role: IRole) {
-        this.roleId = role.roleId;
-        this.roleName = role.roleName;
-        this.printid = role.printid;
-        this.useflag = role.useflag;
-        this.useflagDate = role.useflagDate;
-        this.creater = role.creater;
-        this.createdAt = role.createdAt;
-        this.updater = role.updater;
-        this.updatedAt = role.updatedAt;
-        this.level1Review = role.level1Review;
-        this.level1Name = role.level1Name;
-        this.level1Date = role.level1Date;
-        this.level2Review = role.level2Review;
-        this.level2Name = role.level2Name;
-        this.level2Date = role.level2Date;
-        this.del_uuid = role.del_uuid;
-        this.deleter = role.deleter;
-        this.deletedAt = role.deletedAt;
+    constructor() {
+        this.roleId = 0;
+        this.roleName = "";
+        this.printid = 0;
+        this.useflag = 1;
+        this.useflagDate = null;
+        this.creater = "";
+        this.createdAt = null;
+        this.updater = "";
+        this.updatedAt = null;
+        this.level1Review = 0;
+        this.level1Name = "";
+        this.level1Date = null;
+        this.level2Review = 0;
+        this.level2Name = "";
+        this.level2Date = null;
+        this.del_uuid = 0;
+        this.deleter = "";
+        this.deletedAt = null;
     }
 }

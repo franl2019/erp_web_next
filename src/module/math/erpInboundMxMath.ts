@@ -1,10 +1,10 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
 import {bignumber, chain, round} from 'mathjs';
-import {IProductionInboundMxTableData} from "@/module/productionInbound/types/IProductionInboundMxTableData";
+import {IBuyInboundMxInTable} from "@/module/buyInbound/dto/inboundMx/types/buyInboundMxInTable";
 
 export class ErpInboundMxMath {
 
-    private inboundMx: IProductionInboundMxTableData
+    private inboundMx: IBuyInboundMxInTable
     private readonly colField: string;
 
     constructor(params: ValueSetterParams) {

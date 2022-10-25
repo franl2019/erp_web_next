@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {AccountExpenditureSheetMxService} from "@/module/accountExpenditure/accountExpenditureSheetMx.service";
 import Table_accountPayableType from "@/components/table/components/renderer/table_accountPayableType.vue";
@@ -8,7 +8,7 @@ import {
 } from "@/view/accountExpenditure/config/valueSetter/formatEditAccountExpenditureSheetMx";
 
 
-export const editAccountExpenditureSheetMxTableConfig = ref<ITableState<IAccountExpenditureSheetMx>>({
+export const editAccountExpenditureSheetMxTableConfig = ref<ITableConfig<IAccountExpenditureSheetMx>>({
     tableName: "editAccountExpenditureSheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

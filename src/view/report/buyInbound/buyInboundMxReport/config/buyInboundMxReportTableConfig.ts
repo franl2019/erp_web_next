@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {BuyInboundMxReportService} from "@/module/report/buyInboundMxReport/buyInboundMxReport.service";
 import {IBuyInboundMxReport} from "@/module/report/buyInboundMxReport/buyInboundMxReport";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
@@ -9,7 +9,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
-export const buyInboundMxReportTableConfig = ref<ITableState<IBuyInboundMxReport>>({
+export const buyInboundMxReportTableConfig = ref<ITableConfig<IBuyInboundMxReport>>({
     tableName: "buyInboundMxReportTableConfig",
     gridOptions: {
         defaultColDef: {

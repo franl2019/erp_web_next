@@ -1,10 +1,10 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
 import {ProductService} from "@/module/product/product.service";
 import {IProduct} from "@/module/product/product";
 
-export const tableEditorProductCodeConfig = ref<ITableState<IProduct>>({
+export const tableEditorProductCodeConfig = ref<ITableConfig<IProduct>>({
     tableName: "tableEditorProductCodeConfig",
     gridOptions: {
         defaultColDef: {

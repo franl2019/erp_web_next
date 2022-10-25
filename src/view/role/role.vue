@@ -7,17 +7,22 @@
       </erp-button>
     </erp-title>
 
-    <erp-table ref="roleTableRef" :find-dto="{}" :table-state="roleTableConfig"
-      @selection-changed="tableSelectionChanged">
+    <erp-table ref="roleTableRef"
+               :find-dto="{}"
+               :table-state="roleTableConfig"
+               @selection-changed="tableSelectionChanged">
     </erp-table>
   </erp-page-box>
 
-  <role-create-dialog v-if="createDialogVisual" @clickedCancel="clickedCancelCreateDialog"
-    @clickedConfirm="clickedConfirmCreateDialog">
+  <role-create-dialog v-if="createDialogVisual"
+                      @clickedCancel="clickedCancelCreateDialog"
+                      @clickedConfirm="clickedConfirmCreateDialog">
   </role-create-dialog>
 
-  <role-update-dialog v-if="updateDialogVisual" :role="tableSelectedRole" @clickedCancel="clickedCancelUpdateDialog"
-    @clickedConfirm="clickedConfirmUpdateDialog">
+  <role-update-dialog v-if="updateDialogVisual"
+                      :role="tableSelectedRole"
+                      @clickedCancel="clickedCancelUpdateDialog"
+                      @clickedConfirm="clickedConfirmUpdateDialog">
   </role-update-dialog>
 </template>
 
@@ -36,12 +41,11 @@ import {roleTableConfig} from "@/view/role/tableConfig/roleTableConfig";
 import RoleCreateDialog from "@/view/role/roleCreateDialog.vue";
 import RoleUpdateDialog from "@/view/role/roleUpdateDialog.vue";
 import {SelectionChangedEvent} from "ag-grid-community";
-import useErpDialog from "@/components/dialog/useErpDialog";
 import {RoleUpdateDto} from "@/module/role/dto/roleUpdate.dto";
 
 export default defineComponent({
-  name:"RoleView",
-  components:{
+  name: "RoleView",
+  components: {
     ErpTable,
     ErpPageBox,
     ErpTitle,
@@ -53,10 +57,10 @@ export default defineComponent({
     const roleTableRef = ref<ITableRef>();
     const createDialogVisual = ref(false);
     const updateDialogVisual = ref(false);
-    const { buttonShowState, updateButtonState } = useButtonState();
+    const {buttonShowState, updateButtonState} = useButtonState();
     const roleService = new RoleService();
     const tableSelectedRole: Ref<IRole> = ref(new RoleUpdateDto({} as IRole));
-      
+
     onMounted(async () => {
       await init();
     });
@@ -99,16 +103,11 @@ export default defineComponent({
       updateDialogVisual.value = true;
     }
 
-    function onClickedDeleteRoleButton() {
-      useErpDialog({
-        title: '提示',
-        message: "是否删除该角色",
-        ok: async () => {
-          await roleService.delete_data(tableSelectedRole.value);
-          await init();
-        }
-      })
+    async function onClickedDeleteRoleButton() {
+      await roleService.delete_data(tableSelectedRole.value.roleId);
+      await init();
     }
+
     return {
       roleTableConfig,
       roleTableRef,

@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IAccount} from "@/module/account/account";
 import {AccountService} from "@/module/account/account.service";
 
-export const defaultAccountTableConfig = ref<ITableState<IAccount>>({
+export const defaultAccountTableConfig = ref<ITableConfig<IAccount>>({
     tableName: "defaultAccountTableConfig",
     gridOptions: {
         defaultColDef: {

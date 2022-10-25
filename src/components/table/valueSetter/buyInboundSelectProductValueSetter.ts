@@ -1,17 +1,12 @@
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
-import {useFormatProductToInboundMx} from "@/module/buyInbound/utils/useFormatProductToInboundMx";
+import {BuyInboundMxCreateInTableDto} from "@/module/buyInbound/dto/inboundMx/buyInboundMxCreateInTable.dto";
 
 export function buyInboundSelectProductValueSetter(params: ValueSetterParams) {
-    //判断是否为数字
-    if (
-        params.newValue !== null
-        && params.newValue.productid !== undefined
-        && params.newValue.productid !== 0
-    ) {
-        const product = params.newValue
 
-        useFormatProductToInboundMx(product,params.data);
-
+    if (params.newValue && params.newValue.productid !== 0) {
+        BuyInboundMxCreateInTableDto.useFormatProductToInboundMx(
+            params.newValue, params.data
+        );
         params.api.refreshCells({
             rowNodes: [params.node!]
         });

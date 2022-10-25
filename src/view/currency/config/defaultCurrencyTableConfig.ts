@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {CurrencyService} from "@/module/currency/currency.service";
 import {ICurrency} from "@/module/currency/currency";
 
 
-export const defaultCurrencyTableConfig = ref<ITableState<ICurrency>>({
+export const defaultCurrencyTableConfig = ref<ITableConfig<ICurrency>>({
     tableName: "defaultCurrencyTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {AccountPayableMxReportService} from "@/module/report/accountPayableMxReport/accountPayableMxReport.service";
 import {IAccountPayableMxReport} from "@/module/report/accountPayableMxReport/accountPayableMxReport";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
@@ -9,7 +9,7 @@ import Table_CodeType from "@/components/table/components/renderer/table_CodeTyp
 import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 import Table_NotShowZero from "@/components/table/components/renderer/table_NotShowZero.vue";
 
-export const defaultAccountPayableMxReportTableConfig = ref<ITableState<IAccountPayableMxReport>>({
+export const defaultAccountPayableMxReportTableConfig = ref<ITableConfig<IAccountPayableMxReport>>({
     tableName: "defaultAccountPayableMxReportTableConfig",
     gridOptions: {
         defaultColDef: {

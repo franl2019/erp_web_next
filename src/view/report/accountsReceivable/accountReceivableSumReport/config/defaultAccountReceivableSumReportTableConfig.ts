@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {
     AccountReceivableSumReportService
@@ -7,7 +7,7 @@ import {
 import {IAccountReceivableSumReport} from "@/module/report/accountReceivableSumReport/accountReceivableSumReport";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const defaultAccountReceivableSumReportTableConfig = ref<ITableState<IAccountReceivableSumReport>>({
+export const defaultAccountReceivableSumReportTableConfig = ref<ITableConfig<IAccountReceivableSumReport>>({
     tableName: "defaultAccountReceivableSumReportTableConfig",
     gridOptions: {
         defaultColDef: {

@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {InventoryService} from "@/module/inventory/inventory.service";
 import {Inventory} from "@/module/inventory/inventory";
 import {valueName} from "@/config/valueName";
 
-export const selectedInventoryTableState = ref<ITableState<Inventory>>({
+export const selectedInventoryTableState = ref<ITableConfig<Inventory>>({
     //selectedInventoryTableState
     tableName: "selectInventoryTableState",
     gridOptions: {

@@ -113,7 +113,7 @@ export default defineComponent({
     const {bignumber, chain, round} = mathjs;
     const router = useRouter();
     const route = useRoute();
-    const {buttonShowState, updateButtonState} = useButtonState();
+    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault:true});
     const editAccountInComeAmountMxTableRef = ref<ITableRef>();
     const editAccountInComeSheetMxTableRef = ref<ITableRef>();
     const editDto = ref<IAccountInComeCreateDto>(new AccountInComeCreateDto({

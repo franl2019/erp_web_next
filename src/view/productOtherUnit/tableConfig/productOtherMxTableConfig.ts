@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ProductOtherUnitService} from "@/module/productOtherUnit/productOtherUnit.service";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
 
-export const productOtherMxTableConfig = ref<ITableState<IProductOtherUnit>>({
+export const productOtherMxTableConfig = ref<ITableConfig<IProductOtherUnit>>({
     tableName: "productOtherMxTableConfig",
     gridOptions: {
         defaultColDef: {

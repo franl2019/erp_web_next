@@ -5,7 +5,11 @@
       <erp-button type="success" @click="clickedEditAccount">修改</erp-button>
       <erp-button type="danger" @click="clickedDeleteAccount">删除</erp-button>
     </erp-title>
-    <erp-table ref="accountTableRef" :find-dto="accountFindDto" :table-state="defaultAccountTableConfig">
+    <erp-table
+        init
+        ref="accountTableRef"
+        :find-dto="accountFindDto"
+        :table-state="defaultAccountTableConfig">
     </erp-table>
   </erp-page-box>
 
@@ -23,7 +27,7 @@ import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, ref} from "vue";
 import AccountCreateDialog from "@/view/account/component/accountEdit.vue";
 import AccountEditDialog from "@/view/account/component/accountEdit.vue";
 import {AccountEditDto} from "@/module/account/dto/accountEdit.dto";
@@ -68,11 +72,6 @@ export default defineComponent({
 
     const accountService = new AccountService();
     const accountFindDto = ref(new FindAccountDto());
-
-
-    onMounted(async () => {
-      await initTableData();
-    })
 
     function clickedCreateAccount() {
       accountCreateDto.value = new AccountCreateDto();
@@ -145,7 +144,7 @@ export default defineComponent({
       clickedEditAccount,
       clickedEditCancelBtn,
       clickedEditOkBtn,
-      clickedDeleteAccount,
+      clickedDeleteAccount
     };
   },
 });

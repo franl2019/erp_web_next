@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {AccountExpenditureAmountMxService} from "@/module/accountExpenditure/accountExpenditureAmountMx.service";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
 
-export const defaultAccountExpenditureAmountMxTableConfig = ref<ITableState<IAccountExpenditureAmountMx>>({
+export const defaultAccountExpenditureAmountMxTableConfig = ref<ITableConfig<IAccountExpenditureAmountMx>>({
     tableName: "defaultAccountExpenditureAmountMxTableConfig",
     gridOptions: {
         defaultColDef: {

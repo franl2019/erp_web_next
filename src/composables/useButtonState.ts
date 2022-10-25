@@ -11,12 +11,13 @@ export interface IButtonState {
 }
 
 //按钮状态
-export function useButtonState() {
-
+export function useButtonState(
+    option: { l1ReviewDefault: boolean } = {l1ReviewDefault: false}
+) {
     const buttonShowState = ref<IButtonState>({
         create: true,
         edit: false,
-        level1review: true,
+        level1review: option.l1ReviewDefault,
         un_level1review: false,
         level2review: false,
         un_level2review: false,

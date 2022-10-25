@@ -1,36 +1,14 @@
 import {IRole} from "../role";
-import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
+import {IsInt, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
+import {RoleCreateDto} from "@/module/role/dto/roleCreate.dto";
 
-export class RoleUpdateDto implements IRole{
+export class RoleUpdateDto extends RoleCreateDto{
     @IsInt()
+    @NotEquals(0)
     roleId: number
 
-    @IsString()
-    roleName: string
-
-    @IsInt()
-    printid: number
-
-    @IsInt()
-    useflag: number
-
-    useflagDate: Date | null
-
-    creater: string
-    createdAt: Date | null
-    updater: string
-    updatedAt: Date | null
-    level1Review: number
-    level1Name: string
-    level1Date: Date | null
-    level2Review: number
-    level2Name: string
-    level2Date: Date | null
-    del_uuid: number
-    deleter: string
-    deletedAt: Date | null
-
     constructor(role:IRole) {
+        super()
         this.roleId = role.roleId;
         this.roleName = role.roleName;
         this.printid = role.printid;

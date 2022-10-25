@@ -4,32 +4,37 @@
       <erp-button :disabled="!buttonShowState.create" @click="clickedCreateButton">新增</erp-button>
       <erp-button :disabled="!buttonShowState.edit" type="success" @click="clickedEditButton">修改</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteButton">删除</erp-button>
-      <erp-delimiter />
+      <erp-delimiter/>
       <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedL1ReviewButton">审核
       </erp-button>
       <erp-button :disabled="!buttonShowState.un_level1review" type="danger" @click="clickedUnL1ReviewBtn">撤审
       </erp-button>
-      <erp-delimiter />
+      <erp-delimiter/>
       <erp-button v-reqClick="clickedRefreshButton">刷新</erp-button>
       <template v-slot:input>
         <el-date-picker v-model="findDate" end-placeholder="结束日期" range-separator="-" start-placeholder="开始日期"
-          type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss" @change="onChangeSearch"></el-date-picker>
-        <erp-input-round v-model="accountExpenditureFindDto.accountExpenditureCode" class="md:w-60" placeholder="输入单号搜索"
-          @change="onChangeSearch"></erp-input-round>
+                        type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss"
+                        @change="onChangeSearch"></el-date-picker>
+        <erp-input-round v-model="accountExpenditureFindDto.accountExpenditureCode" class="md:w-60"
+                         placeholder="输入单号搜索"
+                         @change="onChangeSearch"></erp-input-round>
       </template>
     </erp-no-title>
 
-    <erp-table ref="accountExpenditureTableRef" :find-dto="accountExpenditureFindDto"
-      :getRowNodeId="getRowNodeId_headTable" :table-state="defaultAccountExpenditureTableConfig"
-      @selection-changed="onSelectionChanged">
+    <erp-table ref="accountExpenditureTableRef"
+               :find-dto="accountExpenditureFindDto"
+               :getRowNodeId="getRowNodeId_headTable"
+               :table-state="defaultAccountExpenditureTableConfig"
+               init
+               @selection-changed="onSelectionChanged">
     </erp-table>
     <erp-title title="付款明细"></erp-title>
     <erp-table ref="accountExpenditureAmountMxTableRef" :find-dto="accountExpenditureAmountMxFindDto"
-      :table-state="defaultAccountExpenditureAmountMxTableConfig">
+               :table-state="defaultAccountExpenditureAmountMxTableConfig">
     </erp-table>
     <erp-title title="核销明细"></erp-title>
     <erp-table ref="accountExpenditureSheetMxTableRef" :find-dto="accountExpenditureSheetMxFindDto"
-      :table-state="defaultAccountExpenditureSheetMxTableConfig">
+               :table-state="defaultAccountExpenditureSheetMxTableConfig">
     </erp-table>
   </erp-page-box>
 </template>
@@ -42,33 +47,32 @@ import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import { useRouter } from "vue-router";
-import { defineComponent, onMounted, ref } from "vue";
-import { ITableRef } from "@/components/table/type";
+import {useRouter} from "vue-router";
+import {defineComponent, ref} from "vue";
+import {ITableRef} from "@/components/table/type";
 import {
   defaultAccountExpenditureTableConfig
 } from "@/view/accountExpenditure/config/defaultAccountExpenditureTableConfig";
-import { AccountExpenditureFindDto } from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
-import { getButtonState, IButtonState } from "@/composables/useSheetButtonState";
-import { IAccountExpenditureFind } from "@/module/accountExpenditure/accountExpenditure";
+import {AccountExpenditureFindDto} from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
+import {IAccountExpenditureFind} from "@/module/accountExpenditure/accountExpenditure";
 import useErpDialog from "@/components/dialog/useErpDialog";
-import { AccountExpenditureService } from "@/module/accountExpenditure/accountExpenditure.service";
+import {AccountExpenditureService} from "@/module/accountExpenditure/accountExpenditure.service";
 import {
   defaultAccountExpenditureAmountMxTableConfig
 } from "@/view/accountExpenditure/config/defaultAccountExpenditureAmountMxTableConfig";
-import { AccountExpenditureAmountMxFindDto } from "@/module/accountExpenditure/dto/accountExpenditureAmountMxFind.dto";
+import {AccountExpenditureAmountMxFindDto} from "@/module/accountExpenditure/dto/accountExpenditureAmountMxFind.dto";
 import {
   defaultAccountExpenditureSheetMxTableConfig
 } from "@/view/accountExpenditure/config/defaultAccountExpenditureSheetMxTableConfig";
-import { AccountExpenditureSheetMxFindDto } from "@/module/accountExpenditure/dto/accountExpenditureSheetMxFind.dto";
-import { useDateSelect } from "@/composables/useDateSelect";
-import { useRouterPage } from "@/utils";
-import { VerifyParamError } from "@/types/error/verifyParamError";
+import {AccountExpenditureSheetMxFindDto} from "@/module/accountExpenditure/dto/accountExpenditureSheetMxFind.dto";
+import {useDateSelect} from "@/composables/useDateSelect";
+import {useRouterPage} from "@/utils";
+import {VerifyParamError} from "@/types/error/verifyParamError";
+import {useButtonState} from "@/composables/useButtonState";
 
 export default defineComponent({
-  name:"accountExpenditureFind",
-  expose:["activated"],
-  components:{
+  name: "accountExpenditureFind",
+  components: {
     ErpNoTitle,
     ErpTitle,
     ErpTable,
@@ -77,7 +81,7 @@ export default defineComponent({
     ErpDelimiter,
     ErpButton
   },
-  setup() {
+  setup(props,{expose}) {
     const router = useRouter();
     const accountExpenditureTableRef = ref<ITableRef>();
     const accountExpenditureAmountMxTableRef = ref<ITableRef>();
@@ -85,15 +89,7 @@ export default defineComponent({
     const accountExpenditureFindDto = ref(new AccountExpenditureFindDto());
     const accountExpenditureAmountMxFindDto = ref(new AccountExpenditureAmountMxFindDto());
     const accountExpenditureSheetMxFindDto = ref(new AccountExpenditureSheetMxFindDto());
-    const buttonShowState = ref<IButtonState>({
-      create: true,
-      edit: false,
-      level1review: false,
-      un_level1review: false,
-      level2review: false,
-      un_level2review: false,
-      delete_data: false
-    });
+    const {buttonShowState,updateButtonState} = useButtonState()
 
     //设置单头表格id
     function getRowNodeId_headTable(data: IAccountExpenditureFind) {
@@ -104,18 +100,15 @@ export default defineComponent({
     const accountExpenditureService = new AccountExpenditureService();
 
     //设置默认日期
-    const { findDate } = useDateSelect(accountExpenditureFindDto);
+    const {findDate} = useDateSelect(accountExpenditureFindDto);
 
-    onMounted(async () => {
-      await initPage();
-    })
-
-    async function activated(){
+    async function activated() {
       await initPage()
     }
+    expose({activated})
 
     async function initPage() {
-      buttonShowState.value = getButtonState();
+      updateButtonState();
       await accountExpenditureTableRef.value?.initTableData();
     }
 
@@ -161,7 +154,7 @@ export default defineComponent({
     //event -----------------------------------------
     async function onChangeSearch() {
       await accountExpenditureTableRef.value?.initTableData();
-      buttonShowState.value = getButtonState();
+      updateButtonState();
       await initAmountMxTableData();
       await initSheetMxTableData();
     }
@@ -169,7 +162,7 @@ export default defineComponent({
     //单据列表 选择已更改
     async function onSelectionChanged() {
       const accountExpenditure = await getSelected();
-      buttonShowState.value = getButtonState(accountExpenditure.level1Review, accountExpenditure.level2Review);
+      updateButtonState(accountExpenditure.level1Review, accountExpenditure.level2Review);
       await initAmountMxTableData(accountExpenditure.accountExpenditureId);
       await initSheetMxTableData(accountExpenditure.accountExpenditureId);
     }
@@ -194,7 +187,7 @@ export default defineComponent({
 
     //单击编辑按钮
     async function clickedEditButton() {
-      const { accountExpenditureId } = await getSelected();
+      const {accountExpenditureId} = await getSelected();
       const route = await router.resolve({
         name: "accountExpenditureEdit",
         query: {
@@ -206,13 +199,13 @@ export default defineComponent({
 
     //单击删除按钮
     async function clickedDeleteButton() {
-      const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
+      const {accountExpenditureCode, amount, accountExpenditureId} = await getSelected();
       useErpDialog({
         title: "提示",
         message: `是否删除单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
           //删除支出单
-          await accountExpenditureService.delete_data({ accountExpenditureId });
+          await accountExpenditureService.delete_data({accountExpenditureId});
           //刷新
           await initAmountMxTableData();
           await initSheetMxTableData();
@@ -223,12 +216,12 @@ export default defineComponent({
 
     //单击审核按钮
     async function clickedL1ReviewButton() {
-      const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
+      const {accountExpenditureCode, amount, accountExpenditureId} = await getSelected();
       useErpDialog({
         title: "提示",
         message: `是否审核单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
-          await accountExpenditureService.level1Review({ accountExpenditureId });
+          await accountExpenditureService.level1Review({accountExpenditureId});
           await initAmountMxTableData();
           await initSheetMxTableData();
           await initPage();
@@ -239,12 +232,12 @@ export default defineComponent({
 
     //单击撤审按钮
     async function clickedUnL1ReviewBtn() {
-      const { accountExpenditureCode, amount, accountExpenditureId } = await getSelected();
+      const {accountExpenditureCode, amount, accountExpenditureId} = await getSelected();
       useErpDialog({
         title: "提示",
         message: `是否撤审单据${accountExpenditureCode},金额:${amount}`,
         ok: async () => {
-          await accountExpenditureService.unLevel1Review({ accountExpenditureId });
+          await accountExpenditureService.unLevel1Review({accountExpenditureId});
           await initAmountMxTableData();
           await initSheetMxTableData();
           await initPage();
@@ -252,6 +245,7 @@ export default defineComponent({
         }
       })
     }
+
     return {
       defaultAccountExpenditureTableConfig,
       defaultAccountExpenditureAmountMxTableConfig,

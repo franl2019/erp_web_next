@@ -1,12 +1,12 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {AccountPayableSumReportService} from "@/module/report/accountPayableSumReport/accountPayableSumReport.service";
 import {IAccountPayableSumReport} from "@/module/report/accountPayableSumReport/accountPayableSumReport";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import Table_BuyInfo from "@/components/table/components/renderer/table_BuyInfo.vue";
 
-export const defaultAccountPayableSumReportTableConfig = ref<ITableState<IAccountPayableSumReport>>({
+export const defaultAccountPayableSumReportTableConfig = ref<ITableConfig<IAccountPayableSumReport>>({
     tableName: "defaultAccountPayableSumReportTableConfig",
     gridOptions: {
         defaultColDef: {

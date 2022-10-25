@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {IAccountsVerifySheetMx} from "@/module/accountsVerifySheet/accountsVerifySheetMx";
 import {AccountsVerifySheetMxService} from "@/module/accountsVerifySheet/accountsVerifySheetMx.service";
 import {onlyNumberValueSetter} from "@/components/table/valueSetter/onlyNumberValueSetter";
@@ -8,7 +8,7 @@ import Table_account_Receivable_Payable_Type
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 
-export const editAccountsVerifySheetMxTableConfig = ref<ITableState<IAccountsVerifySheetMx>>({
+export const editAccountsVerifySheetMxTableConfig = ref<ITableConfig<IAccountsVerifySheetMx>>({
     tableName: "editAccountsVerifySheetMxTableConfig",
     gridOptions: {
         defaultColDef: {

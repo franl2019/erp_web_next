@@ -1,11 +1,11 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ClientService} from "@/module/client/client.service";
 import {IClient} from "@/module/client/client";
 
-export const selectClientTableState = ref<ITableState<IClient>>({
+export const selectClientTableState = ref<ITableConfig<IClient>>({
     tableName: "selectClientTableState",
     gridOptions: {
         defaultColDef: {

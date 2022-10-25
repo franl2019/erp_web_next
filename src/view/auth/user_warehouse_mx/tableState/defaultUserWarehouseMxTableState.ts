@@ -1,10 +1,10 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import {User_warehouse_mxService} from "@/module/user_warehouse_mx/user_warehouse_mx.service";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {IUser_warehouse_mx} from "@/module/user_warehouse_mx/user_warehouse_mx";
 
-export const defaultUserWarehouseMxTableState = ref<ITableState<IUser_warehouse_mx>>({
+export const defaultUserWarehouseMxTableState = ref<ITableConfig<IUser_warehouse_mx>>({
     tableName: "defaultUserWarehouseMxTable",
     gridOptions: {
         defaultColDef: {

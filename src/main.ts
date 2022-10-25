@@ -23,7 +23,7 @@ app.mount('#app');
 
 app.config.errorHandler = (err: any) => {
     console.dir(err)
-    if (err.errorType === 'verifyParamError') {
+    if (err&&err.errorType === 'verifyParamError') {
         useErpErrorDialog({
             title: "错误提示",
             message: err.message,

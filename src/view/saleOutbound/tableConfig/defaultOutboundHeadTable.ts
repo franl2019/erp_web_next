@@ -1,5 +1,5 @@
 import {ref} from "vue";
-import {ITableState} from "@/components/table/type";
+import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
@@ -7,7 +7,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 
-export const defaultOutboundHeadTable = ref<ITableState<IOutbound>>({
+export const defaultOutboundHeadTable = ref<ITableConfig<IOutbound>>({
     tableName: "defaultOutboundHeadTable",
     gridOptions: {
         defaultColDef: {
