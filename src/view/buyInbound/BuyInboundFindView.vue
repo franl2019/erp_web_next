@@ -14,7 +14,7 @@
       <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnLevel2review">财务撤审
       </erp-button>
       <erp-delimiter/>
-      <erp-button v-reqClick="initPage">刷新</erp-button>
+      <erp-button @click="initPage">刷新</erp-button>
       <template v-slot:input>
         <el-date-picker v-model="findDate" end-placeholder="结束日期" range-separator="-" start-placeholder="开始日期"
                         type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss" @change="refreshData">
@@ -63,8 +63,13 @@
       </template>
     </erp-no-title>
 
-    <erp-table ref="inboundHeadRef" :find-dto="inboundHeadFindDto" :getRowNodeId="getHeadTableRowNodeId"
-               :table-state="BuyInboundFindViewHeadTableConfig" @selectionChanged="onHeadTableSelectRow"></erp-table>
+    <erp-table ref="inboundHeadRef"
+               :find-dto="inboundHeadFindDto"
+               :getRowNodeId="getHeadTableRowNodeId"
+               :table-state="BuyInboundFindViewHeadTableConfig"
+               @ready="initPage"
+               @selectionChanged="onHeadTableSelectRow">
+    </erp-table>
 
     <erp-title title="单据明细"></erp-title>
 
@@ -86,7 +91,7 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpPopOverButton from "@/components/button/ErpPopOverButton.vue";
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpFormItem from "@/components/form/ErpFormItem.vue";
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {useRouter} from "vue-router";
 import useErpDialog from "@/components/dialog/useErpDialog";
@@ -117,10 +122,11 @@ export default defineComponent({
     ErpFormItem,
     ErpWarehouseAuthSelectHaveRoot,
   },
-  setup(_prop,{expose}) {
+  setup(_prop, {expose}) {
     async function activated() {
       await initPage()
     }
+
     expose({activated})
 
     const inboundHeadFindDto = ref<IBuyInboundFindDto>(new BuyInboundFindDto());
@@ -138,12 +144,8 @@ export default defineComponent({
 
     const inboundService = new BuyInboundService();
 
-    onMounted(async () => {
-      await setDefaultAllWarehouse();
-      await initPage();
-    })
-
     async function initPage() {
+      await setDefaultAllWarehouse();
       await initInboundMx();
       await inboundHeadRef.value?.initTableData();
       updateButtonState()

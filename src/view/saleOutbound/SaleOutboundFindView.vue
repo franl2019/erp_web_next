@@ -66,7 +66,7 @@
       <erp-button :disabled="!buttonVisibleState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
       </erp-button>
       <erp-delimiter/>
-      <erp-button v-reqClick="initPage">刷新</erp-button>
+      <erp-button @click="initPage">刷新</erp-button>
     </erp-no-title>
 
     <erp-table ref="outboundHeadRef"

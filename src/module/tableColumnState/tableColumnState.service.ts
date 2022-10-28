@@ -33,6 +33,7 @@ export class TableColumnStateService {
     }
 
     public async saveColumnState(tableColumnStates: ITableColumnState[]) {
+        console.log(tableColumnStates)
         const result = await useHttpPost<IApiResult>(API_URL.TABLE_COLUMN_STATE_ADD, {
             tableName: this.tableName,
             tableColumnState: tableColumnStates

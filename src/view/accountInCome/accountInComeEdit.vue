@@ -1,7 +1,7 @@
 <template>
   <erp-page-box>
     <erp-no-title>
-      <erp-button v-reqClick="clickedSaveBtn" :disabled="!state.edit" type="info">保存</erp-button>
+      <erp-button @click="clickedSaveBtn" :disabled="!state.edit" type="info">保存</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteBtn">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedLevel1ReviewBtn">审核

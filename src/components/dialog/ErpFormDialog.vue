@@ -28,14 +28,22 @@
         <slot name="custom"></slot>
       </template>
 
+
       <div
-          class="bg-gray-100 px-4 py-2 md:py-0 md:h-14 md:flex md:items-center sm:px-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row-reverse sm:space-x-reverse sm:space-x-2">
-        <erp-button class="" type="success" @click="ok">
+          class="flex flex-col
+          bg-gray-100 px-4 py-2 space-y-2
+          md:py-0 md:h-14 md:flex md:items-center
+          sm:flex-row-reverse sm:space-x-reverse
+          sm:px-4 sm:space-y-0 sm:space-x-2">
+        <erp-button type="success" @click="ok">
           确定
         </erp-button>
-        <erp-button class="" type="info" @click="close">
+        <erp-button type="info" @click="close">
           取消
         </erp-button>
+        <div class="flex-grow">
+          <slot name="button"></slot>
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +82,7 @@ export default defineComponent({
     }
 
     function close() {
+      emits('clickedClose')
       emits('clickedCancel');
       emits('update:visible', false);
     }

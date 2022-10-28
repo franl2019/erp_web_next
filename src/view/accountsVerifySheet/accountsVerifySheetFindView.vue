@@ -11,7 +11,7 @@
       <erp-button :disabled="!buttonShowState.un_level1review" type="danger" @click="clickedUnL1ReviewButton">撤审
       </erp-button>
       <erp-delimiter/>
-      <erp-button v-reqClick="clickedRefreshButton">刷新</erp-button>
+      <erp-button @click="clickedRefreshButton">刷新</erp-button>
       <template v-slot:input>
         <el-date-picker v-model="findDate" end-placeholder="结束日期" range-separator="-" start-placeholder="开始日期"
                         type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss"

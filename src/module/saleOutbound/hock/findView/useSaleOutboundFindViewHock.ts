@@ -20,6 +20,8 @@ export function useSaleOutboundFindViewHock(option:{
     const {saleOutboundHeadFindDto,saleOutboundMxFindDto,buttonVisibleState,outboundHeadRef,outboundMxRef } = option
     const {setDefaultAllWarehouse} = useWarehouseSelect(saleOutboundHeadFindDto);
 
+
+
     async function initPage() {
         buttonVisibleState.value = getButtonState()
         await setDefaultAllWarehouse();

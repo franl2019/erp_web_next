@@ -2,7 +2,7 @@
   <erp-page-box>
 
     <erp-no-title>
-      <erp-button v-reqClick="save" :disabled="!state.edit" type="info">保存</erp-button>
+      <erp-button :disabled="!state.edit" type="info" @click="save">保存</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedLevel1review">审核
@@ -48,13 +48,19 @@
 
     <div class="mt-4"></div>
 
-    <erp-table ref="inboundMxTableRef" :find-dto="{}" :getRowNodeId="getInboundMxTableRowNodeId"
-               :showTopBox="true" :table-edit="state.edit" :table-state="BuyInboundCreateViewMxTableConfig"
-               @cellEditingStarted="bottomRowStopEditing" @cellValueChanged="onCellValueChanged"
+    <erp-table ref="inboundMxTableRef"
+               :find-dto="{}"
+               :getRowNodeId="getInboundMxTableRowNodeId"
+               :showTopBox="true"
+               :tableName="'单据明细'"
+               :table-edit="state.edit"
+               :table-state="BuyInboundCreateViewMxTableConfig"
+               @cellEditingStarted="bottomRowStopEditing"
+               @cellValueChanged="onCellValueChanged"
                @ready="onTableReady">
       <template #topBox>
-        <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
-        <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
+          <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
+          <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
       </template>
     </erp-table>
 
@@ -154,7 +160,7 @@ export default defineComponent({
       edit: true
     })
 
-    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault:true});
+    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault: true});
 
     //单据明细表格Ref
     const inboundMxTableRef = ref<ITableRef>();
@@ -329,7 +335,7 @@ export default defineComponent({
       return inboundMx
     }
 
-    function setProductToMx(productList: IProduct[]){
+    function setProductToMx(productList: IProduct[]) {
       const addItems: IBuyInboundMxInTable[] = [];
       productList.forEach(product => {
         addItems.push(new BuyInboundMxCreateInTableDto().setProductToMx(product));
