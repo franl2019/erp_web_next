@@ -11,36 +11,36 @@
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="editDto.accountsVerifySheetCode" label-for-name="单号" lg-col="1" md-col="2">
+      <erp-form-item v-if="editDto.accountsVerifySheetCode" name="单号" lg-col="1" md-col="2">
         <erp-input-round v-model="editDto.accountsVerifySheetCode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="核销类型" lg-col="1" md-col="2">
+      <erp-form-item name="核销类型" lg-col="1" md-col="2">
         <erp-accounts-verify-sheet-type-select v-model="editDto.sheetType"
                                                :disabled="!state.edit"
                                                @change="refreshFromSheetType(editDto.sheetType)">
         </erp-accounts-verify-sheet-type-select>
       </erp-form-item>
-      <erp-form-item label-for-name="发生日期" lg-col="1" md-col="2">
+      <erp-form-item name="发生日期" lg-col="1" md-col="2">
         <el-date-picker v-model="editDto.inDate" :disabled="!state.edit" placeholder="选择日期" type="date"
                         value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item v-if="inputVisible.client" label-for-name="客户" lg-col="2" md-col="2">
+      <erp-form-item v-if="inputVisible.client" name="客户" lg-col="2" md-col="2">
         <erp-select-client-btn :clientname="editDto.clientname" :disabled="!state.edit" @select="onSelectClient"
                                @unSelect="onUnSelectClient"></erp-select-client-btn>
       </erp-form-item>
-      <erp-form-item v-if="inputVisible.client_b" label-for-name="转入客户" lg-col="2" md-col="2">
+      <erp-form-item v-if="inputVisible.client_b" name="转入客户" lg-col="2" md-col="2">
         <erp-select-client-btn :clientname="editDto.clientname_b" :disabled="!state.edit"
                                @select="onSelectClient_b" @unSelect="onUnSelectClient_b"></erp-select-client-btn>
       </erp-form-item>
-      <erp-form-item v-if="inputVisible.buy" label-for-name="供应商" lg-col="2" md-col="2">
+      <erp-form-item v-if="inputVisible.buy" name="供应商" lg-col="2" md-col="2">
         <erp-select-buy-btn :buyname="editDto.buyname" :disabled="!state.edit" @select="onSelectBuy"
                             @unSelect="onUnSelectBuy"></erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item v-if="inputVisible.buy_b" label-for-name="转入供应商" lg-col="2" md-col="2">
+      <erp-form-item v-if="inputVisible.buy_b" name="转入供应商" lg-col="2" md-col="2">
         <erp-select-buy-btn :buyname="editDto.buyname_b" :disabled="!state.edit" @select="onSelectBuy_b"
                             @unSelect="onUnSelectBuy_b"></erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item label-for-name="备注" lg-col="2" md-col="4">
+      <erp-form-item name="备注" lg-col="2" md-col="4">
         <erp-input-round v-model="editDto.reMark1" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>

@@ -16,28 +16,28 @@
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="outboundHead.outboundcode" label-for-name="单号" lg-col="1" md-col="2">
+      <erp-form-item v-if="outboundHead.outboundcode" name="单号" lg-col="1" md-col="2">
         <erp-input-round v-model="outboundHead.outboundcode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="客户" lg-col="2" md-col="2">
+      <erp-form-item name="客户" lg-col="2" md-col="2">
         <erp-select-client-btn :clientname="outboundHead.clientname" :disabled="!state.edit"
                                @select="selectedClientEvent" @unSelect="unSelectedClientEvent"></erp-select-client-btn>
       </erp-form-item>
-      <erp-form-item label-for-name="仓库" lg-col="1" md-col="2">
+      <erp-form-item name="仓库" lg-col="1" md-col="2">
         <erp-warehouse-auth-select v-model="outboundHead.warehouseid" :disabled="!state.edit"
                                    @change="unSelectWarehouse"></erp-warehouse-auth-select>
       </erp-form-item>
-      <erp-form-item label-for-name="出仓日期" lg-col="1" md-col="2">
+      <erp-form-item name="出仓日期" lg-col="1" md-col="2">
         <el-date-picker v-model="outboundHead.outdate" :disabled="!state.edit" placeholder="选择出仓日期"
                         type="date" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item label-for-name="相关号码" lg-col="1" md-col="2">
+      <erp-form-item name="相关号码" lg-col="1" md-col="2">
         <erp-input-round v-model="outboundHead.relatednumber" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="结算方式" lg-col="1" md-col="2">
+      <erp-form-item name="结算方式" lg-col="1" md-col="2">
         <erp-input-round v-model="outboundHead.moneytype" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="备注" lg-col="1" md-col="2">
+      <erp-form-item name="备注" lg-col="1" md-col="2">
         <erp-input-round v-model="outboundHead.remark1" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>

@@ -17,6 +17,7 @@
     <template #popper>
       <erp-table
           ref="tableRef"
+          init
           :find-dto="findDto"
           :navigateToNextCell="navigateToNextCell"
           :table-state="tableEditorProductCodeConfig"

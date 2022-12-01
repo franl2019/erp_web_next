@@ -3,8 +3,13 @@
     <erp-table-top-box
         v-if="$props.showTopBox || $props.tableName.length > 0"
     >
-      <span class="text-sm font-bold">{{ $props.tableName }}</span>
-      <div class="flex-grow flex">
+      <span
+          v-if="$props.tableName.length>0"
+          class="text-sm font-bold mx-2"
+      >{{ $props.tableName }}</span>
+      <div
+          v-if="$slots.topBox"
+          class="flex-grow flex mx-2">
         <slot name="topBox">
         </slot>
       </div>
@@ -60,7 +65,7 @@ import ErpTableOptionTab from "@/components/table/components/ErpTableOptionTab.v
 import ErpTableTopBox from "@/components/table/components/ErpTableTopBox.vue";
 
 export default defineComponent({
-  name:"ErpTable",
+  name: "ErpTable",
   emits: ['ready'],
   components: {
     ErpTableTopBox,
@@ -138,7 +143,7 @@ export default defineComponent({
       await initGridColumn();
       emit('ready', event);
       if (props.init) {
-        await initTableData()
+        await initTableData();
       }
     }
 

@@ -1,34 +1,41 @@
 <template>
-  <erp-page-box>
-    <erp-title title="权限主题管理">
-      <template #default>
-        <erp-button :disabled="!buttonShowState.create"
-                    :type="'info'"
-                    @click="clickedCreateButton"
-        >新增
-        </erp-button>
-        <erp-button :disabled="!buttonShowState.edit"
-                    :type="'success'"
-                    @click="clickedUpdateButton"
-        >修改
-        </erp-button>
-        <erp-button :disabled="!buttonShowState.delete_data"
-                    :type="'danger'"
-                    @click="clickedDeleteButton"
-        >删除
-        </erp-button>
+  <div class="flex flex-col h-full">
+    <erp-title
+        v-if="$props.showTitle"
+        class="flex-none"
+        title="类别">
+      <template v-if="!$props.readonly" #default>
+        <div class="flex h-10 space-x-1">
+          <erp-button :disabled="!buttonShowState.create"
+                      :size="'small'"
+                      :type="'info'"
+                      @click="clickedCreateButton"
+          >新增
+          </erp-button>
+          <erp-button :disabled="!buttonShowState.edit"
+                      :size="'small'"
+                      :type="'success'"
+                      @click="clickedUpdateButton"
+          >修改
+          </erp-button>
+          <erp-button :disabled="!buttonShowState.delete_data"
+                      :size="'small'"
+                      :type="'danger'"
+                      @click="clickedDeleteButton"
+          >删除
+          </erp-button>
+        </div>
       </template>
     </erp-title>
 
-    <erp-table
-        ref="permissionsThemeRef"
-        :find-dto="{}"
-        :getRowNodeId="getRowNodeId"
-        :table-state="permissionsThemeDefaultTableConfig"
-        @selection-changed="selectionChanged"
+
+    <erp-permissions-theme-tree
+        ref="permissionsThemeTreeRef"
+        @node-click="selectionChanged"
+        class="border-solid border border-gray-300 h-0 flex-grow overflow-y-auto"
     >
-    </erp-table>
-  </erp-page-box>
+    </erp-permissions-theme-tree>
+  </div>
 
 </template>
 
@@ -40,23 +47,35 @@ import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import {usePermissionsThemeCreateDialog} from "@/view/permissionsTheme/components/usePermissionsThemeCreateDialog";
-import {ITableRef} from "@/components/table/type";
 import {usePermissionsThemeUpdateDialog} from "@/view/permissionsTheme/components/usePermissionsThemeUpdateDialog";
 import {IPermissionsTheme} from "@/module/permissionsTheme/permissionsTheme";
 import {PermissionsThemeService} from "@/module/permissionsTheme/permissionsTheme.service";
 import {PermissionsThemeCreateDto} from "@/module/permissionsTheme/dto/permissionsThemeCreate.dto";
 import {useButtonState} from "@/composables/useButtonState";
+import ErpPermissionsThemeTree from "@/components/tree/component/ErpPermissionsThemeTree.vue";
 
 export default defineComponent({
   name: "PermissionsTheme",
   components: {
+    ErpPermissionsThemeTree,
     ErpTable,
     ErpButton,
     ErpTitle,
     ErpPageBox
   },
-  setup() {
-    const permissionsThemeRef = ref<ITableRef>();
+  props: {
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    }
+  },
+  emits: ['selectedNode'],
+  setup(_props, {emit}) {
+    const permissionsThemeTreeRef = ref();
     const permissionsThemeSelected = ref<IPermissionsTheme>(new PermissionsThemeCreateDto());
     const {buttonShowState, updateButtonState} = useButtonState();
     onMounted(() => {
@@ -68,7 +87,7 @@ export default defineComponent({
     }
 
     async function init() {
-      await permissionsThemeRef.value?.initTableData();
+      await permissionsThemeTreeRef.value?.initData();
     }
 
     async function clickedCreateButton() {
@@ -93,20 +112,24 @@ export default defineComponent({
     }
 
     function selectionChanged() {
-      const permissionsTheme = permissionsThemeRef.value?.getGridApi().getSelectedRows()[0] as IPermissionsTheme;
-      if (permissionsTheme.permissionsThemeId) {
+      const permissionsTheme = permissionsThemeTreeRef.value?.getSelectedNode() as IPermissionsTheme;
+      if (permissionsTheme.permissionsThemeId === 0) {
+        updateButtonState()
+        emit('selectedNode', permissionsTheme);
+      } else if (permissionsTheme.permissionsThemeId) {
         permissionsThemeSelected.value = permissionsTheme;
         updateButtonState(0, 0);
+        emit('selectedNode', permissionsTheme);
       }
     }
 
     function setSelect(permissionsThemeId: number) {
-      permissionsThemeRef.value?.getGridApi().getRowNode(permissionsThemeId+'')?.setSelected(true);
+      permissionsThemeTreeRef.value?.setSelectedNode(permissionsThemeId);
       updateButtonState(0, 0);
     }
 
     return {
-      permissionsThemeRef,
+      permissionsThemeTreeRef,
       permissionsThemeDefaultTableConfig,
       buttonShowState,
       getRowNodeId,

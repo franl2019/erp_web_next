@@ -1,13 +1,13 @@
 <template>
   <erp-form-dialog title="修改地区" v-bind="$attrs" @clickedCancel="onCancelDialog" @clickedConfirm="onConfirmDialog">
     <erp-form>
-      <erp-form-item label-for-name="编号" lg-col="8" md-col="8">
+      <erp-form-item name="编号" lg-col="8" md-col="8">
         <erp-input-round ref="defaultInputFocusRef" v-model="updateBuyArea.buyareacode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="名称" lg-col="8" md-col="8">
+      <erp-form-item name="名称" lg-col="8" md-col="8">
         <erp-input-round v-model="updateBuyArea.buyareaname"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="所属地区" lg-col="8" md-col="8">
+      <erp-form-item name="所属地区" lg-col="8" md-col="8">
         <erp-buy-area-have-root-select v-model="updateBuyArea.parentid"></erp-buy-area-have-root-select>
       </erp-form-item>
     </erp-form>

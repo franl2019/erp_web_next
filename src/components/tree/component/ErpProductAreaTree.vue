@@ -2,7 +2,6 @@
   <erp-tree ref="productAreaTreeRef"
             :config="productAreaTreeConfig"
             :data="productAreaTreeData"
-            :expand-all="false"
             :highlight-current="true"
             node-key="productareaid"
             v-bind="$attrs"

@@ -1,7 +1,7 @@
 <template>
   <div class="text-left col-span-8" :class="mdFormItemStyle + ' ' + lgFormItemStyle">
     <label :class="labelForNameStyle">
-      {{ props.labelForName }}
+      {{ props.name }}
     </label>
     <div class="w-full max-h-10">
       <slot></slot>
@@ -15,7 +15,7 @@ import { defineComponent, onMounted, PropType, ref } from "vue";
 export default defineComponent({
   name:"ErpFormItem",
   props: {
-    labelForName: {
+    name: {
       type: String,
       default: '',
     },

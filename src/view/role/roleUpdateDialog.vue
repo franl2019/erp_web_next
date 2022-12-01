@@ -1,13 +1,13 @@
 <template>
   <erp-form-dialog title="修改用户角色" @clickedCancel="clickedCancel" @clickedConfirm="clickedConfirm">
     <erp-form>
-      <erp-form-item label-for-name="角色名称" type="danger">
+      <erp-form-item name="角色名称" type="danger">
         <erp-input-round v-model="roleUpdateDto.roleName"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="顺序号" lg-col="4" md-col="4">
+      <erp-form-item name="顺序号" lg-col="4" md-col="4">
         <erp-input-round v-model.number="roleUpdateDto.printid" :type="'number'"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="资料是否使用" lg-col="4" md-col="4">
+      <erp-form-item name="资料是否使用" lg-col="4" md-col="4">
         <erp-checkbox v-model="roleUpdateDto.useflag">使用</erp-checkbox>
       </erp-form-item>
     </erp-form>

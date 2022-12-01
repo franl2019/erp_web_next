@@ -24,14 +24,14 @@
         <template #default>筛选</template>
         <template #form>
           <erp-form>
-            <erp-form-item label-for-name="单据编号">
+            <erp-form-item name="单据编号">
               <erp-input-round v-model="findDto.inboundcode"></erp-input-round>
             </erp-form-item>
-            <erp-form-item :label-for-name="valueName.product+'名称'">
+            <erp-form-item :name="valueName.product+'名称'">
               <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
                                @change="onChangRefresh"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="操作区域">
+            <erp-form-item name="操作区域">
               <erp-operate-area-auth-select
                   v-model="operateAreaId"
                   :have-root-node="true"
@@ -39,27 +39,27 @@
                   @change="onChangRefresh"
               ></erp-operate-area-auth-select>
             </erp-form-item>
-            <erp-form-item label-for-name="仓库">
+            <erp-form-item name="仓库">
               <erp-warehouse-auth-select-have-root
                   v-model="warehouseid"
                   @change="onChangRefresh"></erp-warehouse-auth-select-have-root>
             </erp-form-item>
-            <erp-form-item :label-for-name="valueName.product+'编号'">
+            <erp-form-item :name="valueName.product+'编号'">
               <erp-input-round v-model="findDto.productcode"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="单位">
+            <erp-form-item name="单位">
               <erp-input-round v-model="findDto.unit"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="规格">
+            <erp-form-item name="规格">
               <erp-input-round v-model="findDto.spec"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="用料">
+            <erp-form-item name="用料">
               <erp-input-round v-model="findDto.materials"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="订做规格">
+            <erp-form-item name="订做规格">
               <erp-input-round v-model="findDto.spec_d"></erp-input-round>
             </erp-form-item>
-            <erp-form-item label-for-name="现用料">
+            <erp-form-item name="现用料">
               <erp-input-round v-model="findDto.materials_d"></erp-input-round>
             </erp-form-item>
           </erp-form>

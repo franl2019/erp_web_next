@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col flex-grow pr-2">
+  <div class="flex flex-col flex-grow">
     <erp-title title="类别">
       <div class="flex h-10 space-x-1">
         <erp-button size="small" @click="createProductAreaDialogVisible = true">新增</erp-button>

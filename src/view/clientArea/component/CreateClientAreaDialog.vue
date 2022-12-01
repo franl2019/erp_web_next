@@ -5,13 +5,13 @@
       @clickedCancel="onCancelDialog"
       @clickedConfirm="onConfirmDialog">
     <erp-form>
-      <erp-form-item label-for-name="客户地区编号" lg-col="8" md-col="8">
+      <erp-form-item name="客户地区编号" lg-col="8" md-col="8">
         <erp-input-round ref="defaultInputFocusRef" v-model="createClientArea.clientareacode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="客户地区名称" lg-col="8" md-col="8">
+      <erp-form-item name="客户地区名称" lg-col="8" md-col="8">
         <erp-input-round v-model="createClientArea.clientareaname"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="所属地区" lg-col="8" md-col="8">
+      <erp-form-item name="所属地区" lg-col="8" md-col="8">
         <erp-client-area-have-root-select v-model="createClientArea.parentid"></erp-client-area-have-root-select>
       </erp-form-item>
     </erp-form>

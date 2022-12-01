@@ -18,30 +18,30 @@
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="inboundHead.inboundcode" label-for-name="单据编号" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" name="单据编号" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.inboundcode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="供应商" lg-col="2" md-col="2">
+      <erp-form-item name="供应商" lg-col="2" md-col="2">
         <erp-select-buy-btn :buyname="inboundHead.buyname" :disabled="!state.edit" @select="selectBuy"
                             @unSelect="unSelectBuy">
         </erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item label-for-name="仓库" lg-col="1" md-col="2">
+      <erp-form-item name="仓库" lg-col="1" md-col="2">
         <erp-warehouse-auth-select v-model="inboundHead.warehouseid" :disabled="!state.edit">
         </erp-warehouse-auth-select>
       </erp-form-item>
-      <erp-form-item label-for-name="进仓日期" lg-col="1" md-col="2">
+      <erp-form-item name="进仓日期" lg-col="1" md-col="2">
         <el-date-picker v-model="inboundHead.indate" :disabled="!state.edit" placeholder="选择进仓日期" type="date"
                         value-format="YYYY-MM-DD HH:mm:ss">
         </el-date-picker>
       </erp-form-item>
-      <erp-form-item label-for-name="结算方式" lg-col="1" md-col="2">
+      <erp-form-item name="结算方式" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.moneytype" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="相关号码" lg-col="1" md-col="2">
+      <erp-form-item name="相关号码" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.relatednumber" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="备注" lg-col="1" md-col="2">
+      <erp-form-item name="备注" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.remark1" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>
@@ -65,16 +65,16 @@
     </erp-table>
 
     <erp-form>
-      <erp-form-item v-if="inboundHead.inboundcode" label-for-name="开单" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" name="开单" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.creater" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" label-for-name="最后修改" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" name="最后修改" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.updater" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" label-for-name="审核" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" name="审核" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.level1name" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" label-for-name="财审" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" name="财审" lg-col="1" md-col="2">
         <erp-input-round v-model="inboundHead.level2name" disabled></erp-input-round>
       </erp-form-item>
     </erp-form>

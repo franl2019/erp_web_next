@@ -1,6 +1,6 @@
 <template>
   <erp-page-box>
-    <erp-title title="用户角色管理">
+    <erp-title title="角色管理">
       <erp-button :disabled="!buttonShowState.create" @click="onClickedCreateRoleButton">新增</erp-button>
       <erp-button :disabled="!buttonShowState.edit" type="success" @click="onClickedUpdateRoleButton">修改</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="onClickedDeleteRoleButton">删除
@@ -8,6 +8,7 @@
     </erp-title>
 
     <erp-table ref="roleTableRef"
+               init
                :find-dto="{}"
                :table-state="roleTableConfig"
                @selection-changed="tableSelectionChanged">

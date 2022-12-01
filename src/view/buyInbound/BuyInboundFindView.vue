@@ -29,32 +29,32 @@
           <template #default>筛选</template>
           <template #form>
             <erp-form>
-              <erp-form-item label-for-name="仓库">
+              <erp-form-item name="仓库">
                 <erp-warehouse-auth-select-have-root v-model="warehouseid" @change="refreshData">
                 </erp-warehouse-auth-select-have-root>
               </erp-form-item>
-              <erp-form-item label-for-name="供应商">
+              <erp-form-item name="供应商">
                 <erp-input-round v-model="inboundHeadFindDto.buyname"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="结算方式">
+              <erp-form-item name="结算方式">
                 <erp-input-round v-model="inboundHeadFindDto.moneytype"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="相关单号">
+              <erp-form-item name="相关单号">
                 <erp-input-round v-model="inboundHeadFindDto.relatednumber"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注1">
+              <erp-form-item name="备注1">
                 <erp-input-round v-model="inboundHeadFindDto.remark1"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注2">
+              <erp-form-item name="备注2">
                 <erp-input-round v-model="inboundHeadFindDto.remark2"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注3">
+              <erp-form-item name="备注3">
                 <erp-input-round v-model="inboundHeadFindDto.remark3"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注4">
+              <erp-form-item name="备注4">
                 <erp-input-round v-model="inboundHeadFindDto.remark4"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注5">
+              <erp-form-item name="备注5">
                 <erp-input-round v-model="inboundHeadFindDto.remark5"></erp-input-round>
               </erp-form-item>
             </erp-form>

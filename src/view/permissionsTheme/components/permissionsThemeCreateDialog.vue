@@ -1,15 +1,15 @@
 <template>
   <erp-form-dialog
-      title="新增权限主题"
+      title="新增权限类别"
       @clickedCancel="clickedCancel"
       @clickedClose="clickedClose"
       @clickedConfirm="clickedConfirm"
   >
     <erp-form>
-      <erp-form-item label-for-name="名称" lg-col="8" md-col="8">
+      <erp-form-item name="名称" lg-col="8" md-col="8">
         <erp-input-round v-model="permissionsThemeCreateDto.permissionsThemeName"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="顺序号" lg-col="8" md-col="8">
+      <erp-form-item name="顺序号" lg-col="8" md-col="8">
         <erp-input-round
             v-model.number="permissionsThemeCreateDto.printid"
             :type="'number'">

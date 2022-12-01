@@ -17,7 +17,7 @@ export const permissionsThemeDefaultTableConfig = ref<ITableConfig<IPermissionsT
     },
     columnDefaults: [
         {headerName: '顺序号', field: 'printid',width:80},
-        {headerName: "权限主题名称", field: 'permissionsThemeName'},
+        {headerName: "权限类别名称", field: 'permissionsThemeName'},
     ],
     tableService: new PermissionsThemeService()
 

@@ -2,7 +2,10 @@
   <input ref="inputRef"
          :type="$props.type"
          :value="$props.modelValue"
-         class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300"
+         class="border border-solid border-gray-300
+         focus:outline-none
+         focus:border-2 focus:border-indigo-500
+         px-2 block h-10 w-full rounded sm:text-sm"
          v-bind="$attrs"
          @input="$emit('update:modelValue', $event.target.value)">
 </template>

@@ -76,9 +76,7 @@ export class Table {
 
     //当表格单元格右键
     public onCellContextMenu(event: CellContextMenuEvent) {
-        if (!this.canRightClickFilter) return
-        const headerName = event.colDef.headerName || '';
-        const colId = event.colDef.colId || '';
+
     }
 
 

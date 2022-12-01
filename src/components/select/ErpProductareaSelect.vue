@@ -1,7 +1,6 @@
 <template>
   <erp-select-tree
       :data="productAreaSelectList"
-      :expandOnClickNode="false"
       :model-value="modelValue"
       :config="productAreaTreeConfig"
       node-key="productareaid"

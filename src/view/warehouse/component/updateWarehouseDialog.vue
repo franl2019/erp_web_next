@@ -1,10 +1,10 @@
 <template>
   <erp-form-dialog title="编辑仓库资料" @clickedConfirm="clickedConfirm">
     <erp-form>
-      <erp-form-item label-for-name="仓库编号" lg-col="8" md-col="8">
+      <erp-form-item name="仓库编号" lg-col="8" md-col="8">
         <erp-input-round ref="defaultInputFocusRef" v-model="updateWarehouseDto.warehousecode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="仓库名称" lg-col="8" md-col="8">
+      <erp-form-item name="仓库名称" lg-col="8" md-col="8">
         <erp-input-round v-model="updateWarehouseDto.warehousename"></erp-input-round>
       </erp-form-item>
     </erp-form>

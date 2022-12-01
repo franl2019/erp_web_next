@@ -8,6 +8,7 @@
 
     <erp-table
         ref="warehouseRef"
+        :init="true"
         :find-dto="{}"
         :getRowNodeId="getRowNodeId"
         :table-state="defaultWarehouseTableConfig"
@@ -39,7 +40,7 @@ import UpdateWarehouseDialog from "@/view/warehouse/component/updateWarehouseDia
 import {DefaultWarehouseTable as defaultWarehouseTableConfig} from "@/view/warehouse/tableConfig/defaultWarehouseTable";
 import {IWarehouse, Warehouse} from "@/module/warehouse/warehouse";
 import {SelectionChangedEvent} from "ag-grid-community";
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
@@ -55,9 +56,6 @@ export default defineComponent({
     UpdateWarehouseDialog
   },
   setup() {
-    onMounted(async () => {
-      await warehouseRef.value?.initTableData();
-    })
 
     const warehouseRef = ref<ITableRef>()
     const warehouseTableSelect = ref<IWarehouse>(new Warehouse());

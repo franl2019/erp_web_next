@@ -18,3 +18,7 @@ export interface IRole {
     deleter: string
     deletedAt: Date | null
 }
+
+export interface IRoleTree extends IRole{
+    children?:IRole[]
+}

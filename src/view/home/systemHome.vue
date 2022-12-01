@@ -6,13 +6,13 @@
       <div class="font-bold text-xl mb-2">系统设置</div>
       <div class="flex">
         <div class="mr-6">
-          <erp-router-button router-name="auth">权限设置</erp-router-button>
+          <erp-router-button router-name="auth">数据范围管理</erp-router-button>
         </div>
         <div class="mr-6">
-          <erp-router-button router-name="role">用户角色设置</erp-router-button>
+          <erp-router-button router-name="userRoleMx">角色管理</erp-router-button>
         </div>
         <div class="mr-6">
-          <erp-router-button router-name="permissionsTheme">权限主题设置</erp-router-button>
+          <erp-router-button router-name="rolePermissions">权限设置</erp-router-button>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@ import ErpPageBoxRow from "@/components/page/ErpPageBoxRow.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name:"systemHome",
+  name: "systemHome",
   components: {
     ErpRouterButton,
     ErpPageBoxRow,

@@ -2,12 +2,13 @@
   <erp-form-dialog
       title="新增仓库资料"
       @clickedConfirm="clickedConfirm"
+      @clickedClose="clickedClose"
   >
     <erp-form>
-      <erp-form-item label-for-name="仓库编号" lg-col="8" md-col="8">
+      <erp-form-item name="仓库编号" lg-col="8" md-col="8">
         <erp-input-round ref="defaultInputFocusRef" v-model="createWarehouseDto.warehousecode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="仓库名称" lg-col="8" md-col="8">
+      <erp-form-item name="仓库名称" lg-col="8" md-col="8">
         <erp-input-round v-model="createWarehouseDto.warehousename"></erp-input-round>
       </erp-form-item>
     </erp-form>
@@ -31,7 +32,7 @@ export default defineComponent({
     ErpInputRound,
     ErpFormDialog
   },
-  emits:["ok"],
+  emits:["ok","close"],
   setup(_props,{emit}) {
     const defaultInputFocusRef = ref();
     onMounted(async () => {
@@ -46,10 +47,15 @@ export default defineComponent({
       emit('ok',createResult);
     }
 
+    function clickedClose() {
+      emit('close');
+    }
+
     return {
       defaultInputFocusRef,
       createWarehouseDto,
       clickedConfirm,
+      clickedClose,
     };
   },
 });

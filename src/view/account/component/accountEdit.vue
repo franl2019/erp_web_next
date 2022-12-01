@@ -1,16 +1,16 @@
 <template>
   <erp-dialog-form v-bind="$attrs">
     <erp-form>
-      <erp-form-item label-for-name="账户编号">
+      <erp-form-item name="账户编号">
         <erp-input-rounded ref="defaultInputFocusRef" v-model="dto.accountCode"></erp-input-rounded>
       </erp-form-item>
-      <erp-form-item label-for-name="账户名称">
+      <erp-form-item name="账户名称">
         <erp-input-rounded v-model="dto.accountName"></erp-input-rounded>
       </erp-form-item>
-      <erp-form-item label-for-name="币种">
+      <erp-form-item name="币种">
         <erp-select-currency v-model="dto.currencyid"></erp-select-currency>
       </erp-form-item>
-      <erp-form-item label-for-name="是否公户">
+      <erp-form-item name="是否公户">
         <erp-checkbox-border v-model="dto.companyFlag">公户</erp-checkbox-border>
       </erp-form-item>
     </erp-form>

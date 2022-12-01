@@ -10,3 +10,7 @@ export interface IPermissionsTheme {
     deleter:string;
     deletedAt:Date | null;
 }
+
+export interface IPermissionsThemeTree extends IPermissionsTheme{
+    children?:IPermissionsThemeTree[]
+}

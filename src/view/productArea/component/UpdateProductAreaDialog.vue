@@ -1,13 +1,13 @@
 <template>
   <erp-form-dialog title="修改类别" v-bind="$attrs" @clickedCancel="onCancelDialog" @clickedConfirm="onConfirmDialog">
     <erp-form>
-      <erp-form-item label-for-name="编号" lg-col="8" md-col="8">
+      <erp-form-item name="编号" lg-col="8" md-col="8">
         <erp-input-round ref="defaultInputFocusRef" v-model="updateProductArea.productareacode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="名称" lg-col="8" md-col="8">
+      <erp-form-item name="名称" lg-col="8" md-col="8">
         <erp-input-round v-model="updateProductArea.productareaname"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="所属类别" lg-col="8" md-col="8">
+      <erp-form-item name="所属类别" lg-col="8" md-col="8">
         <erp-productarea-root-select v-model="updateProductArea.parentid"></erp-productarea-root-select>
       </erp-form-item>
     </erp-form>

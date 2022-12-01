@@ -26,6 +26,7 @@ import {UserWarehouseMxApiUrl} from "@/config/apiUrl/userWarehouseMx";
 import {UserAccountMxApiUrl} from "@/config/apiUrl/userAccountMx";
 import {UserOperateareaMxApiUrl} from "@/config/apiUrl/userOperateareaMx";
 import {PermissionsApiUrl} from "@/config/apiUrl/permissions";
+import {UserRoleMxUrl} from "@/config/apiUrl/userRoleMx";
 
 //引用到了utils/axios
 export const API_URL = {
@@ -64,8 +65,10 @@ export const API_URL = {
     ...UserOperateareaMxApiUrl,
     ...UserWarehouseMxApiUrl,
     ...UserAccountMxApiUrl,
+    ...UserRoleMxUrl,
     ...ReportApiUrl,
-    ...PermissionsApiUrl
+    ...PermissionsApiUrl,
+
 }
 
 export const BASE_PATH = '/api';

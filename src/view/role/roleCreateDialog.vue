@@ -5,13 +5,13 @@
       @clickedConfirm="clickedConfirm"
   >
     <erp-form>
-      <erp-form-item label-for-name="角色名称" type="danger">
+      <erp-form-item name="角色名称" type="danger">
         <erp-input-round v-model="roleCreateDto.roleName"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="顺序号" lg-col="4" md-col="4">
+      <erp-form-item name="顺序号" lg-col="4" md-col="4">
         <erp-input-round v-model.number="roleCreateDto.printid" :type="'number'"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="资料是否使用" lg-col="4" md-col="4">
+      <erp-form-item name="资料是否使用" lg-col="4" md-col="4">
         <erp-checkbox v-model="roleCreateDto.useflag">使用</erp-checkbox>
       </erp-form-item>
     </erp-form>

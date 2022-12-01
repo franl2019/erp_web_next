@@ -19,10 +19,10 @@
                    @clicked-confirm="onClickCreateDialogDefineButton"
                    @clicked-cancel="onClickCreateDialogCancelButton">
     <erp-form>
-      <erp-form-item label-for-name="辅助单位">
+      <erp-form-item name="辅助单位">
         <erp-input-round v-model="createDto.productOtherUnitName"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="默认转换率">
+      <erp-form-item name="默认转换率">
         <erp-input-round v-model="createDto.defaultConversionRate"></erp-input-round>
       </erp-form-item>
     </erp-form>
@@ -33,10 +33,10 @@
       @clicked-confirm="onClickUpdateDialogDefineButton"
       @clicked-cancel="onClickUpdateDialogCancelButton">
     <erp-form>
-      <erp-form-item label-for-name="辅助单位">
+      <erp-form-item name="辅助单位">
         <erp-input-round v-model="updateDto.productOtherUnitName"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="默认转换率">
+      <erp-form-item name="默认转换率">
         <erp-input-round v-model="updateDto.defaultConversionRate"></erp-input-round>
       </erp-form-item>
     </erp-form>

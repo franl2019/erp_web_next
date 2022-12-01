@@ -46,7 +46,7 @@ export default defineComponent({
     },
     expandAll: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   emits: ['node-click', 'update:modelValue'],

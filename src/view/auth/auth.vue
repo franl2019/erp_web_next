@@ -1,22 +1,20 @@
 <template>
   <erp-page-box>
-    <div class="flex-none">
-      <erp-title title="权限管理">
-        <template #input>
-          <el-select v-model="userid" class="md:w-36" placeholder="请选择用户">
-            <el-option v-for="item in userSelectList" :key="item.userid" :label="item.username" :value="item.userid">
-            </el-option>
-          </el-select>
-        </template>
-      </erp-title>
-    </div>
-    <div class="flex flex-grow flex-col md:flex-row">
-      <div class="flex-none md:w-64 overflow-y-auto md:mr-2 border-solid border border-gray-400">
-        <erp-tree ref="AuthTreeRef" :config="authTreeConfig" :data="authMenuTreeData" :default-expand-all="true"
-                  :highlight-current="true" node-key="authMenuId" @node-click="onClickTreeNode"/>
-      </div>
-      <div class="flex-grow h-96 md:h-full">
-        <template v-if="userid">
+    <erp-title title="1.选择用户"></erp-title>
+    <erp-form>
+      <erp-form-item lg-col="1" md-col="2" name="用户名称">
+        <erp-user-select v-model="userid"></erp-user-select>
+      </erp-form-item>
+    </erp-form>
+
+    <template v-if="userid">
+      <erp-title title="2.管理用户数据范围"></erp-title>
+      <div class="flex flex-grow flex-col md:flex-row">
+        <div class="flex-none md:w-64 overflow-y-auto md:mr-2 border-solid border border-gray-400">
+          <erp-tree ref="AuthTreeRef" :config="authTreeConfig" :data="authMenuTreeData" :default-expand-all="true"
+                    :highlight-current="true" node-key="authMenuId" @node-click="onClickTreeNode"/>
+        </div>
+        <div class="flex-grow h-96 md:h-full">
           <Component :is="user_client_operatearea_mx" v-if="showComponent==='user_client_operatearea_mx'"
                      :userid="userid"></Component>
           <Component :is="user_buy_operatearea_mx" v-else-if="showComponent==='user_buy_operatearea_mx'"
@@ -25,9 +23,9 @@
           </Component>
           <Component :is="user_account_mx" v-else-if="showComponent==='user_account_mx'" :userid="userid">
           </Component>
-        </template>
+        </div>
       </div>
-    </div>
+    </template>
   </erp-page-box>
 </template>
 
@@ -35,30 +33,29 @@
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpTree from "@/components/tree/ErpTree.vue";
-import user_client_operatearea_mx from "@/view/auth/user_operatearea_mx/client/user_client_operatearea_mx.vue";
-import user_buy_operatearea_mx from "@/view/auth/user_operatearea_mx/buy/user_buy_operatearea_mx.vue";
-import user_warehouse_mx from "@/view/auth/user_warehouse_mx/user_warehouse_mx.vue";
-import user_account_mx from "@/view/auth/user_account_mx/user_account_mx.vue";
-import {Component, defineComponent, onMounted, ref} from "vue";
-import {UserService} from "@/module/user/user.service";
-import {IUser} from "@/module/user/user";
+import user_client_operatearea_mx from "@/view/auth/userOperateareaMx/client/user_client_operatearea_mx.vue";
+import user_buy_operatearea_mx from "@/view/auth/userOperateareaMx/buy/user_buy_operatearea_mx.vue";
+import user_warehouse_mx from "@/view/auth/userWarehouseMx/user_warehouse_mx.vue";
+import user_account_mx from "@/view/auth/userAccountMx/user_account_mx.vue";
+import {Component, defineComponent, ref} from "vue";
+import ErpForm from "@/components/form/ErpForm.vue";
+import ErpFormItem from "@/components/form/ErpFormItem.vue";
+import ErpUserSelect from "@/components/select/ErpUserSelect.vue";
 
 export default defineComponent({
-  name:"auth",
+  name: "auth",
   components: {
+    ErpUserSelect,
+    ErpFormItem,
+    ErpForm,
     ErpTree,
     ErpTitle,
     ErpPageBox,
   },
   setup() {
     const AuthTreeRef = ref();
-    const userid = ref<number>();
-    const userService = new UserService();
-    const userSelectList = ref<IUser[]>([]);
+    const userid = ref<number>(0);
 
-    onMounted(async () => {
-      userSelectList.value = await userService.find();
-    })
 
     const authTreeConfig = {
       children: 'children',
@@ -135,7 +132,6 @@ export default defineComponent({
     return {
       AuthTreeRef,
       userid,
-      userSelectList,
       authTreeConfig,
       authMenuTreeData,
       showComponent,

@@ -2,7 +2,7 @@
   <div v-show="popoverVisible" class="fixed inset-0 sm:h-screen w-full z-10" @click.stop.prevent="onClickInput"></div>
   <div class="relative z-10">
     <!--选中信息文本框-->
-    <input :value="label"
+    <ErpInputRound :value="label"
            class="focus:ring-indigo-500 block h-10 w-full rounded sm:text-sm border-gray-300 cursor-pointer"
            placeholder="点击选择" readonly type="text" @click.stop="onClickInput"/>
     <!--下拉图标-->
@@ -19,9 +19,11 @@ import {defineComponent, ref} from "vue";
 import ErpTree from "@/components/tree/ErpTree.vue";
 import ErpSelectPullDownMenu from "@/components/selectTree/ErpSelectPullDownMenu.vue";
 import ErpSelectPullDownIcon from "@/components/selectTree/ErpSelectPullDownIcon.vue";
+import ErpInputRound from "@/components/input/ErpInputRound.vue";
 
 export default defineComponent({
   components: {
+    ErpInputRound,
     ErpSelectPullDownIcon,
     ErpSelectPullDownMenu,
     ErpTree

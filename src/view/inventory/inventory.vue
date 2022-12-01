@@ -1,7 +1,7 @@
 <template>
   <erp-left-right-page-box>
     <template #left>
-      <div class="flex flex-col flex-grow pr-2">
+      <div class="flex flex-col flex-grow">
         <erp-title :title="valueName.product + '类别'"></erp-title>
         <div class="flex-grow h-0 overflow-y-auto">
           <erp-product-area-tree

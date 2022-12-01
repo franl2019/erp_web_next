@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full pr-2">
+  <div class="flex flex-col h-full">
     <erp-title title="地区">
       <div class="h-10 flex space-x-1">
         <erp-button size="small" @click="createClientAreaDialogVisible = true">新增</erp-button>

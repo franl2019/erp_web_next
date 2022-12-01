@@ -1,52 +1,52 @@
 <template>
   <erp-form-dialog title="编辑供应商" v-bind="$attrs">
     <erp-form>
-      <erp-form-item label-for-name="名称" lg-col="4" md-col="4" type="danger">
+      <erp-form-item name="名称" lg-col="4" md-col="4" type="danger">
         <erp-input-round ref="defaultInputFocusRef" v-model="updateBuyDto.buyname"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="地区" lg-col="4" md-col="4" type="danger">
+      <erp-form-item name="地区" lg-col="4" md-col="4" type="danger">
         <erp-select-buy-area v-model="updateBuyDto.buyareaid"></erp-select-buy-area>
       </erp-form-item>
-      <erp-form-item label-for-name="结算方式" lg-col="2" md-col="4">
+      <erp-form-item name="结算方式" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.moneytype"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="联系人" lg-col="2" md-col="4">
+      <erp-form-item name="联系人" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.contactperson"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="销售" lg-col="2" md-col="4">
+      <erp-form-item name="销售" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.salesman"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="业务员" lg-col="2" md-col="4">
+      <erp-form-item name="业务员" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.ymrep"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="手机" lg-col="2" md-col="4">
+      <erp-form-item name="手机" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.phone_no"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="电话" lg-col="2" md-col="4">
+      <erp-form-item name="电话" lg-col="2" md-col="4">
         <erp-input-round v-model="updateBuyDto.tel_no"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="邮箱" lg-col="4" md-col="4">
+      <erp-form-item name="邮箱" lg-col="4" md-col="4">
         <erp-input-round v-model="updateBuyDto.email"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="地址" lg-col="8" md-col="8">
+      <erp-form-item name="地址" lg-col="8" md-col="8">
         <erp-input-round v-model="updateBuyDto.address"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="备注1" lg-col="8" md-col="8">
+      <erp-form-item name="备注1" lg-col="8" md-col="8">
         <erp-input-round v-model="updateBuyDto.remark1"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="备注2" lg-col="8" md-col="8">
+      <erp-form-item name="备注2" lg-col="8" md-col="8">
         <erp-input-round v-model="updateBuyDto.remark2"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="编号" lg-col="2" md-col="2">
+      <erp-form-item name="编号" lg-col="2" md-col="2">
         <erp-input-round v-model="updateBuyDto.buycode"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="是否使用" lg-col="2" md-col="2">
+      <erp-form-item name="是否使用" lg-col="2" md-col="2">
         <erp-checkbox v-model="updateBuyDto.useflag">使用</erp-checkbox>
       </erp-form-item>
-      <erp-form-item label-for-name="操作区域" lg-col="2" md-col="4">
+      <erp-form-item name="操作区域" lg-col="2" md-col="4">
         <erp-operate-area-select v-model="updateBuyDto.operateareaid" :operateareatype="1"></erp-operate-area-select>
       </erp-form-item>
-      <erp-form-item label-for-name="应付类型" lg-col="2" md-col="4">
+      <erp-form-item name="应付类型" lg-col="2" md-col="4">
         <erp-accounts-payable-select v-model="updateBuyDto.accountspayabletype"></erp-accounts-payable-select>
       </erp-form-item>
     </erp-form>

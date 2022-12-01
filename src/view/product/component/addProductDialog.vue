@@ -8,19 +8,19 @@
         <erp-tabs-pane label="必填信息" name="required">
           <div class="h-96 overflow-y-auto pt-1 pb-2">
             <erp-form :px="true">
-              <erp-form-item label-for-name="名称" lg-col="4" md-col="4">
+              <erp-form-item name="名称" lg-col="4" md-col="4">
                 <erp-input-round ref="defaultInputFocusRef" v-model="createProductDto.productname"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="类别" lg-col="4" md-col="4">
+              <erp-form-item name="类别" lg-col="4" md-col="4">
                 <erp-select-productarea v-model="createProductDto.productareaid"></erp-select-productarea>
               </erp-form-item>
-              <erp-form-item label-for-name="规格" lg-col="4" md-col="4">
+              <erp-form-item name="规格" lg-col="4" md-col="4">
                 <erp-input-round v-model="createProductDto.spec"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="仓库" lg-col="4" md-col="4">
+              <erp-form-item name="仓库" lg-col="4" md-col="4">
                 <erp-warehouse-auth-select v-model="createProductDto.warehouseid"></erp-warehouse-auth-select>
               </erp-form-item>
-              <erp-form-item label-for-name="单位" lg-col="2" md-col="4">
+              <erp-form-item name="单位" lg-col="2" md-col="4">
                 <erp-input-round v-model="createProductDto.unit"></erp-input-round>
               </erp-form-item>
             </erp-form>
@@ -29,72 +29,77 @@
         <erp-tabs-pane label="选填信息" name="info">
           <div class="h-96 overflow-y-auto pt-1 pb-2">
             <erp-form :px="true">
-              <erp-form-item label-for-name="产品编号" lg-col="2" md-col="2">
+              <erp-form-item name="产品编号" lg-col="2" md-col="2">
                 <erp-input-round v-model="createProductDto.productcode"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="用料" lg-col="2" md-col="4">
+              <erp-form-item name="用料" lg-col="2" md-col="4">
                 <erp-input-round v-model="createProductDto.materials"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="包装单位" lg-col="2" md-col="4">
+              <erp-form-item name="包装单位" lg-col="2" md-col="4">
                 <erp-input-round v-model="createProductDto.packunit"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="包装数量" lg-col="2" md-col="4">
+              <erp-form-item name="包装数量" lg-col="2" md-col="4">
                 <erp-input-round v-model.number="createProductDto.packqty"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="体积" lg-col="2" md-col="4">
+              <erp-form-item name="体积" lg-col="2" md-col="4">
                 <erp-input-round v-model.number="createProductDto.m3"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="长度" lg-col="2" md-col="4">
+              <erp-form-item name="长度" lg-col="2" md-col="4">
                 <erp-input-round v-model.number="createProductDto.length"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="宽度" lg-col="2" md-col="4">
+              <erp-form-item name="宽度" lg-col="2" md-col="4">
                 <erp-input-round v-model.number="createProductDto.width"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="高度" lg-col="2" md-col="4">
+              <erp-form-item name="高度" lg-col="2" md-col="4">
                 <erp-input-round v-model.number="createProductDto.height"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="是否使用" lg-col="2" md-col="2">
+              <erp-form-item name="是否使用" lg-col="2" md-col="2">
                 <erp-checkbox-border v-model="createProductDto.useflag">使用
                 </erp-checkbox-border>
               </erp-form-item>
-              <erp-form-item label-for-name="备注1" lg-col="8" md-col="8">
+              <erp-form-item name="备注1" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark1"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注2" lg-col="8" md-col="8">
+              <erp-form-item name="备注2" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark2"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注3" lg-col="8" md-col="8">
+              <erp-form-item name="备注3" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark3"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注4" lg-col="8" md-col="8">
+              <erp-form-item name="备注4" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark4"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注5" lg-col="8" md-col="8">
+              <erp-form-item name="备注5" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark5"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注6" lg-col="8" md-col="8">
+              <erp-form-item name="备注6" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark6"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注7" lg-col="8" md-col="8">
+              <erp-form-item name="备注7" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark7"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注8" lg-col="8" md-col="8">
+              <erp-form-item name="备注8" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark8"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注9" lg-col="8" md-col="8">
+              <erp-form-item name="备注9" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark9"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注10" lg-col="8" md-col="8">
+              <erp-form-item name="备注10" lg-col="8" md-col="8">
                 <erp-input-round v-model="createProductDto.remark10"></erp-input-round>
               </erp-form-item>
             </erp-form>
           </div>
         </erp-tabs-pane>
         <erp-tabs-pane label="辅助单位" name="otherUnit">
-          <div class="h-96 overflow-y-auto">
-            <erp-table ref="productOtherUnitTableRef" :find-dto="productOtherUnitFindDto" :getRowNodeId="getRowNodeId"
-                       :table-state="createProductOtherMxTableConfig" class="h-full"
-                       @cellValueChanged="productOtherUnitTableCellValueChanged">
+          <div class="h-96">
+            <erp-table
+                ref="productOtherUnitTableRef"
+                :find-dto="productOtherUnitFindDto"
+                :getRowNodeId="getRowNodeId"
+                :init="true"
+                :table-state="createProductOtherMxTableConfig"
+                class="h-96"
+                @cellValueChanged="productOtherUnitTableCellValueChanged">
             </erp-table>
           </div>
         </erp-tabs-pane>
@@ -146,7 +151,6 @@ export default defineComponent({
     const defaultInputFocusRef = ref();
 
     onMounted(async () => {
-      productOtherUnitTableRef.value?.initTableData();
       await nextTick(() => {
         defaultInputFocusRef.value.getNode().focus();
       });

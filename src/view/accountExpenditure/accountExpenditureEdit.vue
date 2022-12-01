@@ -11,23 +11,23 @@
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="editDto.accountExpenditureCode" label-for-name="单据编号" lg-col="1" md-col="2">
+      <erp-form-item v-if="editDto.accountExpenditureCode" name="单据编号" lg-col="1" md-col="2">
         <erp-input-round v-model="editDto.accountExpenditureCode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="供应商" lg-col="2" md-col="2">
+      <erp-form-item name="供应商" lg-col="2" md-col="2">
         <erp-select-buy-btn
             :buyname="editDto.buyname"
             :disabled="!state.edit"
             @select="onSelectedBuy" @unSelect="onUnSelectedBuy"></erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item label-for-name="总金额(自动计算)" lg-col="1" md-col="2">
+      <erp-form-item name="总金额(自动计算)" lg-col="1" md-col="2">
         <erp-input-round v-model="editDto.amount" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="发生日期" lg-col="1" md-col="2">
+      <erp-form-item name="发生日期" lg-col="1" md-col="2">
         <el-date-picker v-model="editDto.indate" :disabled="!state.edit" placeholder="选择日期"
                         type="date" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item label-for-name="备注" lg-col="1" md-col="2">
+      <erp-form-item name="备注" lg-col="1" md-col="2">
         <erp-input-round v-model="editDto.reMark" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>

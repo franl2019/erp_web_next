@@ -1,10 +1,10 @@
 <template>
-  <div class="fixed inset-0 z-20 flex items-center justify-center sm:h-screen pt-4 px-4 pb-20">
+  <div class="fixed inset-0 z-20 flex items-center justify-center h-screen pt-4 px-4 pb-20">
     <!--遮罩层-->
-    <div class="fixed inset-0 sm:h-screen w-full bg-black opacity-50" @click.stop.prevent @keyup.enter.stop></div>
+    <div class="fixed inset-0 h-screen w-full bg-black opacity-50" @click.stop.prevent @keyup.enter.stop></div>
 
     <div
-        class="inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+        class="fixed inline-block align-bottom bg-white rounded text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
       <div
           class="w-full flex items-center justify-between px-4 font-bold h-14 bg-gray-100 text-base font-medium text-gray-900">
         <div>
@@ -82,7 +82,7 @@ export default defineComponent({
     }
 
     function close() {
-      emits('clickedClose')
+      emits('clickedClose');
       emits('clickedCancel');
       emits('update:visible', false);
     }

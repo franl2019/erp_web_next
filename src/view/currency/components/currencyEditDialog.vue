@@ -1,10 +1,10 @@
 <template>
   <erp-form-dialog v-bind="$attrs">
     <erp-form>
-      <erp-form-item label-for-name="币种名称">
+      <erp-form-item name="币种名称">
         <erp-input-round ref="defaultInputFocusRef" v-model="dto.currencyname"></erp-input-round>
       </erp-form-item>
-      <erp-form-item label-for-name="是否本位币">
+      <erp-form-item name="是否本位币">
         <erp-checkbox v-model="dto.standardmoneyflag">是</erp-checkbox>
       </erp-form-item>
     </erp-form>

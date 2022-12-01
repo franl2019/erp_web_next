@@ -1,12 +1,12 @@
 <template>
   <div class="flex rounded-md shadow-sm">
-    <input v-show="!props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
+    <ErpInputRound v-show="!props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
            class="flex-1 z-10 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-           disabled placeholder="" type="text">
+           disabled placeholder="" type="text"></ErpInputRound>
 
-    <input v-show="props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
+    <ErpInputRound v-show="props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
            class="flex-1 z-10 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded sm:text-sm border-gray-300"
-           disabled placeholder="" style="background-color: #F5F7FA;color: #A8ABB2" type="text">
+           disabled placeholder="" style="background-color: #F5F7FA;color: #A8ABB2" type="text"></ErpInputRound>
     <template v-if="!props.disabled">
       <button v-if="props.buyname.length===0"
               class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm active:bg-gray-100 focus:outline-none"
@@ -27,9 +27,11 @@ import {useErpSelectBuyDialog} from "@/components/dialog/selectInfo/buy/useErpSe
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {IBuy} from "@/module/buy/buy";
 import {defineComponent} from "vue";
+import ErpInputRound from "@/components/input/ErpInputRound.vue";
 
 export default defineComponent({
   name: "ErpSelectBuyBtn",
+  components: {ErpInputRound},
   props: {
     buyname: {
       type: String,

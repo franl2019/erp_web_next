@@ -14,7 +14,7 @@ export class PermissionsThemeService{
         if(result.code === 200 && result.data){
             return result.data
         }else{
-            return Promise.reject(new Error('查询权限主题错误'))
+            return Promise.reject(new Error('查询权限类别错误'))
         }
     }
 
@@ -24,7 +24,7 @@ export class PermissionsThemeService{
         if(result.code === 200){
             return true
         }else{
-            return Promise.reject(new Error('创建权限主题错误'))
+            return Promise.reject(new Error('创建权限类别错误'))
         }
     }
 
@@ -34,12 +34,12 @@ export class PermissionsThemeService{
         if(result.code === 200){
             return true
         }else{
-            return Promise.reject(new Error('更新权限主题错误'))
+            return Promise.reject(new Error('更新权限类别错误'))
         }
     }
 
     public async delete_data(permissionsThemeId:number){
-        await useErpDialog({message:"是否删除权限主题"})
+        await useErpDialog({message:"是否删除权限类别"})
         const permissionsThemeDeleteDto = new PermissionsThemeDeleteDto();
         permissionsThemeDeleteDto.permissionsThemeId = permissionsThemeId;
         await useVerifyParam(permissionsThemeDeleteDto);
@@ -47,7 +47,7 @@ export class PermissionsThemeService{
         if(result.code === 200){
             return true
         }else{
-            return Promise.reject(new Error('更新权限主题错误'))
+            return Promise.reject(new Error('更新权限类别错误'))
         }
     }
 

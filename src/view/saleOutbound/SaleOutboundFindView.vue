@@ -15,39 +15,39 @@
           <template #default>筛选</template>
           <template #form>
             <erp-form>
-              <erp-form-item label-for-name="操作区域">
+              <erp-form-item name="操作区域">
                 <erp-operate-area-auth-select v-model="operateAreaId" :have-root-node="true" @change="onChange">
                 </erp-operate-area-auth-select>
               </erp-form-item>
-              <erp-form-item label-for-name="仓库">
+              <erp-form-item name="仓库">
                 <erp-warehouse-auth-select-have-root v-model="warehouseid" @change="onChange">
                 </erp-warehouse-auth-select-have-root>
               </erp-form-item>
-              <erp-form-item label-for-name="客户名称">
+              <erp-form-item name="客户名称">
                 <erp-input-round v-model="saleOutboundHeadFindDto.clientname"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="业务员">
+              <erp-form-item name="业务员">
                 <erp-input-round v-model="saleOutboundHeadFindDto.ymrep"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="相关单号">
+              <erp-form-item name="相关单号">
                 <erp-input-round v-model="saleOutboundHeadFindDto.relatednumber"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="结算方式">
+              <erp-form-item name="结算方式">
                 <erp-input-round v-model="saleOutboundHeadFindDto.moneytype"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注1">
+              <erp-form-item name="备注1">
                 <erp-input-round v-model="saleOutboundHeadFindDto.remark1"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注2">
+              <erp-form-item name="备注2">
                 <erp-input-round v-model="saleOutboundHeadFindDto.remark2"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注3">
+              <erp-form-item name="备注3">
                 <erp-input-round v-model="saleOutboundHeadFindDto.remark3"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注4">
+              <erp-form-item name="备注4">
                 <erp-input-round v-model="saleOutboundHeadFindDto.remark4"></erp-input-round>
               </erp-form-item>
-              <erp-form-item label-for-name="备注5">
+              <erp-form-item name="备注5">
                 <erp-input-round v-model="saleOutboundHeadFindDto.remark5"></erp-input-round>
               </erp-form-item>
             </erp-form>

@@ -30,5 +30,6 @@ app.config.errorHandler = (err: any) => {
             messageList: useErrorsToArrayString(err),
             closeBtnVisible: false
         })
+    }else{
     }
 }
