@@ -18,6 +18,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="saleOutboundMxReportTable"
         :find-dto="findDto"
         :table-state="saleOutboundMxReportTableConfig"

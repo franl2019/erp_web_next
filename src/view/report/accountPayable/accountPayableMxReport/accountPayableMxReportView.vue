@@ -25,6 +25,7 @@
       <erp-button @click="initPage">刷新</erp-button>
     </erp-title>
     <erp-table
+        init
         ref="accountPayableMxReportRef"
         :find-dto="findDto"
         :table-state="defaultAccountPayableMxReportTableConfig"

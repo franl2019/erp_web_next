@@ -6,6 +6,7 @@
       <erp-button type="danger" @click="clickedDeleteBtn">删除</erp-button>
     </erp-title>
     <erp-table
+        init
         ref="currencyTableRef"
         :find-dto="{}"
         :table-state="defaultCurrencyTableConfig">

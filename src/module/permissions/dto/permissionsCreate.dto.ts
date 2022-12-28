@@ -5,8 +5,8 @@ export class PermissionsCreateDto implements IPermissions{
     permissionsId: number;
     @IsString()
     permissionsName: string;
-    @IsInt()
-    permissionsCode:number;
+    @IsString()
+    permissionsCode:string;
     @IsInt()
     permissionsThemeId: number;
     creater: string;
@@ -20,7 +20,7 @@ export class PermissionsCreateDto implements IPermissions{
     constructor() {
         this.permissionsId = 0;
         this.permissionsName = "";
-        this.permissionsCode = 0;
+        this.permissionsCode = "";
         this.creater = "";
         this.createdAt = null;
         this.updater = "";

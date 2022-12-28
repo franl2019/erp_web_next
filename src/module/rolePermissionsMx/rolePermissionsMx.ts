@@ -16,7 +16,7 @@ export enum RolePermissionsCanType  {
 export interface IRolePermissionsMxJoinPermissions extends IRolePermissionsMx, IPermissions {
     roleId: number;
     permissionsId: number;
-    permissionsCode: number;
+    permissionsCode: string;
     permissionsName: string;
     permissionsThemeId: number;
     can:RolePermissionsCanType;

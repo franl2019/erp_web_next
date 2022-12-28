@@ -11,12 +11,12 @@ import {defineComponent, onMounted, ref, unref} from "vue";
 import {IOperatearea, OperateareaService} from "@/module/operatearea/operatearea.service";
 import {FindOperateareaDto} from "@/module/operatearea/dto/findOperatearea.dto";
 import {Operatearea} from "@/module/operatearea/operatearea";
-import {ElSelect,ElOption} from "element-plus";
+import {ElOption, ElSelect} from "element-plus";
 
 export default defineComponent({
   name: "ErpOperateAreaAuthSelect",
-  components:{
-    ElSelect,ElOption
+  components: {
+    ElSelect, ElOption
   },
   props: {
     operateareatype: {
@@ -28,11 +28,11 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props,{expose}) {
+  setup(props, {expose}) {
 
     const {operateareatype, haveRootNode} = unref(props)
-    onMounted(async () => {
-      await getOperateareaList();
+    onMounted(() => {
+      getOperateareaList();
     })
 
     const elSelectRef = ref();
@@ -40,6 +40,7 @@ export default defineComponent({
     function focus() {
       elSelectRef.value.focus();
     }
+
     expose({focus})
 
     //操作区域选择Data

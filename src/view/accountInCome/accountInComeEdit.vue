@@ -90,7 +90,7 @@ import {AccountInComeUpdateDto} from "@/module/accountInCome/dto/accountInComeUp
 import {AccountInComeAmountMxService} from "@/module/accountInCome/accountInComeAmountMx.service";
 import {AccountInComeSheetMxService} from "@/module/accountInCome/accountInComeSheetMx.service";
 import {AccountCategoryType} from "@/types/AccountCategoryType";
-import {getToday, useRouterPage} from "@/utils";
+import {useGetToday, useRouterPage} from "@/utils";
 import {useButtonState} from "@/composables/useButtonState";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
@@ -128,7 +128,7 @@ export default defineComponent({
       del_uuid: 0,
       deletedAt: null,
       deleter: "",
-      indate: getToday(),
+      indate: useGetToday(),
       level1Date: null,
       level1Name: "",
       level1Review: 0,

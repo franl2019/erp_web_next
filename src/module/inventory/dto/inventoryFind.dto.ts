@@ -1,4 +1,4 @@
-export interface IFindInventoryDto {
+export interface IInventoryFindDto {
     warehouseids: number[];
     clientid: number;
     operateareaids: number[];
@@ -11,13 +11,14 @@ export interface IFindInventoryDto {
     spec_d: string;
     remark: string
     remarkmx: string
+    batchNo:string;
     unit: string;
     productareaid: number;
     page: number;
     pagesize: number;
 }
 
-export class FindInventoryDto implements IFindInventoryDto {
+export class InventoryFindDto implements IInventoryFindDto {
     clientid: number = 0;
     materials: string = "";
     materials_d: string = "";
@@ -31,6 +32,7 @@ export class FindInventoryDto implements IFindInventoryDto {
     remarkmx: string = "";
     spec: string = "";
     spec_d: string = "";
+    batchNo:string = "";
     unit: string = "";
     useflag: number = 0;
     warehouseids: number[] = [];

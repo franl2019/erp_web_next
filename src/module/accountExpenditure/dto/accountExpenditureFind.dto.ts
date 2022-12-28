@@ -1,5 +1,5 @@
 import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class AccountExpenditureFindDto {
     @IsInt()
@@ -9,9 +9,9 @@ export class AccountExpenditureFindDto {
     @IsInt()
     accountExpenditureType: number = 0;
     @IsString()
-    startDate: string = getStartDate();
+    startDate: string = useGetStartDate();
     @IsString()
-    endDate: string = getEndDate();
+    endDate: string = useGetEndDate();
     @IsInt()
     buyid: number = 0;
     @IsInt()

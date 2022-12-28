@@ -8,7 +8,7 @@
     <erp-form>
       <erp-form-item name="唯一代码">
         <erp-input-round
-            v-model.number="permissionsUpdateDto.permissionsCode">
+            v-model="permissionsUpdateDto.permissionsCode">
         </erp-input-round>
       </erp-form-item>
       <erp-form-item name="名称">

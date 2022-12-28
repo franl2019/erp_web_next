@@ -9,10 +9,10 @@
           <erp-router-button router-name="auth">数据范围管理</erp-router-button>
         </div>
         <div class="mr-6">
-          <erp-router-button router-name="userRoleMx">角色管理</erp-router-button>
+          <erp-router-button router-name="userRoleMx">角色用户管理</erp-router-button>
         </div>
         <div class="mr-6">
-          <erp-router-button router-name="rolePermissions">权限设置</erp-router-button>
+          <erp-router-button router-name="rolePermissions">角色权限管理</erp-router-button>
         </div>
       </div>
     </div>

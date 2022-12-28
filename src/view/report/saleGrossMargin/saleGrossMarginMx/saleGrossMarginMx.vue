@@ -14,7 +14,6 @@
       <erp-select-client-btn
           :clientname="findDto.clientname"
           :un-select-sure="false"
-          class="w-12"
           @select="selectClient"
           @unSelect="unselectClient"
       >
@@ -31,8 +30,10 @@
               <erp-input-round v-model="findDto.outboundcode"></erp-input-round>
             </erp-form-item>
             <erp-form-item :name="valueName.product+'名称'">
-              <erp-input-round v-model="findDto.productname" :placeholder="'输入'+valueName.product+'名称'"
-                               @change="onChangRefresh"></erp-input-round>
+              <erp-input-round
+                  v-model="findDto.productname"
+                  :placeholder="'输入'+valueName.product+'名称'"
+                  @change="onChangRefresh"></erp-input-round>
             </erp-form-item>
             <erp-form-item name="操作区域">
               <erp-operate-area-auth-select
@@ -74,6 +75,7 @@
         ref="saleGrossMarginMxRef"
         :find-dto="findDto"
         :table-state="defaultSaleGrossMarginMxReportTableConfig"
+        init
         @cellDoubleClicked="cellDoubleClicked"
     >
     </erp-table>

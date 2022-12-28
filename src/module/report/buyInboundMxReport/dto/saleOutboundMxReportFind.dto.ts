@@ -1,12 +1,12 @@
 import {IsArray, IsInt, IsString,IsDateString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class SaleOutboundMxReportFindDto{
     @IsDateString()
-    startDate:string = getStartDate();
+    startDate:string = useGetStartDate();
 
     @IsDateString()
-    endDate:string = getEndDate()
+    endDate:string = useGetEndDate()
 
     @IsInt()
     buyid:number = 0;

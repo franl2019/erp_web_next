@@ -1,6 +1,6 @@
 import {IInbound} from "@/module/inbound/IInbound";
 import {IInboundMx} from "@/module/inboundMx/IInboundMx";
-import {getToday, useDateFormat} from "@/utils";
+import {useGetToday, useDateFormat} from "@/utils";
 import {CodeType} from "@/types/CodeType";
 import {IsArray, IsDateString, IsInt, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
@@ -73,7 +73,7 @@ export class BuyInboundAndMxCreateDto implements IBuyInboundAndMxCreateDto {
         this.inboundid = 0;
         this.inboundmx = [];
         this.inboundtype = CodeType.buyInbound;
-        this.indate = getToday();
+        this.indate = useGetToday();
         this.level1date = null;
         this.level1name = "";
         this.level1review = 0;

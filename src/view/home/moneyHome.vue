@@ -5,21 +5,21 @@
 
       <div class="flex h-4/6 w-full items-center justify-center">
         <module-card title="采购付款单" @click="clickedRouteAccountExpenditureButton">
-          <module-card-item content="进行中" :count="accountExpenditureSheetState.completeL1Review"></module-card-item>
-          <module-card-item content="未审核" :count="accountExpenditureSheetState.undoneL1Review"></module-card-item>
-          <module-card-item content="已审核" :count="accountExpenditureSheetState.undoneL2Review"></module-card-item>
+          <module-card-item :count="accountExpenditureSheetState.completeL1Review" content="进行中"></module-card-item>
+          <module-card-item :count="accountExpenditureSheetState.undoneL1Review" content="未审核"></module-card-item>
+          <module-card-item :count="accountExpenditureSheetState.undoneL2Review" content="已审核"></module-card-item>
         </module-card>
         <erp-big-right-button></erp-big-right-button>
         <module-card title="核销单" @click="clickedRouteAccountVerifySheet">
-          <module-card-item content="进行中" :count="accountsVerifySheetSheetState.completeL1Review"></module-card-item>
-          <module-card-item content="未审核" :count="accountsVerifySheetSheetState.undoneL1Review"></module-card-item>
-          <module-card-item content="已审核" :count="accountsVerifySheetSheetState.undoneL2Review"></module-card-item>
+          <module-card-item :count="accountsVerifySheetSheetState.completeL1Review" content="进行中"></module-card-item>
+          <module-card-item :count="accountsVerifySheetSheetState.undoneL1Review" content="未审核"></module-card-item>
+          <module-card-item :count="accountsVerifySheetSheetState.undoneL2Review" content="已审核"></module-card-item>
         </module-card>
         <erp-big-left-button></erp-big-left-button>
         <module-card title="销售收款单" @click="clickedRouteAccountInCome">
-          <module-card-item content="进行中" :count="accountInComeSheetState.completeL1Review"></module-card-item>
-          <module-card-item content="未审核" :count="accountInComeSheetState.undoneL1Review"></module-card-item>
-          <module-card-item content="已审核" :count="accountInComeSheetState.undoneL2Review"></module-card-item>
+          <module-card-item :count="accountInComeSheetState.completeL1Review" content="进行中"></module-card-item>
+          <module-card-item :count="accountInComeSheetState.undoneL1Review" content="未审核"></module-card-item>
+          <module-card-item :count="accountInComeSheetState.undoneL2Review" content="已审核"></module-card-item>
         </module-card>
       </div>
       <div class="w-full border-t border-solid border-gray-300 pt-2"></div>
@@ -73,12 +73,15 @@ import ErpRouterButton from "@/components/button/ErpRouterButton.vue";
 import ErpPageBoxRow from "@/components/page/ErpPageBoxRow.vue";
 import ModuleCard from "@/components/card/moduleCard/ModuleCard.vue";
 import ModuleCardItem from "@/components/card/moduleCard/ModuleCardItem.vue";
-import { useRouter } from "vue-router";
-import { useRouterPage } from "@/utils";
-import { AccountExpenditureService } from "@/module/accountExpenditure/accountExpenditure.service";
-import { AccountInComeService } from "@/module/accountInCome/accountInCome.service";
-import { defineComponent, onMounted, ref } from "vue";
-import { AccountsVerifySheetService } from "@/module/accountsVerifySheet/accountsVerifySheet.service";
+import {useRouter} from "vue-router";
+import {useRouterPage} from "@/utils";
+import {AccountExpenditureService} from "@/module/accountExpenditure/accountExpenditure.service";
+import {AccountInComeService} from "@/module/accountInCome/accountInCome.service";
+import {defineComponent, onMounted, ref} from "vue";
+import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
+import {AccountExpenditureFindDto} from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
+import {AccountInComeFindDto} from "@/module/accountInCome/dto/accountInComeFind.dto";
+import {AccountsVerifySheetFindDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetFind.dto";
 
 interface IAccountExpenditureSheetState {
   completeL1Review: number;
@@ -99,8 +102,8 @@ interface IAccountsVerifySheetSheetState {
 }
 
 export default defineComponent({
-  name:"moneyHone",
-  components:{
+  name: "moneyHone",
+  components: {
     ErpTitle,
     ErpBigRightButton,
     ErpBigLeftButton,
@@ -159,60 +162,35 @@ export default defineComponent({
     }
 
     async function findAccountExpenditureState() {
-      const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState({
-        accountExpenditureCode: "",
-        accountExpenditureId: 0,
-        accountExpenditureType: 0,
-        buyid: 0,
-        endDate: "",
-        page: 0,
-        pagesize: 0,
-        startDate: ""
-      });
+      const accountExpenditureFindDto = new AccountExpenditureFindDto();
+      accountExpenditureFindDto.startDate = "";
+      accountExpenditureFindDto.endDate = "";
+      const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState(accountExpenditureFindDto);
       accountExpenditureSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
       accountExpenditureSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
       accountExpenditureSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
     }
 
     async function findAccountInComeSheetState() {
-      const sheetCompleteState = await accountInComeService.findSheetState({
-        accountInComeCode: "",
-        accountInComeId: 0,
-        accountInComeType: 0,
-        amount: 0,
-        clientid: 0,
-        endDate: "",
-        page: 0,
-        pagesize: 0,
-        paymentAccount: "",
-        startDate: ""
-      })
+      const accountInComeFindDto = new AccountInComeFindDto();
+      accountInComeFindDto.startDate = "";
+      accountInComeFindDto.endDate = "";
+      const sheetCompleteState = await accountInComeService.findSheetState(accountInComeFindDto);
       accountInComeSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
       accountInComeSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
       accountInComeSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
     }
 
     async function findAccountsVerifySheetSheetState() {
-      const sheetCompleteState = await accountsVerifySheetService.findAccountVerifySheetState({
-        accountsVerifySheetCode: "",
-        accountsVerifySheetId: 0,
-        buyid: 0,
-        buyid_b: 0,
-        clientid: 0,
-        clientid_b: 0,
-        endDate: "",
-        level1Review: 0,
-        level2Review: 0,
-        page: 0,
-        pagesize: 0,
-        sheetType: 0,
-        startDate: ""
-
-      })
+      const accountsVerifySheetFindDto = new AccountsVerifySheetFindDto();
+      accountsVerifySheetFindDto.startDate = "";
+      accountsVerifySheetFindDto.endDate = "";
+      const sheetCompleteState = await accountsVerifySheetService.findAccountVerifySheetState(accountsVerifySheetFindDto)
       accountsVerifySheetSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
       accountsVerifySheetSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
       accountsVerifySheetSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
     }
+
     return {
       accountExpenditureSheetState,
       accountInComeSheetState,

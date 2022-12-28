@@ -1,5 +1,5 @@
 import ErpDialog from './ErpDialog.vue'
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 
 export interface IErpDialogOption {
     unmount?: Function;
@@ -12,6 +12,6 @@ export interface IErpDialogOption {
 }
 
 export default function useErpDialog<T = boolean>(option: IErpDialogOption):Promise<T> {
-   return useErpDialogDemo<IErpDialogOption>(ErpDialog,option)
+   return erpDialogFactory<IErpDialogOption>(ErpDialog,option)
 }
 

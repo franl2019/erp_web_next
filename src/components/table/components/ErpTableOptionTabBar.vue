@@ -3,7 +3,8 @@
                     text-center text-sm font-bold leading-5
                     border-b border-solid border-gray-300
                     hover:bg-gray-100 active:bg-gray-200
-                    w-full py-1.5 select-none"
+                    py-1.5 select-none"
+       style="writing-mode:vertical-lr"
   >
     <slot name="default"></slot>
   </div>

@@ -1,7 +1,7 @@
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import PermissionsCreateDialog from "@/view/permissions/permissionsCreateDialog.vue";
 
 
 export async function usePermissionsCreateDialog() {
-    await useErpDialogDemo(PermissionsCreateDialog,{})
+    await erpDialogFactory(PermissionsCreateDialog,{})
 }

@@ -2,7 +2,8 @@
   <div class="flex flex-grow">
     <!--menu btn-->
     <div
-        class="flex flex-none h-full items-center justify-center w-12 bg-zinc-50 rounded-tr-md select-none cursor-pointer">
+        class="flex flex-none h-full items-center justify-center
+        w-12 bg-zinc-50 rounded-tr-md select-none cursor-pointer">
       <div class="flex-none flex items-center
                   flex-row flex-nowrap select-none space-x-4" @click="showMenu">
         <img alt="menu" class="h-6 w-6" src="@/assets/menu_black_18dp.svg"/>
@@ -10,9 +11,9 @@
     </div>
 
 
-    <div class="flex flex-col w-full h-full">
+    <div class="flex flex-col w-full h-full overflow-x-auto overflow-y-hidden">
       <!--拖动tab-->
-      <draggable :list="modelValue" class="flex w-full h-full px-1 overflow-x-auto" drag-class="drag"
+      <draggable :list="modelValue" class="flex w-full h-full px-1" drag-class="drag"
                  ghost-class="ghost" handle=".handle" item-key="key">
         <template #item="{ element }">
           <div class="handle">

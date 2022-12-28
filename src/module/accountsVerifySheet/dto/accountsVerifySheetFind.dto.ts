@@ -1,5 +1,5 @@
 import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class AccountsVerifySheetFindDto {
     @IsInt()
@@ -21,9 +21,9 @@ export class AccountsVerifySheetFindDto {
     @IsInt()
     level2Review: number = 0;
     @IsString()
-    startDate:string = getStartDate();
+    startDate:string = useGetStartDate();
     @IsString()
-    endDate:string = getEndDate();
+    endDate:string = useGetEndDate();
     @IsInt()
     page:number = 0;
     @IsInt()

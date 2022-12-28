@@ -2,7 +2,7 @@ import {IsArray, IsInt, IsNumber, IsString} from "@/utils/verifyParam/customVali
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {IAccountExpenditureCreate} from "@/module/accountExpenditure/types/IAccountExpenditureCreate";
-import {getToday} from "@/utils";
+import {useGetToday} from "@/utils";
 
 export class AccountExpenditureCreateDto implements IAccountExpenditureCreate {
     accountExpenditureId: number = 0;
@@ -12,7 +12,7 @@ export class AccountExpenditureCreateDto implements IAccountExpenditureCreate {
     @IsInt()
     buyid: number = 0;
     //发生日期
-    indate: string = getToday();
+    indate: string = useGetToday();
     //付款单类型
     @IsInt()
     accountExpenditureType: number = 0;

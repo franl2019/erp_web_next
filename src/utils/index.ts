@@ -41,22 +41,29 @@ export function useDisableKey(isDisable: boolean) {
 }
 
 //获取今天日期
-export function useDateFormat(date:any): string {
+export function useDateFormat(date: any): string {
+    console.log(date)
+    if (date === '' || date === null || date === undefined) return ''
     return moment(date).format('YYYY-MM-DD HH:mm:ss');
 }
 
+//获取Null日期
+export function useGetNullDate(): string {
+    return moment('').format('YYYY-MM-DD HH:mm:ss');
+}
+
 //获取今天日期
-export function getToday(): string {
+export function useGetToday(): string {
     return moment().format('YYYY-MM-DD HH:mm:ss');
 }
 
 //获取开始日期
-export function getStartDate(): string {
+export function useGetStartDate(): string {
     return moment().startOf("month").format('YYYY-MM-DD HH:mm:ss');
 }
 
 //获取结束日期
-export function getEndDate(): string {
+export function useGetEndDate(): string {
     return moment().endOf("month").format('YYYY-MM-DD HH:mm:ss');
 }
 

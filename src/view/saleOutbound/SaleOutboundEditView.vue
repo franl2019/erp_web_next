@@ -10,46 +10,69 @@
       <erp-button :disabled="!buttonShowState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
       <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
       </erp-button>
-      <erp-delimiter/>
-      <erp-button :disabled="!state.edit" @click="clickedAddOutboundMxButton">选择库存</erp-button>
-      <erp-button :disabled="!state.edit" type="danger" @click="clickedDeleteOutboundMxButton">删除明细</erp-button>
+
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="outboundHead.outboundcode" name="单号" lg-col="1" md-col="2">
+      <erp-form-item v-if="outboundHead.outboundcode" lg-col="1" md-col="2" name="单号">
         <erp-input-round v-model="outboundHead.outboundcode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="客户" lg-col="2" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="客户">
         <erp-select-client-btn :clientname="outboundHead.clientname" :disabled="!state.edit"
                                @select="selectedClientEvent" @unSelect="unSelectedClientEvent"></erp-select-client-btn>
       </erp-form-item>
-      <erp-form-item name="仓库" lg-col="1" md-col="2">
-        <erp-warehouse-auth-select v-model="outboundHead.warehouseid" :disabled="!state.edit"
-                                   @change="unSelectWarehouse"></erp-warehouse-auth-select>
+      <!--      <erp-form-item name="仓库" lg-col="1" md-col="2">-->
+      <!--        <erp-warehouse-auth-select v-model="outboundHead.warehouseid" :disabled="!state.edit"-->
+      <!--                                   @change="unSelectWarehouse"></erp-warehouse-auth-select>-->
+      <!--      </erp-form-item>-->
+      <erp-form-item lg-col="1" md-col="2" name="操作区域">
+        <erp-operate-area-auth-select v-model="outboundHead.operateareaid"
+                                      :disabled="!state.edit"></erp-operate-area-auth-select>
       </erp-form-item>
-      <erp-form-item name="出仓日期" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="出仓日期">
         <el-date-picker v-model="outboundHead.outdate" :disabled="!state.edit" placeholder="选择出仓日期"
                         type="date" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item name="相关号码" lg-col="1" md-col="2">
-        <erp-input-round v-model="outboundHead.relatednumber" :disabled="!state.edit"></erp-input-round>
+      <erp-form-item lg-col="1" md-col="2" name="交货日期">
+        <el-date-picker v-model="outboundHead.deliveryDate" :disabled="!state.edit" placeholder="选填"
+                        type="date" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item name="结算方式" lg-col="1" md-col="2">
-        <erp-input-round v-model="outboundHead.moneytype" :disabled="!state.edit"></erp-input-round>
+      <erp-form-item lg-col="1" md-col="2" name="相关号码">
+        <erp-input-round v-model="outboundHead.relatednumber" :disabled="!state.edit"
+                         placeholder="选填"></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="备注" lg-col="1" md-col="2">
-        <erp-input-round v-model="outboundHead.remark1" :disabled="!state.edit"></erp-input-round>
+      <erp-form-item lg-col="1" md-col="2" name="结算方式">
+        <erp-input-round v-model="outboundHead.moneytype" :disabled="!state.edit" placeholder="选填"></erp-input-round>
+      </erp-form-item>
+      <erp-form-item lg-col="1" md-col="2" name="备注">
+        <erp-input-round v-model="outboundHead.remark1" :disabled="!state.edit" placeholder="选填"></erp-input-round>
       </erp-form-item>
     </erp-form>
 
-    <erp-table ref="outboundMxTableRef"
-               :find-dto="{}"
-               :getRowNodeId="getRowNodeId"
-               :table-edit="state.edit"
-               :table-state="createOutboundMxTable"
-               @cellEditingStarted="cellEditingStartedEvent"
-               @cellValueChanged="cellValueChangedEvent"
-    ></erp-table>
+    <erp-table
+        ref="outboundMxTableRef"
+        :find-dto="{}"
+        :getRowNodeId="getRowNodeId"
+        :table-edit="state.edit"
+        :table-state="createOutboundMxTable"
+        show-top-box
+        show-button-box
+        @cellEditingStarted="cellEditingStartedEvent"
+        @cellValueChanged="cellValueChangedEvent"
+    >
+      <template #topBox>
+        <erp-button :disabled="!state.edit" :size="'small'" @click="clickedAddOutboundMxButton">选择库存</erp-button>
+        <div class="w-2"></div>
+        <erp-button :disabled="!state.edit" :size="'small'" type="danger" @click="clickedDeleteOutboundMxButton">
+          删除明细
+        </erp-button>
+      </template>
+      <template #buttonBox>
+        <span>
+          合计金额 : {{totalAmt}}
+        </span>
+      </template>
+    </erp-table>
 
   </erp-page-box>
 </template>
@@ -81,8 +104,6 @@ import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundM
 import {SaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
 import {SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {bignumber, chain, round} from "mathjs";
-import {SaleOutboundMxTableTotal} from "@/module/saleOutbound/saleOutboundMxTableTotal";
-import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 import {SaleOutboundAndMxCreateDto} from "@/module/saleOutbound/dto/saleOutboundAndMxCreate.dto";
@@ -90,10 +111,12 @@ import {SaleOutboundCreateDto} from "@/module/saleOutbound/dto/outbound/saleOutb
 import {SaleOutboundUpdateDto} from "@/module/saleOutbound/dto/outbound/saleOutboundUpdate.dto";
 import {SaleOutboundAndMxUpdateDto} from "@/module/saleOutbound/dto/saleOutboundAndMxUpdate.dto";
 import {SaleOutboundMxCreateInTableDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreateInTable.dto";
+import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
 
 export default defineComponent({
   name: "SaleOutboundEditView",
   components: {
+    ErpOperateAreaAuthSelect,
     ErpPageBox,
     ErpButton,
     ErpForm,
@@ -122,15 +145,15 @@ export default defineComponent({
       warehouseid: Number(route.query.warehouseid || 0)
     })
 
-    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault:true});
+    const {buttonShowState, updateButtonState} = useButtonState({l1ReviewDefault: true});
 
-    onMounted(async () => {
+    onMounted(() => {
       //form默认的input.focus
       const defaultInputFocus = ref();
       defaultInputFocus.value?.focus();
 
       //初始化页面
-      await initPage();
+      initPage();
     })
 
     //初始页面，根据state.outboundid 0新增 !0编辑
@@ -191,9 +214,9 @@ export default defineComponent({
       clearMx()
     }
 
-    function unSelectWarehouse() {
-      clearMx()
-    }
+    // function unSelectWarehouse() {
+    //   clearMx()
+    // }
 
     //增加明细按钮
     function clickedAddOutboundMxButton() {
@@ -201,9 +224,9 @@ export default defineComponent({
         return Promise.reject(new VerifyParamError('请先选择客户'))
       }
 
-      if (outboundHead.value.warehouseid === 0) {
-        return Promise.reject(new VerifyParamError('请先选择仓库'))
-      }
+      // if (outboundHead.value.warehouseid === 0) {
+      //   return Promise.reject(new VerifyParamError('请先选择仓库'))
+      // }
       useErpSelectInventoryDialog({
         clientid: outboundHead.value.clientid,
         warehouseid: outboundHead.value.warehouseid,
@@ -225,20 +248,20 @@ export default defineComponent({
     async function getSaleOutboundCreateDto() {
       outboundMxTableRef.value?.getGridApi().stopEditing();
       //获取明细
-      const outboundMx = setOutboundSetPrintId(getOutboundMx());
+      const outboundMx = getOutboundMx()
       //组合单据对象
       return new SaleOutboundAndMxCreateDto()
-          .setOrderHead(outboundHead.value)
+          .setHead(outboundHead.value)
           .setOrderMx(outboundMx)
     }
 
     async function getSaleOutboundUpdateDto() {
       outboundMxTableRef.value?.getGridApi().stopEditing();
       //获取明细
-      const outboundMx = setOutboundSetPrintId(getOutboundMx());
+      const outboundMx = getOutboundMx()
       //组合单据对象
       return new SaleOutboundAndMxUpdateDto()
-          .setOrderHead(outboundHead.value)
+          .setHead(outboundHead.value)
           .setOrderMx(outboundMx)
     }
 
@@ -271,99 +294,89 @@ export default defineComponent({
       //区分新增的审核还是编辑的审核
       if (state.value.outboundid === 0) {
         const outbound = await getSaleOutboundCreateDto();
-        useErpDialog({
+        await useErpDialog({
           title: "提示",
-          message: `是否保存并审核`,
-          ok: async () => {
-            const result = await outboundService.create_l1Review(outbound);
-            if (result && result.createResult) {
-              state.value.outboundid = result.createResult.id
-            } else {
-              return Promise.reject(new Error("保存失败,返回缺少'createResult'"))
-            }
-
-            tabMenu.closeTab(route.fullPath)
-            const newRoute = router.resolve({
-              name: "editOutbound", query: {
-                outboundid: state.value.outboundid
-              }
-            });
-            useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
-          }
+          message: `是否保存并审核`
         })
+        const result = await outboundService.create_l1Review(outbound);
+        if (result && result.createResult) {
+          state.value.outboundid = result.createResult.id
+        } else {
+          return Promise.reject(new Error("保存失败,返回缺少'createResult'"))
+        }
+
+        tabMenu.closeTab(route.fullPath)
+        const newRoute = router.resolve({
+          name: "editOutbound", query: {
+            outboundid: state.value.outboundid
+          }
+        });
+        useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+
       } else {
         const outbound = await getSaleOutboundCreateDto();
         const {outboundcode} = outbound;
-        useErpDialog({
+        await useErpDialog({
           title: "提示",
           message: `是否审核,单号:${outboundcode}`,
-          ok: async () => {
-            await outboundService.updateAndL1Review(outbound);
-            await clearMx();
-            await initPage();
-          }
         })
+        await outboundService.updateAndL1Review(outbound);
+        await clearMx();
+        await initPage();
       }
     }
 
     //撤审出仓单按钮
     async function clickedUnL1Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      useErpDialog({
+      await useErpDialog({
         title: "提示",
         message: `是否撤审,单号:${outboundcode}`,
-        ok: async () => {
-          await outboundService.unL1Review(outboundid);
-          await clearMx();
-          await initPage();
-        }
+
       })
+      await outboundService.unL1Review(outboundid);
+      await clearMx();
+      await initPage();
     }
 
     //审核出仓单按钮
     async function clickedL2Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      useErpDialog({
+      await useErpDialog({
         title: "提示",
-        message: `是否财审,单号:${outboundcode}`,
-        ok: async () => {
-          await outboundService.l2Review(outboundid);
-          await clearMx();
-          await initPage();
-        }
+        message: `是否财审,单号:${outboundcode}`
       })
+      await outboundService.l2Review(outboundid);
+      await clearMx();
+      await initPage();
     }
 
     //撤审出仓单按钮
     async function clickedUnL2Review() {
       const {outboundid, outboundcode} = outboundHead.value;
-      useErpDialog({
+      await useErpDialog({
         title: "提示",
-        message: `是否撤审财审,单号:${outboundcode}`,
-        ok: async () => {
-          await outboundService.unL2Review(outboundid);
-          await clearMx();
-          await initPage();
-        }
+        message: `是否撤审财审,单号:${outboundcode}`
       })
+      await outboundService.unL2Review(outboundid);
+      await clearMx();
+      await initPage();
     }
 
     async function clickedDeleteData() {
       const {outboundid, outboundcode} = outboundHead.value;
-      useErpDialog({
+      await useErpDialog({
         title: "提示",
-        message: `是否删除,单号:${outboundcode}`,
-        ok: async () => {
-          await outboundService.delete_data(outboundid);
-          //跳转
-          tabMenu.closeTab(route.fullPath)
-          const newRoute = router.resolve({
-            name: "saleOutbound"
-          });
-          useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
-
-        }
+        message: `是否删除,单号:${outboundcode}`
       })
+
+      await outboundService.delete_data(outboundid);
+      //跳转
+      tabMenu.closeTab(route.fullPath)
+      const newRoute = router.resolve({
+        name: "saleOutbound"
+      });
+      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
     }
 
     //编辑完成值发生变化
@@ -391,7 +404,7 @@ export default defineComponent({
     function formatInventoryListToOutboundMx(inventories: IFindInventory[]): SaleOutboundMxCreateInTableDto[] {
       const addItems: SaleOutboundMxCreateInTableDto[] = [];
       inventories.forEach(inventory => {
-        const saleOutboundMxCreateInTableDto = new SaleOutboundMxCreateInTableDto(inventory)
+        const saleOutboundMxCreateInTableDto = new SaleOutboundMxCreateInTableDto().selectInventory(inventory)
         addItems.push(saleOutboundMxCreateInTableDto);
       })
       return addItems;
@@ -404,6 +417,9 @@ export default defineComponent({
 
     //获取明细
     function getOutboundMx(): SaleOutboundMxCreateInTableDto[] {
+
+      //printid 还没添加
+
       const outboundMxTableDataList: SaleOutboundMxCreateInTableDto[] = [];
       outboundMxTableRef.value?.getGridApi().forEachNode((rowNode) => {
         outboundMxTableDataList.push(rowNode.data);
@@ -439,32 +455,24 @@ export default defineComponent({
       return sumAmt;
     }
 
+    let totalAmt = ref(0)
     function updateTableAmtTotal() {
-      const bottomRow = new SaleOutboundMxTableTotal();
-      bottomRow.amt = getOutboundMxSumAmt();
-      outboundMxTableRef.value?.getGridApi().setPinnedBottomRowData([
-        bottomRow
-      ]);
-    }
-
-    function setOutboundSetPrintId(outboundMxList: IOutboundMx[]) {
-      for (let i = 0; i < outboundMxList.length; i++) {
-        outboundMxList[i].printid = i + 1
-      }
-      return outboundMxList
+      totalAmt.value = getOutboundMxSumAmt();
     }
 
     return {
-      createOutboundMxTable,
+      state,
       tabMenu,
       outboundMxTableRef,
+      createOutboundMxTable,
       outboundHead,
-      state,
       buttonShowState,
+      totalAmt,
+      cellValueChangedEvent,
       updateButtonState,
       selectedClientEvent,
       unSelectedClientEvent,
-      unSelectWarehouse,
+      // unSelectWarehouse,
       clickedAddOutboundMxButton,
       clickedDeleteOutboundMxButton,
       clickedSaveButton,
@@ -473,7 +481,6 @@ export default defineComponent({
       clickedL2Review,
       clickedUnL2Review,
       clickedDeleteData,
-      cellValueChangedEvent,
       cellEditingStartedEvent,
       initPage,
       getRowNodeId,

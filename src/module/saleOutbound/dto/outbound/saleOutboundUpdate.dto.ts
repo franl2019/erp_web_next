@@ -23,6 +23,7 @@ export class SaleOutboundUpdateDto implements ISaleOutboundUpdateDto{
     outboundid: number;
     outboundtype: number;
     outdate: string;
+    deliveryDate: string;
     printcount: number;
     relatednumber: string;
     remark1: string;
@@ -33,7 +34,7 @@ export class SaleOutboundUpdateDto implements ISaleOutboundUpdateDto{
     updatedAt: Date | null;
     updater: string;
     warehouseid: number;
-
+    operateareaid:number;
 
     constructor(outboundUpdateDto:ISaleOutboundUpdateDto) {
         this.clientid = outboundUpdateDto.clientid;
@@ -54,6 +55,7 @@ export class SaleOutboundUpdateDto implements ISaleOutboundUpdateDto{
         this.outboundid = outboundUpdateDto.outboundid;
         this.outboundtype = outboundUpdateDto.outboundtype;
         this.outdate = outboundUpdateDto.outdate;
+        this.deliveryDate = outboundUpdateDto.deliveryDate;
         this.printcount = outboundUpdateDto.printcount;
         this.relatednumber = outboundUpdateDto.relatednumber;
         this.remark1 = outboundUpdateDto.remark1;
@@ -64,5 +66,6 @@ export class SaleOutboundUpdateDto implements ISaleOutboundUpdateDto{
         this.updatedAt = outboundUpdateDto.updatedAt;
         this.updater = outboundUpdateDto.updater;
         this.warehouseid = outboundUpdateDto.warehouseid;
+        this.operateareaid = outboundUpdateDto.operateareaid;
     }
 }

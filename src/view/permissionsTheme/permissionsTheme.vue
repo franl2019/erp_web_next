@@ -96,8 +96,9 @@ export default defineComponent({
     }
 
     async function clickedUpdateButton() {
-      if (permissionsThemeSelected.value.permissionsThemeId === 0) return
-      const permissionsTheme = await usePermissionsThemeUpdateDialog(permissionsThemeSelected.value);
+      const permissionsTheme = getPermissionSelect();
+      if (permissionsTheme&&permissionsTheme.permissionsThemeId === 0) return
+      await usePermissionsThemeUpdateDialog(permissionsTheme);
       await init();
       setSelect(permissionsTheme.permissionsThemeId);
     }
@@ -105,22 +106,27 @@ export default defineComponent({
     const permissionsThemeService = new PermissionsThemeService();
 
     async function clickedDeleteButton() {
-      if (permissionsThemeSelected.value.permissionsThemeId === 0) return
-      await permissionsThemeService.delete_data(permissionsThemeSelected.value?.permissionsThemeId);
+      const permissionsTheme = await getPermissionSelect();
+      if (permissionsTheme.permissionsThemeId === 0) return
+      await permissionsThemeService.delete_data(permissionsTheme.permissionsThemeId);
       updateButtonState();
       await init();
     }
 
-    function selectionChanged() {
-      const permissionsTheme = permissionsThemeTreeRef.value?.getSelectedNode() as IPermissionsTheme;
+    async function selectionChanged() {
+      const permissionsTheme = await getPermissionSelect();
       if (permissionsTheme.permissionsThemeId === 0) {
-        updateButtonState()
+        updateButtonState();
         emit('selectedNode', permissionsTheme);
       } else if (permissionsTheme.permissionsThemeId) {
         permissionsThemeSelected.value = permissionsTheme;
         updateButtonState(0, 0);
         emit('selectedNode', permissionsTheme);
       }
+    }
+
+    function getPermissionSelect() {
+      return permissionsThemeTreeRef.value?.getSelectedNode() as IPermissionsTheme;
     }
 
     function setSelect(permissionsThemeId: number) {

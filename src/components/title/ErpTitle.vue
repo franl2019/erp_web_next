@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-none flex-col items-start w-full z-10 bg-white md:flex-row md:items-center md:space-y-0 mb-1">
+  <div class="flex flex-none flex-col items-start w-full bg-white md:flex-row md:items-center md:space-y-0 mb-1">
     <div v-if="title" class="flex-none text-lg font-bold sm:mr-4 text-center sm:text-left w-full sm:w-auto">
       {{ title }}
     </div>

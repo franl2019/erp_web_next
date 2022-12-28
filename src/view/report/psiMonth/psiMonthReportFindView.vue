@@ -18,6 +18,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="psiReportTableRef"
         :find-dto="findDto"
         :table-state="defaultPsiMonthReportTableConfig"

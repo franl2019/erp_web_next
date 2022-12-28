@@ -1,10 +1,12 @@
 import {h, render} from "vue";
+import {v4 as uuidV4} from 'uuid';
 
 
-export function useErpDialogDemo<T>(component: any, option: T):Promise<any> {
+export function erpDialogFactory<T>(component: any, option: T):Promise<any> {
     return new Promise((resolve, reject) => {
         const container = document.createElement('div');
-        render(h(component, {
+        container.id = uuidV4();
+        const vNode = h(component, {
             unmount: () => {
                 render(null, container);
                 document.body.removeChild(container);
@@ -12,7 +14,8 @@ export function useErpDialogDemo<T>(component: any, option: T):Promise<any> {
             ...option,
             resolve_dialog:resolve,
             reject_dialog:reject,
-        }), container);
+        })
+        render(vNode, container);
         document.body.appendChild(container);
     })
 }

@@ -93,7 +93,7 @@ import {ITableRef} from "@/components/table/type";
 import {AccountsVerifySheetService} from "@/module/accountsVerifySheet/accountsVerifySheet.service";
 import {AccountsVerifySheetMxService} from "@/module/accountsVerifySheet/accountsVerifySheetMx.service";
 import {AccountsVerifySheetUpdateDto} from "@/module/accountsVerifySheet/dto/accountsVerifySheetUpdate.dto";
-import {getToday, useRouterPage} from "@/utils";
+import {useGetToday, useRouterPage} from "@/utils";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 
@@ -136,7 +136,7 @@ export default defineComponent({
       del_uuid: 0,
       deleteAt: null,
       deleter: "",
-      inDate: getToday(),
+      inDate: useGetToday(),
       level1Date: null,
       level1Name: "",
       level1Review: 0,

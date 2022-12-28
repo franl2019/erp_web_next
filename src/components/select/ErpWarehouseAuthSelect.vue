@@ -17,9 +17,9 @@ import {WarehouseService} from "@/module/warehouse/warehouse.service";
 
 export default defineComponent({
   name: "ErpWarehouseAuthSelect",
-  setup(_props,{expose}) {
-    onMounted(async () => {
-      await getWarehouseList();
+  setup(_props, {expose}) {
+    onMounted(() => {
+      getWarehouseList();
     })
 
     const ElSelectRef = ref();
@@ -27,6 +27,7 @@ export default defineComponent({
     function focus() {
       ElSelectRef.value.focus();
     }
+
     expose({focus})
 
     //产品类别选择List

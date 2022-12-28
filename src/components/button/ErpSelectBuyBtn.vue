@@ -1,11 +1,11 @@
 <template>
   <div class="flex rounded-md shadow-sm">
     <ErpInputRound v-show="!props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
-           class="flex-1 z-10 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
+           class="flex-1 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
            disabled placeholder="" type="text"></ErpInputRound>
 
     <ErpInputRound v-show="props.disabled" :value="props.buyname ? props.buyname:'请选择供应商'"
-           class="flex-1 z-10 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded sm:text-sm border-gray-300"
+           class="flex-1 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded sm:text-sm border-gray-300"
            disabled placeholder="" style="background-color: #F5F7FA;color: #A8ABB2" type="text"></ErpInputRound>
     <template v-if="!props.disabled">
       <button v-if="props.buyname.length===0"

@@ -1,10 +1,9 @@
 <template>
   <div v-show="!props.disabled" class="flex rounded-md shadow-sm">
     <ErpInputRound :value="props.clientname ? props.clientname :'请选择客户'"
-           class="flex-1 z-10 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
+           class="flex-1 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
            disabled
-           placeholder=""
-                   type="text"></ErpInputRound>
+           placeholder="" type="text"></ErpInputRound>
     <button
         v-if="props.clientname.length===0"
         class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm active:bg-gray-100 focus:outline-none"

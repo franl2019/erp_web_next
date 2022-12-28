@@ -21,20 +21,28 @@
       </template>
     </erp-no-title>
 
-    <erp-table ref="accountExpenditureTableRef"
-               :find-dto="accountExpenditureFindDto"
-               :getRowNodeId="getRowNodeId_headTable"
-               :table-state="defaultAccountExpenditureTableConfig"
-               init
-               @selection-changed="onSelectionChanged">
+    <erp-table
+        ref="accountExpenditureTableRef"
+        :find-dto="accountExpenditureFindDto"
+        :getRowNodeId="getRowNodeId_headTable"
+        :table-state="defaultAccountExpenditureTableConfig"
+        init
+        @selection-changed="onSelectionChanged"
+    >
     </erp-table>
     <erp-title title="付款明细"></erp-title>
-    <erp-table ref="accountExpenditureAmountMxTableRef" :find-dto="accountExpenditureAmountMxFindDto"
-               :table-state="defaultAccountExpenditureAmountMxTableConfig">
+    <erp-table
+        ref="accountExpenditureAmountMxTableRef"
+        :find-dto="accountExpenditureAmountMxFindDto"
+        :table-state="defaultAccountExpenditureAmountMxTableConfig"
+    >
     </erp-table>
     <erp-title title="核销明细"></erp-title>
-    <erp-table ref="accountExpenditureSheetMxTableRef" :find-dto="accountExpenditureSheetMxFindDto"
-               :table-state="defaultAccountExpenditureSheetMxTableConfig">
+    <erp-table
+        ref="accountExpenditureSheetMxTableRef"
+        :find-dto="accountExpenditureSheetMxFindDto"
+        :table-state="defaultAccountExpenditureSheetMxTableConfig"
+    >
     </erp-table>
   </erp-page-box>
 </template>
@@ -81,7 +89,7 @@ export default defineComponent({
     ErpDelimiter,
     ErpButton
   },
-  setup(props,{expose}) {
+  setup(props, {expose}) {
     const router = useRouter();
     const accountExpenditureTableRef = ref<ITableRef>();
     const accountExpenditureAmountMxTableRef = ref<ITableRef>();
@@ -89,7 +97,7 @@ export default defineComponent({
     const accountExpenditureFindDto = ref(new AccountExpenditureFindDto());
     const accountExpenditureAmountMxFindDto = ref(new AccountExpenditureAmountMxFindDto());
     const accountExpenditureSheetMxFindDto = ref(new AccountExpenditureSheetMxFindDto());
-    const {buttonShowState,updateButtonState} = useButtonState()
+    const {buttonShowState, updateButtonState} = useButtonState()
 
     //设置单头表格id
     function getRowNodeId_headTable(data: IAccountExpenditureFind) {
@@ -105,6 +113,7 @@ export default defineComponent({
     async function activated() {
       await initPage()
     }
+
     expose({activated})
 
     async function initPage() {

@@ -63,6 +63,8 @@ import {useRouterPage} from "@/utils";
 import {BuyInboundService} from "@/module/buyInbound/service/BuyInbound.service";
 import {defineComponent, onMounted, ref} from "vue";
 import {AccountExpenditureService} from "@/module/accountExpenditure/accountExpenditure.service";
+import {AccountExpenditureFindDto} from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
+import {BuyInboundFindDto} from "@/module/buyInbound/dto/inbound/buyInboundFind.dto";
 
 interface IBuyInboundSheetState {
   completeL1Review: number;
@@ -125,36 +127,20 @@ export default defineComponent({
     }
 
     async function findBuyInboundSheetState() {
-      const sheetCompleteState = await buyInboundService.findSheetCompleteState({
-        buyname: "", moneytype: "", remark1: "", remark2: "", remark3: "", remark4: "", remark5: "",
-        clientid: 0,
-        endDate: "",
-        inboundcode: "",
-        inboundid: 0,
-        inboundtype: 0,
-        operateareaids: [],
-        page: 0,
-        pagesize: 0,
-        relatednumber: "",
-        startDate: "",
-        warehouseids: []
-      });
+      const buyInboundFindDto = new BuyInboundFindDto();
+      buyInboundFindDto.startDate = "";
+      buyInboundFindDto.endDate = "";
+      const sheetCompleteState = await buyInboundService.findSheetCompleteState(buyInboundFindDto);
       buyInboundSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
       buyInboundSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
       buyInboundSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
     }
 
     async function findAccountExpenditureState() {
-      const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState({
-        accountExpenditureCode: "",
-        accountExpenditureId: 0,
-        accountExpenditureType: 0,
-        buyid: 0,
-        endDate: "",
-        page: 0,
-        pagesize: 0,
-        startDate: ""
-      });
+      const accountExpenditureFindDto = new AccountExpenditureFindDto();
+      accountExpenditureFindDto.startDate = "";
+      accountExpenditureFindDto.endDate = "";
+      const sheetCompleteState = await accountExpenditureService.findAccountExpenditureState(accountExpenditureFindDto);
       accountExpenditureSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
       accountExpenditureSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
       accountExpenditureSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;

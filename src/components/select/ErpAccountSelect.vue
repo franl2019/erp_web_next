@@ -1,21 +1,21 @@
 <template>
   <el-select ref="ElSelectRef" placeholder="选择出纳账号" v-bind="$attrs">
     <el-option v-for="item in accountSelectList" :key="item.accountId" :label="item.accountName"
-      :value="item.accountId">
+               :value="item.accountId">
     </el-option>
   </el-select>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import { IAccount } from "@/module/account/account";
-import { AccountService } from "@/module/account/account.service";
+import {defineComponent, onMounted, ref} from "vue";
+import {IAccount} from "@/module/account/account";
+import {AccountService} from "@/module/account/account.service";
 
 export default defineComponent({
   name: "ErpAccountSelect",
-  setup(_props,{expose}) {
-    onMounted(async () => {
-      await getAccountList();
+  setup(_props, {expose}) {
+    onMounted(() => {
+      getAccountList();
     })
 
     const ElSelectRef = ref();

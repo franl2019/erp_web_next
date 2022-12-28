@@ -20,6 +20,7 @@
       <erp-button @click="initPage">刷新</erp-button>
     </erp-title>
     <erp-table
+        init
         ref="cashBankDepositJournalRef"
         :find-dto="cashBankDepositJournalFindDto"
         :table-state="defaultCashBankDepositJournalTableConfig"
@@ -40,7 +41,7 @@ import {
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {CashBankDepositJournalFindDto} from "@/module/report/cashBankDepositJournal/dto/cashBankDepositJournalFind.dto";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export default defineComponent({
   name: "CashBankDepositJournalFindView",
@@ -68,8 +69,8 @@ export default defineComponent({
           cashBankDepositJournalFindDto.value.startDate = val[0]
           cashBankDepositJournalFindDto.value.endDate = val[1]
         } else {
-          cashBankDepositJournalFindDto.value.startDate = getStartDate();
-          cashBankDepositJournalFindDto.value.endDate = getEndDate();
+          cashBankDepositJournalFindDto.value.startDate = useGetStartDate();
+          cashBankDepositJournalFindDto.value.endDate = useGetEndDate();
         }
       }
     })

@@ -13,7 +13,10 @@
       </template>
       <erp-button @click="initPage">刷新</erp-button>
     </erp-title>
-    <erp-table ref="accountPayableSumReportRef" :find-dto="findDto"
+    <erp-table
+        init
+        ref="accountPayableSumReportRef"
+        :find-dto="findDto"
                :table-state="defaultAccountPayableSumReportTableConfig">
     </erp-table>
   </erp-page-box>

@@ -21,7 +21,7 @@ export const permissionsTheme: Array<RouteRecordRaw> = [
         name: 'rolePermissions',
         path: '/rolePermissions',
         meta:{
-            title: "角色权限明细管理"
+            title: "角色权限管理"
         },
         component: ()=> import(/* webpackChunkName: "rolePermissions" */ '@/view/rolePermissionsMx/rolePermissionsMx.vue')
     },
@@ -29,7 +29,7 @@ export const permissionsTheme: Array<RouteRecordRaw> = [
         name: 'userRoleMx',
         path: '/userRoleMx',
         meta:{
-            title: "角色管理"
+            title: "角色用户管理"
         },
         component: ()=> import(/* webpackChunkName: "userRoleMx" */ '@/view/auth/userRoleMx/userRoleMx.vue')
     }

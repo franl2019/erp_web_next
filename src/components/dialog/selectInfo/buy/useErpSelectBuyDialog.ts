@@ -1,5 +1,5 @@
 import ErpSelectBuyDialog from '@/components/dialog/selectInfo/buy/ErpSelectBuyDialog.vue'
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 
 interface IDialogOption {
     unmount?: Function;
@@ -8,5 +8,5 @@ interface IDialogOption {
 }
 
 export function useErpSelectBuyDialog(option: IDialogOption) {
-    useErpDialogDemo(ErpSelectBuyDialog,option);
+    erpDialogFactory(ErpSelectBuyDialog,option);
 }

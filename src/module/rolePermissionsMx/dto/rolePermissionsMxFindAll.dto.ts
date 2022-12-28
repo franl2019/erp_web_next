@@ -7,8 +7,8 @@ export class RolePermissionsMxFindAllDto implements IRolePermissionsMxJoinPermis
     roleId: number;
     @IsInt()
     permissionsId: number;
-    @IsInt()
-    permissionsCode: number;
+    @IsString()
+    permissionsCode: string;
     @IsString()
     permissionsName: string;
     @IsInt()
@@ -27,7 +27,7 @@ export class RolePermissionsMxFindAllDto implements IRolePermissionsMxJoinPermis
     constructor() {
         this.roleId = 0;
         this.permissionsId = 0;
-        this.permissionsCode = 0;
+        this.permissionsCode = "";
         this.permissionsName = "";
         this.permissionsThemeId = 0;
         this.can = RolePermissionsCanType.all;

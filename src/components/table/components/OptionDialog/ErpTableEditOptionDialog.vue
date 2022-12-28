@@ -1,5 +1,7 @@
 <template>
-  <erp-form-dialog title="设置表格列" @clickedClose="close" @clickedConfirm="save" v-bind="$attrs">
+  <erp-form-dialog
+      title="设置表格列" @clickedClose="close" @clickedConfirm="save" v-bind="$attrs"
+  >
     <div class="h-96 flex flex-col">
       <!--option list-->
       <draggable
@@ -23,7 +25,6 @@
               <span class="flex-none">宽度:</span>
               <erp-input-round v-model.number="element.width" class="py-0 h-7 rounded-none" type="text" />
             </div>
-
         </template>
       </draggable>
 

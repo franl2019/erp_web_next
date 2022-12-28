@@ -63,8 +63,8 @@ export const LOCALE_CN = {
     group: '分组',
 
     // Other
-    loadingOoo: '加载中...',
-    noRowsToShow: '数据为空',
+    loadingOoo: '无数据',
+    noRowsToShow: '无数据',
     enabled: '启用',
 
     // Menu

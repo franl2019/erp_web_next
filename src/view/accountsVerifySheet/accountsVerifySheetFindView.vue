@@ -18,8 +18,14 @@
                         @change="initPage"></el-date-picker>
       </template>
     </erp-no-title>
-    <erp-table ref="accountsVerifySheetFindRef" :find-dto="findDto" :getRowNodeId="getRowNodeIdForHeadTable"
-               :table-state="accountsVerifySheetFindTableConfig" @selection-changed="onSelectionChanged">
+    <erp-table
+        ref="accountsVerifySheetFindRef"
+        :find-dto="findDto"
+        :getRowNodeId="getRowNodeIdForHeadTable"
+        :table-state="accountsVerifySheetFindTableConfig"
+        init
+        @selection-changed="onSelectionChanged"
+    >
     </erp-table>
 
     <erp-title title="核销明细">

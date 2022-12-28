@@ -6,8 +6,6 @@ export interface IFindInventory extends IInventory{
     clientname: string;
     productcode: string;
     productname: string;
-    materials: string;
-    spec: string;
     unit: string;
     packunit: string;
     packqty: number;

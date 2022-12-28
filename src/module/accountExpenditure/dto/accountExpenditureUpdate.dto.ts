@@ -3,7 +3,7 @@ import {IAccountExpenditureCreate} from "@/module/accountExpenditure/types/IAcco
 import {IAccountExpenditureAmountMx} from "@/module/accountExpenditure/types/IAccountExpenditureAmountMx";
 import {IAccountExpenditureSheetMx} from "@/module/accountExpenditure/types/IAccountExpenditureSheetMx";
 import {IAccountExpenditure} from "@/module/accountExpenditure/accountExpenditure";
-import {getToday, useDateFormat} from "@/utils";
+import {useGetToday, useDateFormat} from "@/utils";
 
 export class AccountExpenditureUpdateDto implements IAccountExpenditureCreate {
     @IsInt()
@@ -14,7 +14,7 @@ export class AccountExpenditureUpdateDto implements IAccountExpenditureCreate {
     @IsInt()
     buyid: number = 0;
     //发生日期
-    indate: string = getToday();
+    indate: string = useGetToday();
     //付款单类型
     @IsInt()
     accountExpenditureType: number = 0;

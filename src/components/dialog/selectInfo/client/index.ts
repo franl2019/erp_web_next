@@ -1,5 +1,5 @@
 import ErpSelectClientDialog from '@/components/dialog/selectInfo/client/ErpSelectClientDialog.vue'
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 
 interface IDialogOption {
     unmount?: Function;
@@ -8,6 +8,6 @@ interface IDialogOption {
 }
 
 export function useErpSelectClientDialog(option: IDialogOption) {
-    useErpDialogDemo(ErpSelectClientDialog, option);
+    erpDialogFactory(ErpSelectClientDialog, option);
 }
 

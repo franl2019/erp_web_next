@@ -10,8 +10,12 @@
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="onClickDeleteButton">删除</erp-button>
     </erp-title>
 
-    <erp-table ref="productOtherUnitTableRef" :find-dto="productOtherUnitFindDto"
-               :table-state="productOtherMxTableConfig" @selection-changed="selectionChanged">
+    <erp-table
+        ref="productOtherUnitTableRef"
+        :find-dto="productOtherUnitFindDto"
+        :table-state="productOtherMxTableConfig"
+        init
+        @selection-changed="selectionChanged">
     </erp-table>
   </erp-page-box>
 

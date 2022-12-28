@@ -172,14 +172,16 @@ export class SaleOutboundService {
     private async verifySaleOutboundMxCreateDto(outboundMxList: IOutboundMx[]) {
         for (let i = 0; i < outboundMxList.length; i++) {
             const outboundMx = outboundMxList[i];
-            await useVerifyParam(new SaleOutboundMxCreateDto(outboundMx))
+            outboundMx.printid = i;
+            await useVerifyParam(new SaleOutboundMxCreateDto().setMx(outboundMx))
         }
     }
 
     private async verifySaleOutboundMxUpdateDto(outboundMxList: IOutboundMx[]) {
         for (let i = 0; i < outboundMxList.length; i++) {
             const outboundMx = outboundMxList[i];
-            await useVerifyParam(new SaleOutboundMxUpdateDto(outboundMx))
+            outboundMx.printid = i;
+            await useVerifyParam(new SaleOutboundMxUpdateDto().setMx(outboundMx))
         }
     }
 }

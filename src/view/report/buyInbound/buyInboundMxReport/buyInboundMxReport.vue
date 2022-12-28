@@ -73,6 +73,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="buyInboundMxReportTable"
         :find-dto="findDto"
         :table-state="buyInboundMxReportTableConfig"

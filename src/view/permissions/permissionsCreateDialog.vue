@@ -8,8 +8,7 @@
     <erp-form>
       <erp-form-item name="唯一代码">
         <erp-input-round
-            :type="'number'"
-            v-model.number="permissions.permissionsCode">
+            v-model="permissions.permissionsCode">
         </erp-input-round>
       </erp-form-item>
       <erp-form-item name="名称">
@@ -39,7 +38,13 @@ import ErpPermissionsThemeSelect from "@/components/select/ErpPermissionThemeSel
 
 export default defineComponent({
   name: "permissionsCreateDialog",
-  components: {ErpPermissionsThemeSelect, ErpInputRound, ErpFormItem, ErpForm, ErpFormDialog},
+  components: {
+    ErpPermissionsThemeSelect,
+    ErpInputRound,
+    ErpFormItem,
+    ErpForm,
+    ErpFormDialog
+  },
   props: {
     resolve_dialog: {
       type: Function as PropType<(value: unknown) => void>,

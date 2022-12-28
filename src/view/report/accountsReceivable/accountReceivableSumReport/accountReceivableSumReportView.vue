@@ -24,6 +24,7 @@
       <erp-button @click="initPage">刷新</erp-button>
     </erp-title>
     <erp-table
+        init
         ref="accountReceivableSumReportRef"
         :find-dto="findDto"
         :table-state="defaultAccountReceivableSumReportTableConfig"

@@ -1,8 +1,8 @@
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import UserRoleMxCreateDialog from "@/view/auth/userRoleMx/userRoleMxCreateDialog.vue";
 
 
 
 export async function useUserRoleMxCreateDialog(roleId:number) {
-    await useErpDialogDemo(UserRoleMxCreateDialog,{roleId})
+    await erpDialogFactory(UserRoleMxCreateDialog,{roleId})
 }

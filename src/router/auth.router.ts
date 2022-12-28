@@ -34,7 +34,7 @@ export const authRouter: Array<RouteRecordRaw> = [
     {
         name: "role",
         meta: {
-            title: "用户角色管理"
+            title: "角色用户管理"
         },
         path: "/role", component: () => import(/* webpackChunkName: "role" */"@/view/role/role.vue")
     }

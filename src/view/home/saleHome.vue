@@ -1,7 +1,7 @@
 <template>
   <erp-page-box-row>
     <div
-      class="flex flex-none flex-col items-start flex-grow pt-3 overflow-auto"
+        class="flex flex-none flex-col items-start flex-grow pt-3 overflow-auto"
     >
       <div class="font-bold text-xl">销售管理流程图</div>
 
@@ -13,34 +13,34 @@
         <!--        </module-card>-->
         <!--        <erp_button_big></erp_button_big>-->
         <module-card
-          title="销售单"
-          @click="openSaleOutboundView"
+            title="销售单"
+            @click="openSaleOutboundView"
         >
           <module-card-item
-            content="进行中"
-            :count="saleOutboundSheetState.completeL1Review"
+              :count="saleOutboundSheetState.completeL1Review"
+              content="进行中"
           ></module-card-item>
           <module-card-item
-            content="未审核"
-            :count="saleOutboundSheetState.undoneL1Review"
+              :count="saleOutboundSheetState.undoneL1Review"
+              content="未审核"
           ></module-card-item>
           <module-card-item
-            content="未财审"
-            :count="saleOutboundSheetState.undoneL2Review"
+              :count="saleOutboundSheetState.undoneL2Review"
+              content="未财审"
           ></module-card-item>
         </module-card>
         <erp-big-right-button></erp-big-right-button>
         <module-card
-          title="销售收款"
-          @click="openAccountInComeView"
+            title="销售收款"
+            @click="openAccountInComeView"
         >
           <module-card-item
-            content="进行中"
-            :count="accountInComeSheetState.completeL1Review"
+              :count="accountInComeSheetState.completeL1Review"
+              content="进行中"
           ></module-card-item>
           <module-card-item
-            content="未审核"
-            :count="accountInComeSheetState.undoneL1Review"
+              :count="accountInComeSheetState.undoneL1Review"
+              content="未审核"
           ></module-card-item>
         </module-card>
       </div>
@@ -49,12 +49,14 @@
       <div class="flex">
         <div class="mr-6">
           <erp-router-button router-name="client"
-            >客户资料设置</erp-router-button
+          >客户资料设置
+          </erp-router-button
           >
         </div>
         <div class="mr-6">
           <erp-router-button router-name="product"
-            >商品资料设置</erp-router-button
+          >商品资料设置
+          </erp-router-button
           >
         </div>
       </div>
@@ -111,21 +113,16 @@ import ModuleCardItem from "@/components/card/moduleCard/ModuleCardItem.vue";
 import ErpBigRightButton from "@/components/button/ErpBigRightButton.vue";
 import ErpPageBoxRow from "@/components/page/ErpPageBoxRow.vue";
 import ErpRouterButton from "@/components/button/ErpRouterButton.vue";
-import { useRouter } from "vue-router";
-import { useRouterPage } from "@/utils";
-import {
-  ISaleOutboundSheetState,
-  SaleOutboundService,
-} from "@/module/saleOutbound/service/saleOutbound.service";
-import { defineComponent, onMounted, ref } from "vue";
-import {
-  AccountInComeService,
-  IAccountInComeSheetState,
-} from "@/module/accountInCome/accountInCome.service";
+import {useRouter} from "vue-router";
+import {useRouterPage} from "@/utils";
+import {ISaleOutboundSheetState, SaleOutboundService,} from "@/module/saleOutbound/service/saleOutbound.service";
+import {defineComponent, onMounted, ref} from "vue";
+import {AccountInComeService, IAccountInComeSheetState,} from "@/module/accountInCome/accountInCome.service";
+import {AccountInComeFindDto} from "@/module/accountInCome/dto/accountInComeFind.dto";
 
 export default defineComponent({
-  name:"saleHome",
-  components:{
+  name: "saleHome",
+  components: {
     ErpTitle,
     ErpPageBoxRow,
     ErpRouterButton,
@@ -133,7 +130,7 @@ export default defineComponent({
     ModuleCard,
     ModuleCardItem
   },
-  setup(prop,{expose}) {
+  setup(prop, {expose}) {
     const router = useRouter();
     const outboundSaleService = new SaleOutboundService();
     const accountInComeService = new AccountInComeService();
@@ -143,7 +140,7 @@ export default defineComponent({
       await findAccountInComeSheetState();
     }
 
-    expose({ activated });
+    expose({activated});
 
     onMounted(() => {
       findSaleOutboundSheetState();
@@ -199,33 +196,23 @@ export default defineComponent({
         warehouseids: [],
       });
       saleOutboundSheetState.value.completeL1Review =
-        sheetCompleteState.completeL1Review;
+          sheetCompleteState.completeL1Review;
       saleOutboundSheetState.value.undoneL1Review =
-        sheetCompleteState.undoneL1Review;
+          sheetCompleteState.undoneL1Review;
       saleOutboundSheetState.value.undoneL2Review =
-        sheetCompleteState.undoneL2Review;
+          sheetCompleteState.undoneL2Review;
     }
 
     async function findAccountInComeSheetState() {
-      const sheetCompleteState = await accountInComeService.findSheetState({
-        accountInComeCode: "",
-        accountInComeId: 0,
-        accountInComeType: 0,
-        amount: 0,
-        clientid: 0,
-        endDate: "",
-        page: 0,
-        pagesize: 0,
-        paymentAccount: "",
-        startDate: "",
-      });
-      accountInComeSheetState.value.completeL1Review =
-        sheetCompleteState.completeL1Review;
-      accountInComeSheetState.value.undoneL1Review =
-        sheetCompleteState.undoneL1Review;
-      accountInComeSheetState.value.undoneL2Review =
-        sheetCompleteState.undoneL2Review;
+      const accountInComeFindDto = new AccountInComeFindDto();
+      accountInComeFindDto.startDate = "";
+      accountInComeFindDto.endDate = "";
+      const sheetCompleteState = await accountInComeService.findSheetState(accountInComeFindDto);
+      accountInComeSheetState.value.completeL1Review = sheetCompleteState.completeL1Review;
+      accountInComeSheetState.value.undoneL1Review = sheetCompleteState.undoneL1Review;
+      accountInComeSheetState.value.undoneL2Review = sheetCompleteState.undoneL2Review;
     }
+
     return {
       saleOutboundSheetState,
       accountInComeSheetState,

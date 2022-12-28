@@ -1,12 +1,12 @@
 import {IsArray, IsDateString, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class SaleGrossMarginSumFindDto {
     @IsDateString()
-    startDate:string = getStartDate();
+    startDate:string = useGetStartDate();
 
     @IsDateString()
-    endDate:string = getEndDate();
+    endDate:string = useGetEndDate();
 
     @IsInt()
     clientid:number = 0

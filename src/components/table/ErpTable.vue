@@ -37,18 +37,21 @@
         <erp-table-option-tab-bar @click="onClickShowTableOptionBar">更多</erp-table-option-tab-bar>
       </erp-table-option-tab>
     </div>
+    <erp-table-bottom-box
+        v-if="$props.showButtonBox"
+    >
+      <div
+          v-if="$slots.buttonBox"
+          class="flex-grow flex mx-2">
+        <slot name="buttonBox">
+        </slot>
+      </div>
+    </erp-table-bottom-box>
   </div>
-
-  <erp-table-edit-option-dialog
-      v-if="optionBarVisible"
-      :grid-col="gridCol"
-      @clickedClose="onClickedOptionClose"
-      @clickedConfirm="onClickedOptionConfirm"
-  />
 </template>
 
 <script lang='ts'>
-import {defineComponent, PropType, ref, unref, UnwrapRef, watch} from "vue";
+import {defineComponent, PropType, unref, UnwrapRef, watch} from "vue";
 import {ColumnApi, GridApi, GridReadyEvent} from "ag-grid-community";
 import {AgGridVue} from "ag-grid-vue3";
 import {ITableConfig} from "@/components/table/type";
@@ -59,16 +62,19 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpInputReCheckbox from "@/components/input/ErpInputReCheckbox.vue";
 import {TableCol} from "@/components/table/TableCol";
 import {Table} from "@/components/table/Table";
-import ErpTableEditOptionDialog from "@/components/table/components/ErpTableEditOptionDialog.vue";
+import ErpTableEditOptionDialog from "@/components/table/components/OptionDialog/ErpTableEditOptionDialog.vue";
 import ErpTableOptionTabBar from "@/components/table/components/ErpTableOptionTabBar.vue";
 import ErpTableOptionTab from "@/components/table/components/ErpTableOptionTab.vue";
 import ErpTableTopBox from "@/components/table/components/ErpTableTopBox.vue";
+import ErpTableBottomBox from "@/components/table/components/ErpTableBottomBox.vue";
+import {useTableOptionDialog} from "@/components/table/components/OptionDialog/useTableOptionDialog";
 
 export default defineComponent({
   name: "ErpTable",
   emits: ['ready'],
   components: {
     ErpTableTopBox,
+    ErpTableBottomBox,
     ErpTableOptionTab,
     ErpTableOptionTabBar,
     ErpTableEditOptionDialog,
@@ -102,6 +108,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    showButtonBox:{
+      type:Boolean,
+      default:false,
+    }
   },
   setup(props, {emit, expose}) {
     const {tableState, findDto} = unref(props);
@@ -113,7 +123,7 @@ export default defineComponent({
       findDto: findDto
     }
 
-    const tableCol = new TableCol(
+    const gridCol = new TableCol(
         tableConfig.tableName,
         getGridApi,
         getColumnApi,
@@ -123,7 +133,7 @@ export default defineComponent({
       startEditTable,
       endEditTable,
       init: initGridColumn,
-    } = tableCol;
+    } = gridCol;
 
     const {
       setPinnedBottomRowStyle,
@@ -140,6 +150,7 @@ export default defineComponent({
     async function onGridReady(event: GridReadyEvent) {
       gridApi = event.api;
       columnApi = event.columnApi;
+      gridApi.setRowData([]);
       await initGridColumn();
       emit('ready', event);
       if (props.init) {
@@ -177,33 +188,20 @@ export default defineComponent({
       return columnApi ? columnApi : null
     }
 
-
-    const optionBarVisible = ref(false);
-
-    function onClickShowTableOptionBar() {
-      optionBarVisible.value = !optionBarVisible.value;
+    async function onClickShowTableOptionBar() {
+      await useTableOptionDialog({gridCol:gridCol});
     }
 
     function onClickSaveTableOptionBar() {
-      tableCol.saveColumnDefine(tableCol.getGridTableColumnState())
-    }
-
-
-    function onClickedOptionConfirm() {
-      optionBarVisible.value = !optionBarVisible.value
-    }
-
-    function onClickedOptionClose() {
-      optionBarVisible.value = !optionBarVisible.value
+      gridCol.saveColumnDefine(gridCol.getGridTableColumnState())
     }
 
     expose({initTableData, initTableDataList, getGridApi, getColumnApi});
 
     return {
-      gridCol: tableCol,
+      gridCol,
       LOCALE_CN,
       tableConfig,
-      optionBarVisible,
       setPinnedBottomRowStyle,
       onNavigateToNextCell,
       onCellContextMenu,
@@ -212,8 +210,6 @@ export default defineComponent({
       getColumnApi,
       onClickShowTableOptionBar,
       onClickSaveTableOptionBar,
-      onClickedOptionClose,
-      onClickedOptionConfirm
     };
   },
 });

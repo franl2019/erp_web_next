@@ -1,5 +1,5 @@
 import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export interface IFindSaleOutboundDto {
     warehouseids: number[];
@@ -35,7 +35,7 @@ export class SaleOutboundMxReportFindDto implements IFindSaleOutboundDto{
     @IsString()
     relatednumber: string = "";
     @IsString()
-    startDate: string = getStartDate();
+    startDate: string = useGetStartDate();
     @IsString()
-    endDate: string = getEndDate();
+    endDate: string = useGetEndDate();
 }

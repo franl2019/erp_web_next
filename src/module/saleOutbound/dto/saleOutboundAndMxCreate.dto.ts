@@ -1,6 +1,6 @@
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
-import {IsDateString,IsInt,IsString,IsArray} from "@/utils/verifyParam/customValidationDecorators";
-import {getToday, useDateFormat} from "@/utils";
+import {IsDateString, IsInt, IsString, IsArray, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
+import {useGetToday, useDateFormat} from "@/utils";
 import {CodeType} from "@/types/CodeType";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 
@@ -13,6 +13,8 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
     outboundcode: string;
     @IsDateString()
     outdate: string;
+    @IsString()
+    deliveryDate: string;
     @IsString()
     moneytype: string;
     @IsString()
@@ -27,6 +29,10 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
     remark4: string;
     @IsString()
     remark5: string;
+
+    @IsInt()
+    @NotEquals(0)
+    operateareaid:number;
     @IsInt()
     warehouseid: number;
     @IsInt()
@@ -54,7 +60,8 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
     constructor() {
         this.outboundid = 0;
         this.outboundcode = "";
-        this.outdate = getToday();
+        this.outdate = useGetToday();
+        this.deliveryDate = "";
         this.moneytype = "";
         this.relatednumber = "";
         this.remark1 = "";
@@ -62,6 +69,7 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
         this.remark3 = "";
         this.remark4 = "";
         this.remark5 = "";
+        this.operateareaid = 0;
         this.warehouseid = 0;
         this.clientid = 0;
         this.outboundMx = [];
@@ -83,10 +91,11 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
         return this
     }
 
-    setOrderHead(outbound:IOutbound){
+    setHead(outbound:IOutbound){
         this.outboundid = outbound.outboundid;
         this.outboundcode = outbound.outboundcode;
         this.outdate = useDateFormat(outbound.outdate);
+        this.deliveryDate = useDateFormat(outbound.deliveryDate);
         this.moneytype = outbound.moneytype;
         this.relatednumber = outbound.relatednumber;
         this.remark1 = outbound.remark1;
@@ -94,6 +103,7 @@ export class SaleOutboundAndMxCreateDto implements ISaleOutboundCreateDto{
         this.remark3 = outbound.remark3;
         this.remark4 = outbound.remark4;
         this.remark5 = outbound.remark5;
+        this.operateareaid = outbound.operateareaid;
         this.warehouseid = outbound.warehouseid;
         this.clientid = outbound.clientid;
         this.printcount = outbound.printcount;

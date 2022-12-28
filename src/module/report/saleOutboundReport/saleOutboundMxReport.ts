@@ -3,4 +3,6 @@ import {IClient} from "@/module/client/client";
 import {IWarehouse} from "@/module/warehouse/warehouse";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 
-export interface ISaleOutboundMxReport extends IOutbound,IOutboundMx,IClient,IWarehouse{}
+export interface ISaleOutboundMxReport extends IOutbound, IOutboundMx, Omit<IClient, "operateareaid">, IWarehouse {
+
+}

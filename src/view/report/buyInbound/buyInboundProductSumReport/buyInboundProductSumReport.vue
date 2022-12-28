@@ -70,6 +70,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="buyInboundProductSumReportTableRef"
         :find-dto="findDto"
         :table-state="buyInboundProductSumReportTableConfig"

@@ -58,7 +58,7 @@ import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSele
 import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
 import {defaultInventoryTableState} from "@/view/inventory/tableConfig/defaultInventoryTableState";
-import {FindInventoryDto, IFindInventoryDto,} from "@/module/inventory/dto/FindInventory.dto";
+import {InventoryFindDto, IInventoryFindDto,} from "@/module/inventory/dto/inventoryFind.dto";
 import {computed, defineComponent, onMounted, ref} from "vue";
 import {IInventory} from "@/module/inventory/inventory";
 import {ITableRef} from "@/components/table/type";
@@ -94,7 +94,7 @@ export default defineComponent({
       await inventoryTableRef.value?.initTableData();
     }
 
-    const findInventoryDto = ref<IFindInventoryDto>(new FindInventoryDto());
+    const findInventoryDto = ref<IInventoryFindDto>(new InventoryFindDto());
     //仓库id 计算属性
     const {warehouseid, setDefaultWarehouse} =
         useWarehouseSelect(findInventoryDto);

@@ -1,5 +1,5 @@
 import {IsArray, IsDateString, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class SaleOutboundProductSummaryReportFindDto {
     @IsInt()
@@ -12,10 +12,10 @@ export class SaleOutboundProductSummaryReportFindDto {
     productname:string = "";
 
     @IsDateString()
-    startDate:string = getStartDate();
+    startDate:string = useGetStartDate();
 
     @IsDateString()
-    endDate:string = getEndDate();
+    endDate:string = useGetEndDate();
 
     @IsString()
     unit:string = ""

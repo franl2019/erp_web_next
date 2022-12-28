@@ -4,6 +4,7 @@ export interface IInventory {
     spec_d: string;
     materials: string;
     materials_d: string;
+    batchNo:string;
     remark: string;
     remarkmx: string;
     qty: number;
@@ -34,4 +35,5 @@ export class Inventory implements IInventory {
     productid: number = 0;
     clientid: number = 0;
     warehouseid: number = 0;
+    batchNo: string = "";
 }

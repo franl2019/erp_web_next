@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref} from "vue";
-import {FindInventoryDto, IFindInventoryDto} from "@/module/inventory/dto/FindInventory.dto";
+import {InventoryFindDto, IInventoryFindDto} from "@/module/inventory/dto/inventoryFind.dto";
 import {IInventory, IInventoryForSelect} from "@/module/inventory/inventory";
 import {ITableRef} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
@@ -126,8 +126,8 @@ export default defineComponent({
     })
 
     //搜索条件
-    const findInventoryDto = ref<IFindInventoryDto>(new FindInventoryDto());
-    findInventoryDto.value.warehouseids = [props.warehouseid];
+    const findInventoryDto = ref<IInventoryFindDto>(new InventoryFindDto());
+    findInventoryDto.value.warehouseids = props.warehouseid?[props.warehouseid]:[];
     findInventoryDto.value.clientid = props.clientid;
 
     //搜索

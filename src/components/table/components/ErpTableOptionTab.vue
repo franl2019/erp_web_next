@@ -1,7 +1,6 @@
 <template>
   <div class="flex flex-col flex-none items-center
-                  border-r border-y border-solid
-                  w-6"
+                  border-r border-y border-solid w-6"
        style="border-color:#bec4c7">
     <slot name="default"></slot>
   </div>

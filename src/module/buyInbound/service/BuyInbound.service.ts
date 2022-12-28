@@ -1,7 +1,7 @@
 import {useHttpPost, IApiResult} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {VerifyParamError} from "@/types/error/verifyParamError";
-import {BuyInboundFindDto, IBuyInboundFindDto} from "@/module/buyInbound/dto/inbound/buyInboundFind.dto";
+import {BuyInboundFindDto} from "@/module/buyInbound/dto/inbound/buyInboundFind.dto";
 import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {BuyInboundAndMxCreateDto} from "@/module/buyInbound/dto/buyInboundAndMxCreate.dto";
 import {IBuyInboundInView} from "@/module/buyInbound/dto/inbound/types/buyInboundInView";
@@ -20,7 +20,7 @@ export class BuyInboundService {
         }
     }
 
-    public async findSheetCompleteState(findDto: IBuyInboundFindDto) {
+    public async findSheetCompleteState(findDto: BuyInboundFindDto) {
         const result = await useHttpPost<IApiResult>(API_URL.BUY_INBOUND_FIND_SHEET_COMPLETE_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState

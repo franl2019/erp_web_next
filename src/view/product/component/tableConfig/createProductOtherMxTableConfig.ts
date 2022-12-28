@@ -4,7 +4,6 @@ import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ProductOtherUnitService} from "@/module/productOtherUnit/productOtherUnit.service";
 import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
-import {useFormatOutboundMxNumber} from "@/utils/tableUtils";
 
 export const createProductOtherMxTableConfig = ref<ITableConfig<IProductOtherUnit>>({
     tableName: "createProductOtherMxTableConfig",
@@ -23,8 +22,10 @@ export const createProductOtherMxTableConfig = ref<ITableConfig<IProductOtherUni
         {headerName: '辅助单位', field: 'productOtherUnitName'},
         {headerName: '默认转换率', field: 'defaultConversionRate'},
         {
-            headerName: '自定义转换率', field: 'conversionRate', editable: true, type: 'numericColumn',
-            valueSetter: (params) => useFormatOutboundMxNumber(params)
+            headerName: '自定义转换率',
+            field: 'conversionRate',
+            editable: true,
+            type: 'numericColumn',
         },
         {headerName: '审核', field: 'level1review', cellRendererFramework: Table_flag},
         {headerName: '审核人', field: 'level1name'},

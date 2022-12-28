@@ -65,8 +65,8 @@ export default defineComponent({
       return permissionsThemeTreeRef.value.getSelectedNode()
     }
 
-    function setSelectedNode() {
-      return permissionsThemeTreeRef.value.setSelectedNode()
+    function setSelectedNode(permissionsThemeId: number) {
+      return permissionsThemeTreeRef.value.setSelectedNode(permissionsThemeId)
     }
 
     expose({initData, getSelectedNode, setSelectedNode});

@@ -51,12 +51,12 @@ export default defineComponent({
   },
   props: {
     resolve_dialog: {
-      type: Function as PropType<(value: unknown) => void>,
-      required: true
+      type: Function as PropType<(value: any) => boolean>,
+      default:Promise.resolve
     },
     reject_dialog: {
       type: Function as PropType<(reason?: any) => void>,
-      required: true
+      default: Promise.reject
     },
     unmount: {
       type: Function,
@@ -69,7 +69,6 @@ export default defineComponent({
     },
     message: {
       type: String,
-      required: true,
       default: "",
     },
     ok: {

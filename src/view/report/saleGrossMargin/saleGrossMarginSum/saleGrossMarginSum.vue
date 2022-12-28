@@ -67,6 +67,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="saleGrossMarginSumRef"
         :find-dto="findDto"
         :table-state="defaultSaleGrossMarginSumReportTableConfig"

@@ -68,6 +68,7 @@
     </erp-no-title>
 
     <erp-table
+        init
         ref="saleOutboundClientProductSummaryReportTable"
         :find-dto="findDto"
         :table-state="saleOutboundClientProductSummaryReportTableConfig"

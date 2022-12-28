@@ -1,5 +1,5 @@
 import ErpErrorDialog from '@/components/dialog/error/ErpErrorDialog.vue'
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import {IErpDialogOption} from "@/components/dialog/useErpDialog";
 
 export interface IErpErrorDialogOption extends IErpDialogOption{
@@ -7,6 +7,6 @@ export interface IErpErrorDialogOption extends IErpDialogOption{
 }
 
 export default function useErpErrorDialog(option: IErpErrorDialogOption) {
-    useErpDialogDemo<IErpDialogOption>(ErpErrorDialog,option)
+    erpDialogFactory<IErpDialogOption>(ErpErrorDialog,option)
 }
 

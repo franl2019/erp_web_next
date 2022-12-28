@@ -1,4 +1,4 @@
-import {getToday} from "@/utils";
+import {useGetToday} from "@/utils";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 
 interface ISaleOutboundCreateDto extends IOutbound{
@@ -9,7 +9,8 @@ export class SaleOutboundCreateDto implements ISaleOutboundCreateDto{
     outboundid: number = 0;
     outboundcode: string = "";
     outboundtype: number = 8;
-    outdate: string = getToday();
+    outdate: string = useGetToday();
+    deliveryDate: string = "";
     moneytype: string = "";
     relatednumber: string = "";
     remark1: string = "";
@@ -28,6 +29,7 @@ export class SaleOutboundCreateDto implements ISaleOutboundCreateDto{
     createdAt: Date | null = null;
     updater: string = "";
     updatedAt: Date | null = null;
+    operateareaid:number = 0;
     warehouseid: number = 0;
     clientid: number = 0;
     del_uuid: number = 0;

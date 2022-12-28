@@ -1,7 +1,7 @@
 <template>
   <erp-page-box>
     <erp-no-title>
-      <erp-button @click="clickedSaveButton" :disabled="!state.edit" type="info">保存</erp-button>
+      <erp-button :disabled="!state.edit" type="info" @click="clickedSaveButton">保存</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteButton">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedL1ReviewButton">审核
@@ -11,23 +11,23 @@
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="editDto.accountExpenditureCode" name="单据编号" lg-col="1" md-col="2">
+      <erp-form-item v-if="editDto.accountExpenditureCode" lg-col="1" md-col="2" name="单据编号">
         <erp-input-round v-model="editDto.accountExpenditureCode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="供应商" lg-col="2" md-col="2">
+      <erp-form-item lg-col="2" md-col="2" name="供应商">
         <erp-select-buy-btn
             :buyname="editDto.buyname"
             :disabled="!state.edit"
             @select="onSelectedBuy" @unSelect="onUnSelectedBuy"></erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item name="总金额(自动计算)" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="总金额(自动计算)">
         <erp-input-round v-model="editDto.amount" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="发生日期" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="发生日期">
         <el-date-picker v-model="editDto.indate" :disabled="!state.edit" placeholder="选择日期"
                         type="date" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
-      <erp-form-item name="备注" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="备注">
         <erp-input-round v-model="editDto.reMark" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>
@@ -88,8 +88,9 @@ import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import {useRouterPage} from "@/utils";
 import useErpDialog from "@/components/dialog/useErpDialog";
-import {useErpSelectAccountPayableDialog}
-  from "@/components/dialog/selectInfo/accountPayable/useErpSelectAccountPayableDialog";
+import {
+  useErpSelectAccountPayableDialog
+} from "@/components/dialog/selectInfo/accountPayable/useErpSelectAccountPayableDialog";
 import * as mathjs from 'mathjs';
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
@@ -101,6 +102,7 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
+import {AccountExpenditureFindDto} from "@/module/accountExpenditure/dto/accountExpenditureFind.dto";
 
 export default defineComponent({
   name: "AccountExpenditureEdit",
@@ -227,16 +229,9 @@ export default defineComponent({
 
     //按付款单id获取核销明细
     async function initHeadData(accountExpenditureId: number) {
-      const accountExpenditureList = await accountExpenditureService.find({
-        accountExpenditureCode: "",
-        accountExpenditureId: accountExpenditureId,
-        accountExpenditureType: 0,
-        buyid: 0,
-        page: 0,
-        pagesize: 0,
-        endDate: "",
-        startDate: ""
-      });
+      const accountExpenditureFindDto = new AccountExpenditureFindDto();
+      accountExpenditureFindDto.accountExpenditureId = accountExpenditureId;
+      const accountExpenditureList = await accountExpenditureService.find(accountExpenditureFindDto);
 
       if (accountExpenditureList.length !== 1) {
         return Promise.reject(new VerifyParamError('查无此单'));

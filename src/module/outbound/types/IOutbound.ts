@@ -3,6 +3,7 @@ export interface IOutbound {
     outboundcode: string;
     outboundtype: number;
     outdate: string;
+    deliveryDate: string;
     moneytype: string;
     relatednumber: string;
     remark1: string;
@@ -21,6 +22,7 @@ export interface IOutbound {
     createdAt: Date | null;
     updater: string;
     updatedAt: Date | null;
+    operateareaid:number;
     warehouseid: number;
     clientid: number;
     del_uuid: number;

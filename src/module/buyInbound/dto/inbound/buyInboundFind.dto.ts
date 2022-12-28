@@ -1,4 +1,4 @@
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export interface IBuyInboundFindDto {
@@ -34,9 +34,9 @@ export class BuyInboundFindDto implements IBuyInboundFindDto {
     @IsInt()
     pagesize: number = 0;
     @IsString()
-    startDate: string = getStartDate();
+    startDate: string = useGetStartDate();
     @IsString()
-    endDate: string = getEndDate();
+    endDate: string = useGetEndDate();
     clientid: number = 0;
     @IsString()
     inboundcode: string = "";

@@ -1,6 +1,6 @@
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import PermissionsThemeCreateDialog from "@/view/permissionsTheme/components/permissionsThemeCreateDialog.vue";
 
 export async function usePermissionsThemeCreateDialog() {
-    return await useErpDialogDemo(PermissionsThemeCreateDialog,{})
+    return await erpDialogFactory(PermissionsThemeCreateDialog,{})
 }

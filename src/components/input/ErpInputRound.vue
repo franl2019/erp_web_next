@@ -2,7 +2,7 @@
   <input ref="inputRef"
          :type="$props.type"
          :value="$props.modelValue"
-         class="border border-solid border-gray-300
+         class="border border-solid border-gray-300 text
          focus:outline-none
          focus:border-2 focus:border-indigo-500
          px-2 block h-10 w-full rounded sm:text-sm"

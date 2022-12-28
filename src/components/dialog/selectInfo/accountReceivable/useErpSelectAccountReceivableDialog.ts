@@ -1,4 +1,4 @@
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import ErpSelectAccountReceivableDialog
     from '@/components/dialog/selectInfo/accountReceivable/ErpSelectAccountReceivableDialog.vue';
 
@@ -11,5 +11,5 @@ interface IDialogOption {
 }
 
 export function useErpSelectAccountReceivableDialog(option: IDialogOption) {
-    useErpDialogDemo(ErpSelectAccountReceivableDialog, option);
+  return erpDialogFactory(ErpSelectAccountReceivableDialog, option);
 }

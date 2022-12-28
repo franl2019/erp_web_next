@@ -1,9 +1,12 @@
 import {IPermissionsTheme} from "@/module/permissionsTheme/permissionsTheme";
+import {IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export class PermissionsThemeCreateDto implements IPermissionsTheme{
 
     permissionsThemeId: number;
+    @IsString()
     permissionsThemeName: string;
+    @IsInt()
     printid: number;
     creater: string;
     createdAt: Date | null;

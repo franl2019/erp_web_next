@@ -1,4 +1,4 @@
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
 
 export interface ISaleOutboundFindDataDto {
@@ -30,8 +30,8 @@ export class SaleOutboundFindDataDto implements ISaleOutboundFindDataDto {
     operateareaids: number[] = [];
     @IsInt()
     clientid: number = 0;
-    startDate: string = getStartDate();
-    endDate: string = getEndDate();
+    startDate: string = useGetStartDate();
+    endDate: string = useGetEndDate();
     @IsInt()
     outboundid: number = 0;
     @IsString()

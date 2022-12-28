@@ -1,8 +1,8 @@
 import ErpWarnDialog from '../warn/ErpWarnDialog.vue.vue'
-import {useErpDialogDemo} from "@/components/dialog/useErpDialogDemo";
+import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
 import {IErpDialogOption} from "@/components/dialog/useErpDialog";
 
 export default function useErpWarnDialog<T = boolean>(option: IErpDialogOption):Promise<T> {
-   return useErpDialogDemo<IErpDialogOption>(ErpWarnDialog, {...option,closeBtnVisible:false})
+   return erpDialogFactory<IErpDialogOption>(ErpWarnDialog, {...option,closeBtnVisible:false})
 }
 

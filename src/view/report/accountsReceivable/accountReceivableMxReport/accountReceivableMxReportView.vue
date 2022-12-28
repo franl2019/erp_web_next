@@ -25,6 +25,7 @@
       <erp-button @click="refreshButton">刷新</erp-button>
     </erp-title>
     <erp-table
+        init
         ref="accountReceivableMxReportRef"
         :find-dto="findDto"
         :table-state="defaultAccountReceivableMxReportTableConfig"

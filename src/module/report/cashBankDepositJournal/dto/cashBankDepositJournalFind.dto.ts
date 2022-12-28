@@ -1,9 +1,9 @@
 import {IsInt} from "@/utils/verifyParam/customValidationDecorators";
-import {getEndDate, getStartDate} from "@/utils";
+import {useGetEndDate, useGetStartDate} from "@/utils";
 
 export class CashBankDepositJournalFindDto{
     @IsInt()
     accountId:number = 0;
-    startDate:string = getStartDate();
-    endDate:string = getEndDate();
+    startDate:string = useGetStartDate();
+    endDate:string = useGetEndDate();
 }

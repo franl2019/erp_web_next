@@ -1,6 +1,6 @@
 import {IInbound} from "@/module/inbound/IInbound";
 import {CodeType} from "@/types/CodeType";
-import {getToday} from "@/utils";
+import {useGetToday} from "@/utils";
 import {IsDateString, IsInt, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
 
@@ -54,7 +54,7 @@ export class BuyInboundCreateDto implements IInbound {
         this.clientid = 0;
         this.warehouseid = 0;
         this.inboundtype = CodeType.buyInbound;
-        this.indate = getToday();
+        this.indate = useGetToday();
         this.moneytype = "";
         this.printcount = 0;
         this.relatednumber = "";
