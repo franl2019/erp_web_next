@@ -1,7 +1,10 @@
 <template>
   <el-select ref="ElSelectRef" placeholder="选择所属仓库" v-bind="$attrs">
-    <el-option v-for="item in warehouseSelectList" :key="item.warehouseid" :label="item.warehousename"
-               :value="item.warehouseid">
+    <el-option
+        v-for="item in warehouseSelectList"
+        :key="item.warehouseid"
+        :label="item.warehousename"
+        :value="item.warehouseid">
     </el-option>
   </el-select>
 </template>
@@ -10,9 +13,13 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {IWarehouse, Warehouse} from "@/module/warehouse/warehouse";
 import {WarehouseService} from "@/module/warehouse/warehouse.service";
+import {ElOption, ElSelect} from "element-plus";
 
 export default defineComponent({
   name: "ErpWarehouseAuthSelectHaveRoot",
+  components: {
+    ElSelect, ElOption
+  },
   setup(_props, {expose}) {
     onMounted(() => {
       getWarehouseList();

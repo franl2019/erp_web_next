@@ -12,6 +12,6 @@ export interface IErpDialogOption {
 }
 
 export default function useErpDialog<T = boolean>(option: IErpDialogOption):Promise<T> {
-   return erpDialogFactory<IErpDialogOption>(ErpDialog,option)
+   return erpDialogFactory(ErpDialog,option)
 }
 

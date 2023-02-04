@@ -124,7 +124,7 @@ export default defineComponent({
       }
     }
 
-//选择表格第一行
+    //选择表格第一行
     function selectTableFirstRow() {
       tableRef.value?.getGridApi().ensureIndexVisible(0);
       const firstCol = tableRef.value?.getColumnApi().getAllDisplayedColumns()[0];

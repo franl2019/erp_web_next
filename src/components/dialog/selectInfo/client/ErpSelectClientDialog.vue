@@ -1,5 +1,8 @@
 <template>
-  <erp-left-right-layout-dialog>
+  <erp-full-screen-dialog
+      title="选择客户"
+      @clicked-confirm="clickedOkSelectedDialog"
+      @clicked-cancel="clickedCloseSelectedDialog">
     <template v-slot:left>
       <div class="flex flex-col h-full pr-4">
         <erp-title title="地区"/>
@@ -9,21 +12,20 @@
       </div>
     </template>
     <template v-slot:default>
-      <erp-title title="请选择客户">
+      <erp-title>
         <template v-slot:input>
           <erp-input-round v-model="findClientDto.search" class="md:w-52" placeholder="输入关键词"
                              @change="onSearchChange"></erp-input-round>
         </template>
-        <erp-button @click="clickedCloseSelectedDialog">关闭</erp-button>
       </erp-title>
       <erp-table ref="clientTableRef" :find-dto="findClientDto" :getRowNodeId="getRowNodeId"
                  :table-state="selectClientTableState" @rowDoubleClicked="onClientTableDoubleClick"></erp-table>
     </template>
-  </erp-left-right-layout-dialog>
+  </erp-full-screen-dialog>
 </template>
 
 <script lang='ts'>
-import {defineComponent, onMounted, ref} from "vue";
+import {defineComponent, onMounted, PropType, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {RowDoubleClickedEvent} from "ag-grid-community";
 import {IClient} from "@/module/client/client";
@@ -35,12 +37,13 @@ import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpClientAreaTree from "@/components/tree/component/ErpClientAreaTree.vue";
-import ErpLeftRightLayoutDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
+import ErpFullScreenDialog from "@/components/dialog/ErpFullScreenDialog.vue";
+import {IFindInventory} from "@/module/inventory/FindInventory";
 
 export default defineComponent({
   name:"ErpSelectClientDialog",
   components: {
-    ErpLeftRightLayoutDialog,
+    ErpFullScreenDialog,
     ErpButton,
     ErpTitle,
     ErpTable,
@@ -48,17 +51,15 @@ export default defineComponent({
     ErpClientAreaTree,
   },
   props: {
+    resolve_dialog: {
+      type: Function as PropType<(value: any) => IFindInventory[] | undefined>,
+      required: true,
+    },
+    reject_dialog: {
+      type: Function as PropType<(reason?: any) => void>,
+      required: true,
+    },
     unmount: {
-      type: Function,
-      default: () => {
-      },
-    },
-    ok: {
-      type: Function,
-      default: () => {
-      },
-    },
-    close: {
       type: Function,
       default: () => {
       },
@@ -91,18 +92,18 @@ export default defineComponent({
     //产品资料表行双击
     async function onClientTableDoubleClick(event: RowDoubleClickedEvent) {
       if (event.data) {
-        await props.ok(event.data);
+        props.resolve_dialog(event.data)
         props.unmount();
       }
     }
 
     async function clickedOkSelectedDialog() {
-      await props.ok(getSelectedClientInfo());
+      await props.resolve_dialog(getSelectedClientInfo());
       props.unmount();
     }
 
     async function clickedCloseSelectedDialog() {
-      await props.close();
+      await props.reject_dialog();
       props.unmount();
     }
 

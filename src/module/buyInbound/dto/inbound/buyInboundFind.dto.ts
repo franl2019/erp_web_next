@@ -1,5 +1,6 @@
 import {useGetEndDate, useGetStartDate} from "@/utils";
 import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
+import {CodeType} from "@/types/CodeType";
 
 export interface IBuyInboundFindDto {
     warehouseids: number[];
@@ -41,7 +42,7 @@ export class BuyInboundFindDto implements IBuyInboundFindDto {
     @IsString()
     inboundcode: string = "";
     @IsInt()
-    inboundtype: number = 1;
+    inboundtype: number = CodeType.buyInbound;
     @IsArray()
     operateareaids: number[] = [];
     @IsString()

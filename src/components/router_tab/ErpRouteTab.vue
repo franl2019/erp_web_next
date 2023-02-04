@@ -3,9 +3,9 @@
     <!--menu btn-->
     <div
         class="flex flex-none h-full items-center justify-center
-        w-12 bg-zinc-50 rounded-tr-md select-none cursor-pointer">
+        w-12 bg-zinc-50 rounded-tr-md select-none cursor-pointer" @click="showMenu">
       <div class="flex-none flex items-center
-                  flex-row flex-nowrap select-none space-x-4" @click="showMenu">
+                  flex-row flex-nowrap select-none space-x-4">
         <img alt="menu" class="h-6 w-6" src="@/assets/menu_black_18dp.svg"/>
       </div>
     </div>

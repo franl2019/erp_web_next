@@ -1,5 +1,9 @@
 <template>
-  <erp-left-right-structure-dialog>
+  <erp-full-screen-dialog
+      title="选择供应商"
+      @clicked-confirm="clickedOkSelectedDialog"
+      @clicked-cancel="clickedCloseSelectedDialog"
+  >
     <template v-slot:left>
       <div class="flex flex-col h-full pr-4">
         <erp-title title="地区">
@@ -10,17 +14,14 @@
       </div>
     </template>
     <template v-slot:default>
-      <erp-no-title title="请选择供应商">
+      <erp-title>
         <template #input>
-          <erp-input-round v-model="a"
+          <erp-input-round v-model="findBuyDto.search"
                            class="md:w-52"
                            placeholder="输入关键词"
                            @change="onSearchChange"></erp-input-round>
-          <erp-button @click="clickedCloseSelectedDialog">关闭</erp-button>
         </template>
-        <erp-button type="success" @click="clickedOkSelectedDialog">确定选择</erp-button>
-
-      </erp-no-title>
+      </erp-title>
       <erp-table ref="buyTableRef"
                  :find-dto="findBuyDto"
                  :getRowNodeId="getRowNodeId"
@@ -28,11 +29,11 @@
                  @rowDoubleClicked="onBuyTableDoubleClick"
       ></erp-table>
     </template>
-  </erp-left-right-structure-dialog>
+  </erp-full-screen-dialog>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref, unref} from "vue";
+import {defineComponent, onMounted, PropType, ref} from "vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
@@ -44,8 +45,9 @@ import {IBuyArea} from "@/module/buyArea/buyArea";
 import {selectBuyTableState} from "@/view/buy/tableConfig/selectBuyTableState";
 import {IBuy} from "@/module/buy/buy";
 import ErpBuyAreaTree from "@/components/tree/component/ErpBuyAreaTree.vue";
-import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
+import ErpFullScreenDialog from "@/components/dialog/ErpFullScreenDialog.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
+import {IFindInventory} from "@/module/inventory/FindInventory";
 
 export default defineComponent({
   name: 'ErpSelectBuyDialog',
@@ -55,32 +57,29 @@ export default defineComponent({
     ErpTitle,
     ErpBuyAreaTree,
     ErpInputRound,
-    ErpLeftRightStructureDialog,
+    ErpFullScreenDialog,
     ErpNoTitle
   },
   props: {
+    resolve_dialog: {
+      type: Function as PropType<(value: any) => IFindInventory[] | undefined>,
+      required: true,
+    },
+    reject_dialog: {
+      type: Function as PropType<(reason?: any) => void>,
+      required: true,
+    },
     unmount: {
       type: Function,
       required: true,
       default: () => {
       }
-    },
-    ok: {
-      type: Function,
-      default: () => {
-      }
-    },
-    close: {
-      type: Function,
-      default: () => {
-      }
     }
   },
   setup(props) {
-    const {ok, close, unmount} = unref(props)
     const buyTableRef = ref<ITableRef>()
     const findBuyDto = ref<IFindBuyDto>(new FindBuyDto());
-    const a = ref("")
+
     //表格行id设置
     function getRowNodeId(data: IBuy) {
       return data.buyid
@@ -102,21 +101,21 @@ export default defineComponent({
     }
 
     //产品资料表行双击
-    async function onBuyTableDoubleClick(event: RowDoubleClickedEvent) {
+    function onBuyTableDoubleClick(event: RowDoubleClickedEvent) {
       if (event.data) {
-        await ok(event.data);
-        unmount();
+        props.resolve_dialog(event.data);
+        props.unmount();
       }
     }
 
     async function clickedOkSelectedDialog() {
-      await ok(getSelectedBuyInfo());
-      unmount();
+      await props.resolve_dialog(getSelectedBuyInfo());
+      props.unmount();
     }
 
     async function clickedCloseSelectedDialog() {
-      await close();
-      unmount();
+      await props.reject_dialog();
+      props.unmount();
     }
 
     function getSelectedBuyInfo(): IBuy {
@@ -124,7 +123,6 @@ export default defineComponent({
     }
 
     return {
-      a,
       buyTableRef,
       findBuyDto,
       selectBuyTableState,

@@ -16,59 +16,23 @@
       <erp-delimiter/>
       <erp-button @click="initPage">刷新</erp-button>
       <template v-slot:input>
-        <el-date-picker v-model="findDate" end-placeholder="结束日期" range-separator="-" start-placeholder="开始日期"
-                        type="daterange" unlink-panels value-format="YYYY-MM-DD HH:mm:ss" @change="refreshData">
-        </el-date-picker>
-        <erp-warehouse-auth-select-have-root v-model="warehouseid" class="md:w-40" @change="refreshData">
-        </erp-warehouse-auth-select-have-root>
-        <erp-input-round v-model="inboundHeadFindDto.inboundcode" class="md:w-60" placeholder="输入单号搜索"
-                         @change="refreshData"></erp-input-round>
-
-        <!-- filter button 筛选按钮-->
-        <erp-pop-over-button @close="clickedFilterCloseBtn" @ok="clickedFilterOkBtn" @reset="clickedFilterResetBtn">
-          <template #default>筛选</template>
-          <template #form>
-            <erp-form>
-              <erp-form-item name="仓库">
-                <erp-warehouse-auth-select-have-root v-model="warehouseid" @change="refreshData">
-                </erp-warehouse-auth-select-have-root>
-              </erp-form-item>
-              <erp-form-item name="供应商">
-                <erp-input-round v-model="inboundHeadFindDto.buyname"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="结算方式">
-                <erp-input-round v-model="inboundHeadFindDto.moneytype"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="相关单号">
-                <erp-input-round v-model="inboundHeadFindDto.relatednumber"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="备注1">
-                <erp-input-round v-model="inboundHeadFindDto.remark1"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="备注2">
-                <erp-input-round v-model="inboundHeadFindDto.remark2"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="备注3">
-                <erp-input-round v-model="inboundHeadFindDto.remark3"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="备注4">
-                <erp-input-round v-model="inboundHeadFindDto.remark4"></erp-input-round>
-              </erp-form-item>
-              <erp-form-item name="备注5">
-                <erp-input-round v-model="inboundHeadFindDto.remark5"></erp-input-round>
-              </erp-form-item>
-            </erp-form>
-          </template>
-        </erp-pop-over-button>
+        <erp-input-round
+            v-model="inboundHeadFindDto.inboundcode"
+            class="md:w-60"
+            placeholder="输入单号搜索"
+            @change="refreshData">
+        </erp-input-round>
       </template>
     </erp-no-title>
 
-    <erp-table ref="inboundHeadRef"
-               :find-dto="inboundHeadFindDto"
-               :getRowNodeId="getHeadTableRowNodeId"
-               :table-state="BuyInboundFindViewHeadTableConfig"
-               @ready="initPage"
-               @selectionChanged="onHeadTableSelectRow">
+    <erp-table
+        ref="inboundHeadRef"
+        :find-dto="inboundHeadFindDto"
+        :getRowNodeId="getHeadTableRowNodeId"
+        :show-filter-tips-box="true"
+        :table-state="BuyInboundFindViewHeadTableConfig"
+        @ready="initPage"
+        @selectionChanged="onHeadTableSelectRow">
     </erp-table>
 
     <erp-title title="单据明细"></erp-title>
@@ -315,7 +279,6 @@ export default defineComponent({
       clickedFilterCloseBtn,
       clickedFilterResetBtn,
       onHeadTableSelectRow,
-      getSelectRow,
       clickedCreateBtn,
       clickedEditBtn,
       clickedLevel1review,

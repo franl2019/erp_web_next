@@ -1,6 +1,7 @@
 import {GridApi, GridOptions, ColDef, ColumnApi, ColGroupDef} from "ag-grid-community";
 
 export interface ITableRef {
+    initFindDto:()=>void;
     initTableData: (callback?:Function) => Promise<void>;
     initTableDataList: () => Promise<void>;
     //获取表格Api

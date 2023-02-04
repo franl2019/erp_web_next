@@ -1,37 +1,23 @@
 <template>
-  <div v-show="!props.disabled" class="flex rounded-md shadow-sm">
-    <ErpInputRound :value="props.clientname ? props.clientname :'请选择客户'"
-           class="flex-1 focus:ring-indigo-500 focus:border-indigo-500  block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-           disabled
-           placeholder="" type="text"></ErpInputRound>
-    <button
-        v-if="props.clientname.length===0"
-        class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm active:bg-gray-100 focus:outline-none"
-        @click="clickedSelect"
-    >
-      选择
-    </button>
-    <button
-        v-else
-        class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-red-500 text-white text-sm active:bg-red-600 focus:outline-none"
-        @click="clickedUnSelect"
-    >
-      取消选择
-    </button>
-  </div>
-  <erp-input-round v-show="props.disabled" v-model="props.clientname" disabled></erp-input-round>
+  <erp-input-round
+      :disabled="$props.disabled"
+      :value="$props.clientname ? $props.clientname :'点击选择客户'"
+      class="hover:underline underline-offset-4 cursor-pointer"
+      readonly
+      type="text"
+      @click="clickedButton">
+  </erp-input-round>
 </template>
 
 <script lang='ts'>
-import {useErpSelectClientDialog} from "@/components/dialog/selectInfo/client";
-import {IClient} from "@/module/client/client";
+import {useErpSelectClientDialog} from "@/components/dialog/selectInfo/client/useErpSelectClientDialog";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name:"ErpSelectClientBtn",
-  components:{
+  name: "ErpSelectClientBtn",
+  components: {
     ErpInputRound,
   },
   props: {
@@ -49,32 +35,35 @@ export default defineComponent({
     },
   },
   emits: ["select", "unSelect"],
-  setup(props, {emit: emits}) {
+  setup(props, {emit}) {
 
-    function clickedSelect() {
-      useErpSelectClientDialog({
-        ok: (client: IClient) => {
-          emits('select', client);
-        }
-      })
-    }
-
-    function clickedUnSelect() {
-      if (props.unSelectSure) {
-        useErpDialog({
-          title: "注意",
-          message: "取消选择客户将会清空单据明细！",
-          ok: () => {
-            emits('unSelect');
-          }
-        })
+    async function clickedButton() {
+      if (props.clientname === "") {
+        await clickedSelect();
       } else {
-        emits('unSelect');
+        await clickedUnSelect();
       }
     }
 
+    async function clickedSelect() {
+      const client = await useErpSelectClientDialog()
+      emit('select', client);
+    }
+
+    async function clickedUnSelect() {
+      if (props.unSelectSure) {
+        await useErpDialog({
+          title: "注意",
+          message: "重新选择将清空明细！"
+        })
+      }
+      const client = await useErpSelectClientDialog()
+      emit('unSelect');
+      emit('select', client);
+    }
+
     return {
-      props,
+      clickedButton,
       clickedSelect,
       clickedUnSelect,
     };

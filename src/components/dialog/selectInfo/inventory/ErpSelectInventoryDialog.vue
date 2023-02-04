@@ -1,57 +1,79 @@
 <template>
-  <erp-left-right-structure-dialog>
+  <erp-full-screen-dialog
+      title="选择库存"
+      @clicked-confirm="onClickedOk"
+      @clicked-cancel="onClickedClose"
+  >
     <template v-slot:left>
       <div class="flex flex-col h-full pr-4">
         <erp-title title="类别"></erp-title>
         <div class="flex-grow overflow-y-auto">
           <erp-product-area-tree
               :have-root-node="true"
-              @node-click="onClickedProductAreaTreeNode"></erp-product-area-tree>
+              @node-click="onClickedProductAreaTreeNode">
+          </erp-product-area-tree>
         </div>
       </div>
     </template>
-    <template v-slot:default>
-      <erp-title title="选择库存">
+    <template #default>
+      <erp-title>
         <template v-slot:input>
           <erp-operate-area-auth-select
               v-model="operateareaid"
               :have-root-node="true"
               class="md:w-36"
-              @change="onSearchChange"
-          ></erp-operate-area-auth-select>
-          <erp-input-round v-model="findInventoryDto.productname" :placeholder='"输入"+valueName.product+"名称"'
-                           class="md:w-52"
-                           @change="onSearchChange"></erp-input-round>
+              @change="onSearchChange">
+          </erp-operate-area-auth-select>
+          <erp-input-round
+              v-model="findInventoryDto.productname"
+              :placeholder='"输入"+valueName.product+"名称"'
+              class="md:w-52"
+              @change="onSearchChange">
+          </erp-input-round>
+          <erp-check-box
+              v-model="multipleClickSelectReturn"
+              class="md:w-20 md:h-10"
+          >多选</erp-check-box>
         </template>
-        <erp-button @click="onSearchChange">刷新</erp-button>
-        <erp-button type="success" @click="onClickedOk">确定选择</erp-button>
-        <erp-button @click="onClickedClose">取消选择</erp-button>
+        <erp-button
+            ref="refreshButtonRef"
+            @click="onSearchChange"
+        >刷新
+        </erp-button>
       </erp-title>
-      <erp-table ref="inventoryTableRef"
-                 :find-dto="findInventoryDto"
-                 :getRowNodeId="getRowNodeId"
-                 :table-state="selectInventoryTableState"
-                 @rowDoubleClicked="onSelectTableDoubleClick"
-                 @selection-changed="()=>{}"
+      <erp-table
+          ref="inventoryTableRef"
+          :find-dto="findInventoryDto"
+          :getRowNodeId="getRowNodeId"
+          :table-state="selectInventoryTableState"
+          @rowDoubleClicked="onSelectTableDoubleClick"
+          @selection-changed="()=>{}"
       >
       </erp-table>
-      <erp-title class="mt-1" title="已选库存">
-        <erp-button type="danger" @click="clickedDeleteSelected">删除已选</erp-button>
-        <erp-button @click="clickedClearSelected">清空已选</erp-button>
-      </erp-title>
-      <erp-table ref="inventorySelectedTableRef"
-                 :find-dto="{}"
-                 :getRowNodeId="getMxRowNodeId"
-                 :table-state="selectedInventoryTableState"
-                 @selection-changed="()=>{}">
+      <div class="h-2"></div>
+      <erp-table
+          v-show="multipleClickSelectReturn"
+          ref="multipleSelectedTableRef"
+          :find-dto="{}"
+          :getRowNodeId="getMxRowNodeId"
+          :table-state="selectedInventoryTableState"
+          show-top-box
+          table-name="已选库存"
+          @selection-changed="()=>{}">
+        <template #topBox>
+          <div class="flex space-x-1.5">
+            <erp-button :size="'mini'" type="danger" @click="clickedDeleteSelected">删除选中</erp-button>
+            <erp-button :size="'mini'" @click="clickedClearSelected">清空全部</erp-button>
+          </div>
+        </template>
       </erp-table>
     </template>
-  </erp-left-right-structure-dialog>
+  </erp-full-screen-dialog>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, onMounted, PropType, ref} from "vue";
-import {InventoryFindDto, IInventoryFindDto} from "@/module/inventory/dto/inventoryFind.dto";
+import {IInventoryFindDto, InventoryFindDto} from "@/module/inventory/dto/inventoryFind.dto";
 import {IInventory, IInventoryForSelect} from "@/module/inventory/inventory";
 import {ITableRef} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
@@ -60,18 +82,20 @@ import {selectInventoryTableState} from "@/view/inventory/tableConfig/selectInve
 import {selectedInventoryTableState} from "@/view/inventory/tableConfig/selectedInventoryTableState";
 import {RowDoubleClickedEvent} from "ag-grid-community";
 import {IFindInventory} from "@/module/inventory/FindInventory";
-import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
+import ErpFullScreenDialog from "@/components/dialog/ErpFullScreenDialog.vue";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
 import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
+import ErpCheckBox from "@/components/input/ErpCheckbox.vue";
 
 export default defineComponent({
   name: "ErpSelectInventoryDialog",
   components: {
-    ErpLeftRightStructureDialog,
+    ErpCheckBox,
+    ErpFullScreenDialog,
     ErpOperateAreaAuthSelect,
     ErpProductAreaTree,
     ErpTitle,
@@ -80,24 +104,6 @@ export default defineComponent({
     ErpTable,
   },
   props: {
-    unmount: {
-      type: Function,
-      required: true,
-      default: () => {
-      }
-    },
-    ok: {
-      type: Function as PropType<(inventoryList: IInventory[]) => Promise<IInventory[]> | IInventory[]>,
-      required: false,
-      default: () => {
-      }
-    },
-    close: {
-      type: Function as PropType<() => void>,
-      required: false,
-      default: () => {
-      }
-    },
     warehouseid: {
       type: Number,
       required: true,
@@ -108,10 +114,24 @@ export default defineComponent({
       required: true,
       default: 0
     },
+    resolve_dialog: {
+      type: Function as PropType<(value: any) => IFindInventory[] | undefined>,
+      required: true,
+    },
+    reject_dialog: {
+      type: Function as PropType<(reason?: any) => void>,
+      required: true,
+    },
+    unmount: {
+      type: Function,
+      default: () => {
+      },
+    },
   },
   setup(props) {
     const inventoryTableRef = ref<ITableRef>();
-    const inventorySelectedTableRef = ref<ITableRef>();
+
+    const multipleSelectedTableRef = ref<ITableRef>();
 
     function getRowNodeId(data: IInventoryForSelect) {
       return data.inventoryid;
@@ -121,13 +141,15 @@ export default defineComponent({
       return data.rowNodeId;
     }
 
-    onMounted(() => {
+
+    const refreshButtonRef = ref();
+    onMounted( () => {
       inventoryTableRef.value?.initTableData();
     })
 
     //搜索条件
     const findInventoryDto = ref<IInventoryFindDto>(new InventoryFindDto());
-    findInventoryDto.value.warehouseids = props.warehouseid?[props.warehouseid]:[];
+    findInventoryDto.value.warehouseids = props.warehouseid ? [props.warehouseid] : [];
     findInventoryDto.value.clientid = props.clientid;
 
     //搜索
@@ -177,9 +199,14 @@ export default defineComponent({
     }
 
     //获取已选
-    function getSelectedList(): IFindInventory[] {
+    function getInventorySelectedList(): IFindInventory[] {
+      return  inventoryTableRef.value?.getGridApi().getSelectedRows() as IFindInventory[]
+    }
+
+    //获取已选
+    function getMultipleSelectedList(): IFindInventory[] {
       const selectedList: IFindInventory[] = [];
-      inventorySelectedTableRef.value?.getGridApi().forEachNode(rowNode => {
+      multipleSelectedTableRef.value?.getGridApi().forEachNode(rowNode => {
         selectedList.push(rowNode.data);
       })
       return selectedList
@@ -187,12 +214,12 @@ export default defineComponent({
 
     //增加已选
     function addSelected(inventoryList: IInventory[]) {
-      inventorySelectedTableRef.value?.getGridApi().applyTransaction({add: inventoryList});
+      multipleSelectedTableRef.value?.getGridApi().applyTransaction({add: inventoryList});
     }
 
     //删除已选
     function deleteSelected(inventoryList: IInventoryForSelect[]) {
-      inventorySelectedTableRef.value?.getGridApi().applyTransaction({
+      multipleSelectedTableRef.value?.getGridApi().applyTransaction({
         remove: inventoryList.map((inventory) => {
           return {
             rowNodeId: inventory.rowNodeId
@@ -203,7 +230,7 @@ export default defineComponent({
 
     //删除已选按钮事件
     function clickedDeleteSelected() {
-      const inventoryList = inventorySelectedTableRef.value?.getGridApi().getSelectedRows();
+      const inventoryList = multipleSelectedTableRef.value?.getGridApi().getSelectedRows();
       if (inventoryList) {
         deleteSelected(inventoryList);
       }
@@ -211,33 +238,50 @@ export default defineComponent({
 
     //清空已选按钮事件
     function clickedClearSelected() {
-      inventorySelectedTableRef.value?.getGridApi().setRowData([]);
+      multipleSelectedTableRef.value?.getGridApi().setRowData([]);
     }
 
     let rowNodeId = 0;
+    const multipleClickSelectReturn = ref(0);
 
     //双击库存资料
     function onSelectTableDoubleClick(event: RowDoubleClickedEvent) {
       const inventory = JSON.parse(JSON.stringify(event.data))
-      inventory.rowNodeId = rowNodeId;
-      rowNodeId = rowNodeId + 1;
-      addSelected([inventory]);
+
+      //默认单选
+      if (multipleClickSelectReturn.value === 0) {
+        props.resolve_dialog([inventory]);
+        props.unmount();
+      }
+      //多选模式
+      else {
+        inventory.rowNodeId = rowNodeId;
+        rowNodeId = rowNodeId + 1;
+        addSelected([inventory]);
+      }
     }
 
-    //取消选择按钮
-    async function onClickedClose() {
-      await props.close();
-      await props.unmount();
-    }
 
     //确定选择按钮
     async function onClickedOk() {
-      await props.ok(getSelectedList());
-      await props.unmount();
+      if(multipleClickSelectReturn.value === 0){
+        props.resolve_dialog(getInventorySelectedList());
+        props.unmount();
+      }else{
+        props.resolve_dialog(getMultipleSelectedList());
+        props.unmount();
+      }
+    }
+
+    function onClickedClose() {
+      props.reject_dialog();
+      props.unmount();
     }
 
     return {
-      inventorySelectedTableRef,
+      refreshButtonRef,
+      multipleClickSelectReturn,
+      multipleSelectedTableRef,
       inventoryTableRef,
       valueName,
       warehouseid,
@@ -251,9 +295,9 @@ export default defineComponent({
       clickedDeleteSelected,
       clickedClearSelected,
       onSelectTableDoubleClick,
-      onClickedClose,
       onClickedOk,
-      onSearchChange
+      onSearchChange,
+      onClickedClose
     }
   }
 

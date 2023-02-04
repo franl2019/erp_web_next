@@ -148,7 +148,7 @@ export default defineComponent({
         return Promise.reject(new Error("请先选中辅助单位"));
       }
 
-      useErpDialog({
+      await useErpDialog({
         title: "提示",
         message: "是否删除辅助单位",
         ok: async () => {

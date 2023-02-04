@@ -1,5 +1,5 @@
 <template>
-  <erp-left-right-structure-dialog :left-menu="false">
+  <erp-full-screen-dialog :left-menu="false">
     <template #default>
       <erp-title title="选择供应商核销明细">
         <template v-slot:input>
@@ -19,7 +19,7 @@
       <erp-table ref="selectedTableRef" :find-dto="{}" :getRowNodeId="getRowNodeId"
         :table-state="selectedAccountExpenditureSheetMxTableConfig"></erp-table>
     </template>
-  </erp-left-right-structure-dialog>
+  </erp-full-screen-dialog>
 </template>
 
 <script lang='ts'>
@@ -27,7 +27,7 @@ import ErpButton from "@/components/button/ErpButton.vue";
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
+import ErpFullScreenDialog from "@/components/dialog/ErpFullScreenDialog.vue";
 import { defineComponent, onMounted, PropType, ref, unref } from "vue";
 import { ITableRef } from "@/components/table/type";
 import { RowDoubleClickedEvent } from "ag-grid-community";
@@ -47,7 +47,7 @@ export default defineComponent({
     ErpTitle,
     ErpInputRound,
     ErpTable,
-    ErpLeftRightStructureDialog,
+    ErpFullScreenDialog,
   },
   props: {
     unmount: {

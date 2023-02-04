@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center">
-    <div v-if="params.value" class="font-bold text-green-500 text-xl">√</div>
-    <div v-else class="font-bold text-red-600 text-xl">×</div>
+    <div v-if="params.value" class="font-bold text-green-500">已审</div>
+    <div v-else class="font-bold text-red-600">未审</div>
   </div>
 </template>
 

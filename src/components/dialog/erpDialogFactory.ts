@@ -2,7 +2,7 @@ import {h, render} from "vue";
 import {v4 as uuidV4} from 'uuid';
 
 
-export function erpDialogFactory<T>(component: any, option: T):Promise<any> {
+export function erpDialogFactory<T>(component: any, option: any):Promise<T> {
     return new Promise((resolve, reject) => {
         const container = document.createElement('div');
         container.id = uuidV4();

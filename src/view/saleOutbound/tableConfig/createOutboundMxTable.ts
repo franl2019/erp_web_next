@@ -6,10 +6,16 @@ import {valueName} from "@/config/valueName";
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
 import {bignumber, round} from "mathjs";
 import {OutboundMxMath} from "@/module/math/OutboundMxMath";
+import TableSelectProductOtherUnit from "@/components/table/components/editor/tableEditorSelectProductOtherUnit.vue";
+import TableEditorSelectPriceType from "@/components/table/components/editor/tableEditorSelectPriceType.vue";
+import TableRenderPriceType from "@/components/table/components/renderer/tableRenderPriceType.vue";
 
 function valueSetter(params: ValueSetterParams) {
     //判断是否为数字
-    if (!isNaN(Number(params.newValue))) {
+    if (
+        params.newValue !== '' &&
+        !isNaN(Number(params.newValue))
+    ) {
         //给单元格赋值
         params.data[params.column.getColId()] = Number(round(bignumber(params.newValue), 4));
 
@@ -33,7 +39,7 @@ export const createOutboundMxTable = ref<ITableConfig<IOutboundMx>>({
         defaultColDef: {
             editable: false,//单元表格是否可编辑
             resizable: true,
-            sortable: true,
+            sortable: false,
         },
         rowSelection: "single",
         enableCellTextSelection: true,
@@ -95,6 +101,8 @@ export const createOutboundMxTable = ref<ITableConfig<IOutboundMx>>({
             width: 100,
             type: 'numericColumn',
             hide: false,
+            editable: true,
+            valueSetter
         },
         {
             headerName: '单价',
@@ -188,19 +196,26 @@ export const createOutboundMxTable = ref<ITableConfig<IOutboundMx>>({
             headerName: '辅助单位',
             field: 'otherUnit',
             editable: true,
+            singleClickEdit:true,
             width: 78,
+            cellEditorFramework: TableSelectProductOtherUnit,
         },
         {
             headerName: '转换率',
             field: 'otherUnitConversionRate',
             editable: true,
             type: 'numericColumn',
-            width: 66
+            width: 66,
+            valueSetter
         },
         {
             headerName: '计价方式',
             field: 'pricetype',
             width: 100,
+            editable:true,
+            singleClickEdit:true,
+            cellRendererFramework:TableRenderPriceType,
+            cellEditorFramework:TableEditorSelectPriceType,
         },
         {
             headerName: `客制${valueName.product}编号`,

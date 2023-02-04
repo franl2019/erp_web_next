@@ -1,3 +1,5 @@
+import {IProductOtherUnitMx} from "@/module/productOtherUnit/productOtherUnitMx";
+
 export interface IProductOtherUnit {
     //id
     productOtherUnitId: number;
@@ -32,3 +34,5 @@ export interface IProductOtherUnit {
     deleter: string | null;
     deletedAt: Date | null;
 }
+
+export type IProductOtherUnitFind = IProductOtherUnit & IProductOtherUnitMx

@@ -30,10 +30,10 @@
       </div>
       <div
           class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-end sm:space-x-2.5">
-        <erp-button v-if="props.okBtnVisible" ref="okBtnRef" type="danger" @click="clickedConfirm">
+        <erp-button v-if="props.okBtnVisible" ref="okButtonRef" type="danger" @click="clickedConfirm">
           确定
         </erp-button>
-        <erp-button v-if="props.closeBtnVisible" ref="cancelButtonRef" type="info" @click="clickedCancel">
+        <erp-button v-if="props.closeBtnVisible" ref="closeButtonRef" type="info" @click="clickedCancel">
           取消
         </erp-button>
       </div>
@@ -43,7 +43,7 @@
 
 <script lang='ts'>
 import ErpButton from "@/components/button/ErpButton.vue";
-import {defineComponent, onMounted, PropType, ref, unref} from "vue";
+import {defineComponent, nextTick, onMounted, PropType, ref, unref} from "vue";
 import ErpErrorDialogMessageList from "@/components/dialog/error/ErpErrorDialogMessageList.vue";
 
 export default defineComponent({
@@ -95,7 +95,8 @@ export default defineComponent({
     const okButtonRef = ref();
     const closeButtonRef = ref();
     const {okBtnVisible, closeBtnVisible} = unref(props);
-    onMounted(() => {
+    onMounted(async () => {
+      await nextTick();
       initDialogDefaultFocus(okBtnVisible, closeBtnVisible);
     })
 
@@ -125,8 +126,8 @@ export default defineComponent({
     return {
       props,
       isShow,
-      okBtnRef: okButtonRef,
-      cancelButtonRef: closeButtonRef,
+      okButtonRef,
+      closeButtonRef,
       clickedConfirm,
       clickedCancel,
     };

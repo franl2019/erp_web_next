@@ -57,4 +57,14 @@ export class SaleOutboundFindDataDto implements ISaleOutboundFindDataDto {
     remark4: string = "";
     @IsString()
     remark5: string = "";
+
+    public clearQueryDateRange(){
+        this.startDate = "";
+        this.endDate = "";
+        return this
+    }
+
+    public resetDefault(){
+        this.clientname = ""
+    }
 }

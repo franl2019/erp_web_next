@@ -1,6 +1,10 @@
 <template>
-  <erp-left-right-structure-dialog>
-    <template v-slot:left>
+  <erp-full-screen-dialog
+      :title="'请选择'+valueName.product"
+      @clicked-confirm="clickedOkSelectedDialog"
+      @clicked-cancel="clickedCloseSelectedDialog"
+  >
+    <template #left>
       <div class="flex flex-col h-full pr-4">
         <erp-title title="类别"></erp-title>
         <div class="flex-grow overflow-y-auto">
@@ -11,8 +15,8 @@
         </div>
       </div>
     </template>
-    <template v-slot:default>
-      <erp-title :title="'请选择'+valueName.product">
+    <template #default>
+      <erp-title>
         <template v-slot:input>
           <erp-input-round
               v-model="findProductDto.search"
@@ -21,20 +25,50 @@
               @change="onSearchChange"
           >
           </erp-input-round>
+          <erp-check-box
+              v-model="multipleClickSelectReturn"
+              class="md:w-20 md:h-10"
+          >多选
+          </erp-check-box>
         </template>
-        <erp-button ref="defaultFocus" type="success" @click="clickedOkSelectedDialog">确定选择</erp-button>
-        <erp-button @click="clickedCloseSelectedDialog">关闭选择</erp-button>
       </erp-title>
-      <erp-table ref="productTableRef" :find-dto="findProductDto" :getRowNodeId="getRowNodeId"
-                 :table-state="selectProductTableState" @rowDoubleClicked="onProductTableDoubleClick"></erp-table>
-      <erp-title :title="'已选'+valueName.product">
-        <erp-button type="danger" @click="clickedDeleteSelected">删除已选</erp-button>
-        <erp-button @click="clickedClearSelected">清空已选</erp-button>
+      <erp-table
+          ref="productTableRef"
+          :find-dto="findProductDto"
+          :getRowNodeId="getRowNodeId"
+          :table-state="selectProductTableState"
+          @rowDoubleClicked="onProductTableDoubleClick">
+      </erp-table>
+      <erp-title
+          v-show="multipleClickSelectReturn===1"
+          :title="'已选'+valueName.product">
       </erp-title>
-      <erp-table ref="selectedTableRef" :find-dto="{}" :getRowNodeId="getRowNodeId"
-                 :table-state="selectedProductTableState"></erp-table>
+      <erp-table
+          v-show="multipleClickSelectReturn===1"
+          ref="selectedTableRef"
+          :find-dto="{}"
+          :getRowNodeId="getRowNodeId"
+          :table-state="selectedProductTableState"
+          show-top-box
+      >
+        <template #topBox>
+          <erp-button
+              size="small"
+              type="danger"
+              @click="clickedDeleteSelected"
+          >
+            删除已选
+          </erp-button>
+          <erp-button
+              size="small"
+              @click="clickedClearSelected"
+          >
+            清空已选
+          </erp-button>
+        </template>
+      </erp-table>
     </template>
-  </erp-left-right-structure-dialog>
+  </erp-full-screen-dialog>
 </template>
 
 <script lang='ts'>
@@ -52,17 +86,19 @@ import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpProductAreaTree from "@/components/tree/component/ErpProductAreaTree.vue";
-import ErpLeftRightStructureDialog from "@/components/dialog/ErpLeftRightLayoutDialog.vue";
+import ErpFullScreenDialog from "@/components/dialog/ErpFullScreenDialog.vue";
+import ErpCheckBox from "@/components/input/ErpCheckbox.vue";
 
 export default defineComponent({
   name: "ErpSelectProductDialog",
   components: {
+    ErpCheckBox,
     ErpButton,
     ErpTitle,
     ErpInputRound,
     ErpTable,
     ErpProductAreaTree,
-    ErpLeftRightStructureDialog,
+    ErpFullScreenDialog,
   },
   props: {
     resolve_dialog: {
@@ -88,14 +124,11 @@ export default defineComponent({
       return data.productid
     }
 
-    const defaultFocus = ref();
-
     onMounted(() => {
-      defaultFocus.value.getNode().focus();
       productTableRef.value?.initTableData();
       document.onkeydown = (event) => {
         if (event.key === 'Escape') {
-          props.unmount();
+          clickedCloseSelectedDialog();
         }
       }
     })
@@ -111,16 +144,28 @@ export default defineComponent({
       await productTableRef.value?.initTableData();
     }
 
+    // 0 单选 1 多选
+    const multipleClickSelectReturn = ref(0);
+
     //产品资料表行双击
     function onProductTableDoubleClick(event: RowDoubleClickedEvent) {
-      if (event.data && !isAdded(event.data)) {
-        addSelectedProductInfo([event.data]);
+      if(multipleClickSelectReturn.value === 0){
+        clickedOkSelectedDialog()
+      }else{
+        if (event.data && !isAdded(event.data)) {
+          addSelectedProductInfo([event.data]);
+        }
       }
     }
 
     async function clickedOkSelectedDialog() {
-      props.resolve_dialog(getSelectedProductInfoList());
-      props.unmount();
+      if(multipleClickSelectReturn.value === 0){
+        props.resolve_dialog(getProductInfoTableSelectedList());
+        props.unmount();
+      }else{
+        props.resolve_dialog(getMultipleTableDataList());
+        props.unmount();
+      }
     }
 
     async function clickedCloseSelectedDialog() {
@@ -141,8 +186,13 @@ export default defineComponent({
       selectedTableRef.value?.getGridApi().applyTransaction({remove: productList});
     }
 
+    //获取产品表格选中
+    function getProductInfoTableSelectedList(): IProduct[] {
+      return productTableRef.value?.getGridApi().getSelectedRows() as IProduct[]
+    }
+
     //获取已选
-    function getSelectedProductInfoList(): IProduct[] {
+    function getMultipleTableDataList(): IProduct[] {
       const selectedProductList: IProduct[] = [];
       selectedTableRef.value?.getGridApi().forEachNode(rowNode => {
         selectedProductList.push(rowNode.data);
@@ -165,7 +215,7 @@ export default defineComponent({
 
     //是已添加？
     function isAdded(product: IProduct): boolean {
-      const selectedProductList: IProduct[] = getSelectedProductInfoList();
+      const selectedProductList: IProduct[] = getMultipleTableDataList();
       return selectedProductList.indexOf(product) !== -1;
     }
 
@@ -176,7 +226,7 @@ export default defineComponent({
       productTableRef,
       selectedTableRef,
       findProductDto,
-      defaultFocus,
+      multipleClickSelectReturn,
       getRowNodeId,
       categoryTreeClicked,
       onSearchChange,

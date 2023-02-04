@@ -16,7 +16,7 @@ export default defineComponent({
   name: "ErpCheckBox",
   props: {
     modelValue: {
-      type: Number,
+      type: Number || Boolean,
       default: 0,
     },
     border: {

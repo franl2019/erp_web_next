@@ -1,6 +1,5 @@
 <template>
   <erp-page-box>
-
     <erp-no-title>
       <erp-button :disabled="!state.edit" type="info" @click="save">保存</erp-button>
       <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
@@ -13,68 +12,99 @@
       </erp-button>
       <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnLevel2review">财务撤审
       </erp-button>
-      <erp-delimiter/>
-      <erp-button :disabled="!state.edit" type="success" @click="clickedAddInboundMx">选择产品</erp-button>
     </erp-no-title>
 
     <erp-form>
-      <erp-form-item v-if="inboundHead.inboundcode" name="单据编号" lg-col="1" md-col="2">
+      <erp-form-item v-if="inboundHead.inboundcode" lg-col="1" md-col="2" name="单据编号">
         <erp-input-round v-model="inboundHead.inboundcode" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="供应商" lg-col="2" md-col="2">
-        <erp-select-buy-btn :buyname="inboundHead.buyname" :disabled="!state.edit" @select="selectBuy"
-                            @unSelect="unSelectBuy">
+      <erp-form-item lg-col="1" md-col="2" name="供应商">
+        <erp-select-buy-btn
+            :buyname="inboundHead.buyname"
+            :disabled="!state.edit"
+            :un-select-sure="false"
+            @select="selectBuy"
+            @unSelect="unSelectBuy">
         </erp-select-buy-btn>
       </erp-form-item>
-      <erp-form-item name="仓库" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="仓库">
         <erp-warehouse-auth-select v-model="inboundHead.warehouseid" :disabled="!state.edit">
         </erp-warehouse-auth-select>
       </erp-form-item>
-      <erp-form-item name="进仓日期" lg-col="1" md-col="2">
-        <el-date-picker v-model="inboundHead.indate" :disabled="!state.edit" placeholder="选择进仓日期" type="date"
-                        value-format="YYYY-MM-DD HH:mm:ss">
+      <erp-form-item lg-col="1" md-col="2" name="进仓日期">
+        <el-date-picker
+            v-model="inboundHead.indate"
+            :disabled="!state.edit"
+            placeholder="选择进仓日期"
+            type="date"
+            value-format="YYYY-MM-DD HH:mm:ss"
+        >
         </el-date-picker>
       </erp-form-item>
-      <erp-form-item name="结算方式" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="结算方式">
         <erp-input-round v-model="inboundHead.moneytype" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="相关号码" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="相关号码">
         <erp-input-round v-model="inboundHead.relatednumber" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
-      <erp-form-item name="备注" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="备注">
         <erp-input-round v-model="inboundHead.remark1" :disabled="!state.edit"></erp-input-round>
       </erp-form-item>
     </erp-form>
 
     <div class="mt-4"></div>
 
-    <erp-table ref="inboundMxTableRef"
-               :find-dto="{}"
-               :getRowNodeId="getInboundMxTableRowNodeId"
-               :showTopBox="true"
-               :tableName="'单据明细'"
-               :table-edit="state.edit"
-               :table-state="BuyInboundCreateViewMxTableConfig"
-               @cellEditingStarted="bottomRowStopEditing"
-               @cellValueChanged="onCellValueChanged"
-               @ready="onTableReady">
+    <erp-table
+        ref="inboundMxTableRef"
+        :find-dto="{}"
+        :getRowNodeId="getInboundMxTableRowNodeId"
+        :showTopBox="true"
+        :table-edit="state.edit"
+        :table-state="BuyInboundCreateViewMxTableConfig"
+        @cellEditingStarted="bottomRowStopEditing"
+        @cellValueChanged="onCellValueChanged"
+        @ready="onTableReady">
       <template #topBox>
-          <erp-button :disabled="!state.edit" size="mini" type="info" @click="addNullLine">+ 增加行</erp-button>
-          <erp-button :disabled="!state.edit" size="mini" type="danger" @click="deleteInboundMx">- 删除行</erp-button>
+        <erp-button
+            :disabled="!state.edit"
+            size="mini"
+            type="success"
+            @click="clickedAddInboundMx"
+        >
+          选择产品
+        </erp-button>
+        <div class="w-2"></div>
+        <erp-button
+            :disabled="!state.edit"
+            size="mini"
+            type="info"
+            @click="addNullLine"
+        >
+          + 增加行
+        </erp-button>
+        <div class="w-2"></div>
+        <erp-button
+            :disabled="!state.edit"
+            size="mini"
+            type="danger"
+            @click="deleteInboundMx"
+        >
+          - 删除行
+        </erp-button>
       </template>
     </erp-table>
 
     <erp-form>
-      <erp-form-item v-if="inboundHead.inboundcode" name="开单" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="开单">
         <erp-input-round v-model="inboundHead.creater" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" name="最后修改" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="最后修改">
         <erp-input-round v-model="inboundHead.updater" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" name="审核" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="审核">
         <erp-input-round v-model="inboundHead.level1name" disabled></erp-input-round>
       </erp-form-item>
-      <erp-form-item v-if="inboundHead.inboundcode" name="财审" lg-col="1" md-col="2">
+      <erp-form-item lg-col="1" md-col="2" name="财审">
         <erp-input-round v-model="inboundHead.level2name" disabled></erp-input-round>
       </erp-form-item>
     </erp-form>
@@ -116,6 +146,7 @@ import {IBuyInboundMxInTable} from "@/module/buyInbound/dto/inboundMx/types/buyI
 import {BuyInboundCreateInViewDto} from "@/module/buyInbound/dto/inbound/buyInboundCreateInView.dto";
 import {BuyInboundUpdateInViewDto} from "@/module/buyInbound/dto/inbound/buyInboundUpdateInView.dto";
 import {BuyInboundMxUpdateInTableDto} from "@/module/buyInbound/dto/inboundMx/buyInboundMxUpdateInTable.dto";
+import {BuyInboundFindDto} from "@/module/buyInbound/dto/inbound/buyInboundFind.dto";
 
 export default defineComponent({
   name: "BuyInboundEditView",
@@ -155,8 +186,6 @@ export default defineComponent({
     //单据页面状态
     const state = ref({
       inboundcode: String(route.query.inboundcode || ''),
-      title: "采购进仓单",
-      exitMessage: "是否退出",
       edit: true
     })
 
@@ -211,34 +240,16 @@ export default defineComponent({
     async function initPage(): Promise<void> {
 
       if (state.value.inboundcode.length === 0) {
-        state.value.title = "新增采购进仓单";
-        state.value.exitMessage = "是否取消新增采购进仓单"
         state.value.edit = true;
         inboundHead.value.warehouseid = Number(route.query.warehouseid) || 0;
-        addNullLine()
+        // addNullLine()
       } else {
+        const buyInboundFindDto = new BuyInboundFindDto();
+        buyInboundFindDto.inboundcode = state.value.inboundcode;
+        buyInboundFindDto.startDate = "";
+        buyInboundFindDto.endDate = "";
         //读取单头
-        const inboundList = await inboundService.find({
-          clientid: 0,
-          inboundcode: state.value.inboundcode,
-          inboundid: 0,
-          inboundtype: 0,
-          operateareaids: [],
-          page: 0,
-          pagesize: 0,
-          relatednumber: "",
-          startDate: "",
-          endDate: "",
-          buyname: "",
-          moneytype: "",
-          remark1: "",
-          remark2: "",
-          remark3: "",
-          remark4: "",
-          remark5: "",
-          search: "",
-          warehouseids: []
-        });
+        const inboundList = await inboundService.find(buyInboundFindDto);
 
         if (inboundList.length === 0 || state.value.inboundcode.length === 0) {
           await useErpDialog({message: "查无此单", closeBtnVisible: false})
@@ -257,9 +268,6 @@ export default defineComponent({
         //读取明细
         const inboundMx = await inboundMxService.find({inboundid: inboundHead.value.inboundid});
         addInboundMx(inboundMx);
-        state.value.title = "编辑采购进仓单"
-        state.value.exitMessage = "是否取消编辑采购进仓单"
-
         updateTableAmtTotal()
       }
 
@@ -318,9 +326,9 @@ export default defineComponent({
 
     //增加明细按钮
     async function clickedAddInboundMx() {
-      if (inboundHead.value.buyid === 0) {
-        return await useErpDialog({message: "请先选择供应商", closeBtnVisible: false});
-      }
+      // if (inboundHead.value.buyid === 0) {
+      //   return await useErpDialog({message: "请先选择供应商", closeBtnVisible: false});
+      // }
       const productList = await useErpSelectProductDialog<IProduct[]>();
       addInboundMx(setProductToMx(productList));
     }
@@ -361,6 +369,7 @@ export default defineComponent({
     //删除明细
     async function deleteInboundMx(): Promise<void> {
       const removeData = inboundMxTableRef.value?.getGridApi().getSelectedRows();
+      console.log(removeData)
       inboundMxTableRef.value?.getGridApi().applyTransaction({remove: removeData});
       updateTableAmtTotal();
     }
@@ -375,19 +384,18 @@ export default defineComponent({
     function unSelectBuy() {
       inboundHead.value.buyname = "";
       inboundHead.value.buyid = 0;
-      inboundMxTableRef.value?.getGridApi().applyTransaction({remove: getInboundMx()})
     }
 
     async function clickedLevel1review() {
       if (state.value.edit) {
-        const dialogResult = await useErpDialog({message: `是否保存并审核`})
-        if (!dialogResult) return
+        await useErpDialog({message: `是否保存并审核`})
         await save_l1review();
         await useErpDialog({message: `保存审核成功`, closeBtnVisible: false});
         await initPage();
       } else {
-        const dialogResult = await useErpDialog({message: `是否审核,单号:${inboundHead.value.inboundcode}`});
-        if (!dialogResult) return
+        await useErpDialog({
+          message: `是否审核,单号:${inboundHead.value.inboundcode}`
+        });
         await inboundService.level1review(inboundHead.value.inboundid);
         await useErpDialog({message: `审核成功`, closeBtnVisible: false});
         await initPage();
@@ -397,32 +405,35 @@ export default defineComponent({
     async function clickedUnLevel1review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      const dialogResult = await useErpDialog({title: "提示", message: `是否撤审,单号:${inboundCode}`});
-      if (!dialogResult) return
+      await useErpDialog({
+        title: "提示", message: `是否撤审,单号:${inboundCode}`
+      });
       await inboundService.unLevel1review(inboundId);
-      await useErpDialog({message: `撤审成功`, closeBtnVisible: false});
+      await useErpDialog({
+        message: `撤审成功`, closeBtnVisible: false
+      });
       await initPage();
     }
 
     async function clickedLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      const dialogResult = await useErpDialog({
+      await useErpDialog({
         message: `是否财务审核,单号:${inboundCode}`,
       })
-      if (!dialogResult) return
       await inboundService.level2review(inboundId);
-      await useErpDialog({message: `财务审核成功`, closeBtnVisible: false});
+      await useErpDialog({
+        message: `财务审核成功`, closeBtnVisible: false
+      });
       await initPage();
     }
 
     async function clickedUnLevel2review() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      const dialogResult = await useErpDialog({
+      await useErpDialog({
         message: `是否撤销财务审核,单号:${inboundCode}`
       })
-      if (!dialogResult) return
       await inboundService.unLevel2review(inboundId);
       await useErpDialog({
         message: `撤销财务审核成功`,
@@ -434,10 +445,9 @@ export default defineComponent({
     async function clickedDeleteData() {
       const inboundId = inboundHead.value.inboundid;
       const inboundCode = inboundHead.value.inboundcode;
-      const dialogResult = await useErpDialog({
+      await useErpDialog({
         message: `是否删除,单号:${inboundCode}`,
       })
-      if (!dialogResult) return
       await inboundService.delete_data(inboundId);
       await useErpDialog({
         message: `删除成功`,
@@ -448,33 +458,36 @@ export default defineComponent({
       const newRoute = router.resolve({
         name: "buyInbound"
       });
-      useRouterPage(newRoute.fullPath, newRoute.meta.title as string);
+      useRouterPage(
+          newRoute.fullPath,
+          newRoute.meta.title as string
+      );
     }
 
     return {
-      BuyInboundCreateViewMxTableConfig,
-      tabMenu,
-      getInboundMxTableRowNodeId,
-      onTableReady,
-      inboundHead,
       state,
+      tabMenu,
+      inboundHead,
       buttonShowState,
-      updateButtonState,
       inboundMxTableRef,
+      BuyInboundCreateViewMxTableConfig,
       save,
       initPage,
       selectBuy,
-      addNullLine,
-      onCellValueChanged,
-      bottomRowStopEditing,
-      clickedAddInboundMx,
-      deleteInboundMx,
       unSelectBuy,
-      clickedLevel1review,
-      clickedUnLevel1review,
-      clickedLevel2review,
-      clickedUnLevel2review,
+      addNullLine,
+      onTableReady,
+      deleteInboundMx,
+      updateButtonState,
       clickedDeleteData,
+      onCellValueChanged,
+      clickedAddInboundMx,
+      clickedLevel1review,
+      clickedLevel2review,
+      bottomRowStopEditing,
+      clickedUnLevel1review,
+      clickedUnLevel2review,
+      getInboundMxTableRowNodeId,
     };
   },
 });

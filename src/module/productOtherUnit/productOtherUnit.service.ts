@@ -1,6 +1,6 @@
 import {ProductOtherUnitFindDto} from "@/module/productOtherUnit/dto/productOtherUnitFind.dto";
 import {useHttpPost, IApiResult} from "@/utils/axios";
-import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
+import {IProductOtherUnitFind} from "@/module/productOtherUnit/productOtherUnit";
 import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import {ProductOtherUnitCreateDto} from "@/module/productOtherUnit/dto/productOtherUnitCreate.dto";
@@ -11,7 +11,7 @@ export class ProductOtherUnitService {
 
     public async find(findDto: ProductOtherUnitFindDto) {
         await useVerifyParam(findDto);
-        const result = await useHttpPost<IApiResult<IProductOtherUnit>>(API_URL.PRODUCT_OTHER_UNIT_FIND,findDto);
+        const result = await useHttpPost<IApiResult<IProductOtherUnitFind>>(API_URL.PRODUCT_OTHER_UNIT_FIND,findDto);
         if (result.code === 200 && result.data) {
             return result.data
         }else{

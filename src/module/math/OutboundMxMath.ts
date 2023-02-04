@@ -17,6 +17,16 @@ export class OutboundMxMath {
         );
     }
 
+    private unCountOutQty() {
+        this.outboundMx.outqty = round(
+            Number(
+                chain(bignumber(this.outboundMx.priceqty))
+                    .divide(bignumber(this.outboundMx.otherUnitConversionRate))
+                    .done()
+            ),4
+        )
+    }
+
     private countBzqty() {
         this.outboundMx.bzqty = Number(
             chain(bignumber(this.outboundMx.outqty))
@@ -78,9 +88,22 @@ export class OutboundMxMath {
 
     private countPriceqty() {
         if (this.outboundMx.pricetype === 0) {
-            this.outboundMx.priceqty = this.outboundMx.outqty;
+
+            this.outboundMx.priceqty = round(
+                Number(
+                    chain(bignumber(this.outboundMx.outqty))
+                        .multiply(bignumber(this.outboundMx.otherUnitConversionRate))
+                        .done()
+                ), 4)
+
         } else if (this.outboundMx.pricetype === 1) {
-            this.outboundMx.priceqty = this.outboundMx.outqty;
+
+            this.outboundMx.priceqty =  round(
+                Number(
+                    chain(bignumber(this.outboundMx.bzqty))
+                        .multiply(bignumber(this.outboundMx.otherUnitConversionRate))
+                        .done()
+                ), 4)
         }
     }
 
@@ -132,6 +155,27 @@ export class OutboundMxMath {
                 this.countAmt();
                 break
             case "floatprice3":
+                this.countNetprice();
+                this.countAmt();
+                break
+            case "otherUnit":
+                this.countPriceqty();
+                this.countAmt();
+                break
+            case "otherUnitConversionRate":
+                this.countPriceqty();
+                this.countAmt();
+                break
+            case "priceqty":
+                this.unCountOutQty();
+                this.countBzqty();
+                this.countPriceqty();
+                this.countNetprice();
+                this.countAmt();
+                break
+            case "pricetype":
+                console.log('pricetype')
+                this.countPriceqty();
                 this.countNetprice();
                 this.countAmt();
                 break

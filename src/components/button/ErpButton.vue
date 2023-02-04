@@ -16,7 +16,6 @@ import {computed, ref} from "vue";
 
 export default defineComponent({
   name:"ErpButton",
-  expose:["getNode"],
   props:{
     size:{
       type:String as PropType<'mini' | 'small' | 'big'>,
@@ -34,7 +33,7 @@ export default defineComponent({
       default:false,
     }
   },
-  setup(props){
+  setup(props,{expose}){
     const buttonType = {
       info: `bg-white hover:bg-white active:bg-gray-50 text-black border-gray-300 shadow border border-gray-200`,
       primary: `bg-blue-500 hover:bg-blue-600 active:bg-blue-700  text-white shadow-lg`,
@@ -70,6 +69,8 @@ export default defineComponent({
     function getNode() {
       return buttonRef.value
     }
+
+    expose({getNode})
 
     return{
       buttonSizeStyle,

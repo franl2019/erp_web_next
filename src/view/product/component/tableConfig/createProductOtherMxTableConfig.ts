@@ -3,9 +3,9 @@ import {ITableConfig} from "@/components/table/type";
 import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import Table_Date from "@/components/table/components/renderer/table_date.vue";
 import {ProductOtherUnitService} from "@/module/productOtherUnit/productOtherUnit.service";
-import {IProductOtherUnit} from "@/module/productOtherUnit/productOtherUnit";
+import {IProductOtherUnitFind} from "@/module/productOtherUnit/productOtherUnit";
 
-export const createProductOtherMxTableConfig = ref<ITableConfig<IProductOtherUnit>>({
+export const createProductOtherMxTableConfig = ref<ITableConfig<IProductOtherUnitFind>>({
     tableName: "createProductOtherMxTableConfig",
     gridOptions: {
         defaultColDef: {

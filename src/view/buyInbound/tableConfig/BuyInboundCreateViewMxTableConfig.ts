@@ -11,7 +11,10 @@ import {BuyInboundMxCreateInTableDto} from "@/module/buyInbound/dto/inboundMx/bu
 
 function valueSetter(params: ValueSetterParams) {
     //判断是否为数字
-    if (!isNaN(Number(params.newValue))) {
+    if (
+        params.newValue !== '' &&
+        !isNaN(Number(params.newValue))
+    ) {
         //给单元格赋值
         params.data[params.column.getColId()] = Number(round(bignumber(params.newValue), 4));
 

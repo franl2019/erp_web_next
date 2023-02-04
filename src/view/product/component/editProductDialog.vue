@@ -154,8 +154,8 @@ export default defineComponent({
   },
   setup(props) {
     const productOtherUnitTableRef = ref<ITableRef>();
-    const productOtherUnitFindDto = ref(new ProductOtherUnitFindDto())
-    productOtherUnitFindDto.value.productid = props.product.productid
+    const productOtherUnitFindDto = ref(new ProductOtherUnitFindDto());
+    productOtherUnitFindDto.value.productid = props.product.productid;
     const defaultInputFocusRef = ref();
     const updateProductDto = ref(new UpdateProductDto())
 

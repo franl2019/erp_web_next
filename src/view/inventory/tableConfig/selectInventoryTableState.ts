@@ -18,9 +18,9 @@ export const selectInventoryTableState = ref<ITableConfig<Inventory>>({
         suppressDragLeaveHidesColumns: true
     },
     columnDefaults: [
-        {headerName: '仓库名称', field: 'warehousename'},
-        {headerName: '客户编号', field: 'clientcode'},
-        {headerName: '客户名称', field: 'clientname'},
+        {headerName: '仓库名称', field: 'warehousename',width:100},
+        {headerName: '客户编号', field: 'clientcode',width:100},
+        {headerName: '客户名称', field: 'clientname',width:100},
         {headerName: `${valueName.product}编号`, field: 'productcode'},
         {headerName: `${valueName.product}名称`, field: 'productname'},
         {headerName: '规格', field: 'spec'},

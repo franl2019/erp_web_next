@@ -7,6 +7,6 @@ export interface IErpErrorDialogOption extends IErpDialogOption{
 }
 
 export default function useErpErrorDialog(option: IErpErrorDialogOption) {
-    erpDialogFactory<IErpDialogOption>(ErpErrorDialog,option)
+   return erpDialogFactory(ErpErrorDialog,option)
 }
 

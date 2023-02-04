@@ -1,7 +1,13 @@
 <template>
-  <el-select ref="elSelectRef" placeholder="选择所属操作区域" v-bind="$attrs">
-    <el-option v-for="item in operateareaSelectList" :key="item.operateareaid" :label="item.operateareaname"
-               :value="item.operateareaid">
+  <el-select
+      ref="elSelectRef"
+      placeholder="选择所属操作区域"
+      v-bind="$attrs">
+    <el-option
+        v-for="item in operateareaSelectList"
+        :key="item.operateareaid"
+        :label="item.operateareaname"
+        :value="item.operateareaid">
     </el-option>
   </el-select>
 </template>

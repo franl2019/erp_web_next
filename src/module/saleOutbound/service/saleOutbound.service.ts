@@ -36,6 +36,16 @@ export class SaleOutboundService {
         }
     }
 
+    public async findOne(findDto: ISaleOutboundFindDataDto) {
+        await useVerifyParam(findDto);
+        const result = await useHttpPost<IApiResult<IOutboundHaveName>>(API_URL.SALE_OUTBOUND_FIND, findDto);
+        if (result.code === 200 && result.data && result.data.length === 1) {
+            return result.data[0]
+        } else {
+            return Promise.reject(new VerifyParamError('查询出仓单错误'))
+        }
+    }
+
     public async findSheetState(findDto: ISaleOutboundFindDataDto) {
         const result = await useHttpPost<IApiResult<ISaleOutboundSheetState>>(API_URL.SALE_OUTBOUND_FIND_SHEET_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
@@ -49,7 +59,7 @@ export class SaleOutboundService {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxCreateDto(outboundDto.outboundMx);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE, outboundDto);
-        if (result.code === 200 && result.createResult && result.createResult.id) {
+        if (result.code === 200 && result.createResult && result.createResult.code) {
             return result;
         } else {
             return Promise.reject(new VerifyParamError('新增出仓单错误'))
@@ -60,7 +70,7 @@ export class SaleOutboundService {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxCreateDto(outboundDto.outboundMx);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE_L1REVIEW, outboundDto);
-        if (result.code === 200) {
+        if (result.code === 200 && result.createResult && result.createResult.code.length !==0) {
             return result;
         } else {
             return Promise.reject(new VerifyParamError('新增出仓单错误'))
