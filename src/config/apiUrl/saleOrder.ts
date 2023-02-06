@@ -1,5 +1,6 @@
 export const SaleOrderApi = {
     SALE_ORDER_FIND:'erp/saleOrder/find',
+    SALE_ORDER_MX_FIND:'erp/saleOrderMx/find',
     SALE_ORDER_CREATE:'erp/saleOrder/create',
     SALE_ORDER_CREATE_AND_REVIEW:'erp/saleOrder/createAndL1Review',
     SALE_ORDER_UPDATE:'erp/saleOrder/update',
@@ -8,6 +9,7 @@ export const SaleOrderApi = {
     SALE_ORDER_UN_L1REVIEW:'erp/saleOrder/unl1Review',
     SALE_ORDER_L2REVIEW:'erp/saleOrder/l2Review',
     SALE_ORDER_UN_L2REVIEW:'erp/saleOrder/unl2Review',
+
     SALE_ORDER_STOP_REVIEW:'erp/saleOrder/stopReview',
     SALE_ORDER_UN_STOP_REVIEW:'erp/saleOrder/unStopReview',
 

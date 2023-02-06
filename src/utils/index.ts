@@ -49,7 +49,7 @@ export function useDateFormat(date: any): string {
 
 //获取Null日期
 export function useGetNullDate(): string {
-    return moment('').format('YYYY-MM-DD HH:mm:ss');
+    return "";
 }
 
 //获取今天日期

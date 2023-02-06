@@ -6,12 +6,12 @@
       <div class="font-bold text-xl">销售管理流程图</div>
 
       <div class="flex h-4/6 w-full items-center justify-center">
-        <!--        <module-card title="销售订单">-->
-        <!--          <module-card-item content="进行中" :count="16"></module-card-item>-->
-        <!--          <module-card-item content="未审核" :count="7"></module-card-item>-->
-        <!--          <module-card-item content="已审核" :count="10"></module-card-item>-->
-        <!--        </module-card>-->
-        <!--        <erp_button_big></erp_button_big>-->
+        <module-card title="销售订单" @click="openSaleOrderView">
+          <module-card-item :count="16" content="进行中"></module-card-item>
+          <module-card-item :count="7" content="未审核"></module-card-item>
+          <module-card-item :count="10" content="已审核"></module-card-item>
+        </module-card>
+        <erp-big-right-button></erp-big-right-button>
         <module-card
             title="销售单"
             @click="openSaleOutboundView"
@@ -159,6 +159,13 @@ export default defineComponent({
       undoneL2Review: 0,
     });
 
+    function openSaleOrderView() {
+      const route = router.resolve({
+        name: "saleOrder",
+      });
+      useRouterPage(route.fullPath, route.meta.title as string);
+    }
+
     function openSaleOutboundView() {
       const route = router.resolve({
         name: "saleOutbound",
@@ -216,6 +223,7 @@ export default defineComponent({
     return {
       saleOutboundSheetState,
       accountInComeSheetState,
+      openSaleOrderView,
       openSaleOutboundView,
       openAccountInComeView,
     };

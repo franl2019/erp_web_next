@@ -1,6 +1,6 @@
 import {RouteRecordRaw} from "vue-router";
 
-export const outboundRouter: Array<RouteRecordRaw> = [
+export const saleOutboundRouter: Array<RouteRecordRaw> = [
     {
         name: "saleOutbound",
         path: "/saleOutbound",

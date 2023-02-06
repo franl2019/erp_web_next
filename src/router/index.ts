@@ -4,13 +4,14 @@ import {clientRouter} from "@/router/client.router";
 import {clientAreaRouter} from "@/router/clientArea.router";
 import {authRouter} from "@/router/auth.router";
 import {buyInboundRouter} from "@/router/buyInbound.router";
-import {outboundRouter} from "@/router/outbound.router";
+import {saleOutboundRouter} from "@/router/saleOutbound.router";
 import {moneyModuleRouter} from "@/router/moneyModuleRouter";
 import {reportRouter} from "@/router/report.router";
 import {valueName} from "@/config/valueName";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
 import Product from "@/view/product/product.vue"
 import {permissionsTheme} from "@/router/permissionsTheme";
+import {saleOrderRouter} from "@/router/saleOrder.router";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -140,7 +141,8 @@ const routes: Array<RouteRecordRaw> = [
                 },
                 component: () => import(/* webpackChunkName: "inventory" */ '@/view/inventory/inventory.vue'),
             },
-            ...outboundRouter,
+            ...saleOrderRouter,
+            ...saleOutboundRouter,
             //资金管理
             ...moneyModuleRouter,
             //权限管理
