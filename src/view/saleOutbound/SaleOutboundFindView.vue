@@ -9,15 +9,15 @@
             @change="onChange">
         </erp-input-round>
       </template>
-      <erp-button :disabled="!buttonVisibleState.create" @click="clickedCreateBtn">新增</erp-button>
-      <erp-button :disabled="!buttonVisibleState.edit" type="success" @click="clickedEditBtn">修改</erp-button>
-      <erp-button :disabled="!buttonVisibleState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
+      <erp-button :disabled="!buttonState.create" @click="clickedCreateBtn">新增</erp-button>
+      <erp-button :disabled="!buttonState.edit" type="success" @click="clickedEditBtn">修改</erp-button>
+      <erp-button :disabled="!buttonState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
       <erp-delimiter/>
-      <erp-button :disabled="!buttonVisibleState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
-      <erp-button :disabled="!buttonVisibleState.un_level1review" type="danger" @click="clickedUnL1Review">撤审
+      <erp-button :disabled="!buttonState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
+      <erp-button :disabled="!buttonState.un_level1review" type="danger" @click="clickedUnL1Review">撤审
       </erp-button>
-      <erp-button :disabled="!buttonVisibleState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
-      <erp-button :disabled="!buttonVisibleState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
+      <erp-button :disabled="!buttonState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
+      <erp-button :disabled="!buttonState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
       </erp-button>
     </erp-no-title>
 
@@ -66,7 +66,6 @@ import {
   SaleOutboundFindDataDto
 } from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
 import {ISaleOutboundMxFindDto, SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
-import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 import {useRouter} from "vue-router";
 import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
 import {useRouterPage} from "@/utils";
@@ -74,6 +73,7 @@ import useErpDialog from "@/components/dialog/useErpDialog";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
+import {ButtonState} from "@/composables/ButtonState";
 
 export default defineComponent({
   name: "SaleOutboundFindView",
@@ -99,15 +99,7 @@ export default defineComponent({
     const saleOutboundMxFindDto = ref<ISaleOutboundMxFindDto>(new SaleOutboundMxFindDto());
 
     //按钮可视状态
-    const buttonVisibleState = ref<IButtonState>({
-      create: true,
-      edit: false,
-      level1review: false,
-      un_level1review: false,
-      level2review: false,
-      un_level2review: false,
-      delete_data: false
-    });
+    const buttonState = ref(new ButtonState());
 
     const outboundHeadRef = ref<ITableRef>();
     const outboundMxRef = ref<ITableRef>();
@@ -116,7 +108,7 @@ export default defineComponent({
     const {operateAreaId} = useOperateAreaSelect(saleOutboundHeadFindDto)
 
     async function initPage() {
-      buttonVisibleState.value = getButtonState();
+      buttonState.value.init();
       await outboundHeadRef.value?.initTableData();
       await outboundMxRef.value?.getGridApi().setRowData([]);
     }
@@ -169,7 +161,7 @@ export default defineComponent({
     async function onChange() {
       await initOutboundHeadTable();
       await initOutboundMx();
-      buttonVisibleState.value = getButtonState()
+      buttonState.value.init();
     }
 
     //出仓单单头表格点击事件
@@ -178,7 +170,7 @@ export default defineComponent({
       const outbound = await getSelectRow();
       if (outbound) {
         //设置按钮状态
-        buttonVisibleState.value = getButtonState(outbound.level1review, outbound.level2review);
+        buttonState.value.updateButtonState(outbound.level1review, outbound.level2review);
         //按出仓单显示出仓单的明细
         await initOutboundMx(outbound.outboundid);
       } else {
@@ -271,7 +263,7 @@ export default defineComponent({
       await outboundService.delete_data(outboundid);
       await initOutboundMx();
       await initOutboundHeadTable();
-      buttonVisibleState.value = getButtonState()
+      buttonState.value.updateButtonState();
     }
 
     async function activated() {
@@ -285,7 +277,7 @@ export default defineComponent({
       defaultOutboundHeadTable,
       saleOutboundHeadFindDto,
       saleOutboundMxFindDto,
-      buttonVisibleState,
+      buttonState,
       outboundHeadRef,
       outboundMxRef,
       findDate,

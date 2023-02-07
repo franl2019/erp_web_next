@@ -9,15 +9,15 @@
             @change="onChangeSaleOrderCodeInput">
         </erp-input-round>
       </template>
-      <erp-button :disabled="!buttonShowState.create" @click="clickedCreateBtn">新增</erp-button>
-      <erp-button :disabled="!buttonShowState.edit" type="success" @click="clickedEditBtn">修改</erp-button>
-      <erp-button :disabled="!buttonShowState.delete_data" type="danger" @click="clickedDeleteBtn">删除</erp-button>
+      <erp-button :disabled="!buttonState.create" @click="clickedCreateBtn">新增</erp-button>
+      <erp-button :disabled="!buttonState.edit" type="success" @click="clickedEditBtn">修改</erp-button>
+      <erp-button :disabled="!buttonState.delete_data" type="danger" @click="clickedDeleteBtn">删除</erp-button>
       <erp-delimiter/>
-      <erp-button :disabled="!buttonShowState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
-      <erp-button :disabled="!buttonShowState.un_level1review" type="danger" @click="clickedUnL1Review">撤审
+      <erp-button :disabled="!buttonState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
+      <erp-button :disabled="!buttonState.un_level1review" type="danger" @click="clickedUnL1Review">撤审
       </erp-button>
-      <erp-button :disabled="!buttonShowState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
-      <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
+      <erp-button :disabled="!buttonState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
+      <erp-button :disabled="!buttonState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
       </erp-button>
     </erp-no-title>
 
@@ -54,7 +54,9 @@ import {defaultSaleOrderMxTable} from "@/view/saleOrder/tableConfig/defaultSaleO
 import {ITableRef} from "@/components/table/type";
 import {ISaleOrder} from "@/module/saleOrder/saleOrder";
 import {SaleOrderService} from "@/module/saleOrder/saleOrder.service";
-import {useButtonState} from "@/composables/useButtonState";
+import {useRouterPage} from "@/utils";
+import {useRouter} from "vue-router";
+import {ButtonState} from "@/composables/ButtonState";
 
 export default defineComponent({
   name: 'saleOrderFindView',
@@ -65,7 +67,7 @@ export default defineComponent({
     const saleOrderMxTableRef = ref<ITableRef>();
     const saleOrderFindDto = ref(new SaleOrderFindDto());
     const saleOrderFindMxDto = ref(new SaleOrderFindMxDto());
-    const {buttonShowState,updateButtonState} =useButtonState()
+    const buttonState = ref(new ButtonState());
 
 
     async function activated() {
@@ -80,12 +82,12 @@ export default defineComponent({
 
     async function onSelectedRows() {
       const saleOrder = await getSaleOrderHeadTableSelectedOrder()
-      updateButtonState(saleOrder.level1Review,saleOrder.level2Review)
+      buttonState.value.updateButtonState(saleOrder.level1Review,saleOrder.level2Review)
     }
 
     function initPage() {
       saleOrderHeadTableRef.value?.initTableData();
-      updateButtonState();
+      buttonState.value.init();
     }
 
     function refresh() {
@@ -103,12 +105,19 @@ export default defineComponent({
 
     }
 
+    const router = useRouter();
     async function clickedCreateBtn() {
-
+      const route = router.resolve({
+        name: "newSaleOrder"
+      })
+      useRouterPage(route.fullPath, route.meta.title as string)
     }
 
     async function clickedEditBtn() {
-
+      const route = router.resolve({
+        name: "editSaleOrder"
+      })
+      useRouterPage(route.fullPath, route.meta.title as string)
     }
 
     async function clickedDeleteBtn() {
@@ -139,7 +148,7 @@ export default defineComponent({
     return {
       saleOrderHeadTableRef,
       saleOrderMxTableRef,
-      buttonShowState,
+      buttonState,
       saleOrderFindDto,
       saleOrderFindMxDto,
       defaultSaleOrderHeadTableConfig,
