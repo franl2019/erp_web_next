@@ -13,7 +13,7 @@ export const selectClientTableState = ref<ITableConfig<IClient>>({
             resizable: true,
             sortable: true,
         },
-        rowSelection:"multiple",
+        rowSelection:"single",
         enableCellTextSelection:true,
         suppressDragLeaveHidesColumns: true,
         suppressCellSelection:true

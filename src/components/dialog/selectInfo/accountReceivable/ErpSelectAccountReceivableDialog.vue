@@ -10,6 +10,7 @@
         <erp-button @click="clickedCloseSelectedDialog">关闭选择</erp-button>
       </erp-title>
       <erp-table ref="selectSheetMxTableRef"
+                 :init="true"
                  :find-dto="accountsReceivableFindDto"
                  :getRowNodeId="getRowNodeId"
                  :table-state="selectAccountInComeSheetMxTableConfig"
@@ -21,7 +22,8 @@
       <erp-table ref="selectedTableRef"
                  :find-dto="{}"
                  :getRowNodeId="getRowNodeId"
-                 :table-state="selectedAccountInComeSheetMxTableConfig">
+                 :table-state="selectedAccountInComeSheetMxTableConfig"
+      >
 
       </erp-table>
     </template>

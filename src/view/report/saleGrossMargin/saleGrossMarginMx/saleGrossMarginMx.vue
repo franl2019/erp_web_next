@@ -11,13 +11,13 @@
           value-format="YYYY-MM-DD HH:mm:ss"
           @change="initPage"
       ></el-date-picker>
-      <erp-select-client-btn
-          :clientname="findDto.clientname"
+      <erp-select-client-input
+          v-model:client-id="findDto.clientid"
+          v-model:client-name="findDto.clientname"
           :un-select-sure="false"
-          @select="selectClient"
           @unSelect="unselectClient"
       >
-      </erp-select-client-btn>
+      </erp-select-client-input>
       <erp-pop-over-button
           @close="clickedFilterCloseBtn"
           @ok="clickedFilterOkBtn"
@@ -87,7 +87,6 @@ import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
@@ -102,17 +101,18 @@ import {
 } from "@/view/report/saleGrossMargin/saleGrossMarginMx/config/defaultSaleGrossMarginMxReportTableConfig";
 import {ITableRef} from "@/components/table/type";
 import {useDateSelect} from "@/composables/useDateSelect";
-import {IClient} from "@/module/client/client";
 import {useRouter} from "vue-router";
 import {CellDoubleClickedEvent} from "ag-grid-community";
 import {useRouterReportToSheet} from "@/utils";
 import {CodeType} from "@/types/CodeType";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "SaleGrossMarginMxReportView",
   components: {
+    ErpSelectClientInput,
     ErpPageBox,
     ErpNoTitle,
     ErpTable,
@@ -121,7 +121,6 @@ export default defineComponent({
     ErpFormItem,
     ErpInputRound,
     ErpPopOverButton,
-    ErpSelectClientBtn,
     ErpOperateAreaAuthSelect,
     ErpWarehouseAuthSelectHaveRoot,
   },
@@ -141,15 +140,7 @@ export default defineComponent({
       await saleGrossMarginMxRef.value?.initTableData()
     }
 
-    function selectClient(client: IClient) {
-      findDto.value.clientid = client.clientid;
-      findDto.value.clientname = client.clientname;
-      initPage();
-    }
-
     function unselectClient() {
-      findDto.value.clientid = 0;
-      findDto.value.clientname = '';
       initPage();
     }
 
@@ -190,7 +181,6 @@ export default defineComponent({
       operateAreaId,
       saleGrossMarginMxRef,
       initPage,
-      selectClient,
       unselectClient,
       onChangRefresh,
       clickedFilterOkBtn,

@@ -11,13 +11,13 @@
           value-format="YYYY-MM-DD HH:mm:ss"
           @change="initPage"
       ></el-date-picker>
-      <erp-select-client-btn
-          :clientname="findDto.clientname"
+      <erp-select-client-input
+          v-model:client-id="findDto.clientid"
+          v-model:client-name="findDto.clientname"
           :un-select-sure="false"
-          @select="selectClient"
           @unSelect="unselectClient"
       >
-      </erp-select-client-btn>
+      </erp-select-client-input>
       <erp-pop-over-button
           @close="clickedFilterCloseBtn"
           @ok="clickedFilterOkBtn"
@@ -87,7 +87,6 @@ import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuth
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
 import ErpPopOverButton from "@/components/button/ErpPopOverButton.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import {valueName} from "@/config/valueName";
 import {
   defaultSaleGrossMarginSumReportTableConfig
@@ -98,11 +97,12 @@ import {useDateSelect} from "@/composables/useDateSelect";
 import {ITableRef} from "@/components/table/type";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
-import {IClient} from "@/module/client/client";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "saleGrossMarginSumReportView",
   components: {
+    ErpSelectClientInput,
     ErpForm,
     ErpTable,
     ErpButton,
@@ -111,7 +111,6 @@ export default defineComponent({
     ErpFormItem,
     ErpInputRound,
     ErpPopOverButton,
-    ErpSelectClientBtn,
     ErpOperateAreaAuthSelect,
     ErpWarehouseAuthSelectHaveRoot,
   },
@@ -131,15 +130,7 @@ export default defineComponent({
       await saleGrossMarginSumRef.value?.initTableData();
     }
 
-    function selectClient(client: IClient) {
-      findDto.value.clientid = client.clientid;
-      findDto.value.clientname = client.clientname;
-      initPage();
-    }
-
     function unselectClient() {
-      findDto.value.clientid = 0;
-      findDto.value.clientname = '';
       initPage();
     }
 
@@ -173,7 +164,6 @@ export default defineComponent({
       saleGrossMarginSumRef,
       defaultSaleGrossMarginSumReportTableConfig,
       initPage,
-      selectClient,
       unselectClient,
       onChangRefresh,
       clickedFilterOkBtn,

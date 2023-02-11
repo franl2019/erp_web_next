@@ -25,12 +25,20 @@
                         value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
       </erp-form-item>
       <erp-form-item v-if="inputVisible.client" name="客户" lg-col="2" md-col="2">
-        <erp-select-client-btn :clientname="editDto.clientname" :disabled="!state.edit" @select="onSelectClient"
-                               @unSelect="onUnSelectClient"></erp-select-client-btn>
+        <erp-select-client-input
+            v-model:client-id="editDto.clientid"
+            v-model:client-name="editDto.clientname"
+            :disabled="!state.edit"
+            :un-select-sure="false"
+            @change="onSelectClient"/>
       </erp-form-item>
       <erp-form-item v-if="inputVisible.client_b" name="转入客户" lg-col="2" md-col="2">
-        <erp-select-client-btn :clientname="editDto.clientname_b" :disabled="!state.edit"
-                               @select="onSelectClient_b" @unSelect="onUnSelectClient_b"></erp-select-client-btn>
+        <erp-select-client-input
+            v-model:client-id="editDto.clientid_b"
+            v-model:client-name="editDto.clientname_b"
+            :disabled="!state.edit"
+            :un-select-sure="false"
+            @change="onSelectClient_b"/>
       </erp-form-item>
       <erp-form-item v-if="inputVisible.buy" name="供应商" lg-col="2" md-col="2">
         <erp-select-buy-btn :buyname="editDto.buyname" :disabled="!state.edit" @select="onSelectBuy"
@@ -71,7 +79,6 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpSelectBuyBtn from "@/components/button/ErpSelectBuyBtn.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import ErpAccountsVerifySheetTypeSelect from "@/components/select/ErpAccountsVerifySheetTypeSelect.vue";
 import {
   editAccountsVerifySheetMxTableConfig
@@ -99,10 +106,12 @@ import {getButtonState, IButtonState} from "@/composables/useSheetButtonState";
 
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "accountsVerifySheetEditView",
   components: {
+    ErpSelectClientInput,
     ErpForm,
     ErpTable,
     ErpTitle,
@@ -112,7 +121,6 @@ export default defineComponent({
     ErpFormItem,
     ErpInputRound,
     ErpSelectBuyBtn,
-    ErpSelectClientBtn,
     ErpDelimiter,
     ErpAccountsVerifySheetTypeSelect,
   },
@@ -320,33 +328,21 @@ export default defineComponent({
     }
 
     function onSelectClient(client: IClient) {
-      if (editDto.value.clientid_b !== client.clientid) {
-        editDto.value.clientid = client.clientid;
-        editDto.value.clientname = client.clientname;
-      } else {
+      if (editDto.value.clientid_b === client.clientid) {
         return Promise.reject(new VerifyParamError('转出客户不能与转入客户相同'))
+      }
+
+      if(client.clientid === 0){
+        initSheetMxTableData();
       }
     }
 
     function onSelectClient_b(client: IClient) {
-      if (editDto.value.clientid !== client.clientid) {
-        editDto.value.clientid_b = client.clientid;
-        editDto.value.clientname_b = client.clientname;
-      } else {
+      if (editDto.value.clientid === client.clientid) {
         return Promise.reject(new VerifyParamError('转出客户不能与转入客户相同'))
+      } else {
+        initSheetMxTableData();
       }
-    }
-
-    function onUnSelectClient() {
-      editDto.value.clientid = 0;
-      editDto.value.clientname = '';
-      initSheetMxTableData();
-    }
-
-    function onUnSelectClient_b() {
-      editDto.value.clientid_b = 0;
-      editDto.value.clientname_b = '';
-      initSheetMxTableData();
     }
 
     function onSelectBuy(buy: IBuy) {
@@ -611,8 +607,6 @@ export default defineComponent({
       refreshFromSheetType,
       onSelectClient,
       onSelectClient_b,
-      onUnSelectClient,
-      onUnSelectClient_b,
       onSelectBuy,
       onSelectBuy_b,
       onUnSelectBuy,

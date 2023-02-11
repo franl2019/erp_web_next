@@ -1,11 +1,5 @@
 import {ISaleOrder, saleOrderStateType} from "@/module/saleOrder/saleOrder";
-import {
-    IsDateString,
-    IsInt,
-    IsNumber,
-    IsString,
-    NotEquals
-} from "@/utils/verifyParam/customValidationDecorators";
+import {IsDateString, IsInt, IsNumber, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 import {useGetToday} from "@/utils";
 
 
@@ -27,8 +21,8 @@ export class SaleOrderCreateDto implements ISaleOrder {
     @IsInt()
     @NotEquals(0)
     clientid: number;
+    clientName: string;
     //仓库id
-    @IsInt()
     warehouseid: number;
     //结算方式
     @IsString()
@@ -86,6 +80,7 @@ export class SaleOrderCreateDto implements ISaleOrder {
         this.orderDate = useGetToday();
         this.deliveryDate = "";
         this.clientid = 0;
+        this.clientName = "";
         this.warehouseid = 0;
         this.moneytype = "";
         this.relatednumber = "";

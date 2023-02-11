@@ -13,12 +13,12 @@
             @change="initPage"
         ></el-date-picker>
 
-        <erp-select-client-btn
-            :clientname="findDto.clientname"
+        <erp-select-client-input
+            v-model:client-id="findDto.clientid"
+            v-model:client-name="findDto.clientname"
             :un-select-sure="false"
-            @select="selectClient"
             @unSelect="unselectClient"
-        ></erp-select-client-btn>
+        ></erp-select-client-input>
 
       </template>
       <erp-button @click="initPage">刷新</erp-button>
@@ -36,11 +36,9 @@
 import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import {defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
-import {IClient} from "@/module/client/client";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {
   defaultAccountReceivableSumReportTableConfig
@@ -48,13 +46,14 @@ import {
 import {
   AccountReceivableSumReportFindDto
 } from "@/module/report/accountReceivableSumReport/dto/accountReceivableSumReportFind.dto";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "AccountReceivableSumReportView",
   components: {
+    ErpSelectClientInput,
     ErpButton,
     ErpTitle,
-    ErpSelectClientBtn,
     ErpTable,
     ErpPageBox
   },
@@ -73,15 +72,7 @@ export default defineComponent({
       await accountReceivableSumReportRef.value?.initTableData();
     }
 
-    function selectClient(client: IClient) {
-      findDto.value.clientid = client.clientid;
-      findDto.value.clientname = client.clientname;
-      initPage();
-    }
-
     function unselectClient() {
-      findDto.value.clientid = 0;
-      findDto.value.clientname = '';
       initPage();
     }
 
@@ -91,7 +82,6 @@ export default defineComponent({
       accountReceivableSumReportRef,
       defaultAccountReceivableSumReportTableConfig,
       initPage,
-      selectClient,
       unselectClient,
     };
   },

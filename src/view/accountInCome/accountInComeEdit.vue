@@ -14,9 +14,12 @@
         <erp-input-round v-model="editDto.accountInComeCode" disabled></erp-input-round>
       </erp-form-item>
       <erp-form-item name="客户" lg-col="2" md-col="2">
-        <erp-select-client-btn :clientname="editDto.clientname" :disabled="!state.edit" @select="onSelectClient"
-                               @unSelect="onUnSelectClient">
-        </erp-select-client-btn>
+        <erp-select-client-input
+            :disabled="!state.edit"
+            v-model:client-id="editDto.clientid"
+            v-model:client-name="editDto.clientname"
+            @change="onUnSelectClient"
+        />
       </erp-form-item>
       <erp-form-item name="总金额(自动计算)" lg-col="1" md-col="2">
         <erp-input-round v-model="editDto.amount" disabled></erp-input-round>
@@ -65,7 +68,6 @@ import ErpTable from "@/components/table/ErpTable.vue";
 import ErpForm from "@/components/form/ErpForm.vue";
 import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
@@ -73,7 +75,6 @@ import {defineComponent, onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {AccountInComeCreateDto} from "@/module/accountInCome/dto/accountInComeCreate.dto";
 import {IAccountInComeCreateDto} from "@/module/accountInCome/accountInCome";
-import {IClient} from "@/module/client/client";
 import {ITableRef} from "@/components/table/type";
 import {IAccountInComeAmountMx} from "@/module/accountInCome/accountInComeAmountMx";
 import {IAccountInComeSheetMxFind} from "@/module/accountInCome/accountInComeSheetMx";
@@ -94,10 +95,12 @@ import {useGetToday, useRouterPage} from "@/utils";
 import {useButtonState} from "@/composables/useButtonState";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "accountInComeEdit",
   components: {
+    ErpSelectClientInput,
     ErpTitle,
     ErpButton,
     ErpPageBox,
@@ -107,7 +110,6 @@ export default defineComponent({
     ErpForm,
     ErpFormItem,
     ErpInputRound,
-    ErpSelectClientBtn,
   },
   setup() {
     const {bignumber, chain, round} = mathjs;
@@ -221,14 +223,7 @@ export default defineComponent({
       await editAccountInComeSheetMxTableRef.value?.initTableDataList();
     }
 
-    function onSelectClient(client: IClient) {
-      editDto.value.clientname = client.clientname;
-      editDto.value.clientid = client.clientid;
-    }
-
     function onUnSelectClient() {
-      editDto.value.clientname = "";
-      editDto.value.clientid = 0;
       deleteAmountMx(getAmountMx())
     }
 
@@ -540,7 +535,6 @@ export default defineComponent({
       getRowNodeIdForAmountMx,
       getRowNodeIdForSheetMx,
       state,
-      onSelectClient,
       onUnSelectClient,
       clickedSaveBtn,
       clickedDeleteBtn,

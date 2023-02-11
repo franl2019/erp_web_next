@@ -1,7 +1,7 @@
 <template>
   <erp-input-round
       :disabled="$props.disabled"
-      :value="$props.clientname ? $props.clientname :'点击选择客户'"
+      :value="$props.clientName || '点击选择客户'"
       class="hover:underline underline-offset-4 cursor-pointer"
       readonly
       type="text"
@@ -16,15 +16,11 @@ import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name: "ErpSelectClientBtn",
+  name: "ErpSelectClientInput",
   components: {
     ErpInputRound,
   },
   props: {
-    clientname: {
-      type: String,
-      default: "",
-    },
     disabled: {
       type: Boolean,
       default: false,
@@ -33,21 +29,37 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    clientId: {
+      type: Number,
+    },
+    clientName: {
+      type: String,
+    },
+    operateareaid: {
+      type: Number
+    }
   },
-  emits: ["select", "unSelect"],
+  emits: [
+    "update:clientId",
+    "update:clientName",
+    "update:operateareaid",
+    "change"],
   setup(props, {emit}) {
 
+    async function clickedSelect() {
+      const client = await useErpSelectClientDialog()
+      emit('update:clientName', client.clientname);
+      emit('update:clientId', client.clientid);
+      emit('update:operateareaid', client.operateareaid)
+      emit('change',client)
+    }
+
     async function clickedButton() {
-      if (props.clientname === "") {
+      if (props.clientId === 0) {
         await clickedSelect();
       } else {
         await clickedUnSelect();
       }
-    }
-
-    async function clickedSelect() {
-      const client = await useErpSelectClientDialog()
-      emit('select', client);
     }
 
     async function clickedUnSelect() {
@@ -57,9 +69,7 @@ export default defineComponent({
           message: "重新选择将清空明细！"
         })
       }
-      const client = await useErpSelectClientDialog()
-      emit('unSelect');
-      emit('select', client);
+      await clickedSelect()
     }
 
     return {

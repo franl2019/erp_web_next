@@ -13,13 +13,13 @@
             @change="initPage"
         ></el-date-picker>
 
-        <erp-select-client-btn
-            :clientname="findDto.clientname"
+        <erp-select-client-input
+            v-model:client-id="findDto.clientid"
+            v-model:client-name="findDto.clientname"
             :un-select-sure="false"
-            @select="selectClient"
-            @unSelect="unselectClient"
+            @change="unselectClient"
         >
-        </erp-select-client-btn>
+        </erp-select-client-input>
 
       </template>
       <erp-button @click="refreshButton">刷新</erp-button>
@@ -40,7 +40,6 @@ import ErpTitle from "@/components/title/ErpTitle.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import {defineComponent, onMounted, ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {
@@ -49,20 +48,20 @@ import {
 import {
   defaultAccountReceivableMxReportTableConfig
 } from "@/view/report/accountsReceivable/accountReceivableMxReport/config/defaultAccountReceivableMxReportTableConfig";
-import {IClient} from "@/module/client/client";
 import {useDateSelect} from "@/composables/useDateSelect";
 import {CellDoubleClickedEvent} from "ag-grid-community";
 import {useRouterReportToSheet} from "@/utils";
 import {useRouter} from "vue-router";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "AccountReceivableMxReportView",
   components: {
+    ErpSelectClientInput,
     ErpTitle,
     ErpTable,
     ErpButton,
     ErpPageBox,
-    ErpSelectClientBtn
   },
   setup() {
     onMounted(async () => {
@@ -84,15 +83,7 @@ export default defineComponent({
       await initPage();
     }
 
-    function selectClient(client: IClient) {
-      findDto.value.clientid = client.clientid;
-      findDto.value.clientname = client.clientname;
-      initPage();
-    }
-
     function unselectClient() {
-      findDto.value.clientid = 0;
-      findDto.value.clientname = '';
       initPage();
     }
 
@@ -111,7 +102,6 @@ export default defineComponent({
       defaultAccountReceivableMxReportTableConfig,
       initPage,
       refreshButton,
-      selectClient,
       unselectClient,
       cellDoubleClicked,
     };

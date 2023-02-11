@@ -18,12 +18,13 @@
         <erp-input-round v-model="outboundHead.outboundcode" disabled></erp-input-round>
       </erp-form-item>
       <erp-form-item lg-col="1" md-col="2" name="客户*">
-        <erp-select-client-btn
-            :clientname="outboundHead.clientname"
+        <erp-select-client-input
+            v-model:client-id="outboundHead.clientid"
+            v-model:client-name="outboundHead.clientname"
+            v-model:operateareaid="outboundHead.operateareaid"
             :disabled="!state.edit"
-            @select="selectedClientEvent"
-            @unSelect="unSelectedClientEvent">
-        </erp-select-client-btn>
+            @change="unSelectedClientEvent"
+        />
       </erp-form-item>
       <!--      <erp-form-item name="仓库" lg-col="1" md-col="2">-->
       <!--        <erp-warehouse-auth-select v-model="outboundHead.warehouseid" :disabled="!state.edit"-->
@@ -115,14 +116,12 @@ import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.vue";
-import ErpSelectClientBtn from "@/components/button/ErpSelectClientBtn.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {defineComponent, onMounted, ref} from "vue";
 import {createOutboundMxTable} from "@/view/saleOutbound/tableConfig/createOutboundMxTable";
 import {ITableRef} from "@/components/table/type";
 import {useRoute, useRouter} from "vue-router";
 import {useButtonState} from "@/composables/useButtonState";
-import {IClient} from "@/module/client/client";
 import {VerifyParamError} from "@/types/error/verifyParamError";
 import {useErpSelectInventoryDialog} from "@/components/dialog/selectInfo/inventory/useErpSelectInventoryDialog";
 import {IFindInventory} from "@/module/inventory/FindInventory";
@@ -141,10 +140,12 @@ import {SaleOutboundUpdateDto} from "@/module/saleOutbound/dto/outbound/saleOutb
 import {SaleOutboundAndMxUpdateDto} from "@/module/saleOutbound/dto/saleOutboundAndMxUpdate.dto";
 import {SaleOutboundMxCreateInTableDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreateInTable.dto";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
+import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
 
 export default defineComponent({
   name: "SaleOutboundEditView",
   components: {
+    ErpSelectClientInput,
     ErpOperateAreaAuthSelect,
     ErpPageBox,
     ErpButton,
@@ -153,7 +154,6 @@ export default defineComponent({
     ErpInputRound,
     ErpTable,
     ErpWarehouseAuthSelect,
-    ErpSelectClientBtn,
     ErpNoTitle,
     ErpDelimiter,
   },
@@ -227,18 +227,9 @@ export default defineComponent({
 
     //Event 事件
 
-    //选择客户
-    function selectedClientEvent(client: IClient) {
-      outboundHead.value.clientname = client.clientname;
-      outboundHead.value.clientid = client.clientid;
-      if (client.operateareaid) outboundHead.value.operateareaid = client.operateareaid;
-    }
-
 
     //取消选择客户
     function unSelectedClientEvent() {
-      outboundHead.value.clientname = "";
-      outboundHead.value.clientid = 0;
       clearMx()
     }
 
@@ -484,7 +475,6 @@ export default defineComponent({
       totalAmt,
       cellValueChangedEvent,
       updateButtonState,
-      selectedClientEvent,
       unSelectedClientEvent,
       clickedAddOutboundMxButton,
       clickedDeleteOutboundMxButton,
