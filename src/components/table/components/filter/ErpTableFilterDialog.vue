@@ -40,17 +40,12 @@
       <erp-form-item
           v-if="findDtoDeepClone.hasOwnProperty('startDate')&&findDtoDeepClone.hasOwnProperty('endDate')"
           lg-col="4" md-col="4" name="查询日期">
-        <el-date-picker
-            v-model="findDate"
-            end-placeholder="结束日期"
-            range-separator="-"
-            start-placeholder="开始日期"
-            style="width:100%"
-            type="daterange"
-            unlink-panels
-            value-format="YYYY-MM-DD HH:mm:ss"
-        >
-        </el-date-picker>
+        <erp-range-date
+          v-model:start-date="findDtoDeepClone.startDate"
+          v-model:end-date="findDtoDeepClone.endDate"
+          style="width:100%"
+          @change="test(findDtoDeepClone)"
+        ></erp-range-date>
       </erp-form-item>
       <erp-form-item
           v-if="findDtoDeepClone.hasOwnProperty('operateareaids')"
@@ -119,15 +114,16 @@ import ErpFormItem from "@/components/form/ErpFormItem.vue";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
 import ErpWarehouseAuthSelectHaveRoot from "@/components/select/ErpWarehouseAuthSelectHaveRoot.vue";
-import {useDateSelect} from "@/composables/useDateSelect";
 import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
 import {useWarehouseSelect} from "@/composables/useWarehouseSelect";
 import {ElDatePicker} from 'element-plus';
 import ErpButton from "@/components/button/ErpButton.vue";
+import ErpRangeDate from "@/components/date/ErpRangeDate.vue";
 
 export default defineComponent({
   name: "ErpTableFilterDialog",
   components: {
+    ErpRangeDate,
     ErpButton,
     ElDatePicker,
     ErpWarehouseAuthSelectHaveRoot,
@@ -169,7 +165,6 @@ export default defineComponent({
   },
   setup(props) {
     const findDtoDeepClone = ref(JSON.parse(JSON.stringify(props.findDto)));
-    const {findDate} = useDateSelect(findDtoDeepClone);
     const {operateAreaId} = useOperateAreaSelect(findDtoDeepClone);
     const {warehouseid, setDefaultAllWarehouse} = useWarehouseSelect(findDtoDeepClone);
 
@@ -279,12 +274,16 @@ export default defineComponent({
       }
     }
 
+    function test(value:any) {
+      console.log(value.startDate)
+    }
+
     return {
+      test,
       save,
       close,
       reset,
       warehouseid,
-      findDate,
       operateAreaId,
       findDtoDeepClone,
       outboundcodeRef,

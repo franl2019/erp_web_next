@@ -1,5 +1,5 @@
 import {erpDialogFactory} from "@/components/dialog/erpDialogFactory";
-import ErpTableFilterDialog from "@/components/table/filter/ErpTableFilterDialog.vue";
+import ErpTableFilterDialog from "@/components/table/components/filter/ErpTableFilterDialog.vue";
 
 export interface TableFilterDialogOption {
     colId:string;

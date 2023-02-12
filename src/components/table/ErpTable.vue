@@ -90,12 +90,12 @@ import {TableCol} from "@/components/table/TableCol";
 import ErpTableEditOptionDialog from "@/components/table/components/OptionDialog/ErpTableEditOptionDialog.vue";
 import ErpTableOptionTabBar from "@/components/table/components/ErpTableOptionTabBar.vue";
 import ErpTableOptionTab from "@/components/table/components/ErpTableOptionTab.vue";
-import ErpTableTopBox from "@/components/table/components/ErpTableTopBox.vue";
-import ErpTableBottomBox from "@/components/table/components/ErpTableBottomBox.vue";
+import ErpTableTopBox from "@/components/table/components/box/ErpTableTopBox.vue";
+import ErpTableBottomBox from "@/components/table/components/box/ErpTableBottomBox.vue";
 import {useTableOptionDialog} from "@/components/table/components/OptionDialog/useTableOptionDialog";
-import ErpTableFilterTipsBox from "@/components/table/components/ErpTableFilterTipsBox.vue";
-import {useFindDtoFormatToFilterTips} from "@/components/table/filter/useFindDtoFormatToFilterTips";
-import {TableFilterDialogOption, useTableFilterDialog} from "@/components/table/filter/useTableFilterDialog";
+import ErpTableFilterTipsBox from "@/components/table/components/box/ErpTableFilterTipsBox.vue";
+import {useFindDtoFormatToFilterTips} from "@/components/table/components/filter/useFindDtoFormatToFilterTips";
+import {TableFilterDialogOption, useTableFilterDialog} from "@/components/table/components/filter/useTableFilterDialog";
 
 export default defineComponent({
   name: "ErpTable",

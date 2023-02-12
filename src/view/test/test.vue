@@ -1,32 +1,18 @@
 <template>
-  <erp-button @click="test">测试</erp-button>
+  <test-component></test-component>
+  <test-component></test-component>
+  <test-component></test-component>
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted} from "vue";
-import ErpButton from "@/components/button/ErpButton.vue";
-import useErpDialog from "@/components/dialog/useErpDialog";
+import {defineComponent} from "vue";
+import TestComponent from "@/view/test/testComponent.vue";
 
 
 export default defineComponent({
-  components: {ErpButton},
+  components: {TestComponent},
   setup() {
-    onMounted(() => {
-    })
 
-    async function test() {
-
-      await useErpDialog({
-        message: "ss"
-      })
-
-      console.log('后续')
-
-    }
-
-    return {
-      test
-    }
   }
 })
 </script>

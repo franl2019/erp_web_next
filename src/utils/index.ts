@@ -57,6 +57,16 @@ export function useGetToday(): string {
     return moment().format('YYYY-MM-DD HH:mm:ss');
 }
 
+//获取上月开始日期
+export function useGetLastMonthStartDate(): string {
+    return moment().subtract(1,"month").startOf("month").format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取上月结束日期
+export function useGetLastMonthEndDate(): string {
+    return moment().subtract(1,"month").endOf("month").format('YYYY-MM-DD HH:mm:ss');
+}
+
 //获取开始日期
 export function useGetStartDate(): string {
     return moment().startOf("month").format('YYYY-MM-DD HH:mm:ss');
@@ -65,6 +75,26 @@ export function useGetStartDate(): string {
 //获取结束日期
 export function useGetEndDate(): string {
     return moment().endOf("month").format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取开始日期
+export function useGetThisYearStartDate(): string {
+    return moment().startOf("year").format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取结束日期
+export function useGetThisYearEndDate(): string {
+    return moment().endOf("year").format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取开始日期
+export function useGetLastYearStartDate(): string {
+    return moment().subtract(1,"year").startOf('year').format('YYYY-MM-DD HH:mm:ss');
+}
+
+//获取结束日期
+export function useGetLastYearEndDate(): string {
+    return moment().subtract(1,"year").endOf('year').format('YYYY-MM-DD HH:mm:ss');
 }
 
 export function useRouterPage(fullPath: string, title: string) {
