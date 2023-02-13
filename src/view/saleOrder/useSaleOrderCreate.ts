@@ -2,17 +2,21 @@ import {ref, Ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {SaleOrderCreateDto} from "@/module/saleOrder/dto/head/saleOrderCreate.dto";
 import {SaleOrderService} from "@/module/saleOrder/saleOrder.service";
-import {SaleOrderUpdateDto} from "@/module/saleOrder/dto/head/saleOrderUpdate.dto";
+import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/saleOrderCreateAndMx.dto";
 
-export function useSaleOrderEditView(
+export function useSaleOrderCreate(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
 ) {
 
-    const saleOrderDto = ref<SaleOrderCreateDto | SaleOrderUpdateDto>(new SaleOrderCreateDto());
+    const saleOrderCreateDto = ref(new SaleOrderCreateDto());
     const saleOrderService = new SaleOrderService();
 
     async function onClickSaveButton() {
-
+        const saleOrderCreateAndMxDto = new SaleOrderCreateAndMxDto()
+        saleOrderCreateAndMxDto.setSaleOrder(saleOrderCreateDto.value);
+        saleOrderCreateAndMxDto.setSaleOrderCreateMxList([]);
+        console.log(saleOrderCreateAndMxDto)
+        const saleOrderAndMxDto = (await saleOrderService.create(saleOrderCreateAndMxDto))[0];
     }
 
     function onClickL1ReviewButton() {
@@ -22,17 +26,17 @@ export function useSaleOrderEditView(
     function onClickUnL1ReviewButton() {
 
     }
-    
+
     function onClickDeleteButton() {
-        
+
     }
 
     function onClientChange() {
 
     }
 
-    return{
-        saleOrderDto,
+    return {
+        saleOrderCreateDto,
         onClickSaveButton,
         onClickL1ReviewButton,
         onClickUnL1ReviewButton,

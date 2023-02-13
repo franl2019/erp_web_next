@@ -4,9 +4,8 @@ import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {ISaleOrder, ISaleOrderAndMxDto} from "@/module/saleOrder/saleOrder";
 import {SaleOrderFindDto} from "@/module/saleOrder/dto/saleOrderFind.dto";
-import {SaleOrderCreateDto} from "@/module/saleOrder/dto/head/saleOrderCreate.dto";
-import {SaleOrderUpdateDto} from "@/module/saleOrder/dto/head/saleOrderUpdate.dto";
 import {SaleOrderReviewDto} from "@/module/saleOrder/dto/saleOrderReview.dto";
+import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/saleOrderCreateAndMx.dto";
 
 export class SaleOrderService {
 
@@ -20,7 +19,8 @@ export class SaleOrderService {
         }
     }
 
-    public async create(createDto: SaleOrderCreateDto) {
+    public async create(createDto: SaleOrderCreateAndMxDto) {
+        console.log(createDto)
         await useVerifyParam(createDto);
         const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_CREATE, createDto);
         if (result.code === 200 && result.data) {
@@ -30,7 +30,7 @@ export class SaleOrderService {
         }
     }
 
-    public async createAndL1Review(createDto: SaleOrderCreateDto) {
+    public async createAndL1Review(createDto: SaleOrderCreateAndMxDto) {
         await useVerifyParam(createDto);
         const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_CREATE_AND_REVIEW, createDto);
         if (result.code === 200) {
@@ -40,7 +40,7 @@ export class SaleOrderService {
         }
     }
 
-    public async update(updateDto: SaleOrderUpdateDto) {
+    public async update(updateDto: SaleOrderCreateAndMxDto) {
         await useVerifyParam(updateDto);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_UPDATE, updateDto);
         if (result.code === 200) {

@@ -57,6 +57,16 @@ export interface ISaleOrder {
 
     updater: string
     updatedAt: Date | null
+
+    remark1:string;
+    remark2:string;
+    remark3:string;
+    remark4:string;
+    remark5:string;
+}
+
+export interface ISaleOrderOrClient extends ISaleOrder{
+    clientName:string
 }
 
 export interface ISaleOrderAndMxDto extends ISaleOrder {

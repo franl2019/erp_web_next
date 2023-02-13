@@ -1,6 +1,7 @@
 import {ISaleOrder, saleOrderStateType} from "@/module/saleOrder/saleOrder";
 import {IsDateString, IsInt, IsNumber, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 import {useGetToday} from "@/utils";
+import {IsDateStringOrNull} from "@/utils/verifyParam/customValidationDecorators/IsDateStringOrNull";
 
 
 export class SaleOrderCreateDto implements ISaleOrder {
@@ -15,7 +16,7 @@ export class SaleOrderCreateDto implements ISaleOrder {
     @IsDateString()
     orderDate: string;
     //出货日期
-    @IsDateString()
+    @IsDateStringOrNull()
     deliveryDate: string;
     //客户id
     @IsInt()
@@ -68,10 +69,21 @@ export class SaleOrderCreateDto implements ISaleOrder {
     deletedAt: Date | null;
 
     creater: string;
-    createdAt: Date | null
+    createdAt: Date | null;
 
-    updater: string
-    updatedAt: Date | null
+    updater: string;
+    updatedAt: Date | null;
+
+    @IsString()
+    remark1:string;
+    @IsString()
+    remark2:string;
+    @IsString()
+    remark3:string;
+    @IsString()
+    remark4:string;
+    @IsString()
+    remark5:string;
 
     constructor() {
         this.saleOrderId = 0;
@@ -110,5 +122,11 @@ export class SaleOrderCreateDto implements ISaleOrder {
         this.createdAt = null;
         this.updater = "";
         this.updatedAt = null;
+
+        this.remark1 = "";
+        this.remark2 = "";
+        this.remark3 = "";
+        this.remark4 = "";
+        this.remark5 = "";
     }
 }

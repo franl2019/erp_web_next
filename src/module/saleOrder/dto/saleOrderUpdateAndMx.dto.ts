@@ -8,7 +8,9 @@ export class SaleOrderUpdateAndMxDto extends SaleOrderUpdateDto implements ISale
     @IsArray()
     saleOrderMx: ISaleOrderMx[] = [];
 
-    constructor() {
-        super();
+
+    constructor(saleOrder: SaleOrderUpdateDto, saleOrderMx: ISaleOrderMx[]) {
+        super(saleOrder);
+        this.saleOrderMx = saleOrderMx;
     }
 }

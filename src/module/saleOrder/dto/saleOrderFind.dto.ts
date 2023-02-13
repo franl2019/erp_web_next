@@ -45,4 +45,15 @@ export class SaleOrderFindDto {
     level1Review:number = 0;
     @IsInt()
     level2Review:number = 0;
+
+    @IsString()
+    remark1:string = "";
+    @IsString()
+    remark2:string = "";
+    @IsString()
+    remark3:string = "";
+    @IsString()
+    remark4:string = "";
+    @IsString()
+    remark5:string = "";
 }
