@@ -51,7 +51,7 @@
         :table-state="editSaleOrderMxTable"
     >
       <template #topBox>
-        <erp-button :size="'small'" type="info">增加明细</erp-button>
+        <erp-button :size="'small'" type="info" @click="onClickAddSaleOrderMxButton">增加明细</erp-button>
         <div class="w-2"></div>
         <erp-button :size="'small'" type="danger">删除明细</erp-button>
       </template>
@@ -109,15 +109,18 @@ export default defineComponent({
     const {
       saleOrderCreateDto:saleOrderDto,
       onClickSaveButton,
-      onClientChange
+      onClientChange,
+      onClickAddSaleOrderMxButton
     } = useSaleOrderCreate(saleOrderMxTableRef);
 
 
     return {
       saleOrderDto,
       editSaleOrderMxTable,
+      saleOrderMxTableRef,
       onClickSaveButton,
-      onClientChange
+      onClientChange,
+      onClickAddSaleOrderMxButton
     }
   }
 })

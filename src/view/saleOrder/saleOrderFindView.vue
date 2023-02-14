@@ -47,8 +47,8 @@ import ErpButton from '@/components/button/ErpButton.vue'
 import ErpInputRound from '@/components/input/ErpInputRound.vue'
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpDelimiter from '@/components/delimiter/ErpDelimiter.vue'
-import {SaleOrderFindDto} from '@/module/saleOrder/dto/saleOrderFind.dto'
-import {SaleOrderFindMxDto} from "@/module/saleOrder/dto/saleOrderMxFind.dto";
+import {SaleOrderFindDto} from '@/module/saleOrder/dto/find/saleOrderFind.dto'
+import {SaleOrderFindMxDto} from "@/module/saleOrder/dto/find/saleOrderMxFind.dto";
 import {defaultSaleOrderHeadTableConfig} from "@/view/saleOrder/tableConfig/defaultSaleOrderHeadTable";
 import {defaultSaleOrderMxTable} from "@/view/saleOrder/tableConfig/defaultSaleOrderMxTable";
 import {ITableRef} from "@/components/table/type";

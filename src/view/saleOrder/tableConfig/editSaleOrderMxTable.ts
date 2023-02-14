@@ -1,10 +1,39 @@
 import {ref} from "vue";
 import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
-import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
-import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
 import {SaleOrderMxService} from "@/module/saleOrder/saleOrderMx.service";
+import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
+import {bignumber, round} from "mathjs";
+import TableEditorProductCode from "@/components/table/components/editor/ProductCode/TableEditorProductCode.vue";
+import {selectProductInfoValueSetter} from "@/view/buyInbound/tableConfig/BuyInboundCreateViewMxTableConfig";
+import TableRenderPriceType from "@/components/table/components/renderer/tableRenderPriceType.vue";
+import TableEditorSelectPriceType from "@/components/table/components/editor/tableEditorSelectPriceType.vue";
+import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
+import {SaleOrderUpdateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderUpdateMxAndProductAndAmt";
+
+function valueSetter(params: ValueSetterParams) {
+    //判断是否为数字
+    if (
+        params.newValue !== '' &&
+        !isNaN(Number(params.newValue))
+    ) {
+
+        const colId = params.column.getColId();
+        //给单元格赋值
+        params.data[colId] = Number(round(bignumber(params.newValue), 4));
+        const paramsData = params.data as SaleOrderCreateMxAndProductAndAmt | SaleOrderUpdateMxAndProductAndAmt;
+        paramsData.recountCol(colId)
+
+        //刷新本行
+        params.api.refreshCells({
+            rowNodes: [params.node!]
+        });
+        return true
+    } else {
+        return false
+    }
+}
 
 export const editSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
     tableName: "editSaleOrderMxTable",
@@ -20,120 +49,131 @@ export const editSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
     },
     columnDefaults: [
         {
+            headerName: "",
+            field: 'rowDrag',
+            rowDrag: true,
+            editable: false,
+            width: 40,
+        },
+        {
             headerName: "#",
             field: 'sn',
             valueGetter: "node.rowIndex + 1",
-            width: 50
-        },
-        {headerName: `${valueName.product}编号`, field: 'productcode', width: 100},
-        {headerName: `${valueName.product}名称`, field: 'productname', width: 100},
-        {headerName: '规格', field: 'spec', width: 80},
-        {headerName: '用料', field: 'materials', width: 80},
-        {headerName: '订做规格', field: 'spec_d', width: 80},
-        {headerName: '现用料', field: 'materials_d', width: 80},
-        {headerName: '明细备注', field: 'remarkmx', width: 80},
-        {headerName: '批号', field: 'batchNo', width: 80},
-        {headerName: '备注', field: 'remark', width: 80},
-        {headerName: '数量', field: 'outqty', type: 'numericColumn',width: 120},
-        {headerName: '包装件数', field: 'packqty', type: 'numericColumn',width: 80},
-        {headerName: '件数', field: 'bzqty', type: 'numericColumn',width: 120},
-        {headerName: '计价数量', field: 'priceqty', type: 'numericColumn',width: 120},
-        {
-            headerName: '单价', field: 'price', type: 'numericColumn',width: 120,
-            valueGetter: (params) => {
-                return amountInThousands(toFixed2(params.data[params.colDef.field!]))
-            }
-        },
-        {headerName: '包件价', field: 'bzprice', type: 'numericColumn',width: 120},
-        {headerName: '折扣', field: 'agio', type: 'numericColumn',width: 120},
-        {headerName: '折扣2', field: 'agio1', type: 'numericColumn',width: 120},
-        {headerName: '折扣3', field: 'agio2', type: 'numericColumn',width: 120},
-        {headerName: '浮动价', field: 'floatprice1', type: 'numericColumn',width: 120},
-        {headerName: '浮动价2', field: 'floatprice2', type: 'numericColumn',width: 120},
-        {headerName: '浮动价3', field: 'floatprice3', type: 'numericColumn',width: 120},
-        {
-            headerName: '辅助单位',
-            field: 'otherUnit',
-            width: 78,
+            editable: false,
+            width: 40
         },
         {
-            headerName: '转换率',
-            field: 'otherUnitConversionRate',
+            headerName: `${valueName.product}编号`,
+            field: 'productcode',
+            cellEditorFramework: TableEditorProductCode,
+            editable: true,
+            valueSetter: selectProductInfoValueSetter,
+            width: 100,
+        },
+        {
+            headerName: `${valueName.product}名称`,
+            field: 'productname',
+            editable: false,
+            width: 100,
+        },
+        {headerName: '规格', field: 'spec', width: 100,},
+        {headerName: '用料', field: 'materials', width: 100,},
+        {headerName: '批次号', field: 'batchNo', editable: true, width: 100,},
+        {headerName: '订做规格', field: 'spec_d', editable: true, width: 100,},
+        {headerName: '现用料', field: 'materials_d', editable: true, width: 100,},
+        {headerName: '明细备注', field: 'remarkmx', editable: true, width: 100,},
+        {headerName: '备注', field: 'remark', editable: true, width: 100,},
+        {
+            headerName: '数量',
+            field: 'outqty',
+            editable: true,
             type: 'numericColumn',
-            width: 66
+            valueSetter,
+            width: 100,
+        },
+        {headerName: '单位', field: 'unit', width: 50},
+        {
+            headerName: '包装数量',
+            field: 'packqty',
+            type: 'numericColumn',
+            width: 100,
         },
         {
-            headerName: '实价', field: 'netprice', type: 'numericColumn', valueGetter: (params) => {
-                return amountInThousands(toFixed2(params.data[params.colDef.field!]))
-            }
+            headerName: '件数',
+            field: 'bzqty',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: '金额', field: 'amt', type: 'numericColumn', valueGetter: (params) => {
-                return amountInThousands(toFixed2(params.data[params.colDef.field!]))
-            }
-        },
-        {headerName: '计价方式', field: 'pricetype'},
-        {
-            headerName: `客制${valueName.product}编号`,
-            field: 'kz_productCode',
-            width: 150
+            headerName: '单价',
+            field: 'price',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: `客制${valueName.product}名称`,
-            field: 'kz_productName',
-            width: 150
+            headerName: '包件价',
+            field: 'bzprice',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: '客制规格',
-            field: 'kz_spec',
-            width: 150
+            headerName: '折扣1',
+            field: 'agio',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: '客制用料',
-            field: 'kz_materials',
-            width: 150
+            headerName: '折扣2',
+            field: 'agio1',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: '客制定做规格',
-            field: 'kz_spec_d',
-            width: 150
+            headerName: '折扣3',
+            field: 'agio2',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter,
+            width: 100,
         },
         {
-            headerName: '客制现用料',
-            field: 'kz_materials_d',
-            width: 150
+            headerName: '实价',
+            field: 'netprice',
+            editable: true,
+            type: 'numericColumn',
+            valueSetter
         },
         {
-            headerName: '客制备注',
-            field: 'kz_remark',
-            width: 150
+            headerName: '计价数量',
+            field: 'priceqty',
+            type: 'numericColumn',
         },
         {
-            headerName: '备注1',
-            field: 'remark1',
-            width: 150
+            headerName: '金额',
+            field: 'amt',
+            type: 'numericColumn',
+            editable: true,
+            valueSetter
         },
         {
-            headerName: '备注2',
-            field: 'remark2',
-            width: 150
+            headerName: '计价方式',
+            field: 'pricetype',
+            width: 100,
+            editable:true,
+            singleClickEdit:true,
+            cellRendererFramework:TableRenderPriceType,
+            cellEditorFramework:TableEditorSelectPriceType,
         },
-        {
-            headerName: '备注3',
-            field: 'remark3',
-            width: 150
-        },
-        {
-            headerName: '备注4',
-            field: 'remark4',
-            width: 150
-        },
-        {
-            headerName: '备注5',
-            field: 'remark5',
-            width: 150
-        },
-        {headerName: '库存所属', field: 'clientname',width:90},
     ],
     tableService: new SaleOrderMxService()
 })

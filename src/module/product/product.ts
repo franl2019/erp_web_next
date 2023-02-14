@@ -24,18 +24,18 @@ export interface IProduct {
     useflag: number;
     level1review: number;
     level1name: string;
-    level1date: Date;
+    level1date: Date | null;
     level2review: number;
     level2name: string;
-    level2date: Date;
+    level2date: Date | null;
     creater: string;
-    createdAt: Date;
+    createdAt: Date | null;
     updater: string;
-    updatedAt: Date;
+    updatedAt: Date | null;
     productareaid: number;
     warehouseid: number;
     del_uuid: number;
-    deletedAt: Date;
+    deletedAt: Date | null;
     deleter: string;
 }
 
@@ -65,17 +65,17 @@ export class Product implements IProduct {
     useflag: number = 0;
     level1review: number = 0;
     level1name: string = "";
-    level1date: Date = new Date();
+    level1date: Date | null = new Date();
     level2review: number = 0;
     level2name: string = "";
-    level2date: Date = new Date();
+    level2date: Date | null = new Date();
     creater: string = "";
-    createdAt: Date = new Date();
+    createdAt: Date | null = new Date();
     updater: string = "";
-    updatedAt: Date = new Date();
+    updatedAt: Date | null = new Date();
     productareaid: number = 0;
     warehouseid: number = 0;
     del_uuid: number = 0;
-    deletedAt: Date = new Date();
+    deletedAt: Date | null = new Date();
     deleter: string = "";
 }

@@ -1,7 +1,7 @@
 import {IApiResult, useHttpPost} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
-import {SaleOrderFindMxDto} from "@/module/saleOrder/dto/saleOrderMxFind.dto";
+import {SaleOrderFindMxDto} from "@/module/saleOrder/dto/find/saleOrderMxFind.dto";
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
 
 export class SaleOrderMxService {

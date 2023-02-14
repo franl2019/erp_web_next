@@ -26,7 +26,7 @@ export interface IUpdateProductDto {
     remark10: string;
     useflag: number;
     updater: string;
-    updatedAt: Date;
+    updatedAt: Date | null;
     productareaid: number;
     warehouseid: number;
 }
@@ -60,7 +60,7 @@ export class UpdateProductDto implements IUpdateProductOtherUnitMxList {
     remark10: string = "";
     useflag: number = 0;
     updater: string = "";
-    updatedAt: Date = new Date();
+    updatedAt: Date | null = new Date();
     productareaid: number = 0;
     warehouseid: number = 0;
     productOtherUnitMxList: IProductOtherUnitMx[] = [];

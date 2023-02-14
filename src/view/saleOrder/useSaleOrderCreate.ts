@@ -2,7 +2,10 @@ import {ref, Ref} from "vue";
 import {ITableRef} from "@/components/table/type";
 import {SaleOrderCreateDto} from "@/module/saleOrder/dto/head/saleOrderCreate.dto";
 import {SaleOrderService} from "@/module/saleOrder/saleOrder.service";
-import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/saleOrderCreateAndMx.dto";
+import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderCreateAndMx.dto";
+import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
+import {IProduct} from "@/module/product/product";
+import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
 
 export function useSaleOrderCreate(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
@@ -35,6 +38,25 @@ export function useSaleOrderCreate(
 
     }
 
+    async function onClickAddSaleOrderMxButton() {
+        const productList = await useErpSelectProductDialog<IProduct[]>();
+        addSaleOrderMx(productList);
+    }
+
+    function addSaleOrderMx(productList: IProduct[]) {
+        const saleOrderCreateMxAndProductList: SaleOrderCreateMxAndProductAndAmt[] = [];
+
+        for (let i = 0; i < productList.length; i++) {
+            const product = productList[i]
+            const saleOrderCreateMxAndProductDto = new SaleOrderCreateMxAndProductAndAmt();
+            saleOrderCreateMxAndProductDto.selectedProduct(product);
+            saleOrderCreateMxAndProductList.push(saleOrderCreateMxAndProductDto);
+        }
+        saleOrderEditTableRef.value?.getGridApi().applyTransaction({
+            add: saleOrderCreateMxAndProductList
+        })
+    }
+
     return {
         saleOrderCreateDto,
         onClickSaveButton,
@@ -42,5 +64,6 @@ export function useSaleOrderCreate(
         onClickUnL1ReviewButton,
         onClickDeleteButton,
         onClientChange,
+        onClickAddSaleOrderMxButton,
     }
 }
