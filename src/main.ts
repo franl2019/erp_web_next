@@ -8,6 +8,7 @@ import locale from 'element-plus/lib/locale/lang/zh-cn'
 import {v_douClick, v_reqClick} from "@/utils";
 import {useErrorsToArrayString} from "@/utils/useErrorsToArrayString";
 import useErpErrorDialog from "@/components/dialog/error/useErpErrorDialog";
+import useErpDialog from "@/components/dialog/useErpDialog";
 
 const app = createApp(App)
 
@@ -31,10 +32,10 @@ app.config.errorHandler = (err: any) => {
             closeBtnVisible: false
         }).then();
     }else{
-        // useErpDialog({
-        //     title: "错误提示",
-        //     message: err.message,
-        //     closeBtnVisible: false
-        // }).then();
+        useErpDialog({
+            title: "错误提示",
+            message: err.message,
+            closeBtnVisible: false
+        }).then();
     }
 }

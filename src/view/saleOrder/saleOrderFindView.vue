@@ -27,12 +27,14 @@
         :init="true"
         :show-filter-tips-box="true"
         :table-state="defaultSaleOrderHeadTableConfig"
-        @refresh="onInitPage"
+        :getRowNodeId="getRowNodeId"
+        @refresh="onRefresh"
         @selectionChanged="onSelectedRows"
     ></erp-table>
 
     <erp-table
         ref="saleOrderMxTableRef"
+        :find-dto="saleOrderFindMxDto"
         :table-state="defaultSaleOrderMxTable"
         table-name="单据明细"
     ></erp-table>
@@ -47,12 +49,10 @@ import ErpButton from '@/components/button/ErpButton.vue'
 import ErpInputRound from '@/components/input/ErpInputRound.vue'
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpDelimiter from '@/components/delimiter/ErpDelimiter.vue'
-import {SaleOrderFindDto} from '@/module/saleOrder/dto/find/saleOrderFind.dto'
-import {SaleOrderFindMxDto} from "@/module/saleOrder/dto/find/saleOrderMxFind.dto";
 import {defaultSaleOrderHeadTableConfig} from "@/view/saleOrder/tableConfig/defaultSaleOrderHeadTable";
 import {defaultSaleOrderMxTable} from "@/view/saleOrder/tableConfig/defaultSaleOrderMxTable";
 import {ITableRef} from "@/components/table/type";
-import {useSaleOrderFind} from "@/view/saleOrder/useSaleOrderFind";
+import {useSaleOrderFind} from "@/view/saleOrder/hock/saleOrderFind/useSaleOrderFind";
 
 export default defineComponent({
   name: 'saleOrderFindView',
@@ -68,17 +68,18 @@ export default defineComponent({
 
     const saleOrderHeadTableRef = ref<ITableRef>();
     const saleOrderMxTableRef = ref<ITableRef>();
-    const saleOrderFindDto = ref(new SaleOrderFindDto());
-    const saleOrderFindMxDto = ref(new SaleOrderFindMxDto());
 
     async function activated() {
-      await onInitPage();
+      await onRefresh();
     }
 
     expose({activated})
 
     const {
       buttonState,
+      saleOrderFindDto,
+      saleOrderFindMxDto,
+      getRowNodeId,
       onClickedCreateBtn,
       onClickedEditBtn,
       onClickedDeleteBtn,
@@ -86,9 +87,9 @@ export default defineComponent({
       onClickedUnL1Review,
       onClickedL2Review,
       onClickedUnL2Review,
-      onInitPage,
       onChangeSaleOrderCodeInput,
       onSelectedRows,
+      onRefresh,
     } = useSaleOrderFind(saleOrderHeadTableRef, saleOrderMxTableRef)
 
 
@@ -100,6 +101,7 @@ export default defineComponent({
       saleOrderFindMxDto,
       defaultSaleOrderHeadTableConfig,
       defaultSaleOrderMxTable,
+      getRowNodeId,
       onClickedCreateBtn,
       onClickedEditBtn,
       onClickedDeleteBtn,
@@ -109,7 +111,7 @@ export default defineComponent({
       onClickedUnL2Review,
       onChangeSaleOrderCodeInput,
       onSelectedRows,
-      onInitPage
+      onRefresh
     }
   }
 })

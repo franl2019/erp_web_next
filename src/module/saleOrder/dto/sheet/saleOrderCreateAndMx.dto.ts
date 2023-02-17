@@ -1,28 +1,25 @@
 import {ISaleOrderAndMxDto} from "@/module/saleOrder/saleOrder";
-import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
-import {
-    IsArray,
-} from "@/utils/verifyParam/customValidationDecorators";
+import {IsArray,} from "@/utils/verifyParam/customValidationDecorators";
 import {SaleOrderCreateDto} from "@/module/saleOrder/dto/head/saleOrderCreate.dto";
-import {SaleOrderCreateMxDto} from "@/module/saleOrder/dto/mx/saleOrderCreateMx.dto";
+import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
+import {bignumber, chain, round} from "mathjs";
 
-export class SaleOrderCreateAndMxDto extends SaleOrderCreateDto implements ISaleOrderAndMxDto{
+export class SaleOrderCreateAndMxDto extends SaleOrderCreateDto implements ISaleOrderAndMxDto {
     @IsArray()
-    saleOrderMx: ISaleOrderMx[];
+    saleOrderMx: SaleOrderCreateMxAndProductAndAmt[] = [];
 
     constructor() {
         super();
-        this.saleOrderMx = []
     }
 
-    setSaleOrder(saleOrder:SaleOrderCreateDto){
+    setSaleOrder(saleOrder: SaleOrderCreateDto) {
         this.saleOrderId = saleOrder.saleOrderId;
         this.saleOrderCode = saleOrder.saleOrderCode;
         this.saleOrderState = saleOrder.saleOrderState;
         this.orderDate = saleOrder.orderDate;
         this.deliveryDate = saleOrder.deliveryDate;
         this.clientid = saleOrder.clientid;
-        this.clientName = saleOrder.clientName;
+        this.clientname = saleOrder.clientname;
         this.warehouseid = saleOrder.warehouseid;
         this.moneytype = saleOrder.moneytype;
         this.relatednumber = saleOrder.relatednumber;
@@ -59,7 +56,22 @@ export class SaleOrderCreateAndMxDto extends SaleOrderCreateDto implements ISale
         this.remark5 = saleOrder.remark5;
     }
 
-    setSaleOrderCreateMxList(saleOrderMx:SaleOrderCreateMxDto[]){
+    setSaleOrderCreateMxList(saleOrderMx: SaleOrderCreateMxAndProductAndAmt[]) {
         this.saleOrderMx = saleOrderMx
+    }
+
+    sumAmt() {
+        for (let i = 0; i < this.saleOrderMx.length; i++) {
+            const saleOrderMx = this.saleOrderMx[i];
+            this.amt =
+                Number(
+                    round(
+                        chain(bignumber(this.amt))
+                            .add(bignumber(saleOrderMx.amt))
+                            .done()
+                        , 4)
+                )
+
+        }
     }
 }

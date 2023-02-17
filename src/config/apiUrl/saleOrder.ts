@@ -4,6 +4,7 @@ export const SaleOrderApi = {
     SALE_ORDER_CREATE:'erp/saleOrder/create',
     SALE_ORDER_CREATE_AND_REVIEW:'erp/saleOrder/createAndL1Review',
     SALE_ORDER_UPDATE:'erp/saleOrder/update',
+    SALE_ORDER_UPDATE_AND_REVIEW:'erp/saleOrder/updateAndL1Review',
     SALE_ORDER_DELETE:'erp/saleOrder/delete_data',
     SALE_ORDER_L1REVIEW:'erp/saleOrder/l1Review',
     SALE_ORDER_UN_L1REVIEW:'erp/saleOrder/unl1Review',

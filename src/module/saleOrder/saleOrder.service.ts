@@ -2,16 +2,17 @@ import {IApiResult, useHttpPost} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {useVerifyParam} from "@/utils/verifyParam/useVerifyParam";
 import useErpDialog from "@/components/dialog/useErpDialog";
-import {ISaleOrder, ISaleOrderAndMxDto} from "@/module/saleOrder/saleOrder";
+import {ISaleOrderAndMxDto, ISaleOrderOrClient} from "@/module/saleOrder/saleOrder";
 import {SaleOrderFindDto} from "@/module/saleOrder/dto/find/saleOrderFind.dto";
 import {SaleOrderReviewDto} from "@/module/saleOrder/dto/find/saleOrderReview.dto";
 import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderCreateAndMx.dto";
+import {SaleOrderUpdateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderUpdateAndMx.dto";
 
 export class SaleOrderService {
 
     public async find(findDto: SaleOrderFindDto) {
         await useVerifyParam(findDto);
-        const result = await useHttpPost<IApiResult<ISaleOrder>>(API_URL.SALE_ORDER_FIND, findDto);
+        const result = await useHttpPost<IApiResult<ISaleOrderOrClient>>(API_URL.SALE_ORDER_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -20,7 +21,6 @@ export class SaleOrderService {
     }
 
     public async create(createDto: SaleOrderCreateAndMxDto) {
-        console.log(createDto)
         await useVerifyParam(createDto);
         const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_CREATE, createDto);
         if (result.code === 200 && result.data) {
@@ -33,20 +33,30 @@ export class SaleOrderService {
     public async createAndL1Review(createDto: SaleOrderCreateAndMxDto) {
         await useVerifyParam(createDto);
         const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_CREATE_AND_REVIEW, createDto);
-        if (result.code === 200) {
-            return result
+        if (result.code === 200 && result.data) {
+            return result.data
         } else {
             return Promise.reject('销售订单:新增并审核失败');
         }
     }
 
-    public async update(updateDto: SaleOrderCreateAndMxDto) {
+    public async update(updateDto: SaleOrderUpdateAndMxDto) {
         await useVerifyParam(updateDto);
-        const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_UPDATE, updateDto);
-        if (result.code === 200) {
-            return true
+        const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_UPDATE, updateDto);
+        if (result.code === 200 && result.data) {
+            return result.data
         } else {
             return Promise.reject('销售订单:更新失败');
+        }
+    }
+
+    public async updateAndL1Review(updateDto: SaleOrderUpdateAndMxDto) {
+        await useVerifyParam(updateDto);
+        const result = await useHttpPost<IApiResult<ISaleOrderAndMxDto>>(API_URL.SALE_ORDER_UPDATE_AND_REVIEW, updateDto);
+        if (result.code === 200 && result.data) {
+            return result.data
+        } else {
+            return Promise.reject('销售订单:更新并审核失败');
         }
     }
 

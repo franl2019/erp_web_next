@@ -1,25 +1,29 @@
 <template>
   <erp-page-box>
     <erp-no-title>
-      <erp-button @click="onClickSaveButton">保存</erp-button>
-      <erp-button :type="'danger'">删除</erp-button>
+      <erp-button :disabled="!buttonState.save" @click="onClickSaveButton">保存</erp-button>
+      <erp-button :disabled="!buttonState.delete_data" :type="'danger'" @click="onClickDeleteButton">删除</erp-button>
       <erp-delimiter/>
-      <erp-button :type="'success'">审核</erp-button>
-      <erp-button :type="'danger'">撤审</erp-button>
-      <erp-button :type="'success'">财审</erp-button>
-      <erp-button :type="'danger'">财务撤审</erp-button>
+      <erp-button :disabled="!buttonState.level1review" :type="'success'" @click="onClickL1ReviewButton">审核
+      </erp-button>
+      <erp-button :disabled="!buttonState.un_level1review" :type="'danger'" @click="onClickUnL1ReviewButton">撤审
+      </erp-button>
+      <erp-button :disabled="!buttonState.level2review" :type="'success'" @click="onClickL2ReviewButton">财审</erp-button>
+      <erp-button :disabled="!buttonState.un_level2review" :type="'danger'" @click="onClickUnL2ReviewButton">财务撤审</erp-button>
     </erp-no-title>
     <erp-form>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'客户'">
         <erp-select-client-input
             v-model:client-id="saleOrderDto.clientid"
-            v-model:client-name="saleOrderDto.clientName"
+            v-model:client-name="saleOrderDto.clientname"
+            :disabled="!buttonState.save"
             @change="onClientChange"
         />
       </erp-form-item>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'订货日期'">
         <el-date-picker
             v-model="saleOrderDto.orderDate"
+            :disabled="!buttonState.save"
             placeholder="选择订货日期"
             type="date"
             value-format="YYYY-MM-DD HH:mm:ss"
@@ -28,19 +32,20 @@
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'出货日期'">
         <el-date-picker
             v-model="saleOrderDto.deliveryDate"
+            :disabled="!buttonState.save"
             placeholder="选择出货日期"
             type="date"
             value-format="YYYY-MM-DD HH:mm:ss"
         ></el-date-picker>
       </erp-form-item>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'结算方式'">
-        <erp-input-round v-model="saleOrderDto.moneytype"></erp-input-round>
+        <erp-input-round v-model="saleOrderDto.moneytype" :disabled="!buttonState.save"></erp-input-round>
       </erp-form-item>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'相关号码'">
-        <erp-input-round v-model="saleOrderDto.relatednumber"></erp-input-round>
+        <erp-input-round v-model="saleOrderDto.relatednumber" :disabled="!buttonState.save"></erp-input-round>
       </erp-form-item>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'备注'">
-        <erp-input-round v-model="saleOrderDto.remark1"></erp-input-round>
+        <erp-input-round v-model="saleOrderDto.remark1" :disabled="!buttonState.save"></erp-input-round>
       </erp-form-item>
     </erp-form>
 
@@ -48,12 +53,31 @@
         ref="saleOrderMxTableRef"
         :find-dto="{}"
         :show-top-box="true"
+        :table-edit="buttonState.save"
+        :show-button-box="true"
         :table-state="editSaleOrderMxTable"
+        @cellValueChanged="onAddSaleOrderMxChanged"
     >
       <template #topBox>
-        <erp-button :size="'small'" type="info" @click="onClickAddSaleOrderMxButton">增加明细</erp-button>
+        <erp-button
+            :disabled="!buttonState.save"
+            :size="'small'"
+            type="info"
+            @click="onClickAddSaleOrderMxButton">增加明细
+        </erp-button>
         <div class="w-2"></div>
-        <erp-button :size="'small'" type="danger">删除明细</erp-button>
+        <erp-button
+            :disabled="!buttonState.save"
+            :size="'small'"
+            type="danger"
+            @click="onClickDeleteMx"
+        >删除明细
+        </erp-button>
+      </template>
+      <template #buttonBox>
+        <span>
+          合计金额 : {{ saleOrderDto.amt }}
+        </span>
       </template>
     </erp-table>
 
@@ -75,7 +99,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
 import ErpPageBox from "@/components/page/ErpPageBox.vue";
 import ErpNoTitle from "@/components/title/ErpNoTitle.vue";
 import ErpButton from "@/components/button/ErpButton.vue";
@@ -87,7 +111,8 @@ import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
 import {editSaleOrderMxTable} from "@/view/saleOrder/tableConfig/editSaleOrderMxTable";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
-import {useSaleOrderCreate} from "@/view/saleOrder/useSaleOrderCreate";
+import {useRoute} from "vue-router";
+import {useSaleOrderEditor} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderEditor";
 
 export default defineComponent({
   name: 'saleOrderEditView',
@@ -106,21 +131,46 @@ export default defineComponent({
   emits: [],
   setup() {
     const saleOrderMxTableRef = ref<ITableRef>();
-    const {
-      saleOrderCreateDto:saleOrderDto,
-      onClickSaveButton,
-      onClientChange,
-      onClickAddSaleOrderMxButton
-    } = useSaleOrderCreate(saleOrderMxTableRef);
+    const route = useRoute();
+    const isEditPage = ref(Boolean(route.name === "editSaleOrder"));
+    const saleOrderId = Number(route.query.saleOrderId) || 0;
 
+    const {
+      saleOrderDto,
+      buttonState,
+      loadSaleOrder,
+      onClickSaveButton,
+      onClickL1ReviewButton,
+      onClickUnL1ReviewButton,
+      onClickL2ReviewButton,
+      onClickUnL2ReviewButton,
+      onClickDeleteButton,
+      onClientChange,
+      onAddSaleOrderMxChanged,
+      onClickAddSaleOrderMxButton,
+      onClickDeleteMx,
+    } = useSaleOrderEditor(isEditPage.value)(saleOrderMxTableRef)
+
+    onMounted(async () => {
+      await loadSaleOrder(saleOrderId);
+    })
 
     return {
+      isEditPage,
       saleOrderDto,
+      buttonState,
       editSaleOrderMxTable,
       saleOrderMxTableRef,
       onClickSaveButton,
+      onClickL1ReviewButton,
+      onClickUnL1ReviewButton,
+      onClickL2ReviewButton,
+      onClickUnL2ReviewButton,
+      onClickDeleteButton,
       onClientChange,
-      onClickAddSaleOrderMxButton
+      onAddSaleOrderMxChanged,
+      onClickAddSaleOrderMxButton,
+      onClickDeleteMx
     }
   }
 })

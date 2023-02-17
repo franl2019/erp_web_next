@@ -66,7 +66,7 @@ export interface ISaleOrder {
 }
 
 export interface ISaleOrderOrClient extends ISaleOrder{
-    clientName:string
+    clientname:string
 }
 
 export interface ISaleOrderAndMxDto extends ISaleOrder {

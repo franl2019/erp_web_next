@@ -6,9 +6,9 @@ import {SaleOrderMxService} from "@/module/saleOrder/saleOrderMx.service";
 import {ValueSetterParams} from "ag-grid-community/dist/lib/entities/colDef";
 import {bignumber, round} from "mathjs";
 import TableEditorProductCode from "@/components/table/components/editor/ProductCode/TableEditorProductCode.vue";
-import {selectProductInfoValueSetter} from "@/view/buyInbound/tableConfig/BuyInboundCreateViewMxTableConfig";
 import TableRenderPriceType from "@/components/table/components/renderer/tableRenderPriceType.vue";
 import TableEditorSelectPriceType from "@/components/table/components/editor/tableEditorSelectPriceType.vue";
+import {selectProductInfoValueSetter} from "@/view/buyInbound/tableConfig/BuyInboundCreateViewMxTableConfig";
 import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
 import {SaleOrderUpdateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderUpdateMxAndProductAndAmt";
 

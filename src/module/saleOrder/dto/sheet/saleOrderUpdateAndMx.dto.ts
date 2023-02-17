@@ -1,16 +1,14 @@
-import {SaleOrderUpdateDto} from "@/module/saleOrder/dto/head/saleOrderUpdate.dto";
-import {ISaleOrderAndMxDto} from "@/module/saleOrder/saleOrder";
-import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
-import {IsArray} from "@/utils/verifyParam/customValidationDecorators";
+import {IsInt, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
+import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderCreateAndMx.dto";
 
-export class SaleOrderUpdateAndMxDto extends SaleOrderUpdateDto implements ISaleOrderAndMxDto {
+export class SaleOrderUpdateAndMxDto extends SaleOrderCreateAndMxDto{
 
-    @IsArray()
-    saleOrderMx: ISaleOrderMx[] = [];
+    @IsInt()
+    @NotEquals(0)
+    saleOrderId: number = 0;
 
 
-    constructor(saleOrder: SaleOrderUpdateDto, saleOrderMx: ISaleOrderMx[]) {
-        super(saleOrder);
-        this.saleOrderMx = saleOrderMx;
+    constructor() {
+        super();
     }
 }

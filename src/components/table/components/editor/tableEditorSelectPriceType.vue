@@ -37,7 +37,7 @@ export default defineComponent({
     })
 
     function getValue() {
-      // this simple editor doubles any value entered into the input
+      // this simple editorModel doubles any value entered into the input
       return value.value;
     }
 

@@ -3,6 +3,7 @@ import {IButtonState} from "@/composables/useButtonState";
 export class ButtonState implements IButtonState{
 
     public create:boolean;
+    public save:boolean;
     public edit:boolean;
     public level1review:boolean;
     public un_level1review:boolean;
@@ -12,6 +13,7 @@ export class ButtonState implements IButtonState{
 
     constructor() {
         this.create = true;
+        this.save = true;
         this.edit = false;
         this.level1review = false;
         this.un_level1review = false;
@@ -22,6 +24,7 @@ export class ButtonState implements IButtonState{
 
     public init(){
         this.create = true;
+        this.save = true;
         this.edit = false;
         this.level1review = false;
         this.un_level1review = false;
@@ -39,6 +42,7 @@ export class ButtonState implements IButtonState{
             !level2review
         ) {
             this.create = true;
+            this.save = true;
             this.edit = true;
             this.level1review = true;
             this.un_level1review = false;
@@ -50,6 +54,7 @@ export class ButtonState implements IButtonState{
             !level2review
         ) {
             this.create = true;
+            this.save = false;
             this.edit = true;
             this.level1review = false;
             this.un_level1review = true;
@@ -61,6 +66,7 @@ export class ButtonState implements IButtonState{
             level2review
         ) {
             this.create = true;
+            this.save = false;
             this.edit = true;
             this.level1review = false;
             this.un_level1review = false;
@@ -69,6 +75,7 @@ export class ButtonState implements IButtonState{
             this.delete_data = false;
         } else {
             this.create = true;
+            this.save = false;
             this.edit = false;
             this.level1review = false;
             this.un_level1review = false;

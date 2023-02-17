@@ -52,12 +52,20 @@ export class SaleOrderCreateMxAndProductAndAmt extends SaleOrderCreateMxDto impl
         this.unit = product.unit;
         this.spec = product.spec;
         this.materials = product.materials;
+        this.width = product.width;
+        this.height = product.height;
+        this.m3 = product.m3;
         this.otherUnitConversionRate = 1;
 
         this.kz_productCode = product.productcode;
         this.kz_productName = product.productname;
         this.kz_materials_d = product.materials;
         this.kz_spec = product.spec;
+    }
+
+    setValue(saleOrderMxAndProductAndAmt: ISaleOrderMxAndProductAndAmt) {
+        super.setValue(saleOrderMxAndProductAndAmt);
+        this.selectedProduct(saleOrderMxAndProductAndAmt);
     }
 
     private countOutQty() {
