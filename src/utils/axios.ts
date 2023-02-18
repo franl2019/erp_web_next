@@ -66,9 +66,7 @@ axiosInstance.interceptors.request.use(function (config) {
         return config;
     } else {
         const token = useLocalStorageGet('token')
-        config.headers = {
-            'token': token
-        }
+        config.headers.set('token',token)
         return config
     }
 });
