@@ -1,5 +1,5 @@
 import {RouteRecordRaw} from "vue-router";
-
+import saleOrderEditView from '@/view/saleOrder/saleOrderEditView.vue'
 export const saleOrderRouter: Array<RouteRecordRaw> = [
     {
         name: "saleOrder",
@@ -15,7 +15,7 @@ export const saleOrderRouter: Array<RouteRecordRaw> = [
         meta: {
             title: "新增销售订单"
         },
-        component: () => import(/* webpackChunkName: "newSaleOrder" */ '@/view/saleOrder/saleOrderEditView.vue'),
+        component:saleOrderEditView,
         props: true
     }, {
         name: "editSaleOrder",
@@ -23,8 +23,7 @@ export const saleOrderRouter: Array<RouteRecordRaw> = [
         meta: {
             title: "编辑销售订单"
         },
-        component: () => import(/* webpackChunkName: "editSaleOrder" */ '@/view/saleOrder/saleOrderEditView.vue'),
+        component:saleOrderEditView,
         props: true
     },
-
 ]

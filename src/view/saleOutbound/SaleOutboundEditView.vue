@@ -118,7 +118,6 @@ import ErpTable from "@/components/table/ErpTable.vue";
 import ErpWarehouseAuthSelect from "@/components/select/ErpWarehouseAuthSelect.vue";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {defineComponent, onMounted, ref} from "vue";
-import {createOutboundMxTable} from "@/view/saleOutbound/tableConfig/createOutboundMxTable";
 import {ITableRef} from "@/components/table/type";
 import {useRoute, useRouter} from "vue-router";
 import {useButtonState} from "@/composables/useButtonState";
@@ -141,6 +140,7 @@ import {SaleOutboundAndMxUpdateDto} from "@/module/saleOutbound/dto/saleOutbound
 import {SaleOutboundMxCreateInTableDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreateInTable.dto";
 import ErpOperateAreaAuthSelect from "@/components/select/ErpOperateAreaAuthSelect.vue";
 import ErpSelectClientInput from "@/components/input/component/ErpSelectClientInput.vue";
+import { useSaleOrderEditorTableConfig } from "@/view/saleOutbound/tableConfig/createOutboundMxTable";
 
 export default defineComponent({
   name: "SaleOutboundEditView",
@@ -164,7 +164,7 @@ export default defineComponent({
     const outboundMxTableRef = ref<ITableRef>();
     //单头
     const outboundHead = ref(new SaleOutboundCreateDto());
-
+    const {createOutboundMxTable} = useSaleOrderEditorTableConfig()
     const state = ref({
       edit: true,
       outboundcode: String(route.query.outboundcode || '')

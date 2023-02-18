@@ -1,6 +1,28 @@
-//@import "./node_modules/ag-grid-community/src/styles/ag-grid.scss";
-//@import "./node_modules/ag-grid-community/src/styles/ag-theme-balham/sass/ag-theme-balham-mixin.scss";
-//
+@use "ag-grid-community/styles" as ag;
+// ^^^ Update the import path. Note that `@import` has changed to `@use {path} as {name}`
+@include ag.grid-styles((
+  // ^^^ Include ag.grid-styles which it is no longer nested  in .ag-theme-{name} {}
+        theme: balham,
+  // ^^^ 选择颜色
+        balham-active-color: #3f8fe2,
+));
+.ag-theme-balham {
+
+
+  //--ag-borders: none;
+  //
+  //--ag-row-border-style: solid;
+  //--ag-row-border-width: 1px;
+  //--ag-row-border-color: rgb(0, 0, 0);
+
+  //容器padding
+  --ag-cell-horizontal-padding: 8px;
+
+  .ag-header-cell {
+    color: #000;
+  }
+}
+
 //.ag-theme-erp {
 //  @include ag-theme-balham((
 //          header-foreground-color: #000,
@@ -10,4 +32,6 @@
 //          row-height:34px,
 //  ))
 //}
-//
+
+// New API
+

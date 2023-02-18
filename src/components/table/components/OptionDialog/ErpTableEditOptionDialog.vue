@@ -44,15 +44,15 @@ import {ITableColumnState} from "@/module/tableColumnState/tableColumnState.serv
 import ErpInputReCheckbox from "@/components/input/ErpInputReCheckbox.vue";
 import Draggable from "vuedraggable";
 import ErpButton from "@/components/button/ErpButton.vue";
-import {TableCol} from "@/components/table/TableCol";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
+import { IGridCol } from "@/components/table/components/OptionDialog/useTableOptionDialog";
 
 export default defineComponent({
   name: "ErpTableEditOptionDialog",
   props: {
     gridCol: {
-      type: Object as PropType<TableCol>,
+      type: Object as PropType<IGridCol>,
       required: true
     }
   },

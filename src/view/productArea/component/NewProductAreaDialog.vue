@@ -2,7 +2,7 @@
   <erp-form-dialog title="新增类别" v-bind="$attrs" @clickedCancel="onCancelDialog" @clickedConfirm="onConfirmDialog">
     <erp-form>
       <erp-form-item name="编号" lg-col="8" md-col="8">
-        <erp-input-round ref="defaultInputFocus" v-model="createProductArea.productareacode"></erp-input-round>
+        <erp-input-round ref="defaultInputFocusRef" v-model="createProductArea.productareacode"></erp-input-round>
       </erp-form-item>
       <erp-form-item name="名称" lg-col="8" md-col="8">
         <erp-input-round v-model="createProductArea.productareaname"></erp-input-round>

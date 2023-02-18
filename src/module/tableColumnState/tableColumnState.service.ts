@@ -10,12 +10,12 @@ export interface ITableColumnState {
     editable: boolean;
     headerName: string;
     hide: boolean;
-    pinned: string;
+    pinned: boolean | "left" | "right" | null | undefined;
     pivot: boolean;
     pivotIndex: number;
     rowGroup: boolean;
     rowGroupIndex: number;
-    sort: string;
+    sort: 'asc' | 'desc' | null;
     sortIndex: number;
     width: number;
     parentId: string;

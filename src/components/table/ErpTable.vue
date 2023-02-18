@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col flex-grow w-full">
     <erp-table-filter-tips-box
-        v-if="$props.showFilterTipsBox"
+      v-if="$props.showFilterTipsBox"
     >
       <div class="overflow-x-auto flex flex-nowrap items-center whitespace-nowrap text-sm">
         <div class="flex flex-none items-center cursor-pointer" @click="resetFindDto">
-          <img alt="刷新" class="h-4 w-4" src="@/assets/refresh_black_24dp.svg"/>
+          <img alt="刷新" class="h-4 w-4" src="@/assets/refresh_black_24dp.svg" />
           <a>刷新</a>
         </div>
         <div class="w-2"></div>
@@ -16,40 +16,40 @@
       </div>
     </erp-table-filter-tips-box>
     <erp-table-top-box
-        v-if="$props.showTopBox || $props.tableName.length > 0"
+      v-if="$props.showTopBox || $props.tableName.length > 0"
     >
       <span
-          v-if="$props.tableName.length>0"
-          class="text-sm font-bold mx-2"
+        v-if="$props.tableName.length>0"
+        class="text-sm font-bold mx-2"
       >{{ $props.tableName }}</span>
       <div
-          v-if="$slots.topBox"
-          class="flex-grow flex mx-2">
+        v-if="$slots.topBox"
+        class="flex-grow flex mx-2">
         <slot name="topBox">
         </slot>
       </div>
     </erp-table-top-box>
     <div class="flex flex-row flex-grow h-0">
       <AgGridVue
-          :animateRows="true"
-          :columnDefs="tableConfig.columnDefaults"
-          :getRowStyle="setPinnedBottomRowStyle"
-          :gridOptions="tableConfig.gridOptions"
-          :localeText="LOCALE_CN"
-          :navigateToNextCell="onNavigateToNextCell"
-          :rowDragManaged="true"
-          :suppressMoveWhenRowDragging="true"
-          class="ag-theme-erp flex-grow"
-          v-bind="$attrs"
-          @cellContextMenu="onCellContextMenu"
-          @rowDragEnd="onRowDragEnd"
-          @grid-ready="onGridReady"
+        :animateRows="true"
+        :columnDefs="tableConfig.columnDefaults"
+        :gridOptions="tableConfig.gridOptions"
+        :getRowStyle="setPinnedBottomRowStyle"
+        :localeText="LOCALE_CN"
+        :navigateToNextCell="onNavigateToNextCell"
+        :rowDragManaged="true"
+        :suppressMoveWhenRowDragging="true"
+        class="ag-theme-balham ag-theme-erp flex-grow"
+        v-bind="$attrs"
+        @cellContextMenu="onCellContextMenu"
+        @rowDragEnd="onRowDragEnd"
+        @grid-ready="onGridReady"
       >
       </AgGridVue>
       <erp-table-option-tab>
         <erp-table-option-tab-bar
-            v-if="$props.showFilterTipsBox"
-            @click="onClickedFilterButton"
+          v-if="$props.showFilterTipsBox"
+          @click="onClickedFilterButton"
         >筛选
         </erp-table-option-tab-bar>
         <erp-table-option-tab-bar @click="onClickSaveTableOptionBar">保存设置</erp-table-option-tab-bar>
@@ -57,11 +57,11 @@
       </erp-table-option-tab>
     </div>
     <erp-table-bottom-box
-        v-if="$props.showButtonBox"
+      v-if="$props.showButtonBox"
     >
       <div
-          v-if="$slots.buttonBox"
-          class="flex-grow flex mx-2">
+        v-if="$slots.buttonBox"
+        class="flex-grow flex mx-2">
         <slot name="buttonBox">
         </slot>
       </div>
@@ -69,8 +69,8 @@
   </div>
 </template>
 
-<script lang='ts'>
-import {defineComponent, PropType, ref, unref, UnwrapRef, watch} from "vue";
+<script lang="ts">
+import { defineComponent, PropType, ref, unref, UnwrapRef, watch } from "vue";
 import {
   CellContextMenuEvent,
   ColumnApi,
@@ -79,29 +79,32 @@ import {
   NavigateToNextCellParams,
   RowClassParams
 } from "ag-grid-community";
-import {AgGridVue} from "ag-grid-vue3";
-import {ITableConfig} from "@/components/table/type";
-import {LOCALE_CN} from '@/components/table/local/zh_cn';
-import {defaultConfig} from "@/components/table/default/defaultConfig";
+import { AgGridVue } from "ag-grid-vue3";
+import { ITableConfig } from "@/components/table/type";
+import { LOCALE_CN } from "@/components/table/local/zh_cn";
+import { defaultConfig } from "@/components/table/default/defaultConfig";
 import Draggable from "vuedraggable";
 import ErpButton from "@/components/button/ErpButton.vue";
 import ErpInputReCheckbox from "@/components/input/ErpInputReCheckbox.vue";
-import {TableCol} from "@/components/table/TableCol";
 import ErpTableEditOptionDialog from "@/components/table/components/OptionDialog/ErpTableEditOptionDialog.vue";
 import ErpTableOptionTabBar from "@/components/table/components/ErpTableOptionTabBar.vue";
 import ErpTableOptionTab from "@/components/table/components/ErpTableOptionTab.vue";
 import ErpTableTopBox from "@/components/table/components/box/ErpTableTopBox.vue";
 import ErpTableBottomBox from "@/components/table/components/box/ErpTableBottomBox.vue";
-import {useTableOptionDialog} from "@/components/table/components/OptionDialog/useTableOptionDialog";
+import { useTableOptionDialog } from "@/components/table/components/OptionDialog/useTableOptionDialog";
 import ErpTableFilterTipsBox from "@/components/table/components/box/ErpTableFilterTipsBox.vue";
-import {useFindDtoFormatToFilterTips} from "@/components/table/components/filter/useFindDtoFormatToFilterTips";
-import {TableFilterDialogOption, useTableFilterDialog} from "@/components/table/components/filter/useTableFilterDialog";
+import { useFindDtoFormatToFilterTips } from "@/components/table/components/filter/useFindDtoFormatToFilterTips";
+import {
+  TableFilterDialogOption,
+  useTableFilterDialog
+} from "@/components/table/components/filter/useTableFilterDialog";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import "ag-grid-community/styles/ag-theme-balham.css";
+import { useErpTable } from "@/components/table/hock/useErpTable"; // Optional theme CSS
 
 export default defineComponent({
   name: "ErpTable",
-  emits: ['ready', 'refresh'],
+  emits: ["ready", "refresh"],
   components: {
     ErpTableFilterTipsBox,
     ErpTableTopBox,
@@ -133,42 +136,49 @@ export default defineComponent({
     },
     tableEdit: {
       type: Boolean,
-      default: true,
+      default: true
     },
     showTopBox: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showButtonBox: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showFilterTipsBox: {
       type: Boolean,
       default: false
     }
   },
-  setup(props, {emit, expose}) {
-    const {tableState} = unref(props);
+  setup(props, { emit, expose }) {
+    const { tableState } = unref(props);
     const defaultFindDto = JSON.parse(JSON.stringify(props.findDto));
     const tableConfig = {
       tableName: tableState.tableName,
       columnDefaults: tableState.columnDefaults,
       gridOptions: tableState.gridOptions,
-      tableService: tableState.tableService,
-    }
-
-    const gridCol = new TableCol(
-        tableConfig.tableName,
-        getGridApi,
-        getColumnApi,
-    );
+      tableService: tableState.tableService
+    };
 
     const {
       startEditTable,
       endEditTable,
       init: initGridColumn,
-    } = gridCol;
+      getGridTableColumnState,
+      setSnToTableColumnState,
+      saveColumnDefine,
+      removeColumnDefine,
+    } = useErpTable(tableConfig.tableName,
+      getGridApi,
+      getColumnApi);
+
+    const gridCol = {
+      getGridTableColumnState,
+      setSnToTableColumnState,
+      saveColumnDefine,
+      removeColumnDefine
+    }
 
     let gridApi: GridApi | null;
     let columnApi: ColumnApi | null;
@@ -179,7 +189,7 @@ export default defineComponent({
       columnApi = event.columnApi;
       gridApi.setRowData([]);
       await initGridColumn();
-      emit('ready', event);
+      emit("ready", event);
       if (props.init) {
         await initTableData();
       }
@@ -191,8 +201,8 @@ export default defineComponent({
       const suggestedNextCell = params.nextCellPosition;
 
       // this is some code
-      const KEY_UP = 38;
-      const KEY_DOWN = 40;
+      const KEY_UP = "ArrowUp";
+      const KEY_DOWN = "ArrowDown";
 
       const noUpOrDownKeyPressed = params.key !== KEY_DOWN && params.key !== KEY_UP;
       if (noUpOrDownKeyPressed) {
@@ -201,8 +211,8 @@ export default defineComponent({
 
       params.api.forEachNode((node: any) => {
         if (
-            suggestedNextCell
-            && node.rowIndex === suggestedNextCell.rowIndex
+          suggestedNextCell
+          && node.rowIndex === suggestedNextCell.rowIndex
         ) {
           node.setSelected(true);
         }
@@ -238,7 +248,7 @@ export default defineComponent({
       if (gridApi) {
         const data = await tableConfig.tableService.find(props.findDto);
         gridApi.setRowData([]);
-        gridApi.applyTransaction({add: data});
+        gridApi.applyTransaction({ add: data });
         filterTipsString.value = findDtoFormatToFilterTipsString(props.findDto);
       }
     }
@@ -246,32 +256,32 @@ export default defineComponent({
 
     //清空表格data
     async function initTableDataList() {
-      if (gridApi) gridApi.setRowData([])
+      if (gridApi) gridApi.setRowData([]);
     }
 
 
     watch(props, (value) => {
       if (value.tableEdit) {
-        startEditTable()
+        startEditTable();
       } else {
-        endEditTable()
+        endEditTable();
       }
-    })
+    });
 
     function getGridApi() {
-      return gridApi ? gridApi : null
+      return gridApi ? gridApi : null;
     }
 
     function getColumnApi() {
-      return columnApi ? columnApi : null
+      return columnApi ? columnApi : null;
     }
 
     async function onClickShowTableOptionBar() {
-      await useTableOptionDialog({gridCol: gridCol});
+      await useTableOptionDialog({ gridCol: gridCol });
     }
 
     function onClickSaveTableOptionBar() {
-      gridCol.saveColumnDefine(gridCol.getGridTableColumnState())
+      gridCol.saveColumnDefine(gridCol.getGridTableColumnState());
     }
 
     async function onClickedFilterButton() {
@@ -299,7 +309,7 @@ export default defineComponent({
     }
 
     function resetFindDto() {
-      emit('refresh')
+      emit("refresh");
     }
 
     //当表格单元格右键筛选
@@ -313,7 +323,7 @@ export default defineComponent({
     }
 
 
-    expose({initTableData, initTableDataList, initFindDto, getGridApi, getColumnApi});
+    expose({ initTableData, initTableDataList, initFindDto, getGridApi, getColumnApi });
 
     return {
       gridCol,
@@ -332,7 +342,7 @@ export default defineComponent({
       resetFindDto,
       initFindDto
     };
-  },
+  }
 });
 </script>
 
