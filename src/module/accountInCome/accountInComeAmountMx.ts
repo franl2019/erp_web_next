@@ -1,0 +1,31 @@
+//收款单 收款明细
+export interface IAccountInComeAmountMx {
+    //收款单明细Id
+    accountInComeAmountMxId:number;
+    //收款单Id
+    accountInComeId:number;
+    //明细顺序
+    printId:number;
+    //结算方式
+    settlementMethod:string;
+    //出纳账户
+    accountId:number;
+    //出纳收款金额
+    amount:number;
+    //币种Id
+    currencyid:number;
+    //汇率
+    exchangeRate:number;
+    //应收账款金额
+    accountsReceivable:number;
+    //付款账户
+    paymentAccount:string;
+    //付款人
+    payer:string;
+    //备注1
+    reMack1:string;
+    //备注2
+    reMack2:string;
+    //备注3
+    reMack3:string;
+}

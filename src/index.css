@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    div {
+        border-style: none;
+    }
+}
+
+#app {
+    @apply h-screen w-screen
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+    @apply w-2 h-2
+}
+
+::-webkit-scrollbar-thumb {
+    @apply rounded bg-gray-300
+}
+
+:root {
+    --el-input-border-color: #6366F1;
+    --el-color-primary: #6366F1;
+    --el-border-color: #d4d4d4;
+    --el-border-radius-base:4px;
+    --el-border-radius-round:1px;
+    --el-disabled-border-color: #d4d4d4
+}
+
+.el-select {
+    @apply w-full;
+}
+
+.el-date-editor.is-active {
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset !important;
+}
+
+.el-select .el-input__wrapper.is-focus {
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset !important;
+}
+
+.el-select .el-input.is-focus .el-input__wrapper {
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset !important;
+}
+
+.el-input .el-input__wrapper.is-focus{
+    box-shadow: 0 0 0 2px var(--el-color-primary) inset !important;
+}
+
+.el-input {
+    width: 100% !important;
+}
+
+.el-input__suffix .el-input__suffix-inner .el-icon {
+    z-index: auto !important;
+}
+
+/*
+ * AG Grid
+*/
+
+.groupTitleClass .ag-header-group-cell-label {
+    justify-content: center;
+}
