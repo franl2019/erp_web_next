@@ -25,11 +25,11 @@ export default defineComponent({
     },
     mdCol: {
       type: String,
-      default: "8",
+      default: "2",
     },
     lgCol: {
       type: String,
-      default: "8",
+      default: "1",
     },
   },
   setup(props) {
