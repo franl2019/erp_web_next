@@ -5,7 +5,6 @@
         :find-dto="{userid: Number(userid)}"
         :table-state="defaultUserWarehouseMxTableState"
         init
-        show-top-box
         @selection-changed="onSelectRow"
     >
       <template #topBox>

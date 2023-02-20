@@ -1,4 +1,3 @@
-import {ref} from "vue";
 import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
@@ -6,7 +5,7 @@ import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
 import {SaleOrderMxService} from "@/module/saleOrder/saleOrderMx.service";
 
-export const defaultSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
+export const defaultSaleOrderMxTable: ITableConfig<ISaleOrderMx> = {
     tableName: "defaultSaleOrderMxTable",
     gridOptions: {
         defaultColDef: {
@@ -35,23 +34,23 @@ export const defaultSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
         {headerName: '明细备注', field: 'remarkmx', width: 80},
         {headerName: '批号', field: 'batchNo', width: 80},
         {headerName: '备注', field: 'remark', width: 80},
-        {headerName: '数量', field: 'outqty', type: 'numericColumn',width: 120},
-        {headerName: '包装件数', field: 'packqty', type: 'numericColumn',width: 80},
-        {headerName: '件数', field: 'bzqty', type: 'numericColumn',width: 120},
-        {headerName: '计价数量', field: 'priceqty', type: 'numericColumn',width: 120},
+        {headerName: '数量', field: 'outqty', type: 'numericColumn', width: 120},
+        {headerName: '包装件数', field: 'packqty', type: 'numericColumn', width: 80},
+        {headerName: '件数', field: 'bzqty', type: 'numericColumn', width: 120},
+        {headerName: '计价数量', field: 'priceqty', type: 'numericColumn', width: 120},
         {
-            headerName: '单价', field: 'price', type: 'numericColumn',width: 120,
+            headerName: '单价', field: 'price', type: 'numericColumn', width: 120,
             valueGetter: (params) => {
                 return amountInThousands(toFixed2(params.data[params.colDef.field!]))
             }
         },
-        {headerName: '包件价', field: 'bzprice', type: 'numericColumn',width: 120},
-        {headerName: '折扣', field: 'agio', type: 'numericColumn',width: 120},
-        {headerName: '折扣2', field: 'agio1', type: 'numericColumn',width: 120},
-        {headerName: '折扣3', field: 'agio2', type: 'numericColumn',width: 120},
-        {headerName: '浮动价', field: 'floatprice1', type: 'numericColumn',width: 120},
-        {headerName: '浮动价2', field: 'floatprice2', type: 'numericColumn',width: 120},
-        {headerName: '浮动价3', field: 'floatprice3', type: 'numericColumn',width: 120},
+        {headerName: '包件价', field: 'bzprice', type: 'numericColumn', width: 120},
+        {headerName: '折扣', field: 'agio', type: 'numericColumn', width: 120},
+        {headerName: '折扣2', field: 'agio1', type: 'numericColumn', width: 120},
+        {headerName: '折扣3', field: 'agio2', type: 'numericColumn', width: 120},
+        {headerName: '浮动价', field: 'floatprice1', type: 'numericColumn', width: 120},
+        {headerName: '浮动价2', field: 'floatprice2', type: 'numericColumn', width: 120},
+        {headerName: '浮动价3', field: 'floatprice3', type: 'numericColumn', width: 120},
         {
             headerName: '辅助单位',
             field: 'otherUnit',
@@ -135,7 +134,7 @@ export const defaultSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
             field: 'remark5',
             width: 150
         },
-        {headerName: '库存所属', field: 'clientname',width:90},
+        {headerName: '库存所属', field: 'clientname', width: 90},
     ],
     tableService: new SaleOrderMxService()
-})
+}

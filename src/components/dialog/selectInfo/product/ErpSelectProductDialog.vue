@@ -49,7 +49,6 @@
           :find-dto="{}"
           :getRowNodeId="getRowNodeId"
           :table-state="selectedProductTableState"
-          show-top-box
       >
         <template #topBox>
           <erp-button

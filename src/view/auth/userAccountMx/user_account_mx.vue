@@ -5,7 +5,6 @@
         :find-dto="userAccountAuthFindDto"
         :table-state="defaultUserAccountAuthTableState"
         init
-        show-top-box
     >
       <template #topBox>
         <erp-button :size="'mini'"

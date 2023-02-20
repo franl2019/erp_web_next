@@ -51,10 +51,7 @@
 
     <erp-table
         ref="saleOrderMxTableRef"
-        :find-dto="{}"
-        :show-top-box="true"
         :table-edit="buttonState.save"
-        :show-button-box="true"
         :table-state="editSaleOrderMxTable"
         @cellValueChanged="onAddSaleOrderMxChanged"
     >
@@ -74,7 +71,7 @@
         >删除明细
         </erp-button>
       </template>
-      <template #buttonBox>
+      <template #bottomBox>
         <span>
           合计金额 : {{ saleOrderDto.amt }}
         </span>

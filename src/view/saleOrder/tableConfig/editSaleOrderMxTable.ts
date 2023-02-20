@@ -1,4 +1,3 @@
-import {ref} from "vue";
 import {ITableConfig} from "@/components/table/type";
 import {valueName} from "@/config/valueName";
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
@@ -35,7 +34,7 @@ function valueSetter(params: ValueSetterParams) {
     }
 }
 
-export const editSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
+export const editSaleOrderMxTable:ITableConfig<ISaleOrderMx> = {
     tableName: "editSaleOrderMxTable",
     gridOptions: {
         defaultColDef: {
@@ -176,4 +175,4 @@ export const editSaleOrderMxTable = ref<ITableConfig<ISaleOrderMx>>({
         },
     ],
     tableService: new SaleOrderMxService()
-})
+}

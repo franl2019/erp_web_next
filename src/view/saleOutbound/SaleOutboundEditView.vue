@@ -70,8 +70,6 @@
         :getRowNodeId="getRowNodeId"
         :table-edit="state.edit"
         :table-state="createOutboundMxTable"
-        show-button-box
-        show-top-box
         @cellEditingStarted="cellEditingStartedEvent"
         @cellValueChanged="cellValueChangedEvent"
     >
@@ -82,7 +80,7 @@
           删除明细
         </erp-button>
       </template>
-      <template #buttonBox>
+      <template #bottomBox>
         <span>
           合计金额 : {{ totalAmt }}
         </span>

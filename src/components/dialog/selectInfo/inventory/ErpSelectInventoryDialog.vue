@@ -57,7 +57,6 @@
           :find-dto="{}"
           :getRowNodeId="getMxRowNodeId"
           :table-state="selectedInventoryTableState"
-          show-top-box
           table-name="已选库存"
           @selection-changed="()=>{}">
         <template #topBox>

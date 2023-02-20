@@ -5,7 +5,6 @@
         :find-dto="findUserBuyOperateareaDto"
         :table-state="DefaultUserBuyOperateAreaMxTableState"
         init
-        :show-top-box="true"
         @selection-changed="onSelectRow"
     >
       <template #topBox>

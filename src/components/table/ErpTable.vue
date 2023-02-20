@@ -16,7 +16,7 @@
       </div>
     </erp-table-filter-tips-box>
     <erp-table-top-box
-        v-if="$props.showTopBox || $props.tableName.length > 0"
+        v-if="$slots.topBox|| $props.tableName.length > 0"
     >
       <span
           v-if="$props.tableName.length>0"
@@ -57,12 +57,11 @@
       </erp-table-option-tab>
     </div>
     <erp-table-bottom-box
-        v-if="$props.showButtonBox"
+        v-if="$slots.bottomBox"
     >
       <div
-          v-if="$slots.buttonBox"
           class="flex-grow flex mx-2">
-        <slot name="buttonBox">
+        <slot name="bottomBox">
         </slot>
       </div>
     </erp-table-bottom-box>
@@ -133,14 +132,6 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    showTopBox: {
-      type: Boolean,
-      default: false,
-    },
-    showButtonBox: {
-      type: Boolean,
-      default: false,
-    },
     showFilterTipsBox: {
       type: Boolean,
       default: false
@@ -152,7 +143,7 @@ export default defineComponent({
     const tableConfig = {
       tableName: tableState.tableName,
       columnDefaults: tableState.columnDefaults,
-      gridOptions: tableState.gridOptions,
+      gridOptions: JSON.parse(JSON.stringify(tableState.gridOptions)),
       tableService: tableState.tableService,
     }
 

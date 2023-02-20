@@ -58,7 +58,6 @@
         ref="inboundMxTableRef"
         :find-dto="{}"
         :getRowNodeId="getInboundMxTableRowNodeId"
-        :showTopBox="true"
         :table-edit="state.edit"
         :table-state="BuyInboundCreateViewMxTableConfig"
         @cellEditingStarted="bottomRowStopEditing"

@@ -4,7 +4,6 @@
         ref="tableRef"
         init
         :find-dto="findUserClientOperateareaDto"
-        :show-top-box="true"
         :table-state="DefaultUserClientOperateAreaMxTableState"
         @selection-changed="onSelectRow"
     >

@@ -26,7 +26,6 @@
               ref="rolePermissionsMxTable"
               :find-dto="rolePermissionsMxFindAllDto"
               :getRowNodeId="getRowNodeId"
-              :show-top-box="true"
               :table-state="rolePermissionsMxTableConfig"
               init
           >
