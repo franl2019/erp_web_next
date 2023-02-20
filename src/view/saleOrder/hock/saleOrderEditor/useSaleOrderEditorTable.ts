@@ -7,11 +7,7 @@ import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCre
 
 export function useSaleOrderEditorTable(
     saleOrderEditTableRef: Ref<ITableRef | undefined>,
-    events:{
-        onAddSaleOrderMxChanged: (saleOrderMxList: SaleOrderCreateMxAndProductAndAmt[])=>void,
-    } = {
-        onAddSaleOrderMxChanged: ()=>{}
-    }
+    getSaleOrderId:()=>number = ()=>0
 ) {
 
     //明细表格colId 唯一
@@ -21,7 +17,7 @@ export function useSaleOrderEditorTable(
     async function onClickAddSaleOrderMxButton() {
         const productList = await useErpSelectProductDialog<IProduct[]|undefined>();
         if(!productList)return
-        addSaleOrderMxForProduct(productList);
+        addSaleOrderMxForProduct(productList,getSaleOrderId());
     }
 
     //删除表格选中明细
@@ -77,8 +73,6 @@ export function useSaleOrderEditorTable(
             add: saleOrderCreateMxAndProductList
         })
 
-        //add saleOrderMx event callback
-        events.onAddSaleOrderMxChanged(getSaleOrderMx());
     }
 
     //service data 添加到销售订单明细
@@ -99,8 +93,6 @@ export function useSaleOrderEditorTable(
             add: saleOrderCreateMxAndProductList
         });
 
-        //add saleOrderMx event callback
-        events.onAddSaleOrderMxChanged(getSaleOrderMx());
     }
 
     //删除销售订单明细表格数据
@@ -108,14 +100,7 @@ export function useSaleOrderEditorTable(
         saleOrderEditTableRef.value?.getGridApi().applyTransaction({
             remove: saleOrderMxList
         })
-
-        //add saleOrderMx event callback
-        events.onAddSaleOrderMxChanged(getSaleOrderMx() || []);
     }
-
-
-
-
     return {
         onClickAddSaleOrderMxButton,
         onClickDeleteMx,

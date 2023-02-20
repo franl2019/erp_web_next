@@ -23,7 +23,8 @@ export function useSaleOrderEdit(
         addSaleOrderMx,
         getSaleOrderMx,
         deleteAllSaleOrderMxInTableData
-    } = useSaleOrderEditorTable(saleOrderEditTableRef);
+    } = useSaleOrderEditorTable(saleOrderEditTableRef,
+        ()=>saleOrderUpdateDto.value.saleOrderId);
     //销售订单对象(单头)
     const saleOrderUpdateDto = ref(new SaleOrderUpdateDto());
     //按钮状态
@@ -63,7 +64,7 @@ export function useSaleOrderEdit(
         //更新按钮状态
         buttonState.value.updateButtonState(
             saleOrder.level1Review,
-            saleOrder.level2Review
+            saleOrder.level2Review,
         );
     }
 
