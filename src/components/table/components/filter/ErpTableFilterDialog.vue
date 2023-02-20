@@ -63,14 +63,15 @@
         <erp-warehouse-auth-select-have-root v-model="warehouseid"></erp-warehouse-auth-select-have-root>
       </erp-form-item>
       <erp-form-item
-          v-if="findDtoDeepClone.hasOwnProperty('ymrep')"
-          lg-col="4" md-col="4" name="业务员">
+          v-if="findDtoDeepClone.hasOwnProperty('ymrep')" name="业务员"
+          lg-col="4" md-col="4" >
         <erp-input-round ref="ymrepRef" v-model="findDtoDeepClone.ymrep"></erp-input-round>
       </erp-form-item>
       <erp-form-item
-          v-if="findDtoDeepClone.hasOwnProperty('relatednumber')"
-          lg-col="4" md-col="4" name="相关单号">
-        <erp-input-round v-model="findDtoDeepClone.relatednumber"></erp-input-round>
+          lg-col="4" md-col="4"
+          v-if="findDtoDeepClone.hasOwnProperty('relatednumber')" name="相关单号">
+        <erp-input-round
+            v-model="findDtoDeepClone.relatednumber"></erp-input-round>
       </erp-form-item>
       <erp-form-item
           v-if="findDtoDeepClone.hasOwnProperty('moneytype')"
@@ -78,29 +79,43 @@
         <erp-input-round v-model="findDtoDeepClone.moneytype"></erp-input-round>
       </erp-form-item>
       <erp-form-item
+          lg-col="4" md-col="4"
           v-if="findDtoDeepClone.hasOwnProperty('remark1')"
           name="备注1">
-        <erp-input-round ref="remark1Ref" v-model="findDtoDeepClone.remark1"></erp-input-round>
+        <erp-input-round
+            ref="remark1Ref" v-model="findDtoDeepClone.remark1"></erp-input-round>
       </erp-form-item>
       <erp-form-item
+          lg-col="4" md-col="4"
           v-if="findDtoDeepClone.hasOwnProperty('remark2')"
           name="备注2">
-        <erp-input-round ref="remark2Ref" v-model="findDtoDeepClone.remark2"></erp-input-round>
+        <erp-input-round
+            ref="remark2Ref"
+            v-model="findDtoDeepClone.remark2"></erp-input-round>
       </erp-form-item>
       <erp-form-item
+          lg-col="4" md-col="4"
           v-if="findDtoDeepClone.hasOwnProperty('remark3')"
           name="备注3">
         <erp-input-round ref="remark3Ref" v-model="findDtoDeepClone.remark3"></erp-input-round>
       </erp-form-item>
       <erp-form-item
+          lg-col="4" md-col="4"
           v-if="findDtoDeepClone.hasOwnProperty('remark4')"
           name="备注4">
-        <erp-input-round ref="remark4Ref" v-model="findDtoDeepClone.remark4"></erp-input-round>
+        <erp-input-round
+            ref="remark4Ref"
+            v-model="findDtoDeepClone.remark4">
+        </erp-input-round>
       </erp-form-item>
       <erp-form-item
           v-if="findDtoDeepClone.hasOwnProperty('remark5')"
+          lg-col="4" md-col="4"
           name="备注5">
-        <erp-input-round ref="remark5Ref" v-model="findDtoDeepClone.remark5"></erp-input-round>
+        <erp-input-round
+            ref="remark5Ref"
+            v-model="findDtoDeepClone.remark5">
+        </erp-input-round>
       </erp-form-item>
     </erp-form>
   </erp-form-dialog>
