@@ -78,6 +78,20 @@ export function useSaleOrderFind(
         await onRefresh()
     }
 
+    async function onClickedStopReview() {
+        const saleOrder = await getSaleOrderHeadTableSelectedOrder();
+        if (!saleOrder) return
+        await saleOrderService.stopReview(saleOrder.saleOrderId);
+        await onRefresh()
+    }
+
+    async function onClickedUnStopReview() {
+        const saleOrder = await getSaleOrderHeadTableSelectedOrder();
+        if (!saleOrder) return
+        await saleOrderService.unStopReview(saleOrder.saleOrderId);
+        await onRefresh()
+    }
+
     async function onChangeSaleOrderCodeInput() {
         await onRefresh()
     }
@@ -85,7 +99,7 @@ export function useSaleOrderFind(
     async function onSelectedRows() {
         const saleOrder = await getSaleOrderHeadTableSelectedOrder()
         if (!saleOrder) return
-        buttonState.value.updateButtonState(saleOrder.level1Review, saleOrder.level2Review);
+        buttonState.value.updateButtonState(saleOrder);
         await loadSaleOrderMxTable(saleOrder.saleOrderId);
     }
 
@@ -114,6 +128,8 @@ export function useSaleOrderFind(
         onClickedUnL1Review,
         onClickedL2Review,
         onClickedUnL2Review,
+        onClickedStopReview,
+        onClickedUnStopReview,
         onChangeSaleOrderCodeInput,
         onSelectedRows,
         onRefresh,

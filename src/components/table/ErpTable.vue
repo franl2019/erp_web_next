@@ -144,6 +144,7 @@ export default defineComponent({
       tableName: tableState.tableName,
       columnDefaults: tableState.columnDefaults,
       gridOptions: JSON.parse(JSON.stringify(tableState.gridOptions)),
+      //gridOptions: tableState.gridOptions,
       tableService: tableState.tableService,
     }
 

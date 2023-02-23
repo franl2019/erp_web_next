@@ -4,6 +4,14 @@ import {amountInThousands} from "@/components/table/valueGetter/amountInThousand
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
 import {SaleOrderMxService} from "@/module/saleOrder/saleOrderMx.service";
+import {RowClassParams} from "ag-grid-community";
+
+export function getRowStyle(params: RowClassParams) {
+    if (params.data.lineClose === 1) {
+        return {color: "red"};
+    }
+    return null;
+}
 
 export const defaultSaleOrderMxTable: ITableConfig<ISaleOrderMx> = {
     tableName: "defaultSaleOrderMxTable",

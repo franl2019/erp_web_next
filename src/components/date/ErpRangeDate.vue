@@ -62,9 +62,10 @@ export default defineComponent({
       },
     ]
 
-    function change() {
-      emit('update:startDate',findDate.value[0])
-      emit('update:endDate',findDate.value[1])
+    async function change() {
+     await emit('update:startDate',findDate.value[0])
+     await emit('update:endDate',findDate.value[1])
+     await emit('change')
     }
     return {
       change,

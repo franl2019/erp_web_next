@@ -20,4 +20,10 @@ export const SaleOrderApi = {
     SALE_ORDER_URGENT_REVIEW:'erp/saleOrder/urgentReview',
     SALE_ORDER_UN_URGENT_REVIEW:'erp/saleOrder/unUrgentReview',
 
+    //终止明细数量
+    SALE_ORDER_STOP_MX:'erp/saleOrder/stopMx',
+
+    //明细整行关闭
+    SALE_ORDER_LINE_CLOSE:'erp/saleOrder/lineClose',
+
 }

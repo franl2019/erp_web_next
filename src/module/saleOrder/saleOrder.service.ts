@@ -7,6 +7,8 @@ import {SaleOrderFindDto} from "@/module/saleOrder/dto/find/saleOrderFind.dto";
 import {SaleOrderReviewDto} from "@/module/saleOrder/dto/find/saleOrderReview.dto";
 import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderCreateAndMx.dto";
 import {SaleOrderUpdateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderUpdateAndMx.dto";
+import {SaleOrderStopMxDto} from "@/module/saleOrder/dto/sheet/saleOrderStopMx.dto";
+import {SaleOrderLineCloseDto} from "@/module/saleOrder/dto/sheet/saleOrderLineClose.dto";
 
 export class SaleOrderService {
 
@@ -121,26 +123,26 @@ export class SaleOrderService {
     }
 
     public async stopReview(saleOrderId: number) {
-        await useErpDialog({message: "是否终止销售订单"});
+        await useErpDialog({message: "是否关闭订单"});
         const saleOrderReviewDto = new SaleOrderReviewDto(saleOrderId)
         await useVerifyParam(saleOrderReviewDto);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_STOP_REVIEW, saleOrderReviewDto);
         if (result.code === 200) {
             return true
         } else {
-            return Promise.reject('销售订单:终止失败');
+            return Promise.reject('销售订单:关闭失败');
         }
     }
 
     public async unStopReview(saleOrderId: number) {
-        await useErpDialog({message: "是否撤销终止销售订单"});
+        await useErpDialog({message: "是否撤销关闭订单"});
         const saleOrderReviewDto = new SaleOrderReviewDto(saleOrderId)
         await useVerifyParam(saleOrderReviewDto);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_UN_STOP_REVIEW, saleOrderReviewDto);
         if (result.code === 200) {
             return true
         } else {
-            return Promise.reject('销售订单:撤销终止失败');
+            return Promise.reject('销售订单:撤销关闭失败');
         }
     }
 
@@ -192,5 +194,31 @@ export class SaleOrderService {
         }
     }
 
+    public async stopMx(saleOrderId: number,saleOrderMxId:number,stopQty:number) {
+        const saleOrderStopMxDto = new SaleOrderStopMxDto(
+            saleOrderId,
+            saleOrderMxId,
+            stopQty)
+        await useVerifyParam(saleOrderStopMxDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_STOP_MX, saleOrderStopMxDto);
+        if (result.code === 200) {
+            return true
+        } else {
+            return Promise.reject('销售订单:终止明细数量失败');
+        }
+    }
 
+    public async lineClose(saleOrderId: number,saleOrderMxId:number,lineClose:boolean) {
+        const saleOrderLineCloseDto = new SaleOrderLineCloseDto(
+            saleOrderId,
+            saleOrderMxId,
+            lineClose)
+        await useVerifyParam(saleOrderLineCloseDto);
+        const result = await useHttpPost<IApiResult>(API_URL.SALE_ORDER_LINE_CLOSE, saleOrderLineCloseDto);
+        if (result.code === 200) {
+            return true
+        } else {
+            return Promise.reject('销售订单:关闭整行失败');
+        }
+    }
 }

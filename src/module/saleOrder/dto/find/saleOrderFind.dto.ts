@@ -56,4 +56,6 @@ export class SaleOrderFindDto {
     remark4:string = "";
     @IsString()
     remark5:string = "";
+    @IsString()
+    salesman:string = ""
 }

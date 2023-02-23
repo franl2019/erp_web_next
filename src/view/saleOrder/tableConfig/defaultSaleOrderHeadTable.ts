@@ -6,15 +6,15 @@ import {SaleOrderService} from "@/module/saleOrder/saleOrder.service";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
 
-export const defaultSaleOrderHeadTableConfig:ITableConfig<ISaleOrder> = {
+export const defaultSaleOrderHeadTableConfig: ITableConfig<ISaleOrder> = {
     tableName: "defaultSaleOrderHeadTableConfig",
     gridOptions: {
         defaultColDef: {
             editable: false,//单元表格是否可编辑
             resizable: true,
             sortable: false,
-            floatingFilter:false,
-            filter:false
+            floatingFilter: false,
+            filter: false
         },
         rowSelection: "single",
         enableCellTextSelection: true,
@@ -51,7 +51,13 @@ export const defaultSaleOrderHeadTableConfig:ITableConfig<ISaleOrder> = {
         {headerName: '终止人', field: 'stopName', width: 68},
         {headerName: '终止日期', field: 'stopDate', cellRendererFramework: Table_Date, width: 90},
 
-        {headerName: '手动完成审核', field: 'manualFinishReview', cellRendererFramework: Table_flag, width: 120},
+        {
+            headerName: '手动完成审核',
+            field: 'manualFinishReview',
+            cellRendererFramework: Table_flag,
+            width: 120
+        },
+
         {headerName: '手动完成人', field: 'manualFinishName', width: 90},
         {headerName: '手动完成日期', field: 'manualFinishDate', cellRendererFramework: Table_Date, width: 120},
 

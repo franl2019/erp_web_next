@@ -86,6 +86,9 @@ export class SaleOrderCreateDto implements ISaleOrder {
     @IsString()
     remark5:string;
 
+    @IsString()
+    salesman:string;
+
     constructor() {
         this.saleOrderId = 0;
         this.saleOrderCode = "";
@@ -130,6 +133,8 @@ export class SaleOrderCreateDto implements ISaleOrder {
         this.remark3 = "";
         this.remark4 = "";
         this.remark5 = "";
+
+        this.salesman = ""
     }
 
     setValue(saleOrder:ISaleOrderOrClient){
@@ -174,5 +179,6 @@ export class SaleOrderCreateDto implements ISaleOrder {
         this.remark3 = saleOrder.remark3;
         this.remark4 = saleOrder.remark4;
         this.remark5 = saleOrder.remark5;
+        this.salesman = saleOrder.salesman;
     }
 }

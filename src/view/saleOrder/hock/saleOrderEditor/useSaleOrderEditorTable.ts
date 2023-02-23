@@ -1,29 +1,15 @@
 import {Ref} from "vue";
 import {ITableRef} from "@/components/table/type";
-import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
 import {IProduct} from "@/module/product/product";
 import {ISaleOrderMx, ISaleOrderMxAndProductAndAmt} from "@/module/saleOrder/saleOrderMx";
 import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
 
 export function useSaleOrderEditorTable(
-    saleOrderEditTableRef: Ref<ITableRef | undefined>,
-    getSaleOrderId:()=>number = ()=>0
+    saleOrderEditTableRef: Ref<ITableRef | undefined>
 ) {
 
     //明细表格colId 唯一
     let printIdCount: number = 0;
-
-    //增加销售订单明细按钮事件
-    async function onClickAddSaleOrderMxButton() {
-        const productList = await useErpSelectProductDialog<IProduct[]|undefined>();
-        if(!productList)return
-        addSaleOrderMxForProduct(productList,getSaleOrderId());
-    }
-
-    //删除表格选中明细
-    async function onClickDeleteMx(){
-        deleteAllSaleOrderMxInTableData(await getSelectedSaleOrderMx())
-    }
 
     //销售订单明细表格 停止编辑状态
     function stopEditSaleOrderMxTable() {
@@ -101,9 +87,10 @@ export function useSaleOrderEditorTable(
             remove: saleOrderMxList
         })
     }
+
     return {
-        onClickAddSaleOrderMxButton,
-        onClickDeleteMx,
+        addSaleOrderMxForProduct,
+        getSelectedSaleOrderMx,
         getSaleOrderMx,
         addSaleOrderMx,
         deleteAllSaleOrderMxInTableData

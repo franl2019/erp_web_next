@@ -6,6 +6,8 @@ import {SaleOrderCreateDto} from "@/module/saleOrder/dto/head/saleOrderCreate.dt
 import {SaleOrderCreateAndMxDto} from "@/module/saleOrder/dto/sheet/saleOrderCreateAndMx.dto";
 import {useSaleOrderEditorTable} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderEditorTable";
 import {useSaleOrderRoute} from "@/view/saleOrder/hock/route/useSaleOrderRoute";
+import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
+import {IProduct} from "@/module/product/product";
 
 export function useSaleOrderCreate(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
@@ -14,8 +16,8 @@ export function useSaleOrderCreate(
     const {routeToEditSaleOrderPage} = useSaleOrderRoute();
 
     const {
-        onClickAddSaleOrderMxButton,
-        onClickDeleteMx,
+        addSaleOrderMxForProduct,
+        getSelectedSaleOrderMx,
         getSaleOrderMx,
         deleteAllSaleOrderMxInTableData
     } = useSaleOrderEditorTable(
@@ -86,6 +88,32 @@ export function useSaleOrderCreate(
         deleteAllSaleOrderMxInTableData(getSaleOrderMx());
     }
 
+    //增加销售订单明细按钮事件
+    async function onClickAddSaleOrderMxButton() {
+        const productList = await useErpSelectProductDialog<IProduct[]|undefined>();
+        if(!productList)return
+        addSaleOrderMxForProduct(productList);
+    }
+
+    //删除表格选中明细
+    async function onClickDeleteMx(){
+        deleteAllSaleOrderMxInTableData(await getSelectedSaleOrderMx())
+    }
+
+    async function onClickStopReviewButton(){
+    }
+
+    async function onClickUnStopReviewButton() {
+    }
+
+    //停止明细
+    async function onClickStopMx(){
+    }
+
+    //关闭整行明细
+    async function onClickLineClose(){
+    }
+
     return {
         saleOrderDto: saleOrderCreateDto,
         buttonState,
@@ -100,5 +128,9 @@ export function useSaleOrderCreate(
         onAddSaleOrderMxChanged,
         onClickAddSaleOrderMxButton,
         onClickDeleteMx,
+        onClickStopMx,
+        onClickLineClose,
+        onClickStopReviewButton,
+        onClickUnStopReviewButton
     }
 }

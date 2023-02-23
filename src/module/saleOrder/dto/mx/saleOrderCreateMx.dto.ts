@@ -104,6 +104,7 @@ export class SaleOrderCreateMxDto implements ISaleOrderMx {
     remark4: string;
     @IsString()
     remark5: string;
+    lineClose:boolean;
 
     constructor() {
         this.saleOrderId = 0;
@@ -148,6 +149,7 @@ export class SaleOrderCreateMxDto implements ISaleOrderMx {
         this.remark3 = "";
         this.remark4 = "";
         this.remark5 = "";
+        this.lineClose = false
     }
 
     setValue(saleOrderMx: ISaleOrderMx){
@@ -179,6 +181,7 @@ export class SaleOrderCreateMxDto implements ISaleOrderMx {
         this.stopQty = saleOrderMx.stopQty;
         this.openQty = saleOrderMx.openQty;
         this.saleQty = saleOrderMx.saleQty;
+        this.lineClose = saleOrderMx.lineClose;
     }
 
 }

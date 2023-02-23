@@ -10,7 +10,7 @@
         </erp-input-round>
       </template>
       <erp-button :disabled="!buttonState.create" @click="clickedCreateBtn">新增</erp-button>
-      <erp-button :disabled="!buttonState.edit" type="success" @click="clickedEditBtn">修改</erp-button>
+      <erp-button  type="success" @click="clickedEditBtn">修改</erp-button>
       <erp-button :disabled="!buttonState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
@@ -170,7 +170,7 @@ export default defineComponent({
       const outbound = await getSelectRow();
       if (outbound) {
         //设置按钮状态
-        buttonState.value.updateButtonState(outbound.level1review, outbound.level2review);
+        buttonState.value.updateButtonState(outbound);
         //按出仓单显示出仓单的明细
         await initOutboundMx(outbound.outboundid);
       } else {
@@ -263,7 +263,7 @@ export default defineComponent({
       await outboundService.delete_data(outboundid);
       await initOutboundMx();
       await initOutboundHeadTable();
-      buttonState.value.updateButtonState();
+      buttonState.value.init();
     }
 
     async function activated() {

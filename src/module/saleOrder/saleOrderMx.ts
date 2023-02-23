@@ -68,7 +68,7 @@ export interface ISaleOrderMx {
     remark3:string;
     remark4:string;
     remark5:string;
-
+    lineClose:boolean;
 }
 
 export interface ISaleOrderMxAndProductAndAmt extends ISaleOrderMx,IProduct{

@@ -8,8 +8,14 @@
       </erp-button>
       <erp-button :disabled="!buttonState.un_level1review" :type="'danger'" @click="onClickUnL1ReviewButton">撤审
       </erp-button>
-      <erp-button :disabled="!buttonState.level2review" :type="'success'" @click="onClickL2ReviewButton">财审</erp-button>
-      <erp-button :disabled="!buttonState.un_level2review" :type="'danger'" @click="onClickUnL2ReviewButton">财务撤审</erp-button>
+      <erp-button :disabled="!buttonState.level2review" :type="'success'" @click="onClickL2ReviewButton">财审
+      </erp-button>
+      <erp-button :disabled="!buttonState.un_level2review" :type="'danger'" @click="onClickUnL2ReviewButton">财务撤审
+      </erp-button>
+      <erp-button :disabled="!buttonState.stopReview" :type="'success'" @click="onClickStopReviewButton">关闭订单
+      </erp-button>
+      <erp-button :disabled="!buttonState.unStopReview" :type="'danger'" @click="onClickUnStopReviewButton">取消关闭
+      </erp-button>
     </erp-no-title>
     <erp-form>
       <erp-form-item :lg-col="'1'" :md-col="'2'" :name="'客户'">
@@ -51,10 +57,12 @@
 
     <erp-table
         ref="saleOrderMxTableRef"
+        :getRowStyle="getRowStyle"
         :table-edit="buttonState.save"
         :table-state="editSaleOrderMxTable"
         @cellValueChanged="onAddSaleOrderMxChanged"
     >
+
       <template #topBox>
         <erp-button
             :disabled="!buttonState.save"
@@ -69,6 +77,22 @@
             type="danger"
             @click="onClickDeleteMx"
         >删除明细
+        </erp-button>
+        <div class="w-2"></div>
+        <erp-button
+            :disabled="!buttonState.un_level2review"
+            :size="'small'"
+            type="danger"
+            @click="onClickStopMx"
+        >终止明细
+        </erp-button>
+        <div class="w-2"></div>
+        <erp-button
+            :disabled="!isEditPage"
+            :size="'small'"
+            type="danger"
+            @click="onClickLineClose"
+        >整行关闭
         </erp-button>
       </template>
       <template #bottomBox>
@@ -106,26 +130,24 @@ import ErpSelectClientInput from "@/components/input/component/ErpSelectClientIn
 import {ITableRef} from "@/components/table/type";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {editSaleOrderMxTable} from "@/view/saleOrder/tableConfig/editSaleOrderMxTable";
+import {editSaleOrderMxTable,getRowStyle} from "@/view/saleOrder/tableConfig/editSaleOrderMxTable";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useRoute} from "vue-router";
 import {useSaleOrderEditor} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderEditor";
 
 export default defineComponent({
-  name: 'saleOrderEditView',
+  name: 'saleOrderEditorView',
   components: {
-    ErpDelimiter,
-    ErpTable,
     ErpForm,
-    ErpFormItem,
-    ErpInputRound,
-    ErpSelectClientInput,
+    ErpTable,
     ErpButton,
     ErpNoTitle,
-    ErpPageBox
+    ErpPageBox,
+    ErpFormItem,
+    ErpDelimiter,
+    ErpInputRound,
+    ErpSelectClientInput
   },
-  props: {},
-  emits: [],
   setup() {
     const saleOrderMxTableRef = ref<ITableRef>();
     const route = useRoute();
@@ -144,8 +166,14 @@ export default defineComponent({
       onClickDeleteButton,
       onClientChange,
       onAddSaleOrderMxChanged,
+
+      //useTableMx
       onClickAddSaleOrderMxButton,
       onClickDeleteMx,
+      onClickLineClose,
+      onClickStopMx,
+      onClickStopReviewButton,
+      onClickUnStopReviewButton
     } = useSaleOrderEditor(isEditPage.value)(saleOrderMxTableRef)
 
     onMounted(async () => {
@@ -167,7 +195,12 @@ export default defineComponent({
       onClientChange,
       onAddSaleOrderMxChanged,
       onClickAddSaleOrderMxButton,
-      onClickDeleteMx
+      onClickDeleteMx,
+      onClickLineClose,
+      onClickStopMx,
+      onClickStopReviewButton,
+      onClickUnStopReviewButton,
+      getRowStyle
     }
   }
 })

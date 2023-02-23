@@ -1,16 +1,11 @@
 <template>
   <erp-page-box>
     <erp-no-title>
-      <el-date-picker
-          v-model="findDate"
-          end-placeholder="结束日期"
-          range-separator="-"
-          start-placeholder="开始日期"
-          type="daterange"
-          unlink-panels
-          value-format="YYYY-MM-DD HH:mm:ss"
-          @change="initPage"
-      ></el-date-picker>
+      <erp-range-date
+          v-model:start-date="findDto.startDate"
+          v-model:end-date="findDto.endDate"
+          @change="onChangRefresh"
+      />
       <erp-button @click="onClickRefreshButton">刷新</erp-button>
       <template #input>
         <erp-input-round v-model="findDto.outboundcode" @change="onChangRefresh"></erp-input-round>
@@ -48,10 +43,12 @@ import {CellDoubleClickedEvent} from "ag-grid-community";
 import {useRouterReportToSheet} from "@/utils";
 import {CodeType} from "@/types/CodeType";
 import {useDateSelect} from "@/composables/useDateSelect";
+import ErpRangeDate from "@/components/date/ErpRangeDate.vue";
 
 export default defineComponent({
   name: "saleOutboundMxReport",
   components: {
+    ErpRangeDate,
     ErpPageBox,
     ErpNoTitle,
     ErpButton,
@@ -71,6 +68,7 @@ export default defineComponent({
     }
 
     async function onChangRefresh() {
+      console.log(findDto.value)
       await initPage()
     }
 

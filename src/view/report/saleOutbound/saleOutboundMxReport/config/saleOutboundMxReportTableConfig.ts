@@ -7,6 +7,18 @@ import Table_flag from "@/components/table/components/renderer/table_flag.vue";
 import {valueName} from "@/config/valueName";
 import {amountInThousands} from "@/components/table/valueGetter/amountInThousands";
 import {toFixed2} from "@/components/table/valueGetter/toFixed2";
+import {CellClassParams} from "ag-grid-community";
+
+export function cellStyle(params:CellClassParams) {
+    if (
+        params.rowIndex > 0 &&
+        params.colDef.colId &&
+        params.data[params.colDef.colId] === params.api.getDisplayedRowAtIndex(params.rowIndex - 1)!.data[params.colDef.colId]
+    ) {
+        return { display: "none" };
+    }
+    return null
+}
 
 export const saleOutboundMxReportTableConfig = ref<ITableConfig<ISaleOutboundMxReport>>({
     tableName: "saleOutboundMxReportTableConfig",
@@ -18,17 +30,19 @@ export const saleOutboundMxReportTableConfig = ref<ITableConfig<ISaleOutboundMxR
         },
         rowSelection: "single",
         enableCellTextSelection: true,
-        suppressDragLeaveHidesColumns: true
+        suppressDragLeaveHidesColumns: true,
     },
     columnDefaults: [
+        {headerName: '销售单号', field: 'outboundcode',cellStyle},
+        {headerName: '客户', field: 'clientname'},
+        {headerName: '客户编号', field: 'clientcode'},
         {headerName: '出仓日期', field: 'outdate', cellRendererFramework: Table_Date},
         {headerName: `${valueName.product}编号`, field: 'productcode'},
         {headerName: `${valueName.product}名称`, field: 'productname'},
         {headerName: '规格', field: 'spec'},
         {headerName: '用料', field: 'materials'},
-        {headerName: '客户编号', field: 'clientcode'},
-        {headerName: '客户', field: 'clientname'},
-        {headerName: '销售单号', field: 'outboundcode'},
+
+
         {
             headerName: '总金额', field: 'amt', type: 'numericColumn',
             valueGetter: (params) => {

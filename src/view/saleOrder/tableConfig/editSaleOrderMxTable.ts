@@ -10,6 +10,8 @@ import TableEditorSelectPriceType from "@/components/table/components/editor/tab
 import {selectProductInfoValueSetter} from "@/view/buyInbound/tableConfig/BuyInboundCreateViewMxTableConfig";
 import {SaleOrderCreateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderCreateMxAndProductAndAmt";
 import {SaleOrderUpdateMxAndProductAndAmt} from "@/module/saleOrder/saleOrderUpdateMxAndProductAndAmt";
+import SaleOrderMxLineCloseRender from "@/view/saleOrder/tableConfig/render/saleOrderMxLineCloseRender.vue";
+import {RowClassParams} from "ag-grid-community";
 
 function valueSetter(params: ValueSetterParams) {
     //判断是否为数字
@@ -34,6 +36,13 @@ function valueSetter(params: ValueSetterParams) {
     }
 }
 
+export function getRowStyle(params: RowClassParams) {
+    if (params.data.lineClose === 1) {
+        return {color: "red"};
+    }
+    return null;
+}
+
 export const editSaleOrderMxTable:ITableConfig<ISaleOrderMx> = {
     tableName: "editSaleOrderMxTable",
     gridOptions: {
@@ -44,7 +53,7 @@ export const editSaleOrderMxTable:ITableConfig<ISaleOrderMx> = {
         },
         rowSelection: "single",
         enableCellTextSelection: true,
-        suppressDragLeaveHidesColumns: true
+        suppressDragLeaveHidesColumns: true,
     },
     columnDefaults: [
         {
@@ -172,6 +181,14 @@ export const editSaleOrderMxTable:ITableConfig<ISaleOrderMx> = {
             singleClickEdit:true,
             cellRendererFramework:TableRenderPriceType,
             cellEditorFramework:TableEditorSelectPriceType,
+        },
+        {
+            headerName:"行关闭",
+            field:"lineClose",
+            editable:false,
+            cellRendererFramework:SaleOrderMxLineCloseRender,
+            width:65,
+            hide:true
         },
     ],
     tableService: new SaleOrderMxService()

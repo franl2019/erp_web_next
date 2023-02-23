@@ -63,6 +63,7 @@ export interface ISaleOrder {
     remark3:string;
     remark4:string;
     remark5:string;
+    salesman:string;
 }
 
 export interface ISaleOrderOrClient extends ISaleOrder{

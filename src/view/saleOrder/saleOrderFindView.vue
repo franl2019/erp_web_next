@@ -10,7 +10,7 @@
         </erp-input-round>
       </template>
       <erp-button :disabled="!buttonState.create" @click="onClickedCreateBtn">新增</erp-button>
-      <erp-button :disabled="!buttonState.edit" type="success" @click="onClickedEditBtn">修改</erp-button>
+      <erp-button type="success" @click="onClickedEditBtn">修改</erp-button>
       <erp-button :disabled="!buttonState.delete_data" type="danger" @click="onClickedDeleteBtn">删除</erp-button>
       <erp-delimiter/>
       <erp-button :disabled="!buttonState.level1review" type="success" @click="onClickedL1Review">审核</erp-button>
@@ -19,15 +19,17 @@
       <erp-button :disabled="!buttonState.level2review" type="success" @click="onClickedL2Review">财审</erp-button>
       <erp-button :disabled="!buttonState.un_level2review" type="danger" @click="onClickedUnL2Review">财务撤审
       </erp-button>
+      <erp-button :disabled="!buttonState.stopReview" type="success" @click="onClickedStopReview">关闭订单</erp-button>
+      <erp-button :disabled="!buttonState.unStopReview" type="danger" @click="onClickedUnStopReview">取消关闭</erp-button>
     </erp-no-title>
 
     <erp-table
         ref="saleOrderHeadTableRef"
         :find-dto="saleOrderFindDto"
+        :getRowNodeId="getRowNodeId"
         :init="true"
         :show-filter-tips-box="true"
         :table-state="defaultSaleOrderHeadTableConfig"
-        :getRowNodeId="getRowNodeId"
         @refresh="onRefresh"
         @selectionChanged="onSelectedRows"
     ></erp-table>
@@ -36,6 +38,7 @@
         ref="saleOrderMxTableRef"
         :find-dto="saleOrderFindMxDto"
         :table-state="defaultSaleOrderMxTable"
+        :getRowStyle="getRowStyle"
         table-name="单据明细"
     ></erp-table>
   </erp-page-box>
@@ -50,7 +53,7 @@ import ErpInputRound from '@/components/input/ErpInputRound.vue'
 import ErpTable from "@/components/table/ErpTable.vue";
 import ErpDelimiter from '@/components/delimiter/ErpDelimiter.vue'
 import {defaultSaleOrderHeadTableConfig} from "@/view/saleOrder/tableConfig/defaultSaleOrderHeadTable";
-import {defaultSaleOrderMxTable} from "@/view/saleOrder/tableConfig/defaultSaleOrderMxTable";
+import {defaultSaleOrderMxTable,getRowStyle} from "@/view/saleOrder/tableConfig/defaultSaleOrderMxTable";
 import {ITableRef} from "@/components/table/type";
 import {useSaleOrderFind} from "@/view/saleOrder/hock/saleOrderFind/useSaleOrderFind";
 
@@ -87,6 +90,8 @@ export default defineComponent({
       onClickedUnL1Review,
       onClickedL2Review,
       onClickedUnL2Review,
+      onClickedStopReview,
+      onClickedUnStopReview,
       onChangeSaleOrderCodeInput,
       onSelectedRows,
       onRefresh,
@@ -109,9 +114,12 @@ export default defineComponent({
       onClickedUnL1Review,
       onClickedL2Review,
       onClickedUnL2Review,
+      onClickedStopReview,
+      onClickedUnStopReview,
       onChangeSaleOrderCodeInput,
       onSelectedRows,
-      onRefresh
+      onRefresh,
+      getRowStyle
     }
   }
 })

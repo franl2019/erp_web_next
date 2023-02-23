@@ -15,7 +15,7 @@ export const saleOrderRouter: Array<RouteRecordRaw> = [
         meta: {
             title: "新增销售订单"
         },
-        component: () => import(/* webpackChunkName: "newSaleOrder" */ '@/view/saleOrder/saleOrderEditView.vue'),
+        component: () => import(/* webpackChunkName: "newSaleOrder" */ '@/view/saleOrder/saleOrderEditorView.vue'),
         props: true
     }, {
         name: "editSaleOrder",
@@ -23,7 +23,7 @@ export const saleOrderRouter: Array<RouteRecordRaw> = [
         meta: {
             title: "编辑销售订单"
         },
-        component: () => import(/* webpackChunkName: "editSaleOrder" */ '@/view/saleOrder/saleOrderEditView.vue'),
+        component: () => import(/* webpackChunkName: "editSaleOrder" */ '@/view/saleOrder/saleOrderEditorView.vue'),
         props: true
     },
 

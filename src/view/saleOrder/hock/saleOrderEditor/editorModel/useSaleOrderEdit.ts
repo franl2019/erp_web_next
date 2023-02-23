@@ -10,6 +10,9 @@ import {ButtonState} from "@/composables/ButtonState";
 import {useSaleOrderEditorTable} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderEditorTable";
 import useErpDialog from "@/components/dialog/useErpDialog";
 import {useSaleOrderRoute} from "@/view/saleOrder/hock/route/useSaleOrderRoute";
+import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
+import {IProduct} from "@/module/product/product";
+import {useSaleOrderStopQtyDialog} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderStopQtyDialog";
 
 export function useSaleOrderEdit(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
@@ -18,13 +21,12 @@ export function useSaleOrderEdit(
     const {routeToFindSaleOrderPage} = useSaleOrderRoute();
 
     const {
-        onClickAddSaleOrderMxButton,
-        onClickDeleteMx,
+        addSaleOrderMxForProduct,
+        getSelectedSaleOrderMx,
         addSaleOrderMx,
         getSaleOrderMx,
         deleteAllSaleOrderMxInTableData
-    } = useSaleOrderEditorTable(saleOrderEditTableRef,
-        ()=>saleOrderUpdateDto.value.saleOrderId);
+    } = useSaleOrderEditorTable(saleOrderEditTableRef);
     //销售订单对象(单头)
     const saleOrderUpdateDto = ref(new SaleOrderUpdateDto());
     //按钮状态
@@ -62,15 +64,12 @@ export function useSaleOrderEdit(
         onAddSaleOrderMxChanged();
 
         //更新按钮状态
-        buttonState.value.updateButtonState(
-            saleOrder.level1Review,
-            saleOrder.level2Review,
-        );
+        buttonState.value.updateButtonState(saleOrder);
     }
 
     //创建更新dto
     function getSaleOrderUpdateAndMxDto() {
-        const saleOrderUpdateAndMxDto = new SaleOrderUpdateAndMxDto()
+        const saleOrderUpdateAndMxDto = new SaleOrderUpdateAndMxDto();
         //设置单头属性
         saleOrderUpdateAndMxDto.setSaleOrder(saleOrderUpdateDto.value);
         //设置明细属性
@@ -88,14 +87,14 @@ export function useSaleOrderEdit(
 
     //保存按钮事件
     async function onClickSaveButton() {
-        const saleOrderUpdateAndMxDto = getSaleOrderUpdateAndMxDto()
-        await saleOrderService.update(saleOrderUpdateAndMxDto)
+        const saleOrderUpdateAndMxDto = getSaleOrderUpdateAndMxDto();
+        await saleOrderService.update(saleOrderUpdateAndMxDto);
         await loadSaleOrder(saleOrderFindDto.saleOrderId, true);
     }
 
     //审核按钮事件
     async function onClickL1ReviewButton() {
-        const saleOrderUpdateAndMxDto = getSaleOrderUpdateAndMxDto()
+        const saleOrderUpdateAndMxDto = getSaleOrderUpdateAndMxDto();
         await saleOrderService.updateAndL1Review(saleOrderUpdateAndMxDto);
         await loadSaleOrder(saleOrderFindDto.saleOrderId, true);
     }
@@ -129,6 +128,45 @@ export function useSaleOrderEdit(
         deleteAllSaleOrderMxInTableData(getSaleOrderMx());
     }
 
+    //增加销售订单明细按钮事件
+    async function onClickAddSaleOrderMxButton() {
+        const productList = await useErpSelectProductDialog<IProduct[]|undefined>();
+        if(!productList)return
+        addSaleOrderMxForProduct(productList,saleOrderUpdateDto.value.saleOrderId);
+    }
+
+    //删除表格选中明细
+    async function onClickDeleteMx(){
+        deleteAllSaleOrderMxInTableData(await getSelectedSaleOrderMx())
+    }
+
+    async function onClickStopReviewButton(){
+        await saleOrderService.stopReview(saleOrderFindDto.saleOrderId);
+        await loadSaleOrder(saleOrderFindDto.saleOrderId,true);
+    }
+
+    async function onClickUnStopReviewButton() {
+        await saleOrderService.unStopReview(saleOrderFindDto.saleOrderId);
+        await loadSaleOrder(saleOrderFindDto.saleOrderId,true);
+    }
+
+    //停止明细
+    async function onClickStopMx(){
+        const saleOrderMx = (await getSelectedSaleOrderMx())[0];
+        if(!saleOrderMx)return
+        const stopQty = await useSaleOrderStopQtyDialog<number>(saleOrderMx.stopQty);
+        await saleOrderService.stopMx(saleOrderMx.saleOrderId,saleOrderMx.printid,stopQty);
+        await loadSaleOrder(saleOrderFindDto.saleOrderId,true);
+    }
+
+    //关闭整行
+    async function onClickLineClose(){
+        const saleOrderMx = (await getSelectedSaleOrderMx())[0];
+        if(!saleOrderMx)return
+        await saleOrderService.lineClose(saleOrderMx.saleOrderId,saleOrderMx.printid,!saleOrderMx.lineClose);
+        await loadSaleOrder(saleOrderFindDto.saleOrderId,true);
+    }
+
     return {
         saleOrderDto: saleOrderUpdateDto,
         buttonState,
@@ -143,5 +181,9 @@ export function useSaleOrderEdit(
         onAddSaleOrderMxChanged,
         onClickAddSaleOrderMxButton,
         onClickDeleteMx,
+        onClickStopMx,
+        onClickLineClose,
+        onClickStopReviewButton,
+        onClickUnStopReviewButton
     }
 }
