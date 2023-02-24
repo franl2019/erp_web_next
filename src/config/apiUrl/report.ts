@@ -43,5 +43,8 @@ export const ReportApiUrl = {
     //销售毛利汇总表
     SALE_GROSS_MARGIN_SUM_REPORT:`/erp/report/saleGrossMarginSum`,
     //销售毛利明细表
-    SALE_GROSS_MARGIN_MX_REPORT:`/erp/report/saleGrossMarginMx`
+    SALE_GROSS_MARGIN_MX_REPORT:`/erp/report/saleGrossMarginMx`,
+
+    //销售订单明细表
+    SALE_ORDER_MX_REPORT:`/erp/report/saleOrderMxReport`
 }

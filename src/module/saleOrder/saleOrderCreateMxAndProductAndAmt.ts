@@ -1,9 +1,9 @@
-import {SaleOrderCreateMxDto} from "@/module/saleOrder/dto/mx/saleOrderCreateMx.dto";
+import {SaleOrderMxCreateDto} from "@/module/saleOrder/dto/mx/saleOrderMxCreate.dto";
 import {IProduct} from "@/module/product/product";
 import {bignumber, chain, round} from "mathjs";
 import {ISaleOrderMxAndProductAndAmt} from "@/module/saleOrder/saleOrderMx";
 
-export class SaleOrderCreateMxAndProductAndAmt extends SaleOrderCreateMxDto implements ISaleOrderMxAndProductAndAmt {
+export class SaleOrderCreateMxAndProductAndAmt extends SaleOrderMxCreateDto implements ISaleOrderMxAndProductAndAmt {
     spec: string = "";
     materials: string = "";
     packqty: number = 0;

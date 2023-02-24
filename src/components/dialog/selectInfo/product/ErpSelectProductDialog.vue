@@ -125,11 +125,6 @@ export default defineComponent({
 
     onMounted(() => {
       productTableRef.value?.initTableData();
-      document.onkeydown = (event) => {
-        if (event.key === 'Escape') {
-          clickedCloseSelectedDialog();
-        }
-      }
     })
 
     //类别树点击事件

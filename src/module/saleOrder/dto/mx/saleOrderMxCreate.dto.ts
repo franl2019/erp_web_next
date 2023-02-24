@@ -1,7 +1,7 @@
 import {ISaleOrderMx} from "@/module/saleOrder/saleOrderMx";
 import {IsInt, IsNumber, IsString, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
 
-export class SaleOrderCreateMxDto implements ISaleOrderMx {
+export class SaleOrderMxCreateDto implements ISaleOrderMx {
     //销售订单头id
     saleOrderId: number;
     //明细顺序
@@ -104,7 +104,7 @@ export class SaleOrderCreateMxDto implements ISaleOrderMx {
     remark4: string;
     @IsString()
     remark5: string;
-    lineClose:boolean;
+    lineClose:number;
 
     constructor() {
         this.saleOrderId = 0;
@@ -149,7 +149,7 @@ export class SaleOrderCreateMxDto implements ISaleOrderMx {
         this.remark3 = "";
         this.remark4 = "";
         this.remark5 = "";
-        this.lineClose = false
+        this.lineClose = 0
     }
 
     setValue(saleOrderMx: ISaleOrderMx){

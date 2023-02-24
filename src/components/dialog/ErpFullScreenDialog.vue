@@ -18,11 +18,11 @@
         </div>
         <div class="flex-grow flex h-0 py-2 pl-4 pr-4">
           <!--left-->
-          <div v-show="leftMenu && isShowLeft"
+          <div v-show="$slots.left && isShowLeft"
                class="flex-col flex-none absolute sm:relative bg-white top-0 sm:left-0 w-full sm:w-64 h-full">
             <slot name="left"></slot>
           </div>
-          <div v-show="leftMenu"
+          <div v-show="$slots.left"
                class="w-6 h-full flex flex-none items-start z-40 sm:z-0 mr-2 border-l border-solid"
                @click="switchLeftBoxVisible">
             <div
@@ -60,7 +60,7 @@ import {defineComponent, nextTick, onMounted, PropType, ref} from "vue";
 import ErpButton from "@/components/button/ErpButton.vue";
 
 export default defineComponent({
-  name: "ErpLeftRightLayoutDialog",
+  name: "ErpFullScreenDialog",
   components: {ErpButton},
   props: {
     resolve_dialog: {
@@ -89,7 +89,7 @@ export default defineComponent({
     'clickedClose',
   ],
   setup(props, {emit}) {
-    const isShowLeft = ref<boolean>(true);
+    const isShowLeft = ref<boolean>(props.leftMenu);
     const okButtonRef = ref();
     function switchLeftBoxVisible() {
       isShowLeft.value = !isShowLeft.value;
@@ -104,7 +104,7 @@ export default defineComponent({
       emit('clickedClose');
       emit('clickedCancel');
       if (props.reject_dialog) {
-        props.reject_dialog('close');
+        props.reject_dialog();
         props.unmount();
       }
     }

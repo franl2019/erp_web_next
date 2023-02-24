@@ -8,6 +8,8 @@ import {useSaleOrderEditorTable} from "@/view/saleOrder/hock/saleOrderEditor/use
 import {useSaleOrderRoute} from "@/view/saleOrder/hock/route/useSaleOrderRoute";
 import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
 import {IProduct} from "@/module/product/product";
+import {SaleOrderMxReportFindDto} from "@/module/report/saleOrderMxReport/saleOrderMxReportFind.dto";
+import {useSelectSaleOrderDialog} from "@/view/saleOrder/hock/dialog/selectSaleOrderMx/useSelectSaleOrderDialog";
 
 export function useSaleOrderCreate(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
@@ -19,7 +21,8 @@ export function useSaleOrderCreate(
         addSaleOrderMxForProduct,
         getSelectedSaleOrderMx,
         getSaleOrderMx,
-        deleteAllSaleOrderMxInTableData
+        deleteAllSaleOrderMxInTableData,
+        addOldSaleOrderMx
     } = useSaleOrderEditorTable(
         saleOrderEditTableRef
     );
@@ -100,6 +103,12 @@ export function useSaleOrderCreate(
         deleteAllSaleOrderMxInTableData(await getSelectedSaleOrderMx())
     }
 
+    async function onClickOldSheet() {
+        const saleOrderMxFindDto = new SaleOrderMxReportFindDto();
+        const saleOrderMxList = await useSelectSaleOrderDialog(saleOrderMxFindDto);
+        addOldSaleOrderMx(saleOrderMxList)
+    }
+
     async function onClickStopReviewButton(){
     }
 
@@ -131,6 +140,7 @@ export function useSaleOrderCreate(
         onClickStopMx,
         onClickLineClose,
         onClickStopReviewButton,
-        onClickUnStopReviewButton
+        onClickUnStopReviewButton,
+        onClickOldSheet
     }
 }

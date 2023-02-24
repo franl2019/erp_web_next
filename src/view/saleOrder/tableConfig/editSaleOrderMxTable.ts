@@ -51,7 +51,7 @@ export const editSaleOrderMxTable:ITableConfig<ISaleOrderMx> = {
             resizable: true,
             sortable: false,
         },
-        rowSelection: "single",
+        rowSelection: "multiple",
         enableCellTextSelection: true,
         suppressDragLeaveHidesColumns: true,
     },

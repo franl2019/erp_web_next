@@ -64,36 +64,42 @@
     >
 
       <template #topBox>
-        <erp-button
-            :disabled="!buttonState.save"
-            :size="'small'"
-            type="info"
-            @click="onClickAddSaleOrderMxButton">增加明细
-        </erp-button>
-        <div class="w-2"></div>
-        <erp-button
-            :disabled="!buttonState.save"
-            :size="'small'"
-            type="danger"
-            @click="onClickDeleteMx"
-        >删除明细
-        </erp-button>
-        <div class="w-2"></div>
-        <erp-button
-            :disabled="!buttonState.un_level2review"
-            :size="'small'"
-            type="danger"
-            @click="onClickStopMx"
-        >终止明细
-        </erp-button>
-        <div class="w-2"></div>
-        <erp-button
-            :disabled="!isEditPage"
-            :size="'small'"
-            type="danger"
-            @click="onClickLineClose"
-        >整行关闭
-        </erp-button>
+        <div class="flex space-x-2">
+          <erp-button
+              :disabled="!buttonState.save"
+              :size="'small'"
+              type="info"
+              @click="onClickAddSaleOrderMxButton">增加明细
+          </erp-button>
+          <erp-button
+              :disabled="!buttonState.save"
+              :size="'small'"
+              type="danger"
+              @click="onClickDeleteMx"
+          >删除明细
+          </erp-button>
+          <erp-button
+              :disabled="!buttonState.save"
+              :size="'small'"
+              type="info"
+              @click="onClickOldSheet"
+          >选择历史订单
+          </erp-button>
+          <erp-button
+              :disabled="!buttonState.un_level2review"
+              :size="'small'"
+              type="danger"
+              @click="onClickStopMx"
+          >终止明细
+          </erp-button>
+          <erp-button
+              :disabled="!buttonState.un_level2review"
+              :size="'small'"
+              type="danger"
+              @click="onClickLineClose"
+          >整行关闭
+          </erp-button>
+        </div>
       </template>
       <template #bottomBox>
         <span>
@@ -130,7 +136,7 @@ import ErpSelectClientInput from "@/components/input/component/ErpSelectClientIn
 import {ITableRef} from "@/components/table/type";
 import ErpInputRound from "@/components/input/ErpInputRound.vue";
 import ErpTable from "@/components/table/ErpTable.vue";
-import {editSaleOrderMxTable,getRowStyle} from "@/view/saleOrder/tableConfig/editSaleOrderMxTable";
+import {editSaleOrderMxTable, getRowStyle} from "@/view/saleOrder/tableConfig/editSaleOrderMxTable";
 import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {useRoute} from "vue-router";
 import {useSaleOrderEditor} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderEditor";
@@ -170,6 +176,7 @@ export default defineComponent({
       //useTableMx
       onClickAddSaleOrderMxButton,
       onClickDeleteMx,
+      onClickOldSheet,
       onClickLineClose,
       onClickStopMx,
       onClickStopReviewButton,
@@ -196,6 +203,7 @@ export default defineComponent({
       onAddSaleOrderMxChanged,
       onClickAddSaleOrderMxButton,
       onClickDeleteMx,
+      onClickOldSheet,
       onClickLineClose,
       onClickStopMx,
       onClickStopReviewButton,

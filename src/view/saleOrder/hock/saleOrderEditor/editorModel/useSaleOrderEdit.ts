@@ -12,7 +12,9 @@ import useErpDialog from "@/components/dialog/useErpDialog";
 import {useSaleOrderRoute} from "@/view/saleOrder/hock/route/useSaleOrderRoute";
 import {useErpSelectProductDialog} from "@/components/dialog/selectInfo/product/useErpSelectProductDialog";
 import {IProduct} from "@/module/product/product";
-import {useSaleOrderStopQtyDialog} from "@/view/saleOrder/hock/saleOrderEditor/useSaleOrderStopQtyDialog";
+import {useSaleOrderStopQtyDialog} from "@/view/saleOrder/hock/dialog/stopQty/useSaleOrderStopQtyDialog";
+import {SaleOrderMxReportFindDto} from "@/module/report/saleOrderMxReport/saleOrderMxReportFind.dto";
+import {useSelectSaleOrderDialog} from "@/view/saleOrder/hock/dialog/selectSaleOrderMx/useSelectSaleOrderDialog";
 
 export function useSaleOrderEdit(
     saleOrderEditTableRef: Ref<ITableRef | undefined>
@@ -25,6 +27,7 @@ export function useSaleOrderEdit(
         getSelectedSaleOrderMx,
         addSaleOrderMx,
         getSaleOrderMx,
+        addOldSaleOrderMx,
         deleteAllSaleOrderMxInTableData
     } = useSaleOrderEditorTable(saleOrderEditTableRef);
     //销售订单对象(单头)
@@ -140,6 +143,12 @@ export function useSaleOrderEdit(
         deleteAllSaleOrderMxInTableData(await getSelectedSaleOrderMx())
     }
 
+    async function onClickOldSheet() {
+        const saleOrderMxFindDto = new SaleOrderMxReportFindDto();
+        const saleOrderMxList = await useSelectSaleOrderDialog(saleOrderMxFindDto);
+        addOldSaleOrderMx(saleOrderMxList)
+    }
+
     async function onClickStopReviewButton(){
         await saleOrderService.stopReview(saleOrderFindDto.saleOrderId);
         await loadSaleOrder(saleOrderFindDto.saleOrderId,true);
@@ -184,6 +193,7 @@ export function useSaleOrderEdit(
         onClickStopMx,
         onClickLineClose,
         onClickStopReviewButton,
-        onClickUnStopReviewButton
+        onClickUnStopReviewButton,
+        onClickOldSheet
     }
 }

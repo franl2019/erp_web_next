@@ -1,7 +1,7 @@
 import {IsInt, NotEquals} from "@/utils/verifyParam/customValidationDecorators";
-import {SaleOrderCreateMxDto} from "@/module/saleOrder/dto/mx/saleOrderCreateMx.dto";
+import {SaleOrderMxCreateDto} from "@/module/saleOrder/dto/mx/saleOrderMxCreate.dto";
 
-export class SaleOrderUpdateMxDto extends SaleOrderCreateMxDto{
+export class SaleOrderMxUpdateDto extends SaleOrderMxCreateDto{
     //销售订单头id
     @IsInt()
     @NotEquals(0)

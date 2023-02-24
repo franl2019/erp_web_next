@@ -1,4 +1,5 @@
 import {IProduct} from "@/module/product/product";
+import {ISaleOrder} from "@/module/saleOrder/saleOrder";
 
 export interface ISaleOrderMx {
     //销售订单头id
@@ -68,9 +69,13 @@ export interface ISaleOrderMx {
     remark3:string;
     remark4:string;
     remark5:string;
-    lineClose:boolean;
+    lineClose:number;
 }
 
 export interface ISaleOrderMxAndProductAndAmt extends ISaleOrderMx,IProduct{
+    amt:number;
+}
+
+export interface ISaleOrderMxOrSaleOrderOrProductOrAmt extends ISaleOrderMx,ISaleOrder,IProduct{
     amt:number;
 }

@@ -73,6 +73,29 @@ export function useSaleOrderEditorTable(
             saleOrderCreateMxAndProductDto.printid = printIdCount;
             saleOrderCreateMxAndProductDto.setValue(saleOrderMx);
             saleOrderCreateMxAndProductDto.recountCol('outqty');
+
+            saleOrderCreateMxAndProductList.push(saleOrderCreateMxAndProductDto);
+        }
+        saleOrderEditTableRef.value?.getGridApi().applyTransaction({
+            add: saleOrderCreateMxAndProductList
+        });
+
+    }
+
+    function addOldSaleOrderMx(saleOrderMxAndProductAndAmtList: ISaleOrderMxAndProductAndAmt[]) {
+        const saleOrderCreateMxAndProductList: SaleOrderCreateMxAndProductAndAmt[] = [];
+
+        for (let i = 0; i < saleOrderMxAndProductAndAmtList.length; i++) {
+            //增加printid
+            printIdCount = printIdCount + 1
+            const saleOrderMx = saleOrderMxAndProductAndAmtList[i];
+            const saleOrderCreateMxAndProductDto = new SaleOrderCreateMxAndProductAndAmt();
+            saleOrderCreateMxAndProductDto.printid = printIdCount;
+            saleOrderCreateMxAndProductDto.setValue(saleOrderMx);
+            saleOrderCreateMxAndProductDto.recountCol('outqty');
+
+            saleOrderCreateMxAndProductDto.lineClose = 0;
+
             saleOrderCreateMxAndProductList.push(saleOrderCreateMxAndProductDto);
         }
         saleOrderEditTableRef.value?.getGridApi().applyTransaction({
@@ -93,6 +116,7 @@ export function useSaleOrderEditorTable(
         getSelectedSaleOrderMx,
         getSaleOrderMx,
         addSaleOrderMx,
+        addOldSaleOrderMx,
         deleteAllSaleOrderMxInTableData
     }
 }
