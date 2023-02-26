@@ -1,7 +1,9 @@
 import {useGetEndDate, useGetStartDate} from "@/utils";
 import {IsArray, IsInt, IsString} from "@/utils/verifyParam/customValidationDecorators";
+import {CodeType} from "@/types/CodeType";
+import {IsDateStringOrNull} from "@/utils/verifyParam/customValidationDecorators/IsDateStringOrNull";
 
-export interface ISaleOutboundFindDataDto {
+export interface ISaleOutboundFindDto {
     warehouseids: number[];
     operateareaids: number[];
     clientid: number;
@@ -23,20 +25,22 @@ export interface ISaleOutboundFindDataDto {
     remark5: string;
 }
 
-export class SaleOutboundFindDataDto implements ISaleOutboundFindDataDto {
+export class SaleOutboundFindDto implements ISaleOutboundFindDto {
     @IsArray()
     warehouseids: number[] = [];
     @IsArray()
     operateareaids: number[] = [];
     @IsInt()
     clientid: number = 0;
+    @IsDateStringOrNull()
     startDate: string = useGetStartDate();
+    @IsDateStringOrNull()
     endDate: string = useGetEndDate();
     @IsInt()
     outboundid: number = 0;
     @IsString()
     outboundcode: string = "";
-    outboundtype: number = 8;
+    outboundtype: number = CodeType.XS;
     relatednumber: string = "";
     page: number = 0;
     pagesize: number = 0;
@@ -62,9 +66,5 @@ export class SaleOutboundFindDataDto implements ISaleOutboundFindDataDto {
         this.startDate = "";
         this.endDate = "";
         return this
-    }
-
-    public resetDefault(){
-        this.clientname = ""
     }
 }

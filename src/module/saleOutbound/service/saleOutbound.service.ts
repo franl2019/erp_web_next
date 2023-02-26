@@ -1,4 +1,4 @@
-import {ISaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {ISaleOutboundFindDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindDto";
 import {IApiResult, useHttpPost} from "@/utils/axios";
 import {API_URL} from "@/config/apiUrl";
 import {SaleOutboundDeleteDto} from "@/module/saleOutbound/dto/outbound/saleOutboundDeleteDto";
@@ -26,7 +26,7 @@ interface IOutboundHaveName extends IOutbound {
 
 export class SaleOutboundService {
 
-    public async find(findDto: ISaleOutboundFindDataDto) {
+    public async find(findDto: ISaleOutboundFindDto) {
         await useVerifyParam(findDto);
         const result = await useHttpPost<IApiResult<IOutboundHaveName>>(API_URL.SALE_OUTBOUND_FIND, findDto);
         if (result.code === 200 && result.data) {
@@ -36,7 +36,7 @@ export class SaleOutboundService {
         }
     }
 
-    public async findOne(findDto: ISaleOutboundFindDataDto) {
+    public async findOne(findDto: ISaleOutboundFindDto) {
         await useVerifyParam(findDto);
         const result = await useHttpPost<IApiResult<IOutboundHaveName>>(API_URL.SALE_OUTBOUND_FIND, findDto);
         if (result.code === 200 && result.data && result.data.length === 1) {
@@ -46,7 +46,7 @@ export class SaleOutboundService {
         }
     }
 
-    public async findSheetState(findDto: ISaleOutboundFindDataDto) {
+    public async findSheetState(findDto: ISaleOutboundFindDto) {
         const result = await useHttpPost<IApiResult<ISaleOutboundSheetState>>(API_URL.SALE_OUTBOUND_FIND_SHEET_STATE, findDto);
         if (result.code === 200 && result.sheetCompleteState) {
             return result.sheetCompleteState

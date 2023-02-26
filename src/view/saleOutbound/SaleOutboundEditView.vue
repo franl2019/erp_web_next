@@ -10,7 +10,6 @@
       <erp-button :disabled="!buttonShowState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
       <erp-button :disabled="!buttonShowState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
       </erp-button>
-
     </erp-no-title>
 
     <erp-form>
@@ -127,7 +126,7 @@ import useErpDialog from "@/components/dialog/useErpDialog";
 import {CellEditingStartedEvent} from "ag-grid-community";
 import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
 import {SaleOutboundMxService} from "@/module/saleOutbound/service/saleOutboundMx.service";
-import {SaleOutboundFindDataDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
+import {SaleOutboundFindDto} from "@/module/saleOutbound/dto/outbound/saleOutboundFindDto";
 import {SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
 import {bignumber, chain, round} from "mathjs";
 import {tabMenu} from "@/components/router_tab/useRouterTab";
@@ -200,14 +199,14 @@ export default defineComponent({
           routeToSaleOutboundSelectPage();
         }
         //查询单头
-        const findSaleOutboundDto = new SaleOutboundFindDataDto().clearQueryDateRange();
+        const findSaleOutboundDto = new SaleOutboundFindDto().clearQueryDateRange();
         findSaleOutboundDto.outboundcode = state.value.outboundcode;
         const saleOutboundHead = await outboundService.findOne(findSaleOutboundDto);
         //读取单头
         outboundHead.value = new SaleOutboundUpdateDto(saleOutboundHead);
 
         //读取明细
-        const findMxDto = new SaleOutboundMxFindDto();
+        const findMxDto = new SaleOutboundMxFindDto(0);
         findMxDto.outboundid = outboundHead.value.outboundid;
         const outboundMxList = await outboundMxService.find(findMxDto);
         addOutboundMx(outboundMxList);

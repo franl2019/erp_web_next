@@ -3,39 +3,37 @@
     <erp-no-title>
       <template #input>
         <erp-input-round
-            v-model="saleOutboundHeadFindDto.outboundcode"
+            v-model="saleOutboundFindDto.outboundcode"
             class="md:w-60"
             placeholder="输入单号搜索"
-            @change="onChange">
+            @change="onRefresh">
         </erp-input-round>
       </template>
-      <erp-button :disabled="!buttonState.create" @click="clickedCreateBtn">新增</erp-button>
-      <erp-button  type="success" @click="clickedEditBtn">修改</erp-button>
-      <erp-button :disabled="!buttonState.delete_data" type="danger" @click="clickedDeleteData">删除</erp-button>
+      <erp-button :disabled="!buttonState.create" @click="onClickCreate">新增</erp-button>
+      <erp-button  type="success" @click="onClickEdit">修改</erp-button>
+      <erp-button :disabled="!buttonState.delete_data" type="danger" @click="onClickDelete">删除</erp-button>
       <erp-delimiter/>
-      <erp-button :disabled="!buttonState.level1review" type="success" @click="clickedL1Review">审核</erp-button>
-      <erp-button :disabled="!buttonState.un_level1review" type="danger" @click="clickedUnL1Review">撤审
+      <erp-button :disabled="!buttonState.level1review" type="success" @click="onClickL1Review">审核</erp-button>
+      <erp-button :disabled="!buttonState.un_level1review" type="danger" @click="onClickUnL1Review">撤审
       </erp-button>
-      <erp-button :disabled="!buttonState.level2review" type="success" @click="clickedL2Review">财审</erp-button>
-      <erp-button :disabled="!buttonState.un_level2review" type="danger" @click="clickedUnL2Review">财务撤审
+      <erp-button :disabled="!buttonState.level2review" type="success" @click="onClickL2Review">财审</erp-button>
+      <erp-button :disabled="!buttonState.un_level2review" type="danger" @click="onClickUnL2Review">财务撤审
       </erp-button>
     </erp-no-title>
 
     <erp-table
-        ref="outboundHeadRef"
-        :find-dto="saleOutboundHeadFindDto"
-        :getRowNodeId="getHeadTableRowNodeId"
+        ref="saleOutboundRef"
+        :find-dto="saleOutboundFindDto"
+        :getRowNodeId="getRowNodeId"
         :show-filter-tips-box="true"
         :table-state="defaultOutboundHeadTable"
-        @ready="activated"
-        @refresh="onRefreshOutboundHeadData"
-        @selectionChanged="onSelectedRows">
+        @ready="onRefresh"
+        @refresh="onRefresh"
+        @selectionChanged="onClickSaleOutboundRow">
     </erp-table>
 
     <erp-table
-        ref="outboundMxRef"
-        :find-dto="saleOutboundMxFindDto"
-        :getRowNodeId="getMxTableRowNodeId"
+        ref="saleOutboundMxRef"
         :table-name="'单据明细'"
         :table-state="defaultOutboundMxTable">
     </erp-table>
@@ -58,22 +56,9 @@ import ErpDelimiter from "@/components/delimiter/ErpDelimiter.vue";
 import {defaultOutboundMxTable} from "@/view/saleOutbound/tableConfig/defaultOutboundMxTable";
 import {defaultOutboundHeadTable} from "@/view/saleOutbound/tableConfig/defaultOutboundHeadTable";
 import {defineComponent, ref} from "vue";
-import {useDateSelect} from "@/composables/useDateSelect";
 import {ITableRef} from "@/components/table/type";
-import {useOperateAreaSelect} from "@/composables/useOperateAreaSelect";
-import {
-  ISaleOutboundFindDataDto,
-  SaleOutboundFindDataDto
-} from "@/module/saleOutbound/dto/outbound/saleOutboundFindData.dto";
-import {ISaleOutboundMxFindDto, SaleOutboundMxFindDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxFind.dto";
-import {useRouter} from "vue-router";
-import {SaleOutboundService} from "@/module/saleOutbound/service/saleOutbound.service";
-import {useRouterPage} from "@/utils";
-import useErpDialog from "@/components/dialog/useErpDialog";
+import {useSaleOutboundFindPage} from "@/view/saleOutbound/hock/saleOutboundFind/useSaleOutboundFindPage";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
-import {VerifyParamError} from "@/types/error/verifyParamError";
-import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
-import {ButtonState} from "@/composables/ButtonState";
 
 export default defineComponent({
   name: "SaleOutboundFindView",
@@ -92,211 +77,54 @@ export default defineComponent({
     ErpDelimiter,
   },
   setup(_props, {expose}) {
-    //销售单查询页单头查询请求参数
-    const saleOutboundHeadFindDto = ref<ISaleOutboundFindDataDto>(new SaleOutboundFindDataDto());
 
-    //销售单查询页明细查询请求参数
-    const saleOutboundMxFindDto = ref<ISaleOutboundMxFindDto>(new SaleOutboundMxFindDto());
+    const saleOutboundRef = ref<ITableRef>();
+    const saleOutboundMxRef = ref<ITableRef>();
 
-    //按钮可视状态
-    const buttonState = ref(new ButtonState());
-
-    const outboundHeadRef = ref<ITableRef>();
-    const outboundMxRef = ref<ITableRef>();
-
-    const {findDate} = useDateSelect(saleOutboundHeadFindDto);
-    const {operateAreaId} = useOperateAreaSelect(saleOutboundHeadFindDto)
-
-    async function initPage() {
-      buttonState.value.init();
-      await outboundHeadRef.value?.initTableData();
-      await outboundMxRef.value?.getGridApi().setRowData([]);
-    }
-
-    async function initOutboundHeadTable() {
-      await outboundHeadRef.value?.initTableData();
-    }
-
-    async function selectRow(outboundid: number) {
-      await outboundHeadRef.value?.getGridApi().getRowNode(String(outboundid))?.setSelected(true);
-    }
-
-    async function initOutboundMx(outboundid?: number) {
-      if (outboundid && outboundid !== 0) {
-        saleOutboundMxFindDto.value.outboundid = outboundid;
-        await outboundMxRef.value?.initTableData();
-      } else {
-        await outboundMxRef.value?.getGridApi().setRowData([]);
-      }
-    }
-
-    function getSelectRow() {
-      const rows = outboundHeadRef.value?.getGridApi().getSelectedRows();
-      if (rows) {
-        return rows[0] as IOutbound
-      } else {
-        return Promise.reject(new VerifyParamError("没有选中销售单"))
-      }
-    }
-
-    function getHeadTableRowNodeId(data: IOutbound) {
+    function getRowNodeId(data:IOutbound) {
       return data.outboundid
     }
 
-    function getMxTableRowNodeId(data: IOutboundMx) {
-      return data.printid
-    }
+    const {
+      buttonState,
+      saleOutboundFindDto,
+      onClickCreate,
+      onClickEdit,
+      onClickL1Review,
+      onClickUnL1Review,
+      onClickL2Review,
+      onClickUnL2Review,
+      onClickDelete,
+      onClickSaleOutboundRow,
+      onRefresh
+    } = useSaleOutboundFindPage(
+        saleOutboundRef,
+        saleOutboundMxRef,
+    )
 
-    //service
-    const router = useRouter();
-    const outboundService = new SaleOutboundService();
-
-
-    //在搜索条件改变
-    async function onRefreshOutboundHeadData() {
-      outboundHeadRef.value?.initFindDto();
-      await initPage();
-    }
-
-    async function onChange() {
-      await initOutboundHeadTable();
-      await initOutboundMx();
-      buttonState.value.init();
-    }
-
-    //出仓单单头表格点击事件
-    async function onSelectedRows() {
-      //获取出仓单
-      const outbound = await getSelectRow();
-      if (outbound) {
-        //设置按钮状态
-        buttonState.value.updateButtonState(outbound);
-        //按出仓单显示出仓单的明细
-        await initOutboundMx(outbound.outboundid);
-      } else {
-        await initOutboundMx();
-      }
-    }
-
-    async function clickedFilterResetBtn() {
-      //重置查询参数
-      for (let valueKey in saleOutboundHeadFindDto.value) {
-        (saleOutboundHeadFindDto.value as any)[valueKey] = (new SaleOutboundFindDataDto() as any)[valueKey]
-      }
-      await initPage()
-    }
-
-    //btn event
-    function clickedCreateBtn() {
-      const route = router.resolve({
-        name: "newOutbound"
-      })
-      useRouterPage(route.fullPath, route.meta.title as string)
-    }
-
-    async function clickedEditBtn() {
-      const outbound = await getSelectRow();
-      if (outbound && outbound.outboundcode.length !== 0) {
-        const route = router.resolve({
-          name: "editOutbound", query: {
-            outboundcode: outbound.outboundcode
-          }
-        });
-        useRouterPage(route.fullPath, route.meta.title as string);
-      }
-    }
-
-    //审核出仓单按钮
-    async function clickedL1Review() {
-      const {outboundid, outboundcode} = await getSelectRow();
-      await useErpDialog({
-        title: "提示",
-        message: `是否审核,单号:${outboundcode}`
-      })
-      await outboundService.l1Review(outboundid);
-      await initOutboundHeadTable();
-      await selectRow(outboundid);
-    }
-
-    //撤审出仓单按钮
-    async function clickedUnL1Review() {
-      const {outboundid, outboundcode} = await getSelectRow();
-      await useErpDialog({
-        title: "提示",
-        message: `是否撤审,单号:${outboundcode}`,
-      })
-      await outboundService.unL1Review(outboundid);
-      await initOutboundHeadTable();
-      await selectRow(outboundid);
-    }
-
-    //审核出仓单按钮
-    async function clickedL2Review() {
-      const {outboundid, outboundcode} = await getSelectRow();
-      await useErpDialog({
-        title: "提示",
-        message: `是否财审,单号:${outboundcode}`
-      })
-      await outboundService.l2Review(outboundid);
-      await initOutboundHeadTable();
-      await selectRow(outboundid);
-    }
-
-    //撤审出仓单按钮
-    async function clickedUnL2Review() {
-      const {outboundid, outboundcode} = await getSelectRow();
-      await useErpDialog({
-        title: "提示",
-        message: `是否撤审财审,单号:${outboundcode}`,
-      })
-      await outboundService.unL2Review(outboundid);
-      await initOutboundHeadTable();
-      await selectRow(outboundid);
-    }
-
-    async function clickedDeleteData() {
-      const {outboundid, outboundcode} = await getSelectRow();
-      await useErpDialog({
-        title: "提示",
-        message: `是否删除,单号:${outboundcode}`
-      })
-      await outboundService.delete_data(outboundid);
-      await initOutboundMx();
-      await initOutboundHeadTable();
-      buttonState.value.init();
-    }
-
-    async function activated() {
-      await initPage()
+    function activated() {
+      onRefresh();
     }
 
     expose({activated})
 
     return {
-      defaultOutboundMxTable,
+      saleOutboundRef,
+      saleOutboundMxRef,
+      getRowNodeId,
       defaultOutboundHeadTable,
-      saleOutboundHeadFindDto,
-      saleOutboundMxFindDto,
+      defaultOutboundMxTable,
       buttonState,
-      outboundHeadRef,
-      outboundMxRef,
-      findDate,
-      operateAreaId,
-      initPage,
-      getHeadTableRowNodeId,
-      getMxTableRowNodeId,
-      onChange,
-      onRefreshOutboundHeadData,
-      onSelectedRows,
-      clickedCreateBtn,
-      clickedEditBtn,
-      clickedL1Review,
-      clickedUnL1Review,
-      clickedL2Review,
-      clickedUnL2Review,
-      clickedDeleteData,
-      clickedFilterResetBtn,
-      activated,
+      saleOutboundFindDto,
+      onClickCreate,
+      onClickEdit,
+      onClickL1Review,
+      onClickUnL1Review,
+      onClickL2Review,
+      onClickUnL2Review,
+      onClickDelete,
+      onClickSaleOutboundRow,
+      onRefresh
     };
   },
 });
