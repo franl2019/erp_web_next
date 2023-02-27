@@ -12,6 +12,9 @@ import {IOutboundMx} from "@/module/outbound/types/IOutboundMx";
 import {IOutbound} from "@/module/outbound/types/IOutbound";
 import {SaleOutboundMxCreateDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxCreate.dto";
 import {SaleOutboundMxUpdateDto} from "@/module/saleOutbound/dto/mx/saleOutboundMxUpdate.dto";
+import {IOutboundService} from "@/module/outbound/types/IOutboundService";
+import {IClient} from "@/module/client/client";
+import {IWarehouse} from "@/module/warehouse/warehouse";
 
 export interface ISaleOutboundSheetState {
     completeL1Review: number;
@@ -19,16 +22,13 @@ export interface ISaleOutboundSheetState {
     undoneL2Review: number;
 }
 
-interface IOutboundHaveName extends IOutbound {
-    clientname: string;
-    warehousename: string;
-}
+type IOutboundFindOrClientOrWarehouse = IOutbound & IClient & IWarehouse;
 
-export class SaleOutboundService {
+export class SaleOutboundService implements IOutboundService<IOutboundFindOrClientOrWarehouse>{
 
     public async find(findDto: ISaleOutboundFindDto) {
         await useVerifyParam(findDto);
-        const result = await useHttpPost<IApiResult<IOutboundHaveName>>(API_URL.SALE_OUTBOUND_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IOutboundFindOrClientOrWarehouse>>(API_URL.SALE_OUTBOUND_FIND, findDto);
         if (result.code === 200 && result.data) {
             return result.data
         } else {
@@ -38,7 +38,7 @@ export class SaleOutboundService {
 
     public async findOne(findDto: ISaleOutboundFindDto) {
         await useVerifyParam(findDto);
-        const result = await useHttpPost<IApiResult<IOutboundHaveName>>(API_URL.SALE_OUTBOUND_FIND, findDto);
+        const result = await useHttpPost<IApiResult<IOutboundFindOrClientOrWarehouse>>(API_URL.SALE_OUTBOUND_FIND, findDto);
         if (result.code === 200 && result.data && result.data.length === 1) {
             return result.data[0]
         } else {
@@ -58,20 +58,20 @@ export class SaleOutboundService {
     public async create(outboundDto: ISaleOutboundCreateDto) {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxCreateDto(outboundDto.outboundMx);
-        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE, outboundDto);
-        if (result.code === 200 && result.createResult && result.createResult.code) {
-            return result;
+        const result = await useHttpPost<IApiResult<IOutboundFindOrClientOrWarehouse>>(API_URL.SALE_OUTBOUND_CREATE, outboundDto);
+        if (result.code === 200 && result.data && result.data.length === 1) {
+            return result.data[0];
         } else {
             return Promise.reject(new VerifyParamError('新增出仓单错误'))
         }
     }
 
-    public async create_l1Review(outboundDto: ISaleOutboundCreateDto) {
+    public async createAndL1Review(outboundDto: ISaleOutboundCreateDto) {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxCreateDto(outboundDto.outboundMx);
-        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_CREATE_L1REVIEW, outboundDto);
-        if (result.code === 200 && result.createResult && result.createResult.code.length !==0) {
-            return result;
+        const result = await useHttpPost<IApiResult<IOutboundFindOrClientOrWarehouse>>(API_URL.SALE_OUTBOUND_CREATE_L1REVIEW, outboundDto);
+        if (result.code === 200 && result.data && result.data.length === 1) {
+            return result.data[0];
         } else {
             return Promise.reject(new VerifyParamError('新增出仓单错误'))
         }
@@ -81,8 +81,8 @@ export class SaleOutboundService {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxUpdateDto(outboundDto.outboundMx);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE, outboundDto);
-        if (result.code === 200) {
-            return true;
+        if (result.code === 200 && result.data && result.data.length === 1) {
+            return result.data[0];
         } else {
             return Promise.reject(new VerifyParamError('更新出仓单错误'))
         }
@@ -92,8 +92,8 @@ export class SaleOutboundService {
         await useVerifyParam(outboundDto);
         await this.verifySaleOutboundMxUpdateDto(outboundDto.outboundMx);
         const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UPDATE_L1REVIEW, outboundDto);
-        if (result.code === 200) {
-            return true;
+        if (result.code === 200 && result.data && result.data.length === 1) {
+            return result.data[0];
         } else {
             return Promise.reject(new VerifyParamError('更新加审核出仓单错误'))
         }
@@ -108,18 +108,6 @@ export class SaleOutboundService {
             return true;
         } else {
             return Promise.reject(new VerifyParamError('删除出仓单错误'))
-        }
-    }
-
-    public async undelete_data(outboundid:number) {
-        const saleOutboundDeleteDto = new SaleOutboundDeleteDto();
-        saleOutboundDeleteDto.outboundid = outboundid;
-        await useVerifyParam(saleOutboundDeleteDto);
-        const result = await useHttpPost<IApiResult>(API_URL.SALE_OUTBOUND_UN_DELETE, saleOutboundDeleteDto);
-        if (result.code === 200) {
-            return true;
-        } else {
-            return Promise.reject(new VerifyParamError('取消删除出仓单错误'))
         }
     }
 

@@ -295,7 +295,7 @@ export default defineComponent({
       if (isNewCreatePage()) {
         const saleOutboundAndMxCreateDto = await getSaleOutboundCreateDto();
         const result = await outboundService.create(saleOutboundAndMxCreateDto);
-        state.value.outboundcode = result.createResult!.code;
+        state.value.outboundcode = result.outboundcode
       } else {
         const saleOutboundAndMxUpdateDto = await getSaleOutboundUpdateDto()
         await outboundService.update(saleOutboundAndMxUpdateDto);
@@ -315,8 +315,8 @@ export default defineComponent({
           title: "提示",
           message: `是否保存并审核`
         })
-        const result = await outboundService.create_l1Review(outbound);
-        state.value.outboundcode = result.createResult!.code
+        const result = await outboundService.createAndL1Review(outbound);
+        state.value.outboundcode = result.outboundcode
 
         routeToEditPage();
 

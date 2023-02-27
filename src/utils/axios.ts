@@ -7,52 +7,29 @@ import {HttpError} from "@/types/error/httpError";
 import {config} from "@/config/env";
 import {BASE_PATH} from "@/config/apiUrl";
 
+export interface sheetCompleteState{
+    completeL1Review: number;
+    undoneL1Review: number;
+    undoneL2Review: number;
+}
+
 export interface IApiResult<T = any> {
     code: number;
     msg: string;
-    error?: any[];
-    data?: T[];
+    data: T[];
     token?: string;
     createResult?: {
         id: number,
         code: string;
     },
-    sheetCompleteState?: {
-        completeL1Review: number;
-        undoneL1Review: number;
-        undoneL2Review: number;
-    },
+    sheetCompleteState?: sheetCompleteState,
     related?: any
 }
 
 //axios实例
 const axiosInstance = axios.create({
     baseURL: config.isDev ? "" : config.serviceUrl,
-    timeout: 12000,
-
-    // `transformRequest` 允许在向服务器发送前，修改请求数据
-    // 它只能用于 'PUT', 'POST' 和 'PATCH' 这几个请求方法
-    // 数组中最后一个函数必须返回一个字符串， 一个Buffer实例，ArrayBuffer，FormData，或 Stream
-    // 你可以修改请求头。
-    transformRequest: [(data) => {
-        // // 对发送的 data 进行任意转换处理
-        // for (const dataKey in data) {
-        //     if (dataKey === 'indate' || dataKey === 'outdate') {
-        //         console.log(data[dataKey]);
-        //         console.log(
-        //             moment(new Date())
-        //                 .utc(true)
-        //                 .format('YYYY-MM-DD HH:mm:ss')
-        //         )
-        //     }
-        // }
-        return data
-    }, ...(axios.defaults.transformRequest as AxiosRequestTransformer[])],
-
-    // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
-    // transformResponse:[function (data){
-    //     return data
-    // }]
+    timeout: 12000
 })
 
 const notTokenUrls = [
