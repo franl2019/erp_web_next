@@ -45,7 +45,7 @@ export default defineComponent({
     }
 
     function clickedConfirm() {
-      emit("clickedConfirm", JSON.parse(JSON.stringify(roleCreateDto.value)))
+      emit("clickedConfirm", roleCreateDto.value)
     }
 
     return {
